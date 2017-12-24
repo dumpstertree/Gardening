@@ -1,0 +1,28 @@
+ {
+     "folders":
+     [
+         {
+            "follow_symlinks": true,
+            "path": ".",
+            "file_exclude_patterns": [
+                "*.meta",
+                "*.csproj",
+                "*.booproj",
+                "*.unityproj",
+                "*.asset",
+                "*.mat",
+                "*.fbx",
+                "*.prefab",
+                "*.anim",
+                "*.controller",
+                "*.physicMaterial",
+                "*.userprefs"
+            ],
+            "folder_include_patterns": [
+                "Assets",
+                "Assets/*"
+            ]
+         }
+     ],
+     "solution_file": "GardeningV2.sln"
+ }
