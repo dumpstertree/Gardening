@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public abstract class InventoryItemData{
+public abstract class InventoryItemData {
 	
 	public InventoryItem.UseAnimation Animation;
 }
@@ -28,4 +28,10 @@ public abstract class InventoryItemData{
 [System.Serializable] public class PlaceData : InventoryItemData {
 	
 	public GameObject Prefab;
+}
+[System.Serializable] public class ShootData : InventoryItemData {	
+
+ 	public HitData _hitData;
+	public GameObject BulletPrefab;
+	public float ShotsPerSecond;
 }

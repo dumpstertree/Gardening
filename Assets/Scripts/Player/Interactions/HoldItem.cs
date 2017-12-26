@@ -6,6 +6,7 @@ public class HoldItem : MonoBehaviour {
 
 	[SerializeField] private Player _player;
 	[SerializeField] private GameObject _defaultItem;
+	[SerializeField] private LayerMask _holdItemLayerMask;
 
 	private GameObject _holdItem;
 
@@ -38,5 +39,9 @@ public class HoldItem : MonoBehaviour {
 		_holdItem.transform.SetParent( transform, false );
 		_holdItem.transform.localPosition = Vector3.zero;
 		_holdItem.transform.localRotation = Quaternion.identity;
+
+		foreach( Transform t in _holdItem.transform.GetComponent<Transform>() ){
+			t.gameObject.layer = gameObject.layer;
+		}
 	}
 }

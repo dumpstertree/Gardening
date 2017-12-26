@@ -105,6 +105,10 @@ public class Interactor : MonoBehaviour {
 			return false;
 		}
 
+		if ( inventoryItem.CanShoot ){
+			return true;
+		}
+
 		if ( inventoryItem.CanPlace && interactableItem == null ){
 			return true;
 		}

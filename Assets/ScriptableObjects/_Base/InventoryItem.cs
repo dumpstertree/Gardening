@@ -17,6 +17,11 @@ public partial class InventoryItem : ScriptableObject {
 			Use( player, _interactData, () => { Place( player.Interactor );  }, onComplete );
 		}
 
+		// shoot
+		if ( _canShoot ) {
+			Shoot( player, _shootData, onComplete );
+		}
+
 		// hit
 		if ( _canHit && player.Interactor.InteractableObject.Hitable ) { 
 			Use( player, _interactData, () => { interactableObject.HitDelegate.Hit( player, _hitData );  }, onComplete );
@@ -70,6 +75,7 @@ public partial class InventoryItem : ScriptableObject {
 	public bool CanFeed { get{ return _canFeed; } }
 	public bool CanInteract { get{ return _canInteract; } }
 	public bool CanPlace { get{ return _canPlace; } }
+	public bool CanShoot { get{ return _canShoot; } }
 	public Sprite Sprite { get{ return _sprite; } }
 	public GameObject HoldItem { get{ return _holdItem; } }
 
@@ -103,6 +109,10 @@ public partial class InventoryItem : ScriptableObject {
 	[SerializeField] private bool _canPlace;
 	[SerializeField] private PlaceData _placeData;
 
+	[HeaderAttribute("Shoot")]
+	[SerializeField] private bool _canShoot;
+	[SerializeField] private ShootData _shootData;
+
 	// *********************************************
 
 	private void Place ( Interactor interactor ) {
@@ -114,6 +124,15 @@ public partial class InventoryItem : ScriptableObject {
 			go.transform.position = hit.point;
 			go.transform.rotation = interactor.transform.rotation;
 		}
+	}
+	private void Shoot ( Player shooter, ShootData shootData, Action onComplete ) {
+
+		var go = Instantiate( shootData.BulletPrefab );
+		go.transform.position = Game.Area.LoadedPlayer.transform.position;
+		go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
+		go.GetComponent<Bullet>().SetBullet( shooter, shootData._hitData );
+
+		Game.Async.WaitForSeconds( 1.0f/shootData.ShotsPerSecond, onComplete );
 	}
 	private void Use ( Player player, InventoryItemData data, Action action, Action onComplete ) {
 		
