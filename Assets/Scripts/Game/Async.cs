@@ -13,15 +13,20 @@ namespace Application {
 		public void WaitForAreaToLoad( string areaName, Action onComplete ){
 			StartCoroutine( WaitForAreaToLoadCoroutine( areaName, onComplete ) );
 		}
+		public void WaitForEndOfFrame( Action onComplete ){
+			StartCoroutine( WaitForEndOfFrameCoroutine( onComplete ) );
+		}
 
 		IEnumerator WaitForSecondsCoroutine( float seconds, Action onComplete ) {
-
 			yield return new WaitForSeconds( seconds );
 			onComplete();
 		}
 		IEnumerator WaitForAreaToLoadCoroutine( string areaName, Action onComplete ) {
-
        		yield return SceneManager.LoadSceneAsync( areaName );
+			onComplete();
+		}
+		IEnumerator WaitForEndOfFrameCoroutine( Action onComplete ) {
+       		yield return new WaitForEndOfFrame();
 			onComplete();
 		}
 
