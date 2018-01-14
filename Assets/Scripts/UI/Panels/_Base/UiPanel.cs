@@ -57,7 +57,7 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 
 	private bool _pointerDown;
 	
-	private void Update () {
+	protected virtual void Update () {
 		
 		if ( _pointerDown ){
 			HandlePointerIsStillDown();

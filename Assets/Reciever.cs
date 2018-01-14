@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gun {
 	
@@ -16,50 +15,26 @@ namespace Gun {
 			}
 		}
 
-		public int Collumn {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetCollumn( transform.position ); }
+		public int X {
+			get{ return GetComponentInParent<GunCraftingPanel>().GetX( transform.position ); }
 		}
-		public int Row {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetRow( transform.position ); }
+		public int Y {
+			get{ return GetComponentInParent<GunCraftingPanel>().GetY( transform.position ); }
 		}
 
-		public Component.Connection Connection;
-		[SerializeField] private Sprite _circleRecieverSprite;
-		[SerializeField] private Sprite _squareRecieverSprite;
+		public Collider.Connection Connection;
 
-		private const float SNAPPING = 50;
 		private const float VISUAL_SIZE = 30;
-
-		private Image __image;
-		private Image _image {
-			get{ 
-				if ( __image == null ){	__image = GetComponent<Image>(); }
-				return __image;
-			}
-		}
 
 		private void OnDrawGizmos () {
 
-			Snap();
-			SetSprite();
-
 			Gizmos.color = Color.red;
-			Gizmos.DrawWireSphere( transform.position, VISUAL_SIZE );
-		}
-		private void Snap () {
+			Gizmos.DrawLine( transform.position, transform.position + (transform.up * 100) );
 			
-			var x = Mathf.Round( transform.localPosition.x/SNAPPING ) * SNAPPING;
-			var y = Mathf.Round( transform.localPosition.y/SNAPPING ) * SNAPPING;
-			var z = transform.localPosition.z;
-			
-			transform.localPosition = new Vector3( x, y, z );
-		}
-		private void SetSprite () {
-
 			switch( Connection ) {
 
-				case Component.Connection.Circle: _image.sprite = _circleRecieverSprite; break;
-				case Component.Connection.Square: _image.sprite = _squareRecieverSprite; break;
+				case Collider.Connection.Circle: Gizmos.DrawWireSphere( transform.position, VISUAL_SIZE/2 ); break;
+				case Collider.Connection.Square: Gizmos.DrawWireCube( transform.position, new Vector3(VISUAL_SIZE,VISUAL_SIZE,VISUAL_SIZE) ); break;
 			}
 		}
 	}
