@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class Inventory {
 
 	// ***************** PUBLIC  *******************
@@ -39,7 +36,9 @@ public class Inventory {
 
 			_inventoryItems[ index ] = item;
 
-			item.OnCountChanged += () => DestroyItem( index, item);
+			if ( item != null ){
+				item.OnCountChanged += () => DestroyItem( index, item);
+			}
 
 			FireOnInventoryItemChangedEvent( index, item );
 		}

@@ -111,7 +111,7 @@ public partial class InventoryItem : ScriptableObject {
 
 	[HeaderAttribute("Shoot")]
 	[SerializeField] private bool _canShoot;
-	[SerializeField] private ShootData _shootData;
+	[SerializeField] public ShootData _shootData;
 
 	// *********************************************
 
@@ -132,7 +132,8 @@ public partial class InventoryItem : ScriptableObject {
 		go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
 		go.GetComponent<Bullet>().SetBullet( shooter, shootData._hitData );
 
-		Game.Async.WaitForSeconds( 1.0f/shootData.ShotsPerSecond, onComplete );
+		Debug.Log( shootData.CraftedGun.GunStats.FireRate );
+		Game.Async.WaitForSeconds( 1.0f/shootData.CraftedGun.GunStats.FireRate, onComplete );
 	}
 	private void Use ( Player player, InventoryItemData data, Action action, Action onComplete ) {
 		

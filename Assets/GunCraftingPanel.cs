@@ -1,7 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class GunCraftingPanel : UiPanel {
+public class GunCraftingPanel : InventoryUI {
+
+	private CraftedGun GetGun () {
+		
+		List<CraftedGun.Component> components = new List<CraftedGun.Component>();
+		foreach( Gun.Component c in _gunComponents ){
+			components.Add( new CraftedGun.Component( c ) );
+		}
+
+		return new CraftedGun( components );
+	}
+	private void AddGun ( CraftedGun craftedGun ) {
+
+		foreach( CraftedGun.Component c in craftedGun.GunComponents ) {
+			
+			var prefab = Resources.Load( c.PrefabName ) as GameObject;
+			var instance = Instantiate( prefab );
+			
+			instance.transform.SetParent( _content, false );
+			instance.transform.rotation = Quaternion.Euler( c.Rotation );
+			instance.transform.position = c.Position;
+
+			_componentsOnGraph.Add( instance.GetComponent<Gun.Component>() );
+		}	
+
+		SetNeedsRecalulatePath();
+	}
+	private void RemoveGun () {
+
+		foreach ( Gun.Component c in _componentsOnGraph ){
+			Destroy( c.gameObject );
+		}
+		_componentsOnGraph.Clear();
+
+		SetNeedsRecalulatePath();
+	}
 
 	// *****************************
 
@@ -127,6 +163,7 @@ public class GunCraftingPanel : UiPanel {
 
 	// *****************************
 	
+	[SerializeField] private InventoryItem _startItem;
 	[SerializeField] private RectTransform _content;
 	[SerializeField] private List<Gun.Projector> _baseProjectors;
 	[SerializeField] private List<Gun.Collider> _baseColliders;
@@ -137,16 +174,34 @@ public class GunCraftingPanel : UiPanel {
 
 	private bool _recalculatePath;
 	private List<Gun.Component> _gunComponents;	
+	private List<Gun.Component> _componentsOnGraph;
 	private Slot[,] _slotGraph;
 
 	// *****************************
 
 	private void Awake () {
 		
-		
 		// init
 		_gunComponents = new List<Gun.Component>();
-		
+		_componentsOnGraph = new List<Gun.Component>();
+
+		// Add a starting item
+		_gunCraftingInventory = new Inventory( 1 );
+		_gunCraftingInventory.SetInventoryItem( 0, Instantiate( _startItem ) );
+		_itemBubble.Index = 0;
+
+		foreach ( Gun.Component c in GetComponentsInChildren<Gun.Component>() ){
+			_componentsOnGraph.Add( c );
+		}
+
+		//**************
+
+		_gunCraftingInventory.OnInventoryItemChanged += (index, item) => {
+			RemoveGun();
+			if ( item != null && item._shootData.CraftedGun != null ) {
+				AddGun( item._shootData.CraftedGun );
+			}
+		};
 		
 		// set items in graph
 		_slotGraph = new Slot[ NUM_OF_SLOTS, NUM_OF_SLOTS];
@@ -160,6 +215,10 @@ public class GunCraftingPanel : UiPanel {
 		foreach( Gun.Projector p in _baseProjectors ) {
 			AddProjector( p );
 		}
+
+		_saveButton.onClick.AddListener( () => {
+			_gunCraftingInventory.GetInventoryItem( _itemBubble.Index )._shootData.CraftedGun = GetGun(); 
+		});
 	}
 
 	// *****************************
@@ -172,14 +231,26 @@ public class GunCraftingPanel : UiPanel {
 	}
 	private void ClearGun () {
 		
-		foreach ( Gun.Component c in GetComponentsInChildren<Gun.Component>() ) {
+		foreach ( Gun.Component c in _gunComponents ) {
 			c.Reset();
 		}
+		_gunComponents.Clear();
 	}
 	private void CalculateGun () {
 	}
 
 	// *****************************
+
+	[SerializeField] private ItemBubbleUI _itemBubble;
+	[SerializeField] private Button _saveButton;
+	private Inventory _gunCraftingInventory;
+
+	protected override Inventory GetInventory () {
+		return _gunCraftingInventory;
+	}
+	protected override ItemBubbleUI[] GetItemBubbles () {
+		return new ItemBubbleUI[]{ _itemBubble };
+	}
 
 	public class Slot {
 
@@ -194,5 +265,6 @@ public class GunCraftingPanel : UiPanel {
 		}
 	}
 }
+
 
 

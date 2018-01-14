@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace Gun {
 
 	public class Component : UiPanel {
 
+		public string PrefabName {
+			get { return _prefabName; }
+		}
 		public void Recieve () {
 
 			if ( !_active ) {
@@ -28,17 +32,23 @@ namespace Gun {
 
 		// **************************
 				
+		[SerializeField] private string _prefabName;
 		[SerializeField] private bool _active;
 		[SerializeField] private GameObject _outline;
 		[SerializeField] private CanvasGroup _canvasGroup;
 
 		private const float SNAPPING = 100;
+		private const float ROTATION_TIME = 0.1f;
+		private const float MOVEMENT_LERP = 0.5f;
 		
 		private GunCraftingPanel _panel;
-		private bool _set;
 		private Reciever[]_recievers;
 		private Projector[] _projectors;
 		private Collider[] _colliders;
+		private bool _set;
+		private bool _lockInput;
+		private Vector3 _targetPos;
+
 
 		private bool CanSet {
 			get {
@@ -148,13 +158,14 @@ namespace Gun {
 				_panel.SetNeedsRecalulatePath();
 			}
 		}
-		private void Move () {
-
-			var x = Mathf.Round( transform.parent.InverseTransformPoint( Input.mousePosition ).x / SNAPPING ) * SNAPPING + 50;
-			var y = Mathf.Round( transform.parent.InverseTransformPoint( Input.mousePosition ).y / SNAPPING ) * SNAPPING + 50;
+		private void Move ( Vector3 clickOffset ) {
+			
+			var inputPos = Input.mousePosition;
+			var x = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).x / SNAPPING ) * SNAPPING + 50;
+			var y = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).y / SNAPPING ) * SNAPPING + 50;
 			var z = transform.localPosition.z;
 			
-			transform.localPosition = new Vector3( x, y, z );
+			_targetPos = new Vector3( x, y, z ); 
 
 			SetStateVisual();
 		}
@@ -199,9 +210,15 @@ namespace Gun {
 			_projectors = GetComponentsInChildren<Projector>();
 			_colliders = GetComponentsInChildren<Collider>();
 
+			var clickOffset = Vector3.zero;
 			// input commands
-			OnPointerDownEvent += UnSet;
-			OnPointerIsStillDownEvent += Move;
+			OnPointerDownEvent += () => { 
+				clickOffset = transform.position - Input.mousePosition;
+				UnSet();
+			};
+			OnPointerIsStillDownEvent += () => {
+				Move( clickOffset );
+			}; 
 			OnPointerUpEvent += () => {
 				if ( CanSet ){
 					Set(); 
@@ -211,31 +228,71 @@ namespace Gun {
 		private void Start () {
 
 			Reset();
+			_targetPos = transform.localPosition;
 			Set();
 		}
 		protected override void Update() {
 		
 			base.Update();
 
-			if( Input.GetKeyDown( KeyCode.LeftArrow ) && MouseIsOver ) {
+			if( Input.GetKeyDown( KeyCode.LeftArrow ) && MouseIsOver && !_lockInput ) {
 				
-				UnSet();
-				transform.Rotate( Vector3.forward, 90f );
-
-				if ( CanSet ) {
-					Set();
-				}
+				StartCoroutine( RotateLeft() );
 			}
 
-			if( Input.GetKeyDown( KeyCode.RightArrow ) && MouseIsOver ) {
+			if( Input.GetKeyDown( KeyCode.RightArrow ) && MouseIsOver && !_lockInput ) {
 				
-				UnSet();
-				transform.Rotate( Vector3.forward, -90f );
-
-				if ( CanSet ) {
-					Set();
-				}
+				StartCoroutine( RotateRight() );
 			}
+
+			transform.localPosition = Vector3.Lerp( transform.localPosition, _targetPos, MOVEMENT_LERP );
+		}
+
+		// **************************
+
+		private IEnumerator RotateLeft(){
+			
+			_lockInput = true;
+
+			UnSet();
+
+			var targetRotation = transform.rotation * Quaternion.AngleAxis( 90, Vector3.forward );
+			for (float i = 0; i < ROTATION_TIME; i += Time.deltaTime ){
+				var frac = i/ROTATION_TIME;
+
+				transform.rotation =  Quaternion.Slerp( transform.rotation, targetRotation, frac);
+				yield return null;
+			}
+
+			transform.rotation = targetRotation;
+
+			if ( CanSet ) {
+				Set();
+			}
+
+			_lockInput = false;
+		}
+		private IEnumerator RotateRight(){
+
+			_lockInput = true;
+
+			UnSet();
+
+			var targetRotation = transform.rotation * Quaternion.AngleAxis( -90, Vector3.forward );
+			for (float i = 0; i < ROTATION_TIME; i += Time.deltaTime ){
+				var frac = i/ROTATION_TIME;
+
+				transform.rotation =  Quaternion.Slerp( transform.rotation, targetRotation, frac);
+				yield return null;
+			}
+
+			transform.rotation = targetRotation;
+
+			if ( CanSet ) {
+				Set();
+			}
+
+			_lockInput = false;
 		}
 	}
 }
