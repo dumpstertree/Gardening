@@ -3,11 +3,55 @@ using System.Collections;
 
 namespace Gun {
 
-	public class Component : UiPanel {
+	public class Component : MonoBehaviour {
 
-		public string PrefabName {
-			get { return _prefabName; }
+		public string PrefabName { get { return _prefabName; } }
+
+		// **************************
+		
+		public void InitAtLocation () {
+
+			// find components
+			_panel = GetComponentInParent<GunCraftingPanel>();
+			_recievers = GetComponentsInChildren<Reciever>();
+			_projectors = GetComponentsInChildren<Projector>();
+			_colliders = GetComponentsInChildren<Collider>();
+
+			// set position
+			_targetPos = transform.localPosition;
+
+			// set dragging
+			_dragging = false;
+
+			// set state
+			Reset();
+			if( CanSet ) Set();
 		}
+		public void InitMoving () {
+			
+			// find components
+			_panel = GetComponentInParent<GunCraftingPanel>();
+			_recievers = GetComponentsInChildren<Reciever>();
+			_projectors = GetComponentsInChildren<Projector>();
+			_colliders = GetComponentsInChildren<Collider>();
+
+			// set position
+			transform.position = Input.mousePosition;
+			_targetPos = transform.localPosition;
+
+			// set dragging
+			_dragging = true;
+			
+			//set state
+			Reset();
+			UnSet();
+
+			// start moving
+			_movementCoroutine = StartCoroutine( Move() );
+		}
+
+		// **************************
+		
 		public void Recieve () {
 
 			if ( !_active ) {
@@ -33,7 +77,6 @@ namespace Gun {
 		// **************************
 				
 		[SerializeField] private string _prefabName;
-		[SerializeField] private bool _active;
 		[SerializeField] private GameObject _outline;
 		[SerializeField] private CanvasGroup _canvasGroup;
 
@@ -45,10 +88,16 @@ namespace Gun {
 		private Reciever[]_recievers;
 		private Projector[] _projectors;
 		private Collider[] _colliders;
+
+		private bool _active;
 		private bool _set;
 		private bool _lockInput;
+		private bool _dragging;
 		private Vector3 _targetPos;
 
+		private Coroutine _movementCoroutine;
+
+		// **************************
 
 		private bool CanSet {
 			get {
@@ -97,7 +146,74 @@ namespace Gun {
 				return false;
 			}
 		}
+
+		// **************************
+
+		private void Update () {
 		
+			// rotate left
+			if( Input.GetKeyDown( KeyCode.LeftArrow ) ){
+				LeftKeyDown();
+			}
+
+			// rotate right
+			if( Input.GetKeyDown( KeyCode.RightArrow ) ) {
+				RightKeyDown();
+			}
+
+			// on mouse down
+			if ( Input.GetMouseButtonDown( 0 ) ) {
+				MouseDown();
+			} 
+
+			// on mouse up
+			if ( Input.GetMouseButtonUp( 0 ) ) {
+				MouseUp();
+			}
+
+			// move controller
+			transform.localPosition = Vector3.Lerp( transform.localPosition, _targetPos, MOVEMENT_LERP );
+		}
+		private void MouseDown () {
+
+			if ( MouseIsOver ) { 
+					
+				_dragging = true;
+				
+				UnSet();
+				_movementCoroutine = StartCoroutine( Move() );
+			}
+		}
+		private void MouseUp () {
+			
+			if ( _dragging ) {
+
+				_dragging = false;
+
+				if ( _movementCoroutine != null ){ 
+					StopCoroutine( _movementCoroutine ); 
+				}
+				
+				if ( CanSet ) {
+					Set(); 
+				} else {
+					_panel.RemovePartFromGraph( this ); 
+				}
+			}
+		}
+		private void LeftKeyDown () {
+			
+			if( MouseIsOver && !_lockInput ) {
+				StartCoroutine( RotateLeft() );
+			}
+		}
+		private void RightKeyDown () {
+
+			if( MouseIsOver && !_lockInput ) {
+				StartCoroutine( RotateRight() );
+			}
+		}
+
 		// ************************** 
 
 		private void Set () {
@@ -158,17 +274,6 @@ namespace Gun {
 				_panel.SetNeedsRecalulatePath();
 			}
 		}
-		private void Move ( Vector3 clickOffset ) {
-			
-			var inputPos = Input.mousePosition;
-			var x = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).x / SNAPPING ) * SNAPPING + 50;
-			var y = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).y / SNAPPING ) * SNAPPING + 50;
-			var z = transform.localPosition.z;
-			
-			_targetPos = new Vector3( x, y, z ); 
-
-			SetStateVisual();
-		}
 
 		// **************************
 		
@@ -201,56 +306,10 @@ namespace Gun {
 			_outline.SetActive( _active );
 		}
 
-		// **************************
-
-		private void Awake () {
-			
-			_panel = GetComponentInParent<GunCraftingPanel>();
-			_recievers = GetComponentsInChildren<Reciever>();
-			_projectors = GetComponentsInChildren<Projector>();
-			_colliders = GetComponentsInChildren<Collider>();
-
-			var clickOffset = Vector3.zero;
-			// input commands
-			OnPointerDownEvent += () => { 
-				clickOffset = transform.position - Input.mousePosition;
-				UnSet();
-			};
-			OnPointerIsStillDownEvent += () => {
-				Move( clickOffset );
-			}; 
-			OnPointerUpEvent += () => {
-				if ( CanSet ){
-					Set(); 
-				}
-			};
-		}
-		private void Start () {
-
-			Reset();
-			_targetPos = transform.localPosition;
-			Set();
-		}
-		protected override void Update() {
-		
-			base.Update();
-
-			if( Input.GetKeyDown( KeyCode.LeftArrow ) && MouseIsOver && !_lockInput ) {
-				
-				StartCoroutine( RotateLeft() );
-			}
-
-			if( Input.GetKeyDown( KeyCode.RightArrow ) && MouseIsOver && !_lockInput ) {
-				
-				StartCoroutine( RotateRight() );
-			}
-
-			transform.localPosition = Vector3.Lerp( transform.localPosition, _targetPos, MOVEMENT_LERP );
-		}
 
 		// **************************
 
-		private IEnumerator RotateLeft(){
+		private IEnumerator RotateLeft () {
 			
 			_lockInput = true;
 
@@ -272,7 +331,7 @@ namespace Gun {
 
 			_lockInput = false;
 		}
-		private IEnumerator RotateRight(){
+		private IEnumerator RotateRight () {
 
 			_lockInput = true;
 
@@ -293,6 +352,21 @@ namespace Gun {
 			}
 
 			_lockInput = false;
+		}
+		private IEnumerator Move () {
+
+			while ( true ) {
+
+				var inputPos = Input.mousePosition;
+				var x = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).x / SNAPPING ) * SNAPPING + 50;
+				var y = Mathf.Round( transform.parent.InverseTransformPoint( inputPos ).y / SNAPPING ) * SNAPPING + 50;
+				var z = transform.localPosition.z;
+				
+				_targetPos = new Vector3( x, y, z ); 
+
+				SetStateVisual();
+				yield return null;
+			}
 		}
 	}
 }

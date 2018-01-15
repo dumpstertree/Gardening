@@ -4,41 +4,6 @@ using UnityEngine.UI;
 
 public class GunCraftingPanel : InventoryUI {
 
-	private CraftedGun GetGun () {
-		
-		List<CraftedGun.Component> components = new List<CraftedGun.Component>();
-		foreach( Gun.Component c in _gunComponents ){
-			components.Add( new CraftedGun.Component( c ) );
-		}
-
-		return new CraftedGun( components );
-	}
-	private void AddGun ( CraftedGun craftedGun ) {
-
-		foreach( CraftedGun.Component c in craftedGun.GunComponents ) {
-			
-			var prefab = Resources.Load( c.PrefabName ) as GameObject;
-			var instance = Instantiate( prefab );
-			
-			instance.transform.SetParent( _content, false );
-			instance.transform.rotation = Quaternion.Euler( c.Rotation );
-			instance.transform.position = c.Position;
-
-			_componentsOnGraph.Add( instance.GetComponent<Gun.Component>() );
-		}	
-
-		SetNeedsRecalulatePath();
-	}
-	private void RemoveGun () {
-
-		foreach ( Gun.Component c in _componentsOnGraph ){
-			Destroy( c.gameObject );
-		}
-		_componentsOnGraph.Clear();
-
-		SetNeedsRecalulatePath();
-	}
-
 	// *****************************
 
 	public void SetNeedsRecalulatePath () {
@@ -59,11 +24,10 @@ public class GunCraftingPanel : InventoryUI {
 				_recalculatePath = false;
 			});
 		}
-
-		CalculateGun();
 	}
 	public void Project( int x, int y ) {
 
+		
 		foreach ( Gun.Projector projector in _slotGraph[ x, y ].Projectors ) {		
 
 			// if projector exists project forward
@@ -96,26 +60,42 @@ public class GunCraftingPanel : InventoryUI {
 
 	public void SetComponent( int x, int y, Gun.Component component ) {
 		
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return;
+		}
+
 		_slotGraph[ x, y ].Component = component;
 	}
 	public void AddProjector( Gun.Projector projector ) {
 		
 		var x = GetX( projector.transform.position );
 		var y = GetY( projector.transform.position );
+
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return;
+		}
 		
 		_slotGraph[ x, y ].Projectors.Add( projector );
 	}
 	public void AddReciever( Gun.Reciever reciever ) {
-		
+
 		var x = GetX( reciever.transform.position );
 		var y = GetY( reciever.transform.position );
-		
+
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return;
+		}
+
 		_slotGraph[ x, y ].Recievers.Add( reciever );
 	}
 	public void RemoveProjector( Gun.Projector projector ) {
 		
 		var x = GetX( projector.transform.position );
 		var y = GetY( projector.transform.position );
+
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return;
+		}
 		
 		if ( _slotGraph[ x, y ].Projectors.Contains( projector ) ) {
 			_slotGraph[ x, y ].Projectors.Remove( projector ); 
@@ -126,8 +106,26 @@ public class GunCraftingPanel : InventoryUI {
 		var x = GetX( reciever.transform.position );
 		var y = GetY( reciever.transform.position );
 
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return;
+		}
+
 		if ( _slotGraph[ x, y ].Recievers.Contains( reciever ) ) {
 			_slotGraph[ x, y ].Recievers.Remove( reciever ); 
+		}
+	}
+	private void ClearGraph () {
+
+		_componentsOnGraph.Clear();
+		_slotGraph = new Slot[ NUM_OF_SLOTS, NUM_OF_SLOTS];
+		for (int y = 0; y < _slotGraph.GetLength( 0 ); y++ ) {
+			for (int x = 0; x < _slotGraph.GetLength( 1 ); x++ ) {
+				_slotGraph[ x, y ] = new Slot(); 
+			}
+		}
+
+		foreach( Gun.Projector p in _baseProjectors ) {
+			AddProjector( p );
 		}
 	}
 	
@@ -149,6 +147,10 @@ public class GunCraftingPanel : InventoryUI {
 	}
 	public bool GetAvailable ( int x, int y ) {
 		
+		if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
+			return false;
+		}
+
 		var slot = _slotGraph[ x, y ];
 
 		if ( slot.Component == null && 
@@ -163,6 +165,7 @@ public class GunCraftingPanel : InventoryUI {
 
 	// *****************************
 	
+	[SerializeField] private GunParts _gunPartsSubpanel;
 	[SerializeField] private InventoryItem _startItem;
 	[SerializeField] private RectTransform _content;
 	[SerializeField] private List<Gun.Projector> _baseProjectors;
@@ -185,14 +188,16 @@ public class GunCraftingPanel : InventoryUI {
 		_gunComponents = new List<Gun.Component>();
 		_componentsOnGraph = new List<Gun.Component>();
 
+		_gunPartsSubpanel.OnDragBegin += part => {
+			Game.Area.LoadedPlayer.GunParts.Remove( part );
+			AddPartToGraph( part, true );
+			_gunPartsSubpanel.Reload();
+		};
+
 		// Add a starting item
 		_gunCraftingInventory = new Inventory( 1 );
 		_gunCraftingInventory.SetInventoryItem( 0, Instantiate( _startItem ) );
 		_itemBubble.Index = 0;
-
-		foreach ( Gun.Component c in GetComponentsInChildren<Gun.Component>() ){
-			_componentsOnGraph.Add( c );
-		}
 
 		//**************
 
@@ -204,21 +209,23 @@ public class GunCraftingPanel : InventoryUI {
 		};
 		
 		// set items in graph
-		_slotGraph = new Slot[ NUM_OF_SLOTS, NUM_OF_SLOTS];
-		for (int y = 0; y < _slotGraph.GetLength( 0 ); y++ ) {
-			for (int x = 0; x < _slotGraph.GetLength( 1 ); x++ ) {
-				_slotGraph[ x, y ] = new Slot(); 
-			}
-		}
+		ClearGraph();
 
-		
+		// add base projectors
 		foreach( Gun.Projector p in _baseProjectors ) {
 			AddProjector( p );
 		}
 
+		// save button
 		_saveButton.onClick.AddListener( () => {
 			_gunCraftingInventory.GetInventoryItem( _itemBubble.Index )._shootData.CraftedGun = GetGun(); 
 		});
+	}
+	private void Start () {
+		
+		foreach ( Gun.Component c in GetComponentsInChildren<Gun.Component>() ){
+			_componentsOnGraph.Add( c );
+		}
 	}
 
 	// *****************************
@@ -234,9 +241,90 @@ public class GunCraftingPanel : InventoryUI {
 		foreach ( Gun.Component c in _gunComponents ) {
 			c.Reset();
 		}
+
 		_gunComponents.Clear();
 	}
-	private void CalculateGun () {
+
+	// *****************************
+
+	private CraftedGun GetGun () {
+		
+		List<CraftedGun.Component> components = new List<CraftedGun.Component>();
+		foreach( Gun.Component c in _gunComponents ){
+			components.Add( new CraftedGun.Component( c ) );
+		}
+
+		return new CraftedGun( components );
+	}
+	private void AddGun ( CraftedGun craftedGun ) {
+
+		// Add all the parts in the gun model to the graph
+		foreach( CraftedGun.Component c in craftedGun.GunComponents ) {
+			AddPartToGraph( c );
+		}	
+
+		// recalculate the path of the gun
+		SetNeedsRecalulatePath();
+	}
+	private void RemoveGun () {
+
+		// remove all part controllers from the graph
+		for ( int i = _componentsOnGraph.Count-1; i >= 0; i-- ) {
+			RemovePartFromGraph( _componentsOnGraph[ i ] );
+		}
+
+		// clear the graph
+		ClearGraph();
+
+		// clear all lists
+		_gunComponents.Clear();
+
+		// reload subpanel
+		_gunPartsSubpanel.Reload();
+
+		// recalculate the path of the gun 
+		SetNeedsRecalulatePath();
+	}
+
+	// *****************************
+	
+	public void AddPartToGraph ( CraftedGun.Component part, bool moving = false ) {
+		
+		// create an instance based on the model name
+		var prefab = Resources.Load( part.PrefabName ) as GameObject;
+		var instance = Instantiate( prefab );
+			
+		// set transform of new part controller
+		instance.transform.SetParent( _content, false );
+		instance.transform.rotation = Quaternion.Euler( part.Rotation );
+		instance.transform.position = part.Position;
+
+		// add new part to the object graph
+		var component = instance.GetComponent<Gun.Component>();
+		_componentsOnGraph.Add( component );
+
+		// if moving start
+		if ( moving ){
+			component.InitMoving();
+		} else {
+			component.InitAtLocation();
+		}
+	}
+	public void RemovePartFromGraph ( Gun.Component part ) {
+		
+		// remove from graph
+		_componentsOnGraph.Remove( part );
+
+		// if part is on the graph but not part of the gun add it back to the parts list
+		if ( !_gunComponents.Contains( part ) ){
+			Game.Area.LoadedPlayer.GunParts.Add( new CraftedGun.Component( part ) );
+		}
+
+		// destroy the part controller
+		Destroy( part.gameObject );
+
+		// reload subpanel
+		_gunPartsSubpanel.Reload();
 	}
 
 	// *****************************
