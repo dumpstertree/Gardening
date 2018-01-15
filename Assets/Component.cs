@@ -15,7 +15,7 @@ namespace Gun {
 			_panel = GetComponentInParent<GunCraftingPanel>();
 			_recievers = GetComponentsInChildren<Reciever>();
 			_projectors = GetComponentsInChildren<Projector>();
-			_colliders = GetComponentsInChildren<Collider>();
+			_colliders = GetComponentsInChildren<Gun.Collider>();
 
 			// set position
 			_targetPos = transform.localPosition;
@@ -33,7 +33,7 @@ namespace Gun {
 			_panel = GetComponentInParent<GunCraftingPanel>();
 			_recievers = GetComponentsInChildren<Reciever>();
 			_projectors = GetComponentsInChildren<Projector>();
-			_colliders = GetComponentsInChildren<Collider>();
+			_colliders = GetComponentsInChildren<Gun.Collider>();
 
 			// set position
 			transform.position = Input.mousePosition;
@@ -87,7 +87,7 @@ namespace Gun {
 		private GunCraftingPanel _panel;
 		private Reciever[]_recievers;
 		private Projector[] _projectors;
-		private Collider[] _colliders;
+		private Gun.Collider[] _colliders;
 
 		private bool _active;
 		private bool _set;
@@ -136,10 +136,8 @@ namespace Gun {
 		}
 		private bool MouseIsOver {
 			get {
-				
-				var panel = GetComponentInParent<GunCraftingPanel>();
 
-				foreach ( Collider c in _colliders ) {
+				foreach ( Gun.Collider c in _colliders ) {
 					 if ( c.MouseIsOver ) { return true; }
 				}
 

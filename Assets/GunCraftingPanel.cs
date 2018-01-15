@@ -225,6 +225,7 @@ public class GunCraftingPanel : InventoryUI {
 		
 		foreach ( Gun.Component c in GetComponentsInChildren<Gun.Component>() ){
 			_componentsOnGraph.Add( c );
+			c.InitAtLocation();
 		}
 	}
 

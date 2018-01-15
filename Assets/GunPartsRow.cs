@@ -11,7 +11,6 @@ public class GunPartsRow : MonoBehaviour, IPointerDownHandler,  IPointerUpHandle
 	public void SetPart ( CraftedGun.Component part ) {
 		
 		_part = part;
-
 		_text.text = part.PrefabName;
 	}
 
@@ -63,9 +62,11 @@ public class GunPartsRow : MonoBehaviour, IPointerDownHandler,  IPointerUpHandle
     	UpdateState();
     }
     void IPointerEnterHandler.OnPointerEnter( PointerEventData eventData ) {
-    	_pointerOverObject = true;
+    	
+        _pointerOverObject = true;
     }
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData) {
+    
     	_pointerOverObject = false;
     }
 }
