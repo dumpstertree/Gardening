@@ -14,7 +14,7 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		set { _index = value; }
 	}
  	public void SetItem ( InventoryItem item ) {
-
+ 		_item = item;
 		if (item == null){
 			SetUnfilledSlot();
 		}
@@ -42,11 +42,13 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	public OnPointerEvent PointerUp;
 
 	public void OnPointerEnter(PointerEventData eventData) {
+		_pointerOver = true;
 		if (PointerEnter != null){
 			PointerEnter();
 		}
 	}
 	public void OnPointerExit(PointerEventData eventData) {
+		_pointerOver = false;
 		if (PointerExit != null){
 			PointerExit();
 		}
@@ -90,6 +92,16 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	private void SetUnfilledSlot () {
 
 		_filledObject.SetActive( false );
+	}
+
+	private InventoryItem _item;
+	private bool _pointerOver;
+	private void Update () {
+
+		if ( _pointerOver && Input.GetKeyDown( KeyCode.E ) ){
+			((GunCraftingPanel)Game.UIController.GunCraftingUIPanel).SetItemToEdit( _item );
+			Game.UIController.ChangeContext( UIController.UiContext.Identifier.GunCrafting );
+		}
 	}
 
 	// ************************************

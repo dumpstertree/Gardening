@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using System.Collections;
+
 
 public partial class InventoryItem : ScriptableObject {
 
@@ -127,13 +129,19 @@ public partial class InventoryItem : ScriptableObject {
 	}
 	private void Shoot ( Player shooter, ShootData shootData, Action onComplete ) {
 
-		var go = Instantiate( shootData.BulletPrefab );
-		go.transform.position = Game.Area.LoadedPlayer.transform.position;
-		go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
-		go.GetComponent<Bullet>().SetBullet( shooter, shootData._hitData );
+		var gunStats = shootData.CraftedGun.GunStats;
+		for ( int i = 0; i < gunStats.NumberOfBullets; i++ ){
+			
+			var go = Instantiate( shootData.BulletPrefab );
+			go.transform.position = Game.Area.LoadedPlayer.transform.position;
+			go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
+			go.GetComponent<Bullet>().SetBullet( shooter, shootData._hitData );
 
-		Debug.Log( shootData.CraftedGun.GunStats.FireRate );
-		Game.Async.WaitForSeconds( 1.0f/shootData.CraftedGun.GunStats.FireRate, onComplete );
+			go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( UnityEngine.Random.Range( -5f, 5f), go.transform.right );
+			go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( UnityEngine.Random.Range( -5f, 5f), go.transform.up );
+		}
+
+		Game.Async.WaitForSeconds( 1.0f/gunStats.FireRate, onComplete );
 	}
 	private void Use ( Player player, InventoryItemData data, Action action, Action onComplete ) {
 		

@@ -3,7 +3,12 @@ using System.Collections;
 
 namespace Gun {
 
-	public class Component : MonoBehaviour {
+	public class Component : MonoBehaviour, UI.GunCrafting.Subpanel.IPartGraphSubpanel {
+
+		private UI.GunCrafting.Subpanel.PartGraph _delegate;
+		void UI.GunCrafting.Subpanel.IPartGraphSubpanel.Inject (  UI.GunCrafting.Subpanel.PartGraph subpanel ){
+			_delegate = subpanel;
+		}
 
 		public string PrefabName { get { return _prefabName; } }
 
@@ -25,7 +30,7 @@ namespace Gun {
 
 			// set state
 			Reset();
-			if( CanSet ) Set();
+			if( CanSet ) HandleHasBeenSet();
 		}
 		public void InitMoving () {
 			
@@ -44,41 +49,45 @@ namespace Gun {
 			
 			//set state
 			Reset();
-			UnSet();
+			HandleHasBeenUnset();
 
 			// start moving
 			_movementCoroutine = StartCoroutine( Move() );
 		}
-
-		// **************************
-		
 		public void Recieve () {
 
 			if ( !_active ) {
 			
 				_active = true;
-				SetActiveVisual();
 
 				var panel = GetComponentInParent<GunCraftingPanel>();
 				foreach ( Projector p in _projectors ){
 					
-					var projectorX = panel.GetX( p.transform.position );
-					var projectorY = panel.GetY( p.transform.position );
-					panel.Project( projectorX, projectorY );
+					var projectorX = _delegate.GetX( p.transform.position );
+					var projectorY = _delegate.GetY( p.transform.position );
+					_delegate.Project( projectorX, projectorY );
 				}
+
+				SetStateVisual();
 			}
 		}
 		public void Reset () {
 
 			_active = false;
-			SetActiveVisual();
+			
+			SetStateVisual();
 		}
+
+		public delegate void HasBeenSetEvent( Gun.Component component, Gun.Collider[] colliders, Projector[] projectors, Reciever[] recievers );
+		public HasBeenSetEvent HasBeenSet;
+
+		public delegate void HasBeenUnsetEvent( Gun.Collider[] colliders, Projector[] projectors, Reciever[] recievers );
+		public HasBeenUnsetEvent HasBeenUnset;
 
 		// **************************
 				
 		[SerializeField] private string _prefabName;
-		[SerializeField] private GameObject _outline;
-		[SerializeField] private CanvasGroup _canvasGroup;
+		[SerializeField] private ObjectAnimator _animator;
 
 		private const float SNAPPING = 100;
 		private const float ROTATION_TIME = 0.1f;
@@ -100,33 +109,32 @@ namespace Gun {
 		// **************************
 
 		private bool CanSet {
+			
 			get {
-
-				var panel = GetComponentInParent<GunCraftingPanel>();
-
+			
 				foreach ( Collider c in _colliders ) {
 					
-					var x = panel.GetX( c.transform.position );
-					var y = panel.GetY( c.transform.position );
-					if ( !panel.GetAvailable( x, y ) ) {
+					var x = _delegate.GetX( c.transform.position );
+					var y = _delegate.GetY( c.transform.position );
+					if ( !_delegate.GetAvailable( x, y ) ) {
 						return false;
 					}
 				}
 
 				foreach ( Projector p in _projectors ) {
 
-					var x = panel.GetX( p.transform.position );
-					var y = panel.GetY( p.transform.position );
-					if ( !panel.GetAvailable( x, y ) ) {
+					var x = _delegate.GetX( p.transform.position );
+					var y = _delegate.GetY( p.transform.position );
+					if ( !_delegate.GetAvailable( x, y ) ) {
 						return false;
 					}
 				}
 
 				foreach ( Reciever r in _recievers ) {
 					
-					var x = panel.GetX( r.transform.position );
-					var y = panel.GetY( r.transform.position );
-					if ( !panel.GetAvailable( x, y ) ) {
+					var x = _delegate.GetX( r.transform.position );
+					var y = _delegate.GetY( r.transform.position );
+					if ( !_delegate.GetAvailable( x, y ) ) {
 						return false;
 					}
 				}
@@ -135,8 +143,8 @@ namespace Gun {
 			}
 		}
 		private bool MouseIsOver {
+			
 			get {
-
 				foreach ( Gun.Collider c in _colliders ) {
 					 if ( c.MouseIsOver ) { return true; }
 				}
@@ -178,7 +186,7 @@ namespace Gun {
 					
 				_dragging = true;
 				
-				UnSet();
+				HandleHasBeenUnset();
 				_movementCoroutine = StartCoroutine( Move() );
 			}
 		}
@@ -193,9 +201,9 @@ namespace Gun {
 				}
 				
 				if ( CanSet ) {
-					Set(); 
+					HandleHasBeenSet();
 				} else {
-					_panel.RemovePartFromGraph( this ); 
+					_delegate.RemovePartFromGraph( this );
 				}
 			}
 		}
@@ -214,62 +222,24 @@ namespace Gun {
 
 		// ************************** 
 
-		private void Set () {
+		private void HandleHasBeenSet () {
+			
+			_set = true;
+			SetStateVisual();
+			
+			if ( HasBeenSet != null ){
 
-			if( !_set ) {
-
-				_set = true;
-				SetStateVisual();
-
-				// remove colliders from graph
-				foreach ( Collider c in _colliders ) {
-					
-					var x = _panel.GetX( c.transform.position );
-					var y = _panel.GetY( c.transform.position );
-					_panel.SetComponent( x, y, this );
-				}
-
-				// remove projectors from graph
-				foreach ( Projector p in _projectors ) {
-					_panel.AddProjector( p );
-				}
-
-				// remove recievers from graph
-				foreach ( Reciever r in _recievers ) {
-					_panel.AddReciever( r );
-				}
-
-				// Recalculate the path
-				_panel.SetNeedsRecalulatePath();
+				HasBeenSet( this, _colliders, _projectors, _recievers );
 			}
 		}
-		private void UnSet () {
+		private void HandleHasBeenUnset () {
 
-			if ( _set ) {
+			_set = false;
+			SetStateVisual();
 
-				_set = false;
-				SetStateVisual();
-				
-				// remove colliders from graph
-				foreach ( Collider c in _colliders ) {
-					
-					var x = _panel.GetX( c.transform.position );
-					var y = _panel.GetY( c.transform.position );
-					_panel.SetComponent( x, y, null );
-				}
+			if ( HasBeenUnset != null ){
 
-				// remove projectors from graph
-				foreach ( Projector p in _projectors ) {
-					_panel.RemoveProjector( p );
-				}
-
-				// remove recievers from graph
-				foreach ( Reciever r in _recievers ) {
-					_panel.RemoveReciever( r );
-				}
-
-				// Recalculate the path
-				_panel.SetNeedsRecalulatePath();
+				HasBeenUnset( _colliders, _projectors, _recievers );
 			}
 		}
 
@@ -278,32 +248,22 @@ namespace Gun {
 		private void SetStateVisual () {
 
 			if ( _set ){
-				SetSetVisual();
+				_animator.Animate( "SET" );
 			} else {
 				if ( CanSet ) {
-					SetUnsetValidVisual();
+					_animator.Animate( "UNSET_VALID" );
 				} else {
-					SetUnsetInvalidVisual();
+					_animator.Animate( "UNSET_INVALID" );
 				}
 			}
-		}
-		private void SetSetVisual () {
 
-			_canvasGroup.alpha = 1.0f;
+			if ( _active ) {
+				_animator.Animate( "ACTIVE" );
+			}
+			else {
+				_animator.Animate( "INACTIVE" );
+			}
 		}
-		private void SetUnsetValidVisual () {
-
-			_canvasGroup.alpha = 0.8f;
-		}
-		private void SetUnsetInvalidVisual () {
-
-			_canvasGroup.alpha = 0.2f;
-		}
-		private void SetActiveVisual () {
-
-			_outline.SetActive( _active );
-		}
-
 
 		// **************************
 
@@ -311,7 +271,7 @@ namespace Gun {
 			
 			_lockInput = true;
 
-			UnSet();
+			HandleHasBeenUnset();
 
 			var targetRotation = transform.rotation * Quaternion.AngleAxis( 90, Vector3.forward );
 			for (float i = 0; i < ROTATION_TIME; i += Time.deltaTime ){
@@ -324,7 +284,7 @@ namespace Gun {
 			transform.rotation = targetRotation;
 
 			if ( CanSet ) {
-				Set();
+				HandleHasBeenSet();
 			}
 
 			_lockInput = false;
@@ -333,7 +293,7 @@ namespace Gun {
 
 			_lockInput = true;
 
-			UnSet();
+			HandleHasBeenUnset();
 
 			var targetRotation = transform.rotation * Quaternion.AngleAxis( -90, Vector3.forward );
 			for (float i = 0; i < ROTATION_TIME; i += Time.deltaTime ){
@@ -346,7 +306,7 @@ namespace Gun {
 			transform.rotation = targetRotation;
 
 			if ( CanSet ) {
-				Set();
+				HandleHasBeenSet();
 			}
 
 			_lockInput = false;

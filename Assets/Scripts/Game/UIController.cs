@@ -116,9 +116,7 @@ public class UIController : MonoBehaviour {
 		craftingContext.Dismiss();
 
 		var gunCraftingContext = new UiContext();
-		gunCraftingContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		gunCraftingContext.RegisterPanel( _gunCraftingUIPanelInstance );
-		gunCraftingContext.RegisterPanel( _quickSlotUIPanelInstance );
 		gunCraftingContext.Dismiss();
 
 		// register all created contexts

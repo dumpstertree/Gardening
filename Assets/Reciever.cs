@@ -15,13 +15,6 @@ namespace Gun {
 			}
 		}
 
-		public int X {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetX( transform.position ); }
-		}
-		public int Y {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetY( transform.position ); }
-		}
-
 		public Collider.Connection Connection;
 
 		private const float VISUAL_SIZE = 30;

@@ -6,14 +6,7 @@ namespace Gun {
 
 		public delegate void OnProjectEvent();
 		public OnProjectEvent OnProject;
-
-		public int X {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetX( transform.position ); }
-		}
-		public int Y {
-			get{ return GetComponentInParent<GunCraftingPanel>().GetY( transform.position ); }
-		}
-
+		
 		// *****************************
 
 		public Collider.Connection Connection;
