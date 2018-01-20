@@ -33,5 +33,5 @@ public abstract class InventoryItemData {
 
  	public HitData _hitData;
 	public GameObject BulletPrefab;
-	public CraftedGun CraftedGun;
+	public Model.Gun CraftedGun;
 }

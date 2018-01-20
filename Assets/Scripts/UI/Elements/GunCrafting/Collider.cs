@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Gun {
+namespace UI.Elements.GunCrafting {
 
 	public class Collider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 

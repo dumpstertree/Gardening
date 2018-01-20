@@ -99,7 +99,7 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	private void Update () {
 
 		if ( _pointerOver && Input.GetKeyDown( KeyCode.E ) ){
-			((GunCraftingPanel)Game.UIController.GunCraftingUIPanel).SetItemToEdit( _item );
+			((UI.Panels.GunCrafting)Game.UIController.GunCraftingUIPanel).SetItemToEdit( _item );
 			Game.UIController.ChangeContext( UIController.UiContext.Identifier.GunCrafting );
 		}
 	}

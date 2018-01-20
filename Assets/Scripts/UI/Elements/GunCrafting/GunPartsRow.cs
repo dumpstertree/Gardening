@@ -4,11 +4,11 @@ using UnityEngine.EventSystems;
 
 public class GunPartsRow : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler {
 
-	public delegate void DragEvent( CraftedGun.Component part );
+	public delegate void DragEvent( Model.Gun.Part part );
 	public DragEvent OnDragBegin;
 	public DragEvent OnDragEnd;
 
-	public void SetPart ( CraftedGun.Component part ) {
+	public void SetPart ( Model.Gun.Part part ) {
 		
 		_part = part;
 		_text.text = part.PrefabName;
@@ -19,18 +19,15 @@ public class GunPartsRow : MonoBehaviour, IPointerDownHandler,  IPointerUpHandle
 	[SerializeField] private Text _text;
 	[SerializeField] private Image _image;
 
-	private CraftedGun.Component _part;
+	private Model.Gun.Part _part;
 	private bool _pointerDown;
 	private bool _pointerOverObject;
-	private bool _draging;
 	
 	private void UpdateState () {
     	
     	if ( _pointerDown && _pointerOverObject ) {
-    		_draging = true;
     		HandleOnDragBegin();
     	} else {
-    		_draging = false;
     		HandleOnDragEnd();
     	}
     }

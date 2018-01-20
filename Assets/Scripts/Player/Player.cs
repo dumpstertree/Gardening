@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -13,7 +12,7 @@ public class Player : MonoBehaviour {
 
 	public QuickSlotInventory QuickslotInventory{ get{ return _quickslotInventory; } }
 	public Inventory Inventory { get{ return _inventory; }  }
-	public List<CraftedGun.Component> GunParts { get { return _gunParts; }}
+	public Model.PartInventory GunParts { get { return _gunParts; }}
 	public QuickSlot QuickSlot { get{ return _quickslot; }  }
 	public Interactor Interactor { get{return _interactor; } }
 	public Animator Animator { get{ return _animator;} }
@@ -44,7 +43,7 @@ public class Player : MonoBehaviour {
 	// ***************** PRIVATE *******************
 
 	private Inventory _inventory = new Inventory( 15 );
-	private List<CraftedGun.Component> _gunParts = new List<CraftedGun.Component>();
+	private Model.PartInventory _gunParts = new Model.PartInventory( 99 );
 	private QuickSlotInventory _quickslotInventory = new QuickSlotInventory( 5 );
 
 	[SerializeField] private Animator _animator;

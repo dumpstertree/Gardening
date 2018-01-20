@@ -52,8 +52,10 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 
 	//******************************
 	
+	#pragma warning disable 0414
 	[SerializeField] private bool _presented;
 	[SerializeField] private bool _hasBeenInited;
+	#pragma warning restore 0414
 
 	private bool _pointerDown;
 	

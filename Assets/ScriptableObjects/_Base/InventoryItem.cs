@@ -129,7 +129,7 @@ public partial class InventoryItem : ScriptableObject {
 	}
 	private void Shoot ( Player shooter, ShootData shootData, Action onComplete ) {
 
-		var gunStats = shootData.CraftedGun.GunStats;
+		var gunStats = shootData.CraftedGun.WeaponStats;
 		for ( int i = 0; i < gunStats.NumberOfBullets; i++ ){
 			
 			var go = Instantiate( shootData.BulletPrefab );

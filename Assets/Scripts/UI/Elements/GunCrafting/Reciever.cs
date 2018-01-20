@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 
-namespace Gun {
+namespace UI.Elements.GunCrafting {
+	
+	public class Reciever : MonoBehaviour {
 
-	public class Projector : MonoBehaviour {
+		public delegate void OnRecieveEvent();
+		public OnRecieveEvent OnRecieve;
 
-		public delegate void OnProjectEvent();
-		public OnProjectEvent OnProject;
-		
-		// *****************************
+		public void Recieve () {
+			
+			if ( OnRecieve != null ) {
+			//	print( transform.parent.parent.name );
+				OnRecieve();
+			}
+		}
 
 		public Collider.Connection Connection;
-		
-		private const float VISUAL_SIZE = 30;
 
-		// *****************************
+		private const float VISUAL_SIZE = 30;
 
 		private void OnDrawGizmos () {
 
-			// draw gizmos
-			Gizmos.color = Color.blue;
+			Gizmos.color = Color.red;
 			Gizmos.DrawLine( transform.position, transform.position + (transform.up * 100) );
-
+			
 			switch( Connection ) {
 
 				case Collider.Connection.Circle: Gizmos.DrawWireSphere( transform.position, VISUAL_SIZE/2 ); break;

@@ -1,26 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Gun {
+namespace UI.Elements.GunCrafting {
 
-	public class Component : MonoBehaviour, UI.GunCrafting.Subpanel.IPartGraphSubpanel {
+	public class Part : MonoBehaviour, Subpanels.GunCrafting.IPartGraphSubpanel {
 
-		private UI.GunCrafting.Subpanel.PartGraph _delegate;
-		void UI.GunCrafting.Subpanel.IPartGraphSubpanel.Inject (  UI.GunCrafting.Subpanel.PartGraph subpanel ){
+		private UI.Subpanels.GunCrafting.PartGraph _delegate;
+		void UI.Subpanels.GunCrafting.IPartGraphSubpanel.Inject (  UI.Subpanels.GunCrafting.PartGraph  subpanel ){
 			_delegate = subpanel;
 		}
+     	
+     	// This is bad ^^^^^^^^
+		// **************************
 
+
+		[SerializeField] private string _prefabName;
 		public string PrefabName { get { return _prefabName; } }
+
+		[SerializeField] private Sprite _sprite;
+		public Sprite Sprite { get { return _sprite; } }
 
 		// **************************
 		
 		public void InitAtLocation () {
 
 			// find components
-			_panel = GetComponentInParent<GunCraftingPanel>();
-			_recievers = GetComponentsInChildren<Reciever>();
-			_projectors = GetComponentsInChildren<Projector>();
-			_colliders = GetComponentsInChildren<Gun.Collider>();
+			_panel = GetComponentInParent<UI.Panels.GunCrafting>();
+			_recievers = GetComponentsInChildren<UI.Elements.GunCrafting.Reciever>();
+			_projectors = GetComponentsInChildren<UI.Elements.GunCrafting.Projector>();
+			_colliders = GetComponentsInChildren<UI.Elements.GunCrafting.Collider>();
+			_animator = GetComponent<ObjectAnimator>();
 
 			// set position
 			_targetPos = transform.localPosition;
@@ -35,10 +44,11 @@ namespace Gun {
 		public void InitMoving () {
 			
 			// find components
-			_panel = GetComponentInParent<GunCraftingPanel>();
-			_recievers = GetComponentsInChildren<Reciever>();
-			_projectors = GetComponentsInChildren<Projector>();
-			_colliders = GetComponentsInChildren<Gun.Collider>();
+			_panel = GetComponentInParent<UI.Panels.GunCrafting>();
+			_recievers = GetComponentsInChildren<UI.Elements.GunCrafting.Reciever>();
+			_projectors = GetComponentsInChildren<UI.Elements.GunCrafting.Projector>();
+			_colliders = GetComponentsInChildren<UI.Elements.GunCrafting.Collider>();
+			_animator = GetComponent<ObjectAnimator>();
 
 			// set position
 			transform.position = Input.mousePosition;
@@ -60,8 +70,7 @@ namespace Gun {
 			
 				_active = true;
 
-				var panel = GetComponentInParent<GunCraftingPanel>();
-				foreach ( Projector p in _projectors ){
+				foreach ( UI.Elements.GunCrafting.Projector p in _projectors ){
 					
 					var projectorX = _delegate.GetX( p.transform.position );
 					var projectorY = _delegate.GetY( p.transform.position );
@@ -78,25 +87,23 @@ namespace Gun {
 			SetStateVisual();
 		}
 
-		public delegate void HasBeenSetEvent( Gun.Component component, Gun.Collider[] colliders, Projector[] projectors, Reciever[] recievers );
+		public delegate void HasBeenSetEvent( Part component, UI.Elements.GunCrafting.Collider[] colliders, UI.Elements.GunCrafting.Projector[] projectors, UI.Elements.GunCrafting.Reciever[] recievers );
 		public HasBeenSetEvent HasBeenSet;
 
-		public delegate void HasBeenUnsetEvent( Gun.Collider[] colliders, Projector[] projectors, Reciever[] recievers );
+		public delegate void HasBeenUnsetEvent( UI.Elements.GunCrafting.Collider[] colliders, UI.Elements.GunCrafting.Projector[] projectors, UI.Elements.GunCrafting.Reciever[] recievers );
 		public HasBeenUnsetEvent HasBeenUnset;
 
 		// **************************
 				
-		[SerializeField] private string _prefabName;
-		[SerializeField] private ObjectAnimator _animator;
-
 		private const float SNAPPING = 100;
 		private const float ROTATION_TIME = 0.1f;
 		private const float MOVEMENT_LERP = 0.5f;
-		
-		private GunCraftingPanel _panel;
-		private Reciever[]_recievers;
-		private Projector[] _projectors;
-		private Gun.Collider[] _colliders;
+
+		private ObjectAnimator _animator;
+		private UI.Panels.GunCrafting _panel;
+		private UI.Elements.GunCrafting.Reciever[]_recievers;
+		private UI.Elements.GunCrafting.Projector[] _projectors;
+		private UI.Elements.GunCrafting.Collider[] _colliders;
 
 		private bool _active;
 		private bool _set;
@@ -112,7 +119,7 @@ namespace Gun {
 			
 			get {
 			
-				foreach ( Collider c in _colliders ) {
+				foreach ( UI.Elements.GunCrafting.Collider c in _colliders ) {
 					
 					var x = _delegate.GetX( c.transform.position );
 					var y = _delegate.GetY( c.transform.position );
@@ -121,7 +128,7 @@ namespace Gun {
 					}
 				}
 
-				foreach ( Projector p in _projectors ) {
+				foreach ( UI.Elements.GunCrafting.Projector p in _projectors ) {
 
 					var x = _delegate.GetX( p.transform.position );
 					var y = _delegate.GetY( p.transform.position );
@@ -130,7 +137,7 @@ namespace Gun {
 					}
 				}
 
-				foreach ( Reciever r in _recievers ) {
+				foreach ( UI.Elements.GunCrafting.Reciever r in _recievers ) {
 					
 					var x = _delegate.GetX( r.transform.position );
 					var y = _delegate.GetY( r.transform.position );
@@ -145,7 +152,7 @@ namespace Gun {
 		private bool MouseIsOver {
 			
 			get {
-				foreach ( Gun.Collider c in _colliders ) {
+				foreach ( UI.Elements.GunCrafting.Collider c in _colliders ) {
 					 if ( c.MouseIsOver ) { return true; }
 				}
 

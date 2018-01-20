@@ -9,7 +9,8 @@ namespace Interactable.Component {
 		// ********* PUBLIC **************
 		
 		public override void Interact ( Player player, InventoryItem item ) {
- 			player.GunParts.Add( _partToPickup );
+ 			
+ 			player.GunParts.AddPart( _partToPickup );
 			_destroyable.Destroy();
 		}
 
@@ -17,7 +18,7 @@ namespace Interactable.Component {
 
 		[SerializeField] private List<GameObject> _partPrefabs;
 		
-		private CraftedGun.Component _partToPickup;
+		private Model.Gun.Part _partToPickup;
 		private OptionalComponent.Destroyable _destroyable;
 
 		// ******************************
@@ -26,7 +27,6 @@ namespace Interactable.Component {
 			
 			// get components
 			_destroyable = GetComponent<OptionalComponent.Destroyable>();
-
 		}
 		private void Start () {
 			
@@ -34,7 +34,7 @@ namespace Interactable.Component {
 				
 				var rand = Random.Range( 0, _partPrefabs.Count );
 				var prefab = _partPrefabs[ rand ];
-				_partToPickup = new CraftedGun.Component( prefab.GetComponent<Gun.Component>() );
+				_partToPickup = new Model.Gun.Part( prefab.GetComponent<UI.Elements.GunCrafting.Part>() );
 			};
 		}
 	}
