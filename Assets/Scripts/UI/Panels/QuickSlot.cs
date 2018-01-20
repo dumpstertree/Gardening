@@ -56,8 +56,10 @@ namespace UI.Panels {
 
 		// ********************************
 
-		private void Update () {
+		protected override void Update () {
 			
+			base.Update();
+
 			switch( _id ) {
 				
 				case QuickSlotInventory.ID.Top:

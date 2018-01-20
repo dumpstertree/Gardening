@@ -17,6 +17,9 @@ public class UIController : MonoBehaviour {
 	public UiPanel CraftingUIPanel {
 		get{ return _craftingUIPanelInstance; }
 	}
+	public UiPanel GunCraftingUIPanel {
+		get{ return _gunCraftingUIPanelInstance; }
+	}
 
 	public void Init () {
 
@@ -56,12 +59,17 @@ public class UIController : MonoBehaviour {
 	private UiPanel _craftingUIPanelPrefab{
 		get{ return (Resources.Load( "CraftingUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
+	private UiPanel _gunCraftingUIPanelPrefab{
+		get{ return (Resources.Load( "GunCraftingUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
+	}
+
 
 	private GameObject _canvasInstance; 
 	private UiPanel _quickSlotUIPanelInstance;
 	private UiPanel _inventorySlotUIPanelInstance;
 	private UiPanel _recipesUIPanelInstance;
 	private UiPanel _craftingUIPanelInstance;
+	private UiPanel _gunCraftingUIPanelInstance;
 
 	private Dictionary<UiContext.Identifier,UiContext> _contexts;
 	private UiContext _loadedContext;
@@ -79,6 +87,7 @@ public class UIController : MonoBehaviour {
 		_inventorySlotUIPanelInstance = CreatePanel( _inventorySlotUIPanelPrefab );
 		_recipesUIPanelInstance 	  = CreatePanel( _recipesUIPanelPrefab );
 		_craftingUIPanelInstance 	  = CreatePanel( _craftingUIPanelPrefab );
+		_gunCraftingUIPanelInstance   = CreatePanel( _gunCraftingUIPanelPrefab );
 	}
 	private void CreateContexts () {
 
@@ -106,11 +115,16 @@ public class UIController : MonoBehaviour {
 		craftingContext.RegisterPanel( _recipesUIPanelInstance );
 		craftingContext.Dismiss();
 
+		var gunCraftingContext = new UiContext();
+		gunCraftingContext.RegisterPanel( _gunCraftingUIPanelInstance );
+		gunCraftingContext.Dismiss();
+
 		// register all created contexts
 		RegisterContext( UiContext.Identifier.Farm, farmContext );
 		RegisterContext( UiContext.Identifier.Dungeon, dungeonContext );
 		RegisterContext( UiContext.Identifier.Inventory, inventoryContext );
 		RegisterContext( UiContext.Identifier.Crafting, craftingContext );
+		RegisterContext( UiContext.Identifier.GunCrafting, gunCraftingContext );
 	}
 
 	// **********************************
@@ -122,6 +136,7 @@ public class UIController : MonoBehaviour {
 		_inventorySlotUIPanelInstance.Init();
 		_recipesUIPanelInstance.Init();
 		_craftingUIPanelInstance.Init();
+		_gunCraftingUIPanelInstance.Init();
 	}
 
 	// **********************************
@@ -172,7 +187,8 @@ public class UIController : MonoBehaviour {
 			Farm,
 			Dungeon,
 			Inventory,
-			Crafting
+			Crafting,
+			GunCrafting
 		}
 	}
 }
