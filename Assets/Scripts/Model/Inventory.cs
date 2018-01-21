@@ -158,7 +158,7 @@ public class Inventory {
 				
 				var item = inventory._inventoryItems[ i ];
 				if ( item != null ) {
-					InventoryItems[ i ] = item.Serialize();
+					InventoryItems[ i ] = InventoryItem.Serialize( item );
 				}
 			}
 		}
