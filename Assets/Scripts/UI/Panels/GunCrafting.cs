@@ -12,6 +12,7 @@ namespace UI.Panels {
 			
 			_itemBeingEdited = itemToEdit;
 
+			var loadedGun = _dataController.LoadGun( _itemBeingEdited.ID );
 			if ( itemToEdit != null && itemToEdit._shootData.CraftedGun != null ) {
 				
 				// clear old gun
@@ -21,9 +22,9 @@ namespace UI.Panels {
 				_gunPartsSubpanel.Reload();
 				
 				// foreach part in this new items gun add it to the graph
-				foreach( Model.Gun.Part c in itemToEdit._shootData.CraftedGun.WeaponParts ) {
-					_partGraphSubpanel.AddPartToGraph( c );
-				}	
+				foreach( Model.Gun.Part p in loadedGun.WeaponParts ) {
+					_partGraphSubpanel.AddPartToGraph( p );
+				}
 			}
 		}
 
@@ -37,10 +38,13 @@ namespace UI.Panels {
 		[SerializeField] private UI.Subpanels.GunCrafting.GunParts _gunPartsSubpanel;
 
 		private InventoryItem _itemBeingEdited;
+		private GunDataController _dataController;
 
 		// ************************************
 
 		private void Awake () {
+
+			_dataController = new GunDataController();
 
 			_exitButton.onClick.AddListener( () => {
 				Game.UIController.ChangeContext( UIController.UiContext.Identifier.Farm );
@@ -48,6 +52,7 @@ namespace UI.Panels {
 
 			_partGraphSubpanel.CraftedGunChanged += newGun => {
 				_itemBeingEdited._shootData.CraftedGun = newGun;
+				_dataController.SaveGun( _itemBeingEdited.ID, newGun );
 			};
 		}
 

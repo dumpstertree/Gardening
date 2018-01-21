@@ -25,7 +25,6 @@ namespace UI.Elements.GunCrafting {
 		public void InitAtLocation () {
 
 			// find components
-			_panel = GetComponentInParent<UI.Panels.GunCrafting>();
 			_recievers = GetComponentsInChildren<UI.Elements.GunCrafting.Reciever>();
 			_projectors = GetComponentsInChildren<UI.Elements.GunCrafting.Projector>();
 			_colliders = GetComponentsInChildren<UI.Elements.GunCrafting.Collider>();
@@ -44,7 +43,6 @@ namespace UI.Elements.GunCrafting {
 		public void InitMoving () {
 			
 			// find components
-			_panel = GetComponentInParent<UI.Panels.GunCrafting>();
 			_recievers = GetComponentsInChildren<UI.Elements.GunCrafting.Reciever>();
 			_projectors = GetComponentsInChildren<UI.Elements.GunCrafting.Projector>();
 			_colliders = GetComponentsInChildren<UI.Elements.GunCrafting.Collider>();
@@ -100,7 +98,6 @@ namespace UI.Elements.GunCrafting {
 		private const float MOVEMENT_LERP = 0.5f;
 
 		private ObjectAnimator _animator;
-		private UI.Panels.GunCrafting _panel;
 		private UI.Elements.GunCrafting.Reciever[]_recievers;
 		private UI.Elements.GunCrafting.Projector[] _projectors;
 		private UI.Elements.GunCrafting.Collider[] _colliders;

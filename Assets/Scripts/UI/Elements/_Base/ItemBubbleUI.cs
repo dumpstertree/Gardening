@@ -41,24 +41,22 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	public OnPointerEvent PointerDown;
 	public OnPointerEvent PointerUp;
 
-	public void OnPointerEnter(PointerEventData eventData) {
-		_pointerOver = true;
+	void IPointerEnterHandler.OnPointerEnter( PointerEventData eventData ) {
 		if (PointerEnter != null){
 			PointerEnter();
 		}
 	}
-	public void OnPointerExit(PointerEventData eventData) {
-		_pointerOver = false;
+	void IPointerExitHandler.OnPointerExit( PointerEventData eventData ) {
 		if (PointerExit != null){
 			PointerExit();
 		}
 	}
-	public void OnPointerDown(PointerEventData eventData) {
+	void IPointerDownHandler.OnPointerDown( PointerEventData eventData ) {
 		if (PointerDown != null){
 			PointerDown();
 		}
 	}
-	public void OnPointerUp(PointerEventData eventData) {
+	void IPointerUpHandler.OnPointerUp( PointerEventData eventData ) {
 		if (PointerUp != null){
 			PointerUp();
 		}
@@ -71,16 +69,29 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	[SerializeField] private Image _sprite;
 	[SerializeField] private Text _countText;
 	[SerializeField] private bool _indestuctable;
+	[SerializeField] private Button _editButton;
 
 	private const string DEFAULT_STATE_TRIGGER = "Default";
 	private const string HOVER_STATE_TRIGGER = "Hover";
 
 	private Animator _animator;
 	private int _index = -1;
+	private InventoryItem _item;
 
 	private void Awake () {
 	
 		_animator = GetComponent<Animator>();
+
+		if (_editButton != null) {
+
+			 _editButton.onClick.AddListener( ()=> {
+
+				if ( _item != null ) {
+					((UI.Panels.GunCrafting)Game.UIController.GunCraftingUIPanel).SetItemToEdit( _item );
+					Game.UIController.ChangeContext( UIController.UiContext.Identifier.GunCrafting );
+				}
+			});
+		}
 	}
 	private void SetFilledSlot ( InventoryItem item) {
 
@@ -92,16 +103,6 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	private void SetUnfilledSlot () {
 
 		_filledObject.SetActive( false );
-	}
-
-	private InventoryItem _item;
-	private bool _pointerOver;
-	private void Update () {
-
-		if ( _pointerOver && Input.GetKeyDown( KeyCode.E ) ){
-			((UI.Panels.GunCrafting)Game.UIController.GunCraftingUIPanel).SetItemToEdit( _item );
-			Game.UIController.ChangeContext( UIController.UiContext.Identifier.GunCrafting );
-		}
 	}
 
 	// ************************************

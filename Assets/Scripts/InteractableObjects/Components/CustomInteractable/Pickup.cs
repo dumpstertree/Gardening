@@ -31,8 +31,12 @@ namespace Interactable.Component {
 
 		// ******************************
 
-		private void Awake () {
-			if( _item != null) { _item = ScriptableObject.Instantiate( _item ); };
+		private void Start () {
+
+			if( _item != null) {
+			  _item = Game.ItemManager.RequestItem( _item.name );
+			};
+			
 			_destroyable = GetComponent<OptionalComponent.Destroyable>();
 		}
 	}
