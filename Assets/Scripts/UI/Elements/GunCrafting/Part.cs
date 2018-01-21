@@ -13,6 +13,7 @@ namespace UI.Elements.GunCrafting {
      	// This is bad ^^^^^^^^
 		// **************************
 
+		public Model.Gun.Stats Stats;
 
 		[SerializeField] private string _prefabName;
 		public string PrefabName { get { return _prefabName; } }

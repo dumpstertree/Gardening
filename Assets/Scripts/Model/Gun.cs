@@ -32,8 +32,9 @@ namespace Model {
 				PrefabName = gunComponent.PrefabName;
 				Position = gunComponent.transform.position;
 				Rotation = gunComponent.transform.rotation.eulerAngles;
-				Stats =  new Stats();
+				Stats = gunComponent.Stats;
 			}
+			public Part () {}
 		}
 
 		[System.Serializable]

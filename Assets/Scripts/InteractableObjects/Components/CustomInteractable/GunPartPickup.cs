@@ -16,7 +16,7 @@ namespace Interactable.Component {
 
 		// ********* PRIVATE **************
 
-		[SerializeField] private List<GameObject> _partPrefabs;
+		[SerializeField] private List<GunPartTemplate> _partPrefabs;
 		
 		private Model.Gun.Part _partToPickup;
 		private OptionalComponent.Destroyable _destroyable;
@@ -33,8 +33,9 @@ namespace Interactable.Component {
 			if ( _partToPickup == null) {
 				
 				var rand = Random.Range( 0, _partPrefabs.Count );
-				var prefab = _partPrefabs[ rand ];
-				_partToPickup = new Model.Gun.Part( prefab.GetComponent<UI.Elements.GunCrafting.Part>() );
+				var prefab = Instantiate( _partPrefabs[ rand ] );
+
+				_partToPickup = prefab.GetPart();
 			};
 		}
 	}

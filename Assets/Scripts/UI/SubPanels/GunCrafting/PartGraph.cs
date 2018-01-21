@@ -50,6 +50,7 @@ namespace UI.Subpanels.GunCrafting {
 			((IPartGraphSubpanel)component).Inject( this );
 
 			// set actions
+			component.Stats = part.Stats;
 			component.HasBeenSet += SetPart;
 			component.HasBeenUnset += UnsetPart;
 
