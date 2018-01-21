@@ -24,6 +24,9 @@ public class Game : MonoBehaviour {
 	public static Area Area{
 		get{ return Game.Instance._area; }
 	}
+	public static ItemManager ItemManager {
+		get{ return Game.Instance._itemManager; }
+	}
 
 	// ************ PRIVATE ****************
 
@@ -33,6 +36,7 @@ public class Game : MonoBehaviour {
 	private AreaController _areaController;
 	private UIController _uiController;
 	private Area _area;
+	private ItemManager _itemManager;
 
 	// ******************************
 	
@@ -86,9 +90,15 @@ public class Game : MonoBehaviour {
 
 		// UIController
 		_uiController = gameObject.AddComponent<UIController>();
+
+		// ItemManager
+		_itemManager = gameObject.AddComponent<ItemManager>();
 	}
 	private void InitGame () {
 
+		// ItemManager
+		_itemManager.Init();
+		
 		// Area
 		_area.Init();
 
@@ -101,6 +111,7 @@ public class Game : MonoBehaviour {
 
 		// UIController
 		_uiController.Init();
+
 	}
 	private void PlayGame () {
 		

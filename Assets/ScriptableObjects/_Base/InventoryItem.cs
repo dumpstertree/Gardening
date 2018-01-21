@@ -18,19 +18,16 @@ public partial class InventoryItem : ScriptableObject {
 		set{ _id = value; }
 	}
 
-	[SerializeField] private string _path;
-	public string Path { 
-		get{ return _path; } 
-	}
-
-	[SerializeField] private string _name;
-	public string Name{ 
-		get{ return _name; } 
-	}
-
 	[SerializeField] private int _count;
 	public int Count{ 
 		get{ return _count; } 
+	}
+
+	// ********************************************
+
+	[SerializeField] private string _displayName;
+	public string DisplayName{ 
+		get{ return _displayName; } 
 	}
 
 	[SerializeField] private int _maxCount;
@@ -119,12 +116,10 @@ public partial class InventoryItem : ScriptableObject {
 		return new InventoryItem.Serialized( inventoryItem );
 	}
 	public static InventoryItem Deserialize ( Serialized serializedData ) {
-		
-		var obj = Resources.Load( serializedData.ItemPath ) as InventoryItem;
-		var inst = Instantiate( obj );
+				
+		var inst = Game.ItemManager.RequestItem( serializedData.ItemName, serializedData.ID );
 
 		inst._count = serializedData.Count;
-		inst._id = serializedData.ID;
 
 		return inst;
 	}
@@ -134,13 +129,13 @@ public partial class InventoryItem : ScriptableObject {
 
 		[SerializeField] public string ID;
 		[SerializeField] public int Count;
-		[SerializeField] public string ItemPath;
+		[SerializeField] public string ItemName;
 
 		public Serialized ( InventoryItem item ) {
 
 			ID = item.ID;
 			Count = item.Count;
-			ItemPath = item.Path;
+			ItemName = item.name;
 		}
 	}
 }
