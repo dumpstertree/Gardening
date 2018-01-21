@@ -47,6 +47,7 @@ public class Player : MonoBehaviour {
 
 	// ***************** PRIVATE *******************
 
+	private PlayerDataController _dataController;
 	private Inventory _inventory;
 	private QuickSlotInventory _quickslotInventory;
 	private Model.PartInventory _gunParts = new Model.PartInventory( 99 );
@@ -59,19 +60,21 @@ public class Player : MonoBehaviour {
 	// *********************************************
 	public void Init () {
 
+		_dataController = new PlayerDataController();
+
 		CreateCameraTarget();
 		CameraFocus = Animator.transform;
 
 		// load data
-		_quickslotInventory = DataController.LoadQuickSlotInventory();
-		_inventory = DataController.LoadInventory();
+		_quickslotInventory = _dataController.LoadQuickSlotInventory();
+		_inventory = _dataController.LoadInventory();
 
 		// save when changes are made
 		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
-			DataController.SaveQuickSlotInventory( _quickslotInventory ); 
+			_dataController.SaveQuickSlotInventory( _quickslotInventory ); 
 		};
 		_inventory.OnInventoryItemChanged += (index, item) => {
-			DataController.SaveInventory( _inventory );
+			_dataController.SaveInventory( _inventory );
 		};
 	}
 	private void CreateCameraTarget(){

@@ -12,7 +12,7 @@ namespace UI.Panels {
 			
 			_itemBeingEdited = itemToEdit;
 
-			var loadedGun = DataController.LoadGun( _itemBeingEdited.ID );
+			var loadedGun = _dataController.LoadGun( _itemBeingEdited.ID );
 			if ( itemToEdit != null && itemToEdit._shootData.CraftedGun != null ) {
 				
 				// clear old gun
@@ -38,10 +38,13 @@ namespace UI.Panels {
 		[SerializeField] private UI.Subpanels.GunCrafting.GunParts _gunPartsSubpanel;
 
 		private InventoryItem _itemBeingEdited;
+		private GunDataController _dataController;
 
 		// ************************************
 
 		private void Awake () {
+
+			_dataController = new GunDataController();
 
 			_exitButton.onClick.AddListener( () => {
 				Game.UIController.ChangeContext( UIController.UiContext.Identifier.Farm );
@@ -49,7 +52,7 @@ namespace UI.Panels {
 
 			_partGraphSubpanel.CraftedGunChanged += newGun => {
 				_itemBeingEdited._shootData.CraftedGun = newGun;
-				DataController.SaveGun( _itemBeingEdited.ID, newGun );
+				_dataController.SaveGun( _itemBeingEdited.ID, newGun );
 			};
 		}
 
