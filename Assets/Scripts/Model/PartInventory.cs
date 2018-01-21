@@ -23,6 +23,7 @@ namespace Model {
 		public bool AddPart ( Gun.Part part ) {
 
 			if ( _parts.Count < _numOfItems ) {
+
 				_parts.Add( part );
 				HandleOnItemsChanged();
 				return true;
@@ -40,7 +41,7 @@ namespace Model {
 
 		// ************ PRIVATE ******************
 
-		private int _numOfItems;
+		[SerializeField] private int _numOfItems;
 		[SerializeField] private List<Gun.Part> _parts;
 
 		private void HandleOnItemsChanged () {

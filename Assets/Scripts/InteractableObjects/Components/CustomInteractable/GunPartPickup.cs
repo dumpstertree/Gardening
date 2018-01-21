@@ -10,7 +10,7 @@ namespace Interactable.Component {
 		
 		public override void Interact ( Player player, InventoryItem item ) {
  			
- 			player.GunParts.AddPart( _partToPickup );
+  			player.GunParts.AddPart( _partToPickup );
 			_destroyable.Destroy();
 		}
 

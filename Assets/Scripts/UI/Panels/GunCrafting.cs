@@ -66,6 +66,16 @@ namespace UI.Panels {
 				_partGraphSubpanel.AddPartToGraph( part, true );
 			};
 		}
+		protected override void OnDismiss () {
+
+			Game.Area.LoadedPlayer.GunParts.OnPartListChanged -= _gunPartsSubpanel.Reload;
+
+			_gunPartsSubpanel.OnDragBegin -= part => {
+
+				Game.Area.LoadedPlayer.GunParts.RemovePart( part );				
+				_partGraphSubpanel.AddPartToGraph( part, true );
+			};
+		}
 	}
 }
 

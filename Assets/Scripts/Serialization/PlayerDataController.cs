@@ -96,7 +96,7 @@ public class PlayerDataController : DataController {
 		var newPartInventory = new PartInventory( NUMBER_OF_PARTS_SLOTS );
 		SavePartInventory( newPartInventory );
 
-		Debug.LogWarningFormat( "No Quickslot data found. Making a new one" );
+		Debug.LogWarningFormat( "No PartInventory data found. Making a new one" );
 		
 		return newPartInventory;
 	}
