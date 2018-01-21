@@ -96,6 +96,7 @@ public class UIController : MonoBehaviour {
 		// create farm context
 		var farmContext = new UiContext();
 		farmContext.RegisterPanel( _quickSlotUIPanelInstance );
+		farmContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		farmContext.Dismiss();
 
 		// create dungeon context

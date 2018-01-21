@@ -9,12 +9,17 @@ public class Player : MonoBehaviour {
 	public Transform CameraFocus;
 	public Rigidbody Rigidbody;
 
-
 	public QuickSlotInventory QuickslotInventory{ get{ return _quickslotInventory; } }
 	public Inventory Inventory { get{ return _inventory; }  }
 	public Model.PartInventory GunParts { get { return _gunParts; }}
+
+	[SerializeField] private QuickSlot _quickslot;
 	public QuickSlot QuickSlot { get{ return _quickslot; }  }
+
+	[SerializeField] private Interactor _interactor;
 	public Interactor Interactor { get{return _interactor; } }
+	
+	[SerializeField] private Animator _animator;
 	public Animator Animator { get{ return _animator;} }
 	public PlayerRecipes PlayerRecipes;
 
@@ -42,19 +47,9 @@ public class Player : MonoBehaviour {
 
 	// ***************** PRIVATE *******************
 
-	private Inventory _inventory = new Inventory( 15 );
+	private Inventory _inventory;
+	private QuickSlotInventory _quickslotInventory;
 	private Model.PartInventory _gunParts = new Model.PartInventory( 99 );
-	private QuickSlotInventory _quickslotInventory = new QuickSlotInventory( 5 );
-
-	[SerializeField] private Animator _animator;
-	[SerializeField] private QuickSlot _quickslot;
-	[SerializeField] private Interactor _interactor;
-
-	[SerializeField] private InventoryItem _topSlot;
-	[SerializeField] private InventoryItem _rightSlot;
-	[SerializeField] private InventoryItem _bottomSlot;
-	[SerializeField] private InventoryItem _leftSlot;
-	[SerializeField] private InventoryItem _centerSlot;
 
 	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
 	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
@@ -67,12 +62,17 @@ public class Player : MonoBehaviour {
 		CreateCameraTarget();
 		CameraFocus = Animator.transform;
 
-		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Top),    ScriptableObject.Instantiate( _topSlot ) );
-		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Right),  ScriptableObject.Instantiate( _rightSlot ) );
-		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Bottom), ScriptableObject.Instantiate( _bottomSlot ) );
-		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Left),   ScriptableObject.Instantiate( _leftSlot ) );
-		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center), ScriptableObject.Instantiate( _centerSlot ) );
-		
+		// load data
+		_quickslotInventory = DataController.LoadQuickSlotInventory();
+		_inventory = DataController.LoadInventory();
+
+		// save when changes are made
+		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
+			DataController.SaveQuickSlotInventory( _quickslotInventory ); 
+		};
+		_inventory.OnInventoryItemChanged += (index, item) => {
+			DataController.SaveInventory( _inventory );
+		};
 	}
 	private void CreateCameraTarget(){
 		CameraTarget = new GameObject( "CameraTarget" ).transform;

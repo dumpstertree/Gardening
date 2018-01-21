@@ -29,7 +29,7 @@ public class HoldItem : MonoBehaviour {
 		}
 
 		// create new
-		if ( currentItem.HoldItem != null ) {
+		if ( currentItem != null && currentItem.HoldItem != null ) {
 			_holdItem = Instantiate( currentItem.HoldItem );
 		} else{
 			_holdItem = Instantiate( _defaultItem );

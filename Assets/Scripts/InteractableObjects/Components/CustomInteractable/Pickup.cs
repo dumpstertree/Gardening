@@ -33,6 +33,7 @@ namespace Interactable.Component {
 
 		private void Awake () {
 			if( _item != null) { _item = ScriptableObject.Instantiate( _item ); };
+			_item.ID = System.Guid.NewGuid().ToString();
 			_destroyable = GetComponent<OptionalComponent.Destroyable>();
 		}
 	}

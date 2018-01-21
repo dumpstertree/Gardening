@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public class Inventory {
 
 	// ***************** PUBLIC  *******************
@@ -102,8 +103,8 @@ public class Inventory {
 
 	// ***************** PRIVATE *******************
 
-	private int _inventoryCount;
-	protected InventoryItem[] _inventoryItems;
+	[SerializeField] private int _inventoryCount;
+	[SerializeField] protected InventoryItem[] _inventoryItems;
 
 	// *******************************************
 
@@ -123,11 +124,53 @@ public class Inventory {
 		}
 	}
 
+	// *******************************************
+
+	public Serialized Serialize () {
+		
+		return new Serialized( this );
+	}
+	public static Inventory Deserialize ( Serialized serializedData ) {
+
+		var inventory = new Inventory( serializedData.InventoryCount );
+
+		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
+				
+			var item = serializedData.InventoryItems[ i ];
+			if ( item.ID != "" ) {
+				inventory.SetInventoryItem( i, InventoryItem.Deserialize( item ) );
+			}
+		}
+
+		return inventory;
+	}
+	public class Serialized {
+
+		[SerializeField] public int InventoryCount;
+		[SerializeField] public InventoryItem.Serialized[] InventoryItems;
+
+		public Serialized ( Inventory inventory ) {
+
+			InventoryCount = inventory._inventoryCount;
+			InventoryItems = new InventoryItem.Serialized[ InventoryCount ];
+
+			for ( int i = 0; i < InventoryCount; i++ ) {
+				
+				var item = inventory._inventoryItems[ i ];
+				if ( item != null ) {
+					InventoryItems[ i ] = item.Serialize();
+				}
+			}
+		}
+	}
 }
 
 public class QuickSlotInventory : Inventory {
 
-	public QuickSlotInventory ( int inventoryCount ) : base( inventoryCount ){}
+	public QuickSlotInventory ( int inventoryCount ) : base( inventoryCount ) {
+
+		_inventoryItems[ ConvertQuickSlotIDToIndex( ID.Center ) ] = Resources.Load( "hand" ) as InventoryItem;
+	}
 
 	// *******************************************
 
@@ -183,5 +226,20 @@ public class QuickSlotInventory : Inventory {
 		Bottom,
 		Left,
 		Center
+	}
+
+	public static QuickSlotInventory Deserialize ( Serialized serializedData ) {
+
+		var inventory = new QuickSlotInventory( serializedData.InventoryCount );
+
+		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
+				
+			var item = serializedData.InventoryItems[ i ];
+			if ( item.ID != "" ) {
+				inventory.SetInventoryItem( i, InventoryItem.Deserialize( item ) );
+			}
+		}
+
+		return inventory;
 	}
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 using System;
-using System.Collections;
 
 
+[System.Serializable]
 public partial class InventoryItem : ScriptableObject {
 
 	// ***************** PUBLIC *******************
@@ -69,6 +69,8 @@ public partial class InventoryItem : ScriptableObject {
 
 	// ********************************************
 	
+	public string ID { get{ return _id; } set { _id = value; } }
+	public string Path { get{ return _path; } }
 	public string Name{ get{ return _name; } }
 	public int Count{ get{ return _count; } }
 	public int MaxCount{ get{ return _maxCount; } }
@@ -82,6 +84,9 @@ public partial class InventoryItem : ScriptableObject {
 	public GameObject HoldItem { get{ return _holdItem; } }
 
 	// ***************** PRIVATE *******************
+
+	[SerializeField] private string _path;
+	[SerializeField] private string _id;
 
 	[HeaderAttribute(" Object Properties ")]
 	[SerializeField] private string _name;
@@ -171,5 +176,39 @@ public partial class InventoryItem : ScriptableObject {
 		if ( _expendable ){
 			ReduceCount( 1 );
 		}
+	}
+
+	// *********************************************
+
+	public Serialized Serialize () {
+		return new Serialized( this );
+	}
+	public static InventoryItem Deserialize ( Serialized serializedData ) {
+		
+		var obj = Resources.Load( serializedData.ItemPath ) as InventoryItem;
+		var inst = Instantiate( obj );
+
+		inst._count = serializedData.Count;
+		inst._id = serializedData.ID;
+
+		return inst;
+	}
+
+	// *********************************************
+
+	[System.Serializable]
+	public class Serialized {
+
+		[SerializeField] public string ID;
+		[SerializeField] public int Count;
+		[SerializeField] public string ItemPath;
+
+		public Serialized ( InventoryItem item ) {
+
+			ID = item.ID;
+			Count = item.Count;
+			ItemPath = item.Path;
+		}
+
 	}
 }

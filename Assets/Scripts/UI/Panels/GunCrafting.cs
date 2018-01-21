@@ -12,6 +12,7 @@ namespace UI.Panels {
 			
 			_itemBeingEdited = itemToEdit;
 
+			var loadedGun = DataController.LoadGun( _itemBeingEdited.ID );
 			if ( itemToEdit != null && itemToEdit._shootData.CraftedGun != null ) {
 				
 				// clear old gun
@@ -21,9 +22,9 @@ namespace UI.Panels {
 				_gunPartsSubpanel.Reload();
 				
 				// foreach part in this new items gun add it to the graph
-				foreach( Model.Gun.Part c in itemToEdit._shootData.CraftedGun.WeaponParts ) {
-					_partGraphSubpanel.AddPartToGraph( c );
-				}	
+				foreach( Model.Gun.Part p in loadedGun.WeaponParts ) {
+					_partGraphSubpanel.AddPartToGraph( p );
+				}
 			}
 		}
 
@@ -48,6 +49,7 @@ namespace UI.Panels {
 
 			_partGraphSubpanel.CraftedGunChanged += newGun => {
 				_itemBeingEdited._shootData.CraftedGun = newGun;
+				DataController.SaveGun( _itemBeingEdited.ID, newGun );
 			};
 		}
 
