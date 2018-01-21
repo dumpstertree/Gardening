@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
 	private PlayerDataController _dataController;
 	private Inventory _inventory;
 	private QuickSlotInventory _quickslotInventory;
-	private Model.PartInventory _gunParts = new Model.PartInventory( 99 );
+	private Model.PartInventory _gunParts;
 
 	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
 	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour {
 		// load data
 		_quickslotInventory = _dataController.LoadQuickSlotInventory();
 		_inventory = _dataController.LoadInventory();
+		_gunParts = _dataController.LoadPartInventory();
 
 		// save when changes are made
 		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
@@ -75,6 +76,9 @@ public class Player : MonoBehaviour {
 		};
 		_inventory.OnInventoryItemChanged += (index, item) => {
 			_dataController.SaveInventory( _inventory );
+		};
+		_gunParts.OnPartListChanged += () => {
+			_dataController.SavePartInventory( _gunParts );
 		};
 	}
 	private void CreateCameraTarget(){

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Model {
 	
+	[System.Serializable]
 	public class PartInventory {
 
 		public PartInventory ( int numOfItems )	 {
@@ -39,7 +41,7 @@ namespace Model {
 		// ************ PRIVATE ******************
 
 		private int _numOfItems;
-		private List<Gun.Part> _parts;
+		[SerializeField] private List<Gun.Part> _parts;
 
 		private void HandleOnItemsChanged () {
 
