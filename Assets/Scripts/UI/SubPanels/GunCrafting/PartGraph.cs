@@ -149,7 +149,7 @@ namespace UI.Subpanels.GunCrafting {
 
 			_partGraph = new Model.PartGraph( 10 );
 			_gunComponents = new List<Elements.GunCrafting.Part>();
-			_partsOnGraph = new List<Elements.GunCrafting.Part>();
+			_partsOnGraph  = new List<Elements.GunCrafting.Part>();
 		}
  		private void AddBaseProjectors () {
  			

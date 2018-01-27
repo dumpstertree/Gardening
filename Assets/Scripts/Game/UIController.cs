@@ -20,6 +20,9 @@ public class UIController : MonoBehaviour {
 	public UiPanel GunCraftingUIPanel {
 		get{ return _gunCraftingUIPanelInstance; }
 	}
+	public UiPanel AmmoUIPanel {
+		get{ return _gunCraftingUIPanelInstance; }
+	}
 
 	public void Init () {
 
@@ -62,6 +65,10 @@ public class UIController : MonoBehaviour {
 	private UiPanel _gunCraftingUIPanelPrefab{
 		get{ return (Resources.Load( "GunCraftingUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
+	private UiPanel _ammoUIPanelPrefab{
+		get{ return (Resources.Load( "AmmoUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
+	}
+
 
 
 	private GameObject _canvasInstance; 
@@ -70,6 +77,8 @@ public class UIController : MonoBehaviour {
 	private UiPanel _recipesUIPanelInstance;
 	private UiPanel _craftingUIPanelInstance;
 	private UiPanel _gunCraftingUIPanelInstance;
+	private UiPanel _ammoUIPanelInstance;
+
 
 	private Dictionary<UiContext.Identifier,UiContext> _contexts;
 	private UiContext _loadedContext;
@@ -88,6 +97,7 @@ public class UIController : MonoBehaviour {
 		_recipesUIPanelInstance 	  = CreatePanel( _recipesUIPanelPrefab );
 		_craftingUIPanelInstance 	  = CreatePanel( _craftingUIPanelPrefab );
 		_gunCraftingUIPanelInstance   = CreatePanel( _gunCraftingUIPanelPrefab );
+		_ammoUIPanelInstance 		  = CreatePanel( _ammoUIPanelPrefab );
 	}
 	private void CreateContexts () {
 
@@ -97,11 +107,13 @@ public class UIController : MonoBehaviour {
 		var farmContext = new UiContext();
 		farmContext.RegisterPanel( _quickSlotUIPanelInstance );
 		farmContext.RegisterPanel( _inventorySlotUIPanelInstance );
+		farmContext.RegisterPanel( _ammoUIPanelInstance );
 		farmContext.Dismiss();
 
 		// create dungeon context
 		var dungeonContext = new UiContext();
 		dungeonContext.RegisterPanel( _quickSlotUIPanelInstance );
+		dungeonContext.RegisterPanel( _ammoUIPanelInstance );
 		dungeonContext.Dismiss();
 
 		// create inventory context
@@ -138,6 +150,7 @@ public class UIController : MonoBehaviour {
 		_recipesUIPanelInstance.Init();
 		_craftingUIPanelInstance.Init();
 		_gunCraftingUIPanelInstance.Init();
+		_ammoUIPanelInstance.Init();
 	}
 
 	// **********************************

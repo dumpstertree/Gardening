@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 partial class InventoryItem {
@@ -9,20 +9,29 @@ partial class InventoryItem {
 	[SerializeField] private bool _canShoot;
 	[SerializeField] public ShootData _shootData;
 
+	private GunRef _gunRef;
+
+	private void InitCanShoot () {
+	
+		if ( _canShoot ) {
+			
+			_gunRef = Game.GunControl.GetGun( _id );
+		}
+	}
+
 	private void Shoot ( Player shooter, ShootData shootData, Action onComplete ) {
 
-		var gunStats = shootData.CraftedGun.WeaponStats;
-		for ( int i = 0; i < gunStats.NumberOfBullets; i++ ){
-			
-			var go = Instantiate( shootData.BulletPrefab );
-			go.transform.position = Game.Area.LoadedPlayer.transform.position;
-			go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
-			go.GetComponent<Bullet>().SetBullet( shooter, shootData._hitData );
+		_gunRef.Fire( shooter, _shootData.BulletPrefab );
 
-			go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( UnityEngine.Random.Range( -5f, 5f), go.transform.right );
-			go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( UnityEngine.Random.Range( -5f, 5f), go.transform.up );
-		}
+ 		onComplete();
+	}
 
-		Game.Async.WaitForSeconds( 1.0f/gunStats.FireRate, onComplete );
+	[System.Serializable] 
+	public class ShootData : InventoryItemData {	
+
+		// *********************************
+
+	 	public HitData _hitData;
+		public GameObject BulletPrefab;
 	}
 }

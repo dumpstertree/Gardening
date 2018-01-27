@@ -6,6 +6,7 @@ namespace Model {
 	[System.Serializable]
 	public class Gun {
 
+		
 		[SerializeField] public List<Part> WeaponParts;
 		[SerializeField] public Stats WeaponStats;
 
@@ -51,7 +52,7 @@ namespace Model {
 				FireRate = 1;
 				ReloadTime = 1;
 				BulletSpeed = 1;
-				ClipSize = 1;
+				ClipSize = 30;
 				NumberOfBullets = 1;
 			}
 

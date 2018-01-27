@@ -27,6 +27,9 @@ public class Game : MonoBehaviour {
 	public static ItemManager ItemManager {
 		get{ return Game.Instance._itemManager; }
 	}
+	public static GunControl GunControl {
+		get{ return Game.Instance._gunControl; }
+	}
 
 	// ************ PRIVATE ****************
 
@@ -37,6 +40,7 @@ public class Game : MonoBehaviour {
 	private UIController _uiController;
 	private Area _area;
 	private ItemManager _itemManager;
+	private GunControl _gunControl;
 
 	// ******************************
 	
@@ -93,12 +97,18 @@ public class Game : MonoBehaviour {
 
 		// ItemManager
 		_itemManager = gameObject.AddComponent<ItemManager>();
+
+		// Gun Control
+		_gunControl = gameObject.AddComponent<GunControl>();
 	}
 	private void InitGame () {
 
 		// ItemManager
 		_itemManager.Init();
 		
+		// Gun Control
+		_gunControl.Init();
+
 		// Area
 		_area.Init();
 

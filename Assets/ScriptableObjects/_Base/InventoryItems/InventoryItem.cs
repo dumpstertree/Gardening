@@ -15,7 +15,6 @@ public partial class InventoryItem : ScriptableObject {
 	[SerializeField] private string _id;
 	public string ID { 
 		get{ return _id; } 
-		set{ _id = value; }
 	}
 
 	[SerializeField] private int _count;
@@ -52,6 +51,15 @@ public partial class InventoryItem : ScriptableObject {
 
 	// ********************************************
 	
+	private bool _hasBeenInit;
+	public void Init ( string id = "" ) {
+
+		_id = id != "" ? id : Guid.NewGuid().ToString();
+		
+		InitCanShoot();
+	}
+
+
 	public void Use ( Player player, Action onComplete ) {
 
 		var interactableObject = player.Interactor.InteractableObject;

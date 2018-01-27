@@ -43,8 +43,9 @@ public class ItemManager : MonoBehaviour {
 	private InventoryItem LoadWithName( string itemName, string assignID ){
 
 		var inst = Instantiate( _items[ itemName ] );
-		inst.ID = assignID != "" ? assignID : System.Guid.NewGuid().ToString();
 		inst.name = itemName;
+		inst.Init( assignID );
+		
 		return inst;
 	}
 	private InventoryItem LoadInvalid( string itemName, string assignID ){
@@ -52,8 +53,9 @@ public class ItemManager : MonoBehaviour {
 		Debug.LogWarning( "Item with name " + itemName + " does not exist. Returning an invalid object!"  );
 
 		var inst = Instantiate( _items[ INVALID_ITEM_NAME ] );
-		inst.ID = assignID != "" ? assignID : System.Guid.NewGuid().ToString();
 		inst.name = itemName;
+		inst.Init( assignID );
+
 		return inst;
 	}
 }

@@ -29,7 +29,7 @@ public class GunDataController : DataController {
 	
 		var newGun = new Gun( new List<Gun.Part>() );
 		SaveGun( id, newGun );
-		Debug.Log( id );
+
 		Debug.LogWarningFormat( "No Gun data found. Making a new one" );
 	
 		return newGun;
