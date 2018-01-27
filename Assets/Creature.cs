@@ -1,0 +1,62 @@
+﻿using System.Collections;
+using UnityEngine;
+
+public abstract class Creature : MonoBehaviour {
+
+	[SerializeField] private Transform _gunProjector;
+	public Transform GunProjector { get{ return _gunProjector; } }
+
+	[SerializeField] private Animator _animator;
+	public Animator Animator { get{ return _animator;} }
+
+	[SerializeField] private Rigidbody _rigidBody;
+	public Rigidbody Rigidbody { get { return _rigidBody; } }
+
+
+	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
+	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
+	private const float FACE_INTERACTABLE_MIN_DISTANC = 0.5f;
+	private const float FACE_INTERACTABLE_MAX_DISTANC = 1.6f;
+	
+	public virtual void Init () {
+
+	}
+
+	public void FaceInteractableObject( Vector3 position ){
+			
+		// rotation
+		var targetRot = Quaternion.LookRotation( new Vector3( position.x, transform.position.y, position.z) - transform.position );
+				
+		// position
+		var targetPos = transform.position;
+		var p1 = transform.position;
+		var p2 = new Vector3( position.x, transform.position.y, position.z);
+		var d = Vector3.Distance( p1, p2);
+		
+		if ( d < FACE_INTERACTABLE_MIN_DISTANC || d > FACE_INTERACTABLE_MAX_DISTANC ) { 
+			var angle = - Mathf.Atan2(p2.x-p1.x, p2.z-p1.z) * Mathf.Rad2Deg -90;
+	     	var x = FACE_INTERACTABLE_FORCE_DISTANCE * Mathf.Cos(angle * Mathf.Deg2Rad);
+	     	var y = 0;
+	     	var z = FACE_INTERACTABLE_FORCE_DISTANCE * Mathf.Sin(angle * Mathf.Deg2Rad);
+	     	targetPos = p2 + new Vector3( x, y, z );
+		}
+
+		StartCoroutine( LerpFaceInteractableObject( targetPos, targetRot ) );
+	}
+
+	private IEnumerator LerpFaceInteractableObject ( Vector3 targetPos, Quaternion targetRot ) {
+
+		var startPos = transform.position;
+		var startRot = transform.rotation;
+
+		for ( float t = 0; t<FACE_INTERACTABLE_LENGTH; t += Time.deltaTime ){
+			
+			var frac = t/FACE_INTERACTABLE_LENGTH;
+			
+			transform.position = Vector3.Lerp( startPos, targetPos, frac);
+			transform.rotation = Quaternion.Slerp( startRot, targetRot, frac);
+			
+			yield return null;
+		}
+	}
+}

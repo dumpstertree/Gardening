@@ -1,64 +1,38 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : Creature {
 
 	// ***************** PUBLIC *******************
 
-	public Transform CameraTarget;
-	public Transform CameraFocus;
-	public Rigidbody Rigidbody;
-
+	private QuickSlotInventory _quickslotInventory;
 	public QuickSlotInventory QuickslotInventory{ get{ return _quickslotInventory; } }
+	
+	private Inventory _inventory;
 	public Inventory Inventory { get{ return _inventory; }  }
+
+	private Model.PartInventory _gunParts;
 	public Model.PartInventory GunParts { get { return _gunParts; }}
 
 	[SerializeField] private QuickSlot _quickslot;
 	public QuickSlot QuickSlot { get{ return _quickslot; }  }
-
+	
 	[SerializeField] private Interactor _interactor;
 	public Interactor Interactor { get{return _interactor; } }
-	
-	[SerializeField] private Animator _animator;
-	public Animator Animator { get{ return _animator;} }
-	public PlayerRecipes PlayerRecipes;
-
-	public void FaceInteractableObject( Vector3 position ){
-			
-		// rotation
-		var targetRot = Quaternion.LookRotation( new Vector3( position.x, transform.position.y, position.z) - transform.position );
-				
-		// position
-		var targetPos = transform.position;
-		var p1 = transform.position;
-		var p2 = new Vector3( position.x, transform.position.y, position.z);
-		var d = Vector3.Distance( p1, p2);
-		
-		if ( d < FACE_INTERACTABLE_MIN_DISTANC || d > FACE_INTERACTABLE_MAX_DISTANC ) { 
-			var angle = - Mathf.Atan2(p2.x-p1.x, p2.z-p1.z) * Mathf.Rad2Deg -90;
-	     	var x = FACE_INTERACTABLE_FORCE_DISTANCE * Mathf.Cos(angle * Mathf.Deg2Rad);
-	     	var y = 0;
-	     	var z = FACE_INTERACTABLE_FORCE_DISTANCE * Mathf.Sin(angle * Mathf.Deg2Rad);
-	     	targetPos = p2 + new Vector3( x, y, z );
-		}
-
-		StartCoroutine( LerpFaceInteractableObject( targetPos, targetRot ) );
-	}
 
 	// ***************** PRIVATE *******************
 
-	private PlayerDataController _dataController;
-	private Inventory _inventory;
-	private QuickSlotInventory _quickslotInventory;
-	private Model.PartInventory _gunParts;
+	public PlayerRecipes PlayerRecipes; 	// convert to prop
+	public Transform CameraTarget; 			// convert to prop
+	public Transform CameraFocus;			// convert to prop
 
-	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
-	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
-	private const float FACE_INTERACTABLE_MIN_DISTANC = 0.5f;
-	private const float FACE_INTERACTABLE_MAX_DISTANC = 1.6f;
+	private PlayerDataController _dataController;
+	
 
 	// *********************************************
-	public void Init () {
+	
+	public override void Init () {
+
+		base.Init();
 
 		_dataController = new PlayerDataController();
 
@@ -81,25 +55,11 @@ public class Player : MonoBehaviour {
 			_dataController.SavePartInventory( _gunParts );
 		};
 	}
-	private void CreateCameraTarget(){
-		CameraTarget = new GameObject( "CameraTarget" ).transform;
-	}
 
 	// *********************************************
 
-	private IEnumerator LerpFaceInteractableObject ( Vector3 targetPos, Quaternion targetRot ) {
-
-		var startPos = transform.position;
-		var startRot = transform.rotation;
-
-		for ( float t = 0; t<FACE_INTERACTABLE_LENGTH; t += Time.deltaTime ){
-			
-			var frac = t/FACE_INTERACTABLE_LENGTH;
-			
-			transform.position = Vector3.Lerp( startPos, targetPos, frac);
-			transform.rotation = Quaternion.Slerp( startRot, targetRot, frac);
-			
-			yield return null;
-		}
+	private void CreateCameraTarget () {
+		
+		CameraTarget = new GameObject( "CameraTarget" ).transform;
 	}
 }

@@ -81,8 +81,8 @@ public class GunRef {
 		var spreadR = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 		var spreadU = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 	
-		go.transform.position = Game.Area.LoadedPlayer.transform.position;
-		go.transform.rotation = Game.Area.LoadedPlayer.transform.rotation;
+		go.transform.position = Game.Area.LoadedPlayer.GunProjector.transform.position;
+		go.transform.rotation = Game.Area.LoadedPlayer.GunProjector.transform.rotation;
 		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadR, go.transform.right );
 		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadU, go.transform.up );
 
