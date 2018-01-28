@@ -49,7 +49,7 @@ public class GunRef {
 			Game.Instance.StartCoroutine( WaitForReload() );
 		}
 	}
-	public void Fire ( Player shooter, GameObject bulletPrefab ) {
+	public void Fire ( Creature user, GameObject bulletPrefab ) {
 
 		// if trying to fire and no bullets reload
 		if ( _availableBullets <= 0 ) {
@@ -61,7 +61,7 @@ public class GunRef {
 		// if not already firing start
 		if ( !_firing ) {
 
-			Game.Instance.StartCoroutine( WaitForFire( shooter, bulletPrefab ) );
+			Game.Instance.StartCoroutine( WaitForFire( user, bulletPrefab ) );
 		}
 	}
 
@@ -72,21 +72,21 @@ public class GunRef {
 	private bool _reloading;
 	private int _availableBullets;
 
-	private void CreateBullet ( Player shooter, GameObject bulletPrefab ) {
+	private void CreateBullet ( Creature user, GameObject bulletPrefab ) {
 
 		var go = GameObject.Instantiate( bulletPrefab );
 		var bulletSpread = 5f;
 		var spreadR = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 		var spreadU = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 	
-		go.transform.position = Game.Area.LoadedPlayer.GunProjector.transform.position;
-		go.transform.rotation = Game.Area.LoadedPlayer.GunProjector.transform.rotation;
-		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadR, go.transform.right );
-		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadU, go.transform.up );
+		go.transform.position = user.GunProjector.transform.position;
+		go.transform.rotation = user.GunProjector.transform.rotation;
+		go.transform.rotation = go.transform.rotation * Quaternion.AngleAxis( spreadR, go.transform.right );
+		go.transform.rotation = go.transform.rotation * Quaternion.AngleAxis( spreadU, go.transform.up );
 
 		var hitData = new HitData();
 		hitData.Power = 1;
-		go.GetComponent<Bullet>().SetBullet( shooter, hitData);
+		go.GetComponent<Bullet>().SetBullet( user, hitData);
 
 		AvailableBullets--;
 	}
@@ -141,14 +141,14 @@ public class GunRef {
 		// end reloading
 		_reloading = false;
 	}
-	private IEnumerator WaitForFire ( Player shooter, GameObject bulletPrefab ){
+	private IEnumerator WaitForFire ( Creature user, GameObject bulletPrefab ){
 		
 		// set firing
 		_firing = true;
 		
 		// create all the bullets
 		var numOfBullets = Gun.WeaponStats.NumberOfBullets;
-		for ( int i=0; i<numOfBullets; i++ ) { CreateBullet( shooter, bulletPrefab ); }
+		for ( int i=0; i<numOfBullets; i++ ) { CreateBullet( user, bulletPrefab ); }
 		
 		// wait for the time between fire rate
 		var fireRate = 1f / Gun.WeaponStats.FireRate;

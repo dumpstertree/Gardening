@@ -12,9 +12,9 @@ namespace Interactable.Component {
 			set{ _item = value; }
 		}
 
-		public override void Interact ( Player player, InventoryItem item ) {
+		public override void Interact ( Creature user, InventoryItem item ) {
 
-			if ( player.QuickslotInventory.AddInventoryItem( Item ) || player.Inventory.AddInventoryItem( Item ) ){
+			if ( user.QuickslotInventory.AddInventoryItem( Item ) || user.Inventory.AddInventoryItem( Item ) ){
 
 				_destroyable.Destroy();
 			}

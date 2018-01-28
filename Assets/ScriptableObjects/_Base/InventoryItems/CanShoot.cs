@@ -19,9 +19,9 @@ partial class InventoryItem {
 		}
 	}
 
-	private void Shoot ( Player shooter, ShootData shootData, Action onComplete ) {
+	private void Shoot ( Creature user, ShootData shootData, Action onComplete ) {
 
-		_gunRef.Fire( shooter, _shootData.BulletPrefab );
+		_gunRef.Fire( user, _shootData.BulletPrefab );
 
  		onComplete();
 	}

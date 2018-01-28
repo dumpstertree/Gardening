@@ -60,36 +60,36 @@ public partial class InventoryItem : ScriptableObject {
 	}
 
 
-	public void Use ( Player player, Action onComplete ) {
+	public void Use ( Creature user, Action onComplete ) {
 
-		var interactableObject = player.Interactor.InteractableObject;
+		var interactableObject = user.Interactor.InteractableObject;
 
 		// place
 		if ( _canPlace ) { 
-			Use( player, _interactData, () => { Place( player.Interactor );  }, onComplete );
+			Use( user, _interactData, () => { Place( user.Interactor );  }, onComplete );
 		}
 
 		// shoot
 		if ( _canShoot ) {
-			Shoot( player, _shootData, onComplete );
+			Shoot( user, _shootData, onComplete );
 		}
 
 		// hit
-		if ( _canHit && player.Interactor.InteractableObject.Hitable ) { 
-			Use( player, _interactData, () => { interactableObject.HitDelegate.Hit( player, _hitData );  }, onComplete );
+		if ( _canHit && user.Interactor.InteractableObject.Hitable ) { 
+			Use( user, _interactData, () => { interactableObject.HitDelegate.Hit( user, _hitData );  }, onComplete );
 		}
 
 		// plant
-		if ( _canPlant && player.Interactor.InteractableObject.Plantable ) { 
+		if ( _canPlant && user.Interactor.InteractableObject.Plantable ) { 
 		}
 
 		// feed
-		if ( _canFeed && player.Interactor.InteractableObject.Feedable ) { 
+		if ( _canFeed && user.Interactor.InteractableObject.Feedable ) { 
 		}
 
 		// interact
-		if ( _canInteract && player.Interactor.InteractableObject.Interactable) { 
-			Use( player, _interactData, () => { interactableObject.InteractDelegate.Interact( player, this ); }, onComplete );
+		if ( _canInteract && user.Interactor.InteractableObject.Interactable) { 
+			Use( user, _interactData, () => { interactableObject.InteractDelegate.Interact( user, this ); }, onComplete );
 		}
 	}
 	public void AddCount ( int more ) {

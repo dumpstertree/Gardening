@@ -32,7 +32,7 @@ public class EnemyBrain : Brain {
 	[SerializeField] private GameObject _attackPrefab;
 
 	[SerializeField] private float _moveSpeed;
-	[SerializeField] private Creature _creature;
+	[SerializeField] private Enemy _creature;
 	[SerializeField] private Eyes _eyes;
 	
 	private const float ATTACK_RANGE = 1.0f;
@@ -136,12 +136,13 @@ public class EnemyBrain : Brain {
 		_creature.Animator.SetFloat( "Horizontal", 0.0f );
 		_creature.Animator.SetTrigger( "Pickup" );
 
-		var inst = Instantiate( _attackPrefab );
-		inst.transform.position = _creature.GunProjector.position;
-		inst.transform.rotation = _creature.GunProjector.rotation;
+		// var inst = Instantiate( _attackPrefab );
+		// inst.transform.position = _creature.GunProjector.position;
+		// inst.transform.rotation = _creature.GunProjector.rotation;
 	}
 	private void OnAttack () {
-
+	
+		_creature.Attack();
 		ChangeState( State.Chase );
 	}
 	private void OnExitAttack () {

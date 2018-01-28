@@ -2,7 +2,7 @@
 
 	public class SwitchToCraftingContext : Interactable {
 
-		public override void Interact( Player player, InventoryItem item ){
+		public override void Interact( Creature user, InventoryItem item ){
 
 			Game.UIController.ChangeContext( UIController.UiContext.Identifier.Crafting );
 		}

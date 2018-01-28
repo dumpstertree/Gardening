@@ -2,11 +2,17 @@
 using UnityEngine;
 using Interactable.OptionalComponent;
 
-[RequireComponent( typeof( Health ) ) ]
+[RequireComponent( typeof(Health) )]
 public abstract class Creature : Interactable.InteractableObject {
 
 	// **************************
 
+	public QuickSlotInventory QuickslotInventory{ 
+		get{ return _quickslotInventory; } 
+	}
+	public Inventory Inventory { 
+		get{ return _inventory; }  
+	}
 	public Transform GunProjector { 
 		get{ return _gunProjector; } 
 	}
@@ -18,6 +24,9 @@ public abstract class Creature : Interactable.InteractableObject {
 	}
 	public Brain Brain { 
 		get{ return _brain; } 
+	}
+	public Interactor Interactor {
+		get{return _interactor; } 
 	}
 
 	// **************************
@@ -42,14 +51,20 @@ public abstract class Creature : Interactable.InteractableObject {
 	
 	// **************************
 
+
+
+	[SerializeField] private Interactor _interactor;
 	[SerializeField] protected Transform _gunProjector;
 	[SerializeField] protected Animator _animator;
 
 	protected Health _health;
 	protected Brain _brain;
 	protected Rigidbody _rigidBody;
+	protected QuickSlotInventory _quickslotInventory;
+	protected Inventory _inventory;
 
 	private bool _dead;
+
 
 	
 	// **************************
@@ -59,6 +74,8 @@ public abstract class Creature : Interactable.InteractableObject {
 		if ( !_animator.GetCurrentAnimatorStateInfo(0).IsTag("InputRestricted") && !_dead ){
 			_brain.Think();
 		}
+	}
+	protected virtual void Start () {
 	}
 	protected virtual void Faint () {
 
@@ -84,6 +101,7 @@ public abstract class Creature : Interactable.InteractableObject {
 	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
 	private const float FACE_INTERACTABLE_MIN_DISTANC = 0.5f;
 	private const float FACE_INTERACTABLE_MAX_DISTANC = 1.6f;
+
 
 	public void FaceInteractableObject( Vector3 position ){
 			

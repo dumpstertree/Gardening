@@ -8,10 +8,14 @@ namespace Interactable.Component {
 
 		// ********* PUBLIC **************
 		
-		public override void Interact ( Player player, InventoryItem item ) {
+		public override void Interact ( Creature user, InventoryItem item ) {
  			
-  			player.GunParts.AddPart( _partToPickup );
-			_destroyable.Destroy();
+ 			var player = user as Player;
+ 			
+ 			if ( player != null ) {
+  				player.GunParts.AddPart( _partToPickup );
+				_destroyable.Destroy();
+			}
 		}
 
 		// ********* PRIVATE **************

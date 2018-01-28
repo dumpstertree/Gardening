@@ -6,6 +6,6 @@ namespace Interactable.Component {
 
 	public class Interactable : MonoBehaviour {
 
-		public virtual void Interact( Player player, InventoryItem item ){}
+		public virtual void Interact( Creature user, InventoryItem item ){}
 	}
 }

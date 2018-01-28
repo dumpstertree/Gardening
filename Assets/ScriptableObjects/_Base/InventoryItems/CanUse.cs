@@ -9,19 +9,19 @@ partial class InventoryItem {
 	[SerializeField] private bool _canInteract;
 	[SerializeField] private InteractData _interactData;
 
-	private void Use ( Player player, InventoryItemData data, Action action, Action onComplete ) {
+	private void Use ( Creature user, InventoryItemData data, Action action, Action onComplete ) {
 		
 		// get use data
 		var useData = GetUseAnimationData( data.Animation );
-		var interactableObject = player.Interactor.InteractableObject;
+		var interactableObject = user.Interactor.InteractableObject;
 
 		// force player to look at interactable
 		if ( interactableObject ){
-			player.FaceInteractableObject( interactableObject.transform.position );
+			user.FaceInteractableObject( interactableObject.transform.position );
 		}
 		
 		// play animation
-		player.Animator.SetTrigger( useData.AnimationTrigger );
+		user.Animator.SetTrigger( useData.AnimationTrigger );
 
 		// use action
 		Game.Async.WaitForSeconds( useData.AnimationUseFraction * useData.AnimationLength, () => {

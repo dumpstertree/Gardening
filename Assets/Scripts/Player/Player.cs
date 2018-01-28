@@ -4,20 +4,12 @@ public class Player : Creature {
 
 	// ***************** PUBLIC *******************
 
-	private QuickSlotInventory _quickslotInventory;
-	public QuickSlotInventory QuickslotInventory{ get{ return _quickslotInventory; } }
-	
-	private Inventory _inventory;
-	public Inventory Inventory { get{ return _inventory; }  }
-
 	private Model.PartInventory _gunParts;
 	public Model.PartInventory GunParts { get { return _gunParts; }}
 
 	[SerializeField] private QuickSlot _quickslot;
 	public QuickSlot QuickSlot { get{ return _quickslot; }  }
 	
-	[SerializeField] private Interactor _interactor;
-	public Interactor Interactor { get{return _interactor; } }
 
 	// ***************** PRIVATE *******************
 
@@ -39,11 +31,13 @@ public class Player : Creature {
 		CreateCameraTarget();
 		CameraFocus = Animator.transform;
 
+		
 		// load data
 		_quickslotInventory = _dataController.LoadQuickSlotInventory();
 		_inventory = _dataController.LoadInventory();
 		_gunParts = _dataController.LoadPartInventory();
 
+		
 		// save when changes are made
 		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
 			_dataController.SaveQuickSlotInventory( _quickslotInventory ); 

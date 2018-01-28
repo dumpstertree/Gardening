@@ -5,9 +5,9 @@ public class Bullet : MonoBehaviour {
 
 	// ********** PUBLIC **************
 
-	public void SetBullet ( Player shooter, HitData hitData ) {
+	public void SetBullet ( Creature user, HitData hitData ) {
 		
-		_shooter = shooter;
+		_shooter = user;
 		_hitData = hitData;
 
 		CreateCasing();
@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour {
 	private const float CONTACT_MIN_SCALE = 0.20f;
 	private const float CONTACT_MAX_SCALE = 0.05f;
 
-	private Player _shooter;
+	private Creature _shooter;
 	private HitData _hitData;
 	private bool _beingDestroyed;
 	

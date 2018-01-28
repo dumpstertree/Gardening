@@ -8,7 +8,7 @@ namespace Interactable.Component {
 
 		// ***************** PUBLIC *******************
 
-		public void Hit( Player player, HitData data ){
+		public void Hit( Creature user, HitData data ){
 			Game.Effects.OneShot( Effects.Type.Hit, transform.position, transform.rotation );
 			_health.RemoveHealth( data.Power );
 		}
