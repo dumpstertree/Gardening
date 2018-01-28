@@ -31,8 +31,6 @@ public class GunRef {
 	
 	// ************ PUBLIC *****************
 
- 	public HitData _hitData;
-
  	public Model.Gun Gun {
  		get{ return _gun; }
  	}
@@ -86,7 +84,9 @@ public class GunRef {
 		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadR, go.transform.right );
 		go.transform.rotation  = go.transform.rotation * Quaternion.AngleAxis( spreadU, go.transform.up );
 
-		go.GetComponent<Bullet>().SetBullet( shooter, _hitData );
+		var hitData = new HitData();
+		hitData.Power = 1;
+		go.GetComponent<Bullet>().SetBullet( shooter, hitData);
 
 		AvailableBullets--;
 	}

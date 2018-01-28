@@ -13,6 +13,12 @@ namespace Application {
 		private GameObject _hit {
 			get{ return Resources.Load( "HitEffect" ) as GameObject; }
 		}
+		private GameObject _faint {
+			get{ return Resources.Load( "FaintEffect" ) as GameObject; }
+		}
+		private GameObject _wakeUp {
+			get{ return Resources.Load( "WakeUpEffect" ) as GameObject; }
+		}
 
 		public void OneShot( Type type, Vector3 position, Quaternion rotation ) {
 
@@ -34,18 +40,31 @@ namespace Application {
 				case Type.Smoke:
 					prefab = _smoke;
 					break;
+
+				case Type.Faint:
+					prefab = _faint;
+					break;
+
+				case Type.WakeUp:
+					prefab = _wakeUp;
+					break;
 			}
 
-			var go = Instantiate( prefab );
-			go.transform.position = position;
-			go.transform.rotation = rotation;
+			if ( prefab != null ) {
+				
+				var go = Instantiate( prefab );
+				go.transform.position = position;
+				go.transform.rotation = rotation;
+			}
 		}
 
 		public enum Type {
 			None,
 			Fireworks,
 			Hit,
-			Smoke
+			Smoke,
+			Faint,
+			WakeUp
 		}
 	}
 }

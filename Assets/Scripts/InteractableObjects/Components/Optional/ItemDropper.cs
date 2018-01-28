@@ -66,7 +66,6 @@ namespace Interactable.OptionalComponent {
 			drop.transform.position = transform.position;
 			drop.transform.rotation = transform.rotation;
 			drop.SetItem( item );
-
 		}
 
 		[System.Serializable]

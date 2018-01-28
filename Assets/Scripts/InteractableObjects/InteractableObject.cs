@@ -49,7 +49,7 @@ namespace Interactable {
 
 		// ***********************************************
 
-		private void Awake () {
+		protected virtual void Awake () {
 
 			_hitDelegate = GetComponent<Component.Hitable>();
 			_plantDelegate = GetComponent<Component.Plantable>();

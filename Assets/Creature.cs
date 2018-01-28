@@ -1,26 +1,89 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Interactable.OptionalComponent;
 
-public abstract class Creature : MonoBehaviour {
+[RequireComponent( typeof( Health ) ) ]
+public abstract class Creature : Interactable.InteractableObject {
 
-	[SerializeField] private Transform _gunProjector;
-	public Transform GunProjector { get{ return _gunProjector; } }
+	// **************************
 
-	[SerializeField] private Animator _animator;
-	public Animator Animator { get{ return _animator;} }
+	public Transform GunProjector { 
+		get{ return _gunProjector; } 
+	}
+	public Animator Animator { 
+		get{ return _animator;} 
+	}
+	public Rigidbody Rigidbody { 
+		get { return _rigidBody; } 
+	}
+	public Brain Brain { 
+		get{ return _brain; } 
+	}
 
-	[SerializeField] private Rigidbody _rigidBody;
-	public Rigidbody Rigidbody { get { return _rigidBody; } }
+	// **************************
 
+	public virtual void Init () {
+
+		_health = GetComponent<Health>();
+		_brain = GetComponent<Brain>();
+		_rigidBody = GetComponent<Rigidbody>();
+
+		_health.OnHealthChanged += currentHealth => {
+
+			if ( currentHealth <= 0 && !_dead ) {
+				Faint();
+			}
+			if ( currentHealth >= 1 && _dead ) {
+				WakeUp();
+			}
+		};
+	}
+
+	
+	// **************************
+
+	[SerializeField] protected Transform _gunProjector;
+	[SerializeField] protected Animator _animator;
+
+	protected Health _health;
+	protected Brain _brain;
+	protected Rigidbody _rigidBody;
+
+	private bool _dead;
+
+	
+	// **************************
+
+	protected virtual void Update () {
+
+		if ( !_animator.GetCurrentAnimatorStateInfo(0).IsTag("InputRestricted") && !_dead ){
+			_brain.Think();
+		}
+	}
+	protected virtual void Faint () {
+
+		_dead = true;
+		_animator.SetTrigger( "Dead" );
+		_rigidBody.isKinematic = true;
+
+		Game.Effects.OneShot( Application.Effects.Type.Faint, transform.position, transform.rotation );
+	}
+	protected virtual void WakeUp () {
+
+		_dead = false;
+		_animator.SetTrigger( "WakeUp" );
+		_rigidBody.isKinematic = false;
+
+		Game.Effects.OneShot( Application.Effects.Type.WakeUp, transform.position, transform.rotation );
+	}
+
+
+	// **************************
 
 	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
 	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
 	private const float FACE_INTERACTABLE_MIN_DISTANC = 0.5f;
 	private const float FACE_INTERACTABLE_MAX_DISTANC = 1.6f;
-	
-	public virtual void Init () {
-
-	}
 
 	public void FaceInteractableObject( Vector3 position ){
 			
@@ -43,7 +106,6 @@ public abstract class Creature : MonoBehaviour {
 
 		StartCoroutine( LerpFaceInteractableObject( targetPos, targetRot ) );
 	}
-
 	private IEnumerator LerpFaceInteractableObject ( Vector3 targetPos, Quaternion targetRot ) {
 
 		var startPos = transform.position;

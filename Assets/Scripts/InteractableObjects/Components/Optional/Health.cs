@@ -6,6 +6,9 @@ namespace Interactable.OptionalComponent {
 
 	public class Health : MonoBehaviour {
 
+		public delegate void HealthChangedEvent( int currentHealth );
+		public HealthChangedEvent OnHealthChanged;
+
 		// **************** PUBLIC *****************
 		
 		public int CurrentHealth {
@@ -38,6 +41,7 @@ namespace Interactable.OptionalComponent {
 		private void OnSetHealth ( int health ) {
 
 			_currentHealth = health;
+			HandleOnHealthChanged();
 
 			if ( _currentHealth <= 0 ) {
 
@@ -45,6 +49,14 @@ namespace Interactable.OptionalComponent {
 				
 					_destroyable.Destroy();
 				}
+			}
+		}
+
+		private void HandleOnHealthChanged () {
+
+			if ( OnHealthChanged != null ) {
+
+				OnHealthChanged( _currentHealth );
 			}
 		}
 	}

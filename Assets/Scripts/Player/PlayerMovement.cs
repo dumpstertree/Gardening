@@ -1,6 +1,18 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : Brain {
+	
+	//***************************
+	
+	public override void Think () {
+
+		_horizontal = Input.GetAxis("Horizontal");
+		_vertical   = Input.GetAxis("Vertical");
+
+		NormalView();
+	}
+
+	//***************************
 
 	[SerializeField] private float _speed;
 
@@ -15,14 +27,8 @@ public class PlayerMovement : MonoBehaviour {
 	//***************************
 
 	private void Awake () {
+		
 		_player = GetComponent<Player>();
-	}
-	private void Update () {
-
-		_horizontal = Input.GetAxis("Horizontal");
-		_vertical   = Input.GetAxis("Vertical");
-
-		NormalView();
 	}
 
 	//***************************
