@@ -18,6 +18,7 @@ public class Player : Creature {
 	public Transform CameraFocus;			// convert to prop
 
 	private PlayerDataController _dataController;
+	private CameraType _cameraType;
 	
 
 	// *********************************************
@@ -29,7 +30,7 @@ public class Player : Creature {
 		_dataController = new PlayerDataController();
 
 		CreateCameraTarget();
-		CameraFocus = Animator.transform;
+		CreateCameraFocus();
 
 		
 		// load data
@@ -55,5 +56,9 @@ public class Player : Creature {
 	private void CreateCameraTarget () {
 		
 		CameraTarget = new GameObject( "CameraTarget" ).transform;
+	}
+	private void CreateCameraFocus () {
+
+		CameraFocus = new GameObject( "CameraFocus" ).transform;
 	}
 }

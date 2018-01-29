@@ -75,7 +75,7 @@ public class GunRef {
 	private void CreateBullet ( Creature user, GameObject bulletPrefab ) {
 
 		var go = GameObject.Instantiate( bulletPrefab );
-		var bulletSpread = 5f;
+		var bulletSpread = 0;
 		var spreadR = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 		var spreadU = UnityEngine.Random.Range( -bulletSpread, bulletSpread);
 	

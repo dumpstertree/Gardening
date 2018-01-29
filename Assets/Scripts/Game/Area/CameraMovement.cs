@@ -6,14 +6,14 @@ public class CameraMovement : MonoBehaviour {
 	private Transform _focus;
 	private bool _hasBeenSetup;
 
-	public void SetupCamera( Transform target, Transform focus ){
+	public void SetupCamera ( Transform target, Transform focus ) {
 		
 		_target = target;
 		_focus = focus;
 
 		_hasBeenSetup = true;
 	}
-	private void Update(){
+	private void Update () {
 
 		if ( _hasBeenSetup ) {
 		
