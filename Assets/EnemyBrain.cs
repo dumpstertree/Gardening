@@ -13,12 +13,12 @@ public class EnemyBrain : Brain {
 				OnIdle ();
 				break;
 			
-			case State.Roam:
-				OnRoam ();
-				break;
-			
 			case State.Chase:
 				OnChase ();
+				break;
+
+			case State.Run:
+				OnRun ();
 				break;
 			
 			case State.Attack:
@@ -29,14 +29,13 @@ public class EnemyBrain : Brain {
 
 	// ***************************
 
-	[SerializeField] private GameObject _attackPrefab;
-
 	[SerializeField] private float _moveSpeed;
 	[SerializeField] private Enemy _creature;
 	[SerializeField] private Eyes _eyes;
-	
-	private const float ATTACK_RANGE = 1.0f;
 
+	[SerializeField] private float _minDistance;
+	[SerializeField] private float _maxDistance;
+	
 	private Creature _target;
 	private State _state;
 
@@ -52,20 +51,16 @@ public class EnemyBrain : Brain {
 
 			switch ( _state ) {
 				case State.Idle: OnExitIdle(); break;
-				case State.Roam: OnExitRoam(); break;
 				case State.Chase: OnExitChase(); break;
 				case State.Attack: OnExitAttack(); break;
-				case State.Dead: OnExitDead(); break;
 			}
 
 			_state = newState;
 
 			switch ( _state ) {
 				case State.Idle: OnEnterIdle(); break;
-				case State.Roam: OnEnterRoam(); break;
 				case State.Chase: OnEnterChase(); break;
 				case State.Attack: OnEnterAttack(); break;
-				case State.Dead: OnEnterDead(); break;
 			}
 		}
 	}
@@ -78,33 +73,30 @@ public class EnemyBrain : Brain {
 			
 			var validTargets = _eyes.LookForTargets();
 			if ( validTargets.Count > 0 ) {
-			
 				_target = FindBestTarget( validTargets );
+			}
+		}
+
+		if ( _target != null ){
+			
+			var dist = GetDistanceToTarget();
+				
+			if ( dist > _minDistance && dist < _maxDistance ){
+				ChangeState( State.Attack );
+				return;
+			}
+			if ( dist < _minDistance ){
+				ChangeState( State.Run );
+				return;
+			}
+			if ( dist > _maxDistance ){
 				ChangeState( State.Chase );
+				return;
 			}
 		}
 	}
 	private void OnExitIdle () {
 	}
-
-	
-	private void OnEnterRoam () {
-	}
-	private void OnRoam () {
-
-		if ( _target == null ) {
-			
-			var validTargets = _eyes.LookForTargets();
-			if ( validTargets.Count > 0 ) {
-			
-				_target = FindBestTarget( validTargets );
-				ChangeState( State.Chase );
-			}
-		}
-	}
-	private void OnExitRoam () {
-	}
-
 
 	private void OnEnterChase () {
 	}
@@ -112,12 +104,13 @@ public class EnemyBrain : Brain {
 		
 		if ( _target != null ) {
 			
-			if ( GetDistanceToTarget() <= ATTACK_RANGE ) {
-				ChangeState( State.Attack );
+			var dist = GetDistanceToTarget();
+			if ( dist < _maxDistance ) {
+				ChangeState( State.Idle );
 			} else {
 				_creature.Animator.SetFloat( "Vertical", 1.0f );
 				LookAtTarget();
-				MoveTowardTarget();	
+				MoveForward();	
 			}
 		}
 
@@ -130,15 +123,39 @@ public class EnemyBrain : Brain {
 	}
 
 
+	private void OnEnterRun () {
+	}
+	private void OnRun () {
+		
+		if ( _target != null ) {
+			
+			var dist = GetDistanceToTarget();
+
+			if ( dist > _minDistance ) {
+				ChangeState( State.Idle );
+			} else {
+				_creature.Animator.SetFloat( "Vertical", 1.0f );
+				LookAwayFromTarget();
+				MoveForward();	
+			}
+		}
+
+		if ( _target == null ) {
+			
+			ChangeState( State.Idle );
+		}
+	}
+	private void OnExitRun () {
+	}
+
+
 	private void OnEnterAttack () {
 
 		_creature.Animator.SetFloat( "Vertical", 0.0f );
 		_creature.Animator.SetFloat( "Horizontal", 0.0f );
 		_creature.Animator.SetTrigger( "Pickup" );
 
-		// var inst = Instantiate( _attackPrefab );
-		// inst.transform.position = _creature.GunProjector.position;
-		// inst.transform.rotation = _creature.GunProjector.rotation;
+		LookAtTarget();
 	}
 	private void OnAttack () {
 	
@@ -148,15 +165,6 @@ public class EnemyBrain : Brain {
 	private void OnExitAttack () {
 	}
 
-	private void OnEnterDead () {
-
-		_creature.Animator.SetTrigger( "Dead" );
-	}
-	private void OnDead () {
-	}
-	private void OnExitDead () {
-	}
-
 
 	// ***************************
 
@@ -164,7 +172,12 @@ public class EnemyBrain : Brain {
 
 		transform.LookAt( _target.transform );
 	}
-	private void MoveTowardTarget () {
+	private void LookAwayFromTarget () {
+
+		transform.LookAt( _target.transform );
+		transform.rotation = transform.rotation * Quaternion.AngleAxis( 180, transform.up );
+	}
+	private void MoveForward () {
 		
 		_creature.Rigidbody.MovePosition( transform.position + transform.forward * _moveSpeed * Time.deltaTime );
 	}
@@ -190,7 +203,7 @@ public class EnemyBrain : Brain {
 		Idle,
 		Roam, 
 		Chase,
-		Attack,
-		Dead
+		Run,
+		Attack
 	}
 }

@@ -9,6 +9,7 @@ public class Area : MonoBehaviour {
 		
 		_loadedPlayer = LoadPlayer();
 		LoadCamera();
+		LoadEnemies();
 	}
 	public void EnterArea ( int doorID ) {
 
@@ -36,6 +37,12 @@ public class Area : MonoBehaviour {
 		var player = Instantiate( _playerPrefab );		
 		player.Init();
 		return player;
+	}
+	private void LoadEnemies () {
+
+		foreach ( Enemy e in FindObjectsOfType<Enemy>() ) {
+			e.Init();
+		}
 	}
 	private void LoadCamera(){
 

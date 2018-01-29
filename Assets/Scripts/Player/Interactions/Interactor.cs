@@ -12,13 +12,13 @@ public class Interactor : MonoBehaviour {
 
 	// ***************** PRIVATE ******************* 
 
-	[SerializeField] private InteractorPostion _interactorPositionPrefab;
+	[SerializeField] protected Creature _creature;
 
-	private List<InteractableObject> _interactableObjectStack;
-	private InteractorPostion _interactorPositionInstance;
-	private InteractableObject _interactable;
-	private InventoryItem _currentItem;
-	private bool _inAction;
+	protected List<InteractableObject> _interactableObjectStack;
+	protected InteractorPostion _interactorPositionInstance;
+	protected InteractableObject _interactable;
+	protected InventoryItem _currentItem;
+	protected bool _inAction;
 
 
 	// ******************************************
@@ -27,37 +27,6 @@ public class Interactor : MonoBehaviour {
 
 		// init list
 		_interactableObjectStack = new List<InteractableObject>();
-		
-		// create new interactor position
-		_interactorPositionInstance = Instantiate( _interactorPositionPrefab );
-		_interactorPositionInstance.transform.position = transform.position;
-	}
-	private void Start () {
-
-		// listen for quickslot changes
-		Game.Area.LoadedPlayer.QuickSlot.OnInputChanged += newId => {
-			var index = Game.Area.LoadedPlayer.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
-			_currentItem = Game.Area.LoadedPlayer.QuickslotInventory.GetInventoryItem( index );
-		};
-	}
-	private void Update () {
-
-		// get interactable
-		_interactable = GetInteractableObject();
-
-		// use the item
-		var canUseItem = GetCanUseItem( _currentItem, _interactable );
-		if ( !_inAction && canUseItem && Input.GetKey(KeyCode.Space) ) {
-			_inAction = true;
-			_currentItem.Use( Game.Area.LoadedPlayer, () => _inAction = false );
-		}
-
-		// change state in interactor position
-		var state = GetState( canUseItem );
-		var tracking = GetTracking( _currentItem, _interactable );
-
-		_interactorPositionInstance.ChangeState( state );
-		_interactorPositionInstance.ChangeTracking( tracking );
 	}
 	private void OnTriggerEnter ( Collider collider ) {
 
@@ -68,38 +37,10 @@ public class Interactor : MonoBehaviour {
 		_interactableObjectStack.Remove( collider.GetComponent<InteractableObject>() );
 	}
 
-	// ******************************************
-
-	private OrbPosition.State GetState ( bool canUseItem ) {
-		
-		if ( canUseItem ) {
-			return OrbPosition.State.Excited;
-		} else{ 
-			return OrbPosition.State.Passive;
-		}
-	}
-	private InteractorPostion.Tracking GetTracking ( InventoryItem item, InteractableObject interactable ) {
-		
-		if ( item == null ){
-			return InteractorPostion.Tracking.Player;
-		}
-		else if ( item.CanPlace && interactable == null ){
-			return InteractorPostion.Tracking.True;
-		}
-		else if ( (item != null && interactable != null) &&
-				  (item.CanInteract && interactable.Interactable ||
-				   item.CanHit && interactable.Hitable ||
-				   item.CanPlant && interactable.Plantable ||
-				   item.CanFeed && interactable.Feedable )) {
-						return InteractorPostion.Tracking.Interactable;
-		} else {
-			return InteractorPostion.Tracking.Player;
-		}
-	}
 
 	// ******************************************
 
-	private bool GetCanUseItem ( InventoryItem inventoryItem, InteractableObject interactableItem ){
+	protected bool GetCanUseItem ( InventoryItem inventoryItem, InteractableObject interactableItem ){
 
 		if ( inventoryItem == null ){
 			return false;
@@ -127,7 +68,7 @@ public class Interactor : MonoBehaviour {
 
 		return false;
 	}
-	private InteractableObject GetInteractableObject () {
+	protected InteractableObject GetInteractableObject () {
 
 		// all valid interactables
 		var validInteractables = new List<InteractableObject>();

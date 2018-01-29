@@ -53,7 +53,7 @@ public abstract class Creature : Interactable.InteractableObject {
 
 
 
-	[SerializeField] private Interactor _interactor;
+	[SerializeField] protected Interactor _interactor;
 	[SerializeField] protected Transform _gunProjector;
 	[SerializeField] protected Animator _animator;
 

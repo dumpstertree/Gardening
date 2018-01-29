@@ -7,7 +7,7 @@ public class Enemy : Creature {
 
 	private ItemDropper _itemDropper;
 	private bool _usingItem;
-
+	private string _itemID = "FUCK";
 
 	public override void Init () {
 
@@ -16,7 +16,7 @@ public class Enemy : Creature {
 
 		_itemDropper = GetComponent<ItemDropper>();
 
-		var itemInst = Game.ItemManager.RequestItem( _holdItem.name );
+		var itemInst = Game.ItemManager.RequestItem( _holdItem.name, _itemID );
 		var index = _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center );
 		_quickslotInventory.SetInventoryItem( index, itemInst );
 
@@ -24,23 +24,15 @@ public class Enemy : Creature {
 	}
 	public void Attack () {
 
-		if ( !_usingItem ) {
+		var enemyInteractor = _interactor as EnemyInteractor;
 
-			var index = _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center );
-			var item = _quickslotInventory.GetInventoryItem( index );
-
-			item.Use( this, () => { _usingItem = false; } );
+		if ( enemyInteractor != null ) {
+			enemyInteractor.Use();
 		}
 	}
 
 	// ********************************
 
-	protected override void Start () {
-
-		base.Start();
-
-		Init();
-	}
 	protected override void Faint () {
 
 		base.Faint();
