@@ -11,16 +11,16 @@ public class Eyes : MonoBehaviour {
 
 		RaycastHit hit;
 
-      Debug.DrawRay( _eyeProjector.position, _eyeProjector.forward * LOOK_DISTANCE );
-      
-      if ( Physics.Raycast( _eyeProjector.position, _eyeProjector.forward, out hit, LOOK_DISTANCE, _lookingFor )) {
- 			
- 			    var c = hit.collider.GetComponents<Creature>();
-          if ( c != null ) {
-              return new List<Creature>( c );
-            }
+    Debug.DrawRay( _eyeProjector.position, _eyeProjector.forward * LOOK_DISTANCE );
+    
+    if ( Physics.Raycast( _eyeProjector.position, _eyeProjector.forward, out hit, LOOK_DISTANCE, _lookingFor )) {
+			
+		    var c = hit.collider.GetComponents<Creature>();
+      if ( c != null ) {
+          return new List<Creature>( c );
         }
+    }
 
-      return new List<Creature>();
-	}
+    return new List<Creature>();
+  }
 }
