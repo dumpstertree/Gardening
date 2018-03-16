@@ -42,17 +42,15 @@ public class Player : Creature {
 
 		base.Init();
 
-		_dataController = new PlayerDataController();
-
 		CreateCameraTarget();
 		CreateCameraFocus();
-
+		CreateDataController();	
+		
 		
 		// load data
 		_quickslotInventory = _dataController.LoadQuickSlotInventory();
 		_inventory = _dataController.LoadInventory();
 		_gunParts = _dataController.LoadPartInventory();
-
 		
 		// save when changes are made
 		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
@@ -69,6 +67,10 @@ public class Player : Creature {
 
 	// *********************************************
 
+	private void CreateDataController () {
+
+		_dataController = new PlayerDataController();	
+	}
 	private void CreateCameraTarget () {
 		
 		_cameraTarget = new GameObject( CAMERA_TARGET_NAME ).transform;

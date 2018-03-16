@@ -1,57 +1,60 @@
 using UnityEngine;
 using System;
 
-
 [System.Serializable]
 public partial class InventoryItem : ScriptableObject {
 
+	
 	// ***************** PUBLIC *******************
 
 	public delegate void OnCountChangedEvent();
 	public OnCountChangedEvent OnCountChanged;
 
+	
 	// ********************************************
 	
-	[SerializeField] private string _id;
 	public string ID { 
 		get{ return _id; } 
 	}
-
-	[SerializeField] private int _count;
 	public int Count{ 
 		get{ return _count; } 
 	}
 
+	
 	// ********************************************
 
-	[SerializeField] private string _displayName;
-	public string DisplayName{ 
+	public string DisplayName { 
 		get{ return _displayName; } 
 	}
-
-	[SerializeField] private int _maxCount;
-	public int MaxCount{ 
+	public int MaxCount { 
 		get{ return _maxCount; } 
 	}
-
-	[SerializeField] private Sprite _sprite;
 	public Sprite Sprite { 
 		get{ return _sprite; } 
 	}
-
-	[SerializeField] private GameObject _holdItem;
 	public GameObject HoldItem { 
 		get{ return _holdItem; } 
 	}
-
-	[SerializeField] private bool _expendable;
 	public bool Expendable { 
 		get{ return _expendable; } 
 	}
 
+
+	// ********************************************
+
+	[SerializeField] private string _id;
+	[SerializeField] private int _count;
+	[SerializeField] private string _displayName;
+	[SerializeField] private int _maxCount;
+	[SerializeField] private Sprite _sprite;
+	[SerializeField] private GameObject _holdItem;
+	[SerializeField] private bool _expendable;
+
+	private bool _hasBeenInit;
+
+
 	// ********************************************
 	
-	private bool _hasBeenInit;
 	public void Init ( string id = "" ) {
 
 		_id = id != "" ? id : Guid.NewGuid().ToString();
@@ -59,20 +62,20 @@ public partial class InventoryItem : ScriptableObject {
 		InitCanShoot();
 	}
 
-
 	public void Use ( Creature user, Action onComplete ) {
 
 		var interactableObject = user.Interactor.InteractableObject;
 
 		// place
 		if ( _canPlace ) { 
-			Use( user, _interactData, () => { Place( user.Interactor );  }, onComplete );
+			Place( user.Interactor );
 		}
 
 		// shoot
 		if ( _canShoot ) {
 			Shoot( user, _shootData, onComplete );
 		}
+
 
 		// hit
 		if ( _canHit && user.Interactor.InteractableObject.Hitable ) { 
@@ -92,6 +95,8 @@ public partial class InventoryItem : ScriptableObject {
 			Use( user, _interactData, () => { interactableObject.InteractDelegate.Interact( user, this ); }, onComplete );
 		}
 	}
+
+
 	public void AddCount ( int more ) {
 
 		_count += more;
@@ -117,6 +122,7 @@ public partial class InventoryItem : ScriptableObject {
 		}
 	}
 
+	
 	// *********************************************
 
 	public static Serialized Serialize ( InventoryItem inventoryItem ) {
