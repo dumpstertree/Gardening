@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Shader created with Shader Forge v1.30 
@@ -53,7 +55,7 @@ Shader "Shader Forge/InteractableObject" {
             VertexOutput vert (VertexInput v) {
                 VertexOutput o = (VertexOutput)0;
                 float4 node_9706 = _Time + _TimeEditor;
-                o.pos = mul(UNITY_MATRIX_MVP, float4(v.vertex.xyz + normalize(v.vertex)*lerp( 0.0, ((abs(sin(node_9706.g))*_OutlineWidth)+0.1), _node_4012 ),1) );
+                o.pos = UnityObjectToClipPos(float4(v.vertex.xyz + normalize(v.vertex)*lerp( 0.0, ((abs(sin(node_9706.g))*_OutlineWidth)+0.1), _node_4012 ),1) );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 return o;
             }
@@ -108,7 +110,7 @@ Shader "Shader Forge/InteractableObject" {
                 o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 return o;
             }

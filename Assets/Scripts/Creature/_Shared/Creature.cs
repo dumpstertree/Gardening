@@ -2,7 +2,6 @@
 using UnityEngine;
 using Interactable.OptionalComponent;
 
-[RequireComponent( typeof(Health) )]
 public abstract class Creature : Interactable.InteractableObject {
 
 	// **************************
@@ -14,13 +13,13 @@ public abstract class Creature : Interactable.InteractableObject {
 		get{ return _inventory; }  
 	}
 	public Transform GunProjector { 
-		get{ return _gunProjector; } 
+		get{ return _projectileSpawner; } 
 	}
 	public Animator Animator { 
 		get{ return _animator;} 
 	}
 	public Rigidbody Rigidbody { 
-		get { return _rigidBody; } 
+		get { return _rigidbody; } 
 	}
 	public Brain Brain { 
 		get{ return _brain; } 
@@ -33,45 +32,35 @@ public abstract class Creature : Interactable.InteractableObject {
 
 	public virtual void Init () {
 
-		_health = GetComponent<Health>();
-		_brain = GetComponent<Brain>();
-		_rigidBody = GetComponent<Rigidbody>();
-
 		_health.OnHealthChanged += currentHealth => {
 
-			if ( currentHealth <= 0 && !_dead ) {
-				Faint();
-			}
-			if ( currentHealth >= 1 && _dead ) {
-				WakeUp();
-			}
+			if ( currentHealth <= 0 && !_dead ) { Faint(); }
+			if ( currentHealth >= 1 &&  _dead ) { WakeUp(); }
 		};
 	}
 
 	
 	// **************************
 
-
-
+	[Header( "Creature Properties" )]
 	[SerializeField] protected Interactor _interactor;
-	[SerializeField] protected Transform _gunProjector;
+	[SerializeField] protected Transform _projectileSpawner;
 	[SerializeField] protected Animator _animator;
+	[SerializeField] protected Health _health;
+	[SerializeField] protected Brain _brain;
+	[SerializeField] protected Rigidbody _rigidbody;
 
-	protected Health _health;
-	protected Brain _brain;
-	protected Rigidbody _rigidBody;
 	protected QuickSlotInventory _quickslotInventory;
 	protected Inventory _inventory;
 
-	private bool _dead;
 
-
-	
 	// **************************
 
 	protected virtual void Update () {
 
-		if ( !_animator.GetCurrentAnimatorStateInfo(0).IsTag("InputRestricted") && !_dead ){
+		var currentAnimState = _animator.GetCurrentAnimatorStateInfo( 0 );
+		
+		if ( !currentAnimState.IsTag( RESRICTED_INPUT_TAG ) && !_dead ){
 			_brain.Think();
 		}
 	}
@@ -80,16 +69,16 @@ public abstract class Creature : Interactable.InteractableObject {
 	protected virtual void Faint () {
 
 		_dead = true;
-		_animator.SetTrigger( "Dead" );
-		_rigidBody.isKinematic = true;
+		_animator.SetTrigger( FAINT_TRIGGER );
+		_rigidbody.isKinematic = true;
 
 		Game.Effects.OneShot( Application.Effects.Type.Faint, transform.position, transform.rotation );
 	}
 	protected virtual void WakeUp () {
 
 		_dead = false;
-		_animator.SetTrigger( "WakeUp" );
-		_rigidBody.isKinematic = false;
+		_animator.SetTrigger( WAKE_UP_TRIGGER );
+		_rigidbody.isKinematic = false;
 
 		Game.Effects.OneShot( Application.Effects.Type.WakeUp, transform.position, transform.rotation );
 	}
@@ -97,10 +86,16 @@ public abstract class Creature : Interactable.InteractableObject {
 
 	// **************************
 
+	private const string FAINT_TRIGGER = "Dead";
+	private const string WAKE_UP_TRIGGER = "WakeUp";
+	private const string RESRICTED_INPUT_TAG = "InputRestricted";
+
 	private const float FACE_INTERACTABLE_LENGTH = 0.5f;
 	private const float FACE_INTERACTABLE_FORCE_DISTANCE = 1.5f;
 	private const float FACE_INTERACTABLE_MIN_DISTANC = 0.5f;
 	private const float FACE_INTERACTABLE_MAX_DISTANC = 1.6f;
+
+	private bool _dead;
 
 
 	public void FaceInteractableObject( Vector3 position ){

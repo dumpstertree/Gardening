@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: f1ce77007af8e467eb84ffafe0e0b59d
+timeCreated: 1521153679
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _WallTexture: {fileID: 2800000, guid: 325c89c9066e041a8bb682356f42be16, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2,25 +2,40 @@
 
 public class Player : Creature {
 
+	
 	// ***************** PUBLIC *******************
 
-	private Model.PartInventory _gunParts;
-	public Model.PartInventory GunParts { get { return _gunParts; }}
+	public Model.PartInventory GunParts { 
+		get { return _gunParts; }
+	}
 
-	[SerializeField] private QuickSlot _quickslot;
-	public QuickSlot QuickSlot { get{ return _quickslot; }  }
-	
+	public QuickSlot QuickSlot { 
+		get{ return _quickslot; }  
+	}
+	public Transform CameraTarget {
+		get{ return _cameraTarget; }
+	}
+	public Transform CameraFocus {
+		get{ return _cameraFocus; }
+	}
+
 
 	// ***************** PRIVATE *******************
 
-	public PlayerRecipes PlayerRecipes; 	// convert to prop
-	public Transform CameraTarget; 			// convert to prop
-	public Transform CameraFocus;			// convert to prop
+	[Header( "Player Properties" )]
+	[SerializeField] private QuickSlot _quickslot;
 
+	private Transform _cameraTarget;	
+	private Transform _cameraFocus;
 	private PlayerDataController _dataController;
+	private Model.PartInventory _gunParts;
 	private CameraType _cameraType;
-	
 
+	public PlayerRecipes PlayerRecipes; // this should be some kind of data type not a monobehavior
+
+	private const string CAMERA_TARGET_NAME = "CameraTarget";
+	private const string CAMERA_FOCUS_NAME = "CameraFocus";
+	
 	// *********************************************
 	
 	public override void Init () {
@@ -51,14 +66,15 @@ public class Player : Creature {
 		};
 	}
 
+
 	// *********************************************
 
 	private void CreateCameraTarget () {
 		
-		CameraTarget = new GameObject( "CameraTarget" ).transform;
+		_cameraTarget = new GameObject( CAMERA_TARGET_NAME ).transform;
 	}
 	private void CreateCameraFocus () {
 
-		CameraFocus = new GameObject( "CameraFocus" ).transform;
+		_cameraFocus = new GameObject( CAMERA_FOCUS_NAME ).transform;
 	}
 }

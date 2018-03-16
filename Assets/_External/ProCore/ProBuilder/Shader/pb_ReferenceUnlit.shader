@@ -1,4 +1,6 @@
-﻿Shader "Hidden/ProBuilder/pb_TransparentOverlay"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ProBuilder/Reference Unlit"
 {
 	Properties
 	{
@@ -7,12 +9,13 @@
 
 	SubShader
 	{
-		Tags { "IgnoreProjector"="True" "RenderType"="Transparent" }
+		Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="Transparent" }
 		Lighting Off
 		ZTest LEqual
-		ZWrite On
-		Cull Back
 		Blend SrcAlpha OneMinusSrcAlpha
+		ZWrite On
+		Cull Off
+		Offset 1,1
 
 		Pass
 		{
@@ -28,14 +31,12 @@
 			struct appdata
 			{
 				float4 vertex : POSITION;
-				float4 color : COLOR;
         		float4 texcoord0 : TEXCOORD0;
 			};
 
 			struct v2f
 			{
 				float4 pos : SV_POSITION;
-				float4 color : COLOR;
 				float2 uv : TEXCOORD0;
 			};
 
@@ -43,18 +44,15 @@
 			{
 				v2f o;
 
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-
+				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv = v.texcoord0.xy;
-
-				o.color = v.color;
 
 				return o;
 			}
 
 			half4 frag (v2f i) : COLOR
 			{
-				return tex2D(_MainTex, i.uv) * i.color;
+				return tex2D(_MainTex, i.uv);
 			}
 
 			ENDCG

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Shader created with Shader Forge v1.30 
@@ -105,7 +107,7 @@ Shader "Shader Forge/Water" {
                 v.vertex.xyz += (float3(node_5675,_Noise_var.r,node_5675)*_Height);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 return o;
             }
@@ -280,7 +282,7 @@ Shader "Shader Forge/Water" {
                 v.vertex.xyz += (float3(node_5675,_Noise_var.r,node_5675)*_Height);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -395,7 +397,7 @@ Shader "Shader Forge/Water" {
                 float4 _Noise_var = tex2Dlod(_Noise,float4(TRANSFORM_TEX(node_7219, _Noise),0.0,0));
                 v.vertex.xyz += (float3(node_5675,_Noise_var.r,node_5675)*_Height);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 TRANSFER_SHADOW_CASTER(o)
                 return o;
             }

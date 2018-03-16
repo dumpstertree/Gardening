@@ -40,6 +40,7 @@ namespace Interactable {
 
 		// ***************** PRIVATE ********************
 
+		[Header( "Interactable Properties" )]
 		[SerializeField] private Transform _interactablePivot;
 
 		private Component.Hitable _hitDelegate;
