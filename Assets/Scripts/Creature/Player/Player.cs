@@ -24,6 +24,7 @@ public class Player : Creature {
 
 	[Header( "Player Properties" )]
 	[SerializeField] private QuickSlot _quickslot;
+	[SerializeField] private Model.Template.InventoryItemTemplate _hand;
 
 	private Transform _cameraTarget;	
 	private Transform _cameraFocus;
@@ -52,16 +53,23 @@ public class Player : Creature {
 		_inventory = _dataController.LoadInventory();
 		_gunParts = _dataController.LoadPartInventory();
 		
+		
 		// save when changes are made
 		_quickslotInventory.OnInventoryItemChanged += (index, item) => { 
 			_dataController.SaveQuickSlotInventory( _quickslotInventory ); 
 		};
 		_inventory.OnInventoryItemChanged += (index, item) => {
+			print( "Inv Changed!" );
 			_dataController.SaveInventory( _inventory );
 		};
 		_gunParts.OnPartListChanged += () => {
 			_dataController.SavePartInventory( _gunParts );
 		};
+
+		Debug.Log( "Listen For Events!" );
+
+		// set hand item
+		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center ), _hand.GetInstance(1));
 	}
 
 

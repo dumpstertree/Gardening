@@ -3,7 +3,7 @@
 
 public abstract class InventoryItemData {
 	
-	public InventoryItem.UseAnimation Animation;
+	// public InventoryItem.UseAnimation Animation;
 }
 
 
@@ -23,15 +23,7 @@ public abstract class InventoryItemData {
 }
 [System.Serializable] public class FeedData : InventoryItemData {
 }
-[System.Serializable] public class InteractData : InventoryItemData {
-}
 [System.Serializable] public class PlaceData : InventoryItemData {
 	
 	public GameObject Prefab;
-}
-[System.Serializable] public class ShootData : InventoryItemData {	
-
- 	public HitData _hitData;
-	public GameObject BulletPrefab;
-	public Model.Gun CraftedGun;
 }

@@ -11,7 +11,6 @@ namespace UI.Panels {
 		public void SetItemToEdit ( InventoryItem itemToEdit ) {
 			
 			_itemBeingEdited = itemToEdit;
-			_gunRef = Game.GunControl.GetGun( _itemBeingEdited.ID );
 
 			if ( itemToEdit != null ) {
 				
@@ -22,12 +21,12 @@ namespace UI.Panels {
 				_gunPartsSubpanel.Reload();
 				
 				// foreach part in this new items gun add it to the graph
-				foreach( Model.Gun.Part p in _gunRef.Gun.WeaponParts ) {
+				foreach( Model.Gun.Part p in itemToEdit._shootData.Gun.WeaponParts ) {
 					_partGraphSubpanel.AddPartToGraph( p );
 				}
 
 
-				UpdateGunStats( _gunRef.Gun );
+				UpdateGunStats( itemToEdit._shootData.Gun );
 			}
 		}
 
@@ -41,7 +40,6 @@ namespace UI.Panels {
 		[SerializeField] private UI.Subpanels.GunCrafting.GunParts _gunPartsSubpanel;
 
 		private InventoryItem _itemBeingEdited;
-		private GunRef _gunRef;
 
 		// ************************************
 
@@ -53,7 +51,8 @@ namespace UI.Panels {
 
 			_partGraphSubpanel.CraftedGunChanged += newGun => {
 				
-				_gunRef.UpdateModel( newGun );
+				Debug.LogWarning( "crafting currently broken here" );
+				// _gunRef.UpdateModel( newGun );
 				UpdateGunStats ( newGun );
 			};
 		}

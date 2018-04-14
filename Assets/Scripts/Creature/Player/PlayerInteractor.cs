@@ -61,8 +61,7 @@ public class PlayerInteractor : Interactor {
 		else if ( (item != null && interactable != null) &&
 				  (item.CanInteract && interactable.Interactable ||
 				   item.CanHit && interactable.Hitable ||
-				   item.CanPlant && interactable.Plantable ||
-				   item.CanFeed && interactable.Feedable )) {
+				   item.CanPlant && interactable.Plantable )) {
 						return InteractorPostion.Tracking.Interactable;
 		} else {
 			return InteractorPostion.Tracking.Player;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.IO;
 using Model;
 
@@ -12,6 +12,8 @@ public class PlayerDataController : DataController {
 
 
 	public void SaveInventory ( Inventory inventory ) {
+
+		Debug.Log( "Save!" );
       
        	var json = JsonUtility.ToJson( inventory.Serialize(), true );
         File.WriteAllText( INVENTORY_SAVE_PATH + INVENTORY_SAVE_FILE_NAME, json );
@@ -22,9 +24,9 @@ public class PlayerDataController : DataController {
 		return (text != "") ? CreateInventoryFromJson( text ) : CreateBlankInventory();
 	}
 	private Inventory CreateInventoryFromJson ( string json ) {
-
-		var model = JsonUtility.FromJson<Inventory.Serialized>( json );
-		return Inventory.Deserialize( model );
+		
+		var inventory = JsonUtility.FromJson<Inventory.Serialized>( json );
+		return new Inventory( inventory );
 	}
 	private Inventory CreateBlankInventory () {
 
@@ -56,8 +58,8 @@ public class PlayerDataController : DataController {
 	}
 	private QuickSlotInventory CreateQuickSlotFromJson ( string json ) {
 	
-		var model = JsonUtility.FromJson<QuickSlotInventory.Serialized>( json );
-		return QuickSlotInventory.Deserialize( model );
+		var inventory = JsonUtility.FromJson<QuickSlotInventory.Serialized>( json );
+		return new QuickSlotInventory( inventory );
 	}
 	private QuickSlotInventory CreateBlankQuickSlot () {
 	

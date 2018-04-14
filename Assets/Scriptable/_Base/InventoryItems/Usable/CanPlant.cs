@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿// using UnityEngine;
 
-partial class InventoryItem {
+// partial class InventoryItem {
 
-	public bool CanPlant { get{ return _canPlant; } }
+// 	public bool CanPlant { get{ return _canPlant; } }
 	
-	[HeaderAttribute("Plant")]
-	[SerializeField] private bool _canPlant;
-	[SerializeField] private PlantData _plantData;
-}
+// 	[HeaderAttribute("Plant")]
+// 	[SerializeField] private bool _canPlant;
+// 	[SerializeField] private PlantData _plantData;
+// }

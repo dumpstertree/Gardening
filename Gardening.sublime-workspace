@@ -4,12 +4,124 @@
 		"selected_items":
 		[
 			[
-				"teplate",
-				"InventoryItemTemplate	InventoryItemTemplate"
+				"from",
+				"FromJsonOverwrite(string json, object objectToOverwrite)	void"
+			],
+			[
+				"_inv",
+				"_inventoryItems	InventoryItem[]"
 			],
 			[
 				"get",
-				"GetInstance()	void"
+				"GetInstance(int startingCount)	InventoryItem"
+			],
+			[
+				"seriali",
+				"serializedData	Serialized"
+			],
+			[
+				"inter",
+				"Interactor	Interactor { get; }"
+			],
+			[
+				"se",
+				"SerializableAttribute	SerializableAttribute"
+			],
+			[
+				"inte",
+				"InteractData	InteractData"
+			],
+			[
+				"_inter",
+				"_interactor	Interacter"
+			],
+			[
+				"conteo",
+				"Controller	Controller"
+			],
+			[
+				"_can",
+				"_canInteract	bool"
+			],
+			[
+				"de",
+				"Debug	Debug"
+			],
+			[
+				"quic",
+				"QuickSlotInventory	QuickSlotInventory"
+			],
+			[
+				"_qui",
+				"_quickslotInventory	QuickSlotInventory"
+			],
+			[
+				"_gun",
+				"_gunGUIDToLookup	string"
+			],
+			[
+				"game",
+				"Game	Game"
+			],
+			[
+				"bull",
+				"BulletPrefab	GameObject"
+			],
+			[
+				"set",
+				"SetBulletPrefab(GameObject prefab)	void"
+			],
+			[
+				"_gu",
+				"_gunGUIDToLookup	string"
+			],
+			[
+				"Game",
+				"GameObject	GameObject"
+			],
+			[
+				"_canpla",
+				"_canPlant	bool"
+			],
+			[
+				"interac",
+				"Interactor	Interactor"
+			],
+			[
+				"ID",
+				"_id	string"
+			],
+			[
+				"inve",
+				"InventoryItemData	InventoryItemData"
+			],
+			[
+				"getin",
+				"GetInstance(int startingCount)	InventoryItem"
+			],
+			[
+				"inven",
+				"InventoryItemTemplate	InventoryItemTemplate"
+			],
+			[
+				"nul",
+				"nullReturn	InventoryItemTemplate"
+			],
+			[
+				"template",
+				"InventoryItemTemplate	InventoryItemTemplate"
+			],
+			[
+				"null",
+				"NULL_TEMPLATE_ID	string"
+			],
+			[
+				"id",
+				"_id	string"
+			],
+			[
+				"teplate",
+				"InventoryItemTemplate	InventoryItemTemplate"
 			],
 			[
 				"load",
@@ -20,20 +132,12 @@
 				"HitData	HitData"
 			],
 			[
-				"inter",
-				"Interactor	Interactor { get; }"
-			],
-			[
 				"camerfoc",
 				"CAMERA_FOCUS_NAME	string"
 			],
 			[
 				"_ca",
 				"_cameraTarget	Transform"
-			],
-			[
-				"game",
-				"gameObject	GameObject { get; }"
 			],
 			[
 				"faint",
@@ -98,10 +202,6 @@
 			[
 				"_g",
 				"_partGraph	PartGraph"
-			],
-			[
-				"inve",
-				"InventoryUI	InventoryUI"
 			],
 			[
 				"key",
@@ -304,14 +404,6 @@
 				"Index	int { get; set; }"
 			],
 			[
-				"_gun",
-				"_gunCraftingInventory	Inventory"
-			],
-			[
-				"inven",
-				"InventoryUI	InventoryUI"
-			],
-			[
 				"Craft",
 				"CraftedGun	CraftedGun"
 			],
@@ -372,10 +464,6 @@
 				"SetProjector(int x, int y, Projector projector)	void"
 			],
 			[
-				"set",
-				"SetComponent(int x, int y, Component component)	void"
-			],
-			[
 				"project",
 				"projectedPos	Vector3"
 			],
@@ -386,10 +474,6 @@
 			[
 				"projec",
 				"projectedY	int"
-			],
-			[
-				"Game",
-				"Game	Game"
 			],
 			[
 				"slots",
@@ -430,141 +514,35 @@
 			[
 				"onpr",
 				"onProject	OnProjectEvent"
-			],
-			[
-				"onpro",
-				"OnProjectEvent	OnProjectEvent"
-			],
-			[
-				"tr",
-				"transform	Transform { get; }"
-			],
-			[
-				"pr",
-				"Project()	void"
-			],
-			[
-				"acti",
-				"_active	bool"
-			],
-			[
-				"guncompon",
-				"GunCraftingComponent	GunCraftingComponent"
-			],
-			[
-				"rotate",
-				"RotateRight()	void"
-			],
-			[
-				"gekeyd",
-				"GetKeyDown(KeyCode key)	bool"
-			],
-			[
-				"poi",
-				"OnPointerIsStillDownEvent	PointerEvent"
-			],
-			[
-				"handl",
-				"HandlePointerIsStillDown()	void"
-			],
-			[
-				"onpoin",
-				"OnPointerUpEvent	PointerEvent"
-			],
-			[
-				"pointer",
-				"OnPointerExitEvent	PointerEvent"
-			],
-			[
-				"handelon",
-				"HandlePointerUp()	void"
-			],
-			[
-				"butt",
-				"Button	Button"
-			],
-			[
-				"getmous",
-				"GetMouseButtonUp(int button)	bool"
-			],
-			[
-				"Vec",
-				"Vector3	Vector3"
-			],
-			[
-				"snap",
-				"SNAPPING	float"
-			],
-			[
-				"ve",
-				"Vector3()	Vector3()"
-			],
-			[
-				"_c",
-				"_currentCraftingComponent	GunCraftingComponent"
-			],
-			[
-				"rotat",
-				"RotateRight()	void"
-			],
-			[
-				"_rot",
-				"_rotateRight	Button"
-			],
-			[
-				"bu",
-				"Button	Button"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Assets/Scripts/Creature/_Shared/Creature.cs",
-			"settings":
-			{
-				"buffer_size": 3845,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "using UnityEngine;\nusing System;\n\n[System.Serializable]\npublic partial class InventoryItem : ScriptableObject {\n\n	\n	// ***************** PUBLIC *******************\n\n	public delegate void OnCountChangedEvent();\n	public OnCountChangedEvent OnCountChanged;\n\n	\n	// ********************************************\n	\n	public string ID { \n		get{ return _id; } \n	}\n	public int Count { \n		get{ return _count; } \n	}\n\n	\n	// ********************************************\n\n	public string DisplayName { \n		get{ return _displayName; } \n	}\n	public int MaxCount { \n		get{ return _maxCount; } \n	}\n	public Sprite Sprite { \n		get{ return _sprite; } \n	}\n	public GameObject HoldItem { \n		get{ return _holdItem; } \n	}\n	public bool Expendable { \n		get{ return _expendable; } \n	}\n\n\n	// ********************************************\n\n	[SerializeField] private string _id;\n	[SerializeField] private int _count;\n	[SerializeField] private string _displayName;\n	[SerializeField] private int _maxCount;\n	[SerializeField] private Sprite _sprite;\n	[SerializeField] private GameObject _holdItem;\n	[SerializeField] private bool _expendable;\n\n	private bool _hasBeenInit;\n\n\n	// ********************************************\n	\n	public void Init ( string id = \"\" ) {\n\n		_id = id != \"\" ? id : Guid.NewGuid().ToString();\n		\n		InitCanShoot();\n	}\n\n	public void Use ( Creature user, Action onComplete ) {\n\n		var interactableObject = user.Interactor.InteractableObject;\n\n		// place\n		if ( _canPlace ) { \n			Place( user.Interactor );\n		}\n\n		// shoot\n		if ( _canShoot ) {\n			Shoot( user, _shootData, onComplete );\n		}\n\n\n		// hit\n		if ( _canHit && user.Interactor.InteractableObject.Hitable ) { \n			Use( user, _interactData, () => { interactableObject.HitDelegate.Hit( user, _hitData );  }, onComplete );\n		}\n\n		// plant\n		if ( _canPlant && user.Interactor.InteractableObject.Plantable ) { \n		}\n\n		// feed\n		if ( _canFeed && user.Interactor.InteractableObject.Feedable ) { \n		}\n\n		// interact\n		if ( _canInteract && user.Interactor.InteractableObject.Interactable) { \n			Use( user, _interactData, () => { interactableObject.InteractDelegate.Interact( user, this ); }, onComplete );\n		}\n	}\n\n\n	public void AddCount ( int more ) {\n\n		_count += more;\n\n		if ( OnCountChanged != null ){\n			OnCountChanged();\n		}\n	}\n	public void ReduceCount ( int less ) {\n\n		_count -= less;\n\n		if ( OnCountChanged != null ){\n			OnCountChanged();\n		}\n	}\n	public void SetCount ( int count ) {\n		\n		_count = count;\n\n		if ( OnCountChanged != null ){\n			OnCountChanged();\n		}\n	}\n\n	\n	// *********************************************\n\n	public static Serialized Serialize ( InventoryItem inventoryItem ) {\n\n		return new InventoryItem.Serialized( inventoryItem );\n	}\n	public static InventoryItem Deserialize ( Serialized serializedData ) {\n				\n		var inst = Game.ItemManager.RequestItem( serializedData.ItemName, serializedData.ID );\n\n		inst._count = serializedData.Count;\n\n		return inst;\n	}\n\n	[System.Serializable]\n	public class Serialized {\n\n		[SerializeField] public string ID;\n		[SerializeField] public int Count;\n		[SerializeField] public string ItemName;\n\n		public Serialized ( InventoryItem item ) {\n\n			ID = item.ID;\n			Count = item.Count;\n			ItemName = item.name;\n		}\n	}\n}\n",
 			"file": "Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs",
-			"file_size": 3195,
-			"file_write_time": 131656375240000000,
 			"settings":
 			{
-				"buffer_size": 3196,
+				"buffer_size": 3761,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs",
+			"file": "Assets/Scripts/Model/Inventory.cs",
 			"settings":
 			{
-				"buffer_size": 1947,
+				"buffer_size": 5579,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "using UnityEngine;\n\npublic class InventoryItemTemplate : ScriptableObject {\n\n	public string ID {\n		get { return _id; }\n	}\n	public void GetInstance () {\n\n		var item = new InventoryItem();\n		item.\n	}\n\n	// *********************************\n\n	[Header( \"Storage\" )]\n	[SerializeField] private string _id = \"example.id\";\n\n\n	[Header( \"Name\" )]\n	[SerializeField] private string _displayName = \"example name\";\n\n\n	[Header( \"Visuals\" )]\n	[SerializeField] private Sprite _sprite = null;\n	[SerializeField] private GameObject _holdItem = null;\n\n\n	[Header( \"Count\" )]\n	[SerializeField] private int _maxCount = 1;\n	[SerializeField] private bool _expendable = true;\n\n\n	[Header( \"Usability\" )]\n	[SerializeField] private bool _canInteract = true;\n	[SerializeField] private InteractData _interactData = null;\n	\n	[SpaceAttribute]\n	[SerializeField] private bool _canShoot = false;\n	[SerializeField] private ShootData _shootData = null;\n	\n	[SpaceAttribute]\n	[SerializeField] private bool _canSwing = false;\n	[SerializeField] private HitData _hitData = null;\n	\n	[SpaceAttribute]\n	[SerializeField] private bool _canPlace = false;\n	[SerializeField] private PlaceData _placeData = null;\n\n	[SpaceAttribute]\n	[SerializeField] private bool _canPlant = false;\n	[SerializeField] private PlantData _plantData = null;\n}\n",
-			"file": "Assets/InventoryItemTemplate.cs",
-			"file_size": 1280,
-			"file_write_time": 131656404380000000,
+			"contents": "using UnityEngine;\nusing System.IO;\nusing Model;\n\npublic class PlayerDataController : DataController {\n\n	// *********** INVENTORY *************\n\n	private const string INVENTORY_SAVE_PATH = \"/Users/zacharycollins/desktop/\";\n	private const string INVENTORY_SAVE_FILE_NAME = \"Inventory\";\n	private const int NUMBER_OF_INVENTORY_SLOTS = 15;\n\n\n	public void SaveInventory ( Inventory inventory ) {\n      \n       	var json = JsonUtility.ToJson( inventory, true );\n        File.WriteAllText( INVENTORY_SAVE_PATH + INVENTORY_SAVE_FILE_NAME, json );\n	}\n	public Inventory LoadInventory () {\n\n		var text = LoadFileFromPath( INVENTORY_SAVE_PATH + INVENTORY_SAVE_FILE_NAME );\n		return (text != \"\") ? CreateInventoryFromJson( text ) : CreateBlankInventory();\n	}\n	private Inventory CreateInventoryFromJson ( string json ) {\n		Debug.Log( json );\n		var inventory = JsonUtility.FromJson<Inventory>( json );\n		Debug.Log( inventory.InventoryCount );\n		return inventory;\n	}\n	private Inventory CreateBlankInventory () {\n\n		Debug.Log( \"blank item\" );\n\n		var newInventory = new Inventory( NUMBER_OF_INVENTORY_SLOTS );\n		SaveInventory( newInventory );\n\n		Debug.LogWarningFormat( \"No Inventory data found. Making a new one\" );\n\n		return newInventory;\n	}\n\n	\n	// ************ QUICKSLOT ************\n\n	private const string QUICKSLOT_PATH = \"/Users/zacharycollins/desktop/\";\n	private const string QUICKSLOT_FILE_NAME = \"QuickSlot\";\n	private const int NUMBER_OF_QUICKSLOT_SLOTS = 5;\n\n	\n	public void SaveQuickSlotInventory ( QuickSlotInventory quickslot ) {\n\n       	var json = JsonUtility.ToJson( quickslot, true );\n        File.WriteAllText( QUICKSLOT_PATH + QUICKSLOT_FILE_NAME, json );\n	}\n	public QuickSlotInventory LoadQuickSlotInventory () {\n\n		var text = LoadFileFromPath( QUICKSLOT_PATH + QUICKSLOT_FILE_NAME );\n		return (text != \"\") ? CreateQuickSlotFromJson( text ) : CreateBlankQuickSlot();\n	}\n	private QuickSlotInventory CreateQuickSlotFromJson ( string json ) {\n	\n		return JsonUtility.FromJson<QuickSlotInventory>( json );\n	}\n	private QuickSlotInventory CreateBlankQuickSlot () {\n	\n		var newQuickSlot = new QuickSlotInventory( NUMBER_OF_QUICKSLOT_SLOTS );\n		SaveQuickSlotInventory( newQuickSlot );\n\n		Debug.LogWarningFormat( \"No Quickslot data found. Making a new one\" );\n		\n		return newQuickSlot;\n	}\n\n	// ************ PARTS ************\n\n	private const string PARTS_PATH = \"/Users/zacharycollins/desktop/\";\n	private const string PARTS_FILE_NAME = \"PartInventory\";\n	private const int NUMBER_OF_PARTS_SLOTS = 99;\n\n	\n	public void SavePartInventory ( PartInventory partInventory ) {\n\n       	var json = JsonUtility.ToJson( partInventory, true );\n        File.WriteAllText( PARTS_PATH + PARTS_FILE_NAME, json );\n	}\n	public PartInventory LoadPartInventory () {\n\n		var text = LoadFileFromPath( PARTS_PATH + PARTS_FILE_NAME );\n		return (text != \"\") ? CreatePartInventoryFromJson( text ) : CreateBlankPartInventory();\n	}\n	private PartInventory CreatePartInventoryFromJson ( string json ) {\n		\n		var model = JsonUtility.FromJson<PartInventory>( json );\n		return model;\n	}\n	private PartInventory CreateBlankPartInventory () {\n	\n		var newPartInventory = new PartInventory( NUMBER_OF_PARTS_SLOTS );\n		SavePartInventory( newPartInventory );\n\n		Debug.LogWarningFormat( \"No PartInventory data found. Making a new one\" );\n		\n		return newPartInventory;\n	}\n\n}\n",
+			"file": "Assets/Scripts/Serialization/PlayerDataController.cs",
+			"file_size": 3324,
+			"file_write_time": 131668295330000000,
 			"settings":
 			{
-				"buffer_size": 1285,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "using System.Collections.Generic;\nusing UnityEngine;\n\npublic class InventoryItemFactory { // remove item manager\n\n	[SerializeField] private InventoryItemTemplate _nullTemplate;\n\n	Dictionary<string,InventoryItemTemplate> _templates;\n\n	public InventoryItemFactory () {\n		\n		_templates = new Dictionary<string,InventoryItemTemplate>();\n		\n		var templates = Resources.LoadAll<InventoryItemTemplate>( \"\" );\n		foreach ( InventoryItemTemplate t in templates ) {\n			_templates.Add( t.ID, t );\n		}\n	}\n\n\n	public void GetItem ( string id ) {\n\n		if ( _templates.ContainsKey( id ) ) {\n			//return _templates[ id ].GetInstance();\n		}\n\n		//return _nullTemplate.GetInstance();\n	}\n	public void GetItem ( InventoryItemTemplate template ) {\n\n		template.GetInstance();\n	}\n}\n",
-			"file": "Assets/InventoryItemFactory.cs",
-			"file_size": 734,
-			"file_write_time": 131656402200000000,
-			"settings":
-			{
-				"buffer_size": 754,
+				"buffer_size": 3321,
 				"line_ending": "Unix"
 			}
 		}
@@ -632,18 +610,50 @@
 	],
 	"file_history":
 	[
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/ItemManager.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/InventoryItemTemplate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/PlayerInteractor.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Enemy/EnemyInteractor.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Interactions/Interactor.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/InteractableObject.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Controller/InteractData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/InteractData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Data/ShootData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/ShootData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InteractData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Controller/InteractData1.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Player.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/QuickSlot.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/GunCrafting.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/Ammo.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Async.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Serialization/GunDataController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunRef.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/GunControl.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Inventory.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Gun.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanShoot.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InventoryItemTemplate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/RefObjects/GunRef.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Enemy/Enemy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/UseAnimation.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanPlant.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanPlace.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanHit.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/_Shared/Creature.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InventoryItemFactory.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Game.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/ItemManager.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanFeed.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CreateCraftingRecipe1.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/MaterialItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/NonUsableInventoryItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Inventory1.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Serialization/PlayerDataController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Player.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/InteractableObject.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/CustomInteractable/GunPartPickup.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/_Shared/Creature.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/_Base/UiPanel.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Player/Player.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartInventory.cs",
@@ -654,7 +664,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ScriptableObjects/_Base/InventoryItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/GunCrafting/PartGraph.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/GunCrafting/GunParts.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/GunCrafting.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ScriptableObjects/_Base/InventoryItemData.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/GunCrafting/PartGraph.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/Projector.cs",
@@ -666,7 +675,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunCraftingPanel.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/PartGraph.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ObjectAnimator.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Async.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/UIController.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/_Base/ItemBubbleUI.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Projector.cs",
@@ -729,37 +737,7 @@
 		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/System/Async.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/ScriptableObjects/_Base/InventoryItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/UseAnimation.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/InteractableObject.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/Components/Optional/Destroyable.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/InventoryItemEditor.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/InventoryItemData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/HoldItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/Components/Hitable.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/Components/Optional/Health.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/CustomBehaviors/DropItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Stop.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/Player/Inventory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/ScriptableObjects/InventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InventoryItems/InventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Workspace.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/ScriptableObjects/_Base/Editor/CreateCraftingRecipe.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/UI/Recipes/ComponentBubbleUI.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/Crafting/Crafting.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/ScriptableObjects/_Base/CraftingRecipe.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/ScriptableObjects/_Base/Editor/CreateInventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/ScriptableObjects/Editor/CreateInventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/ScriptableObjects/_Base/New Folder/CraftingRecipe.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/ScriptableObjects/InventoryItemScriptable.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Gardening.sublime-project",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/GardeningV2.userprefs",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/InventoryItemScriptable.asset",
-		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/Editor/CreateInventoryItem.cs",
-		"/Users/zacharycollins/Library/Application Support/Sublime Text 3/Packages/User/C#.sublime-settings",
-		"/Users/zacharycollins/Documents/Unity Projects/Gardening/Assets/Scripts/Crafting/Recipes.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Gardening/Assets/ToBeRemoved/CharacterControllerGardenMode.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Gardening/Assets/Scripts/_Model/InventoryItems/Shoot/Guns.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Gardening/Assets/Scripts/_Model/InventoryItem.cs",
-		"/Users/zacharycollins/Documents/xCodeProjects/Joker/Podfile"
+		"/Users/zacharycollins/Documents/Unity Projects/GardeningV2/Assets/Scripts/InteractableObjects/InteractableObject.cs"
 	],
 	"find":
 	{
@@ -778,6 +756,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"HandItem",
+			"Action",
+			"wait",
+			"  ",
+			"_expendable",
+			"_plantData",
 			"Gun",
 			"Projector",
 			"Reciever",
@@ -899,13 +883,7 @@
 			"storage",
 			"image",
 			"\"",
-			"newLetter",
-			"uiman",
-			"player",
-			"bma",
-			"DDDDD",
-			"appl",
-			"scale"
+			"newLetter"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -991,72 +969,72 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Assets/Scripts/Creature/_Shared/Creature.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3845,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								25,
-								25
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"1669,1670": "'_rigidBody' is not a known identifier",
-								"1681,1682": "'?' does not contain a definition for 'isKinematic'",
-								"1688,1689": "Cannot convert from System.Boolean to ?"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 237.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3196,
+						"buffer_size": 3761,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2791,
-								2791
+								1635,
+								1635
 							]
 						],
 						"settings":
 						{
 							"oops":
 							{
-								"1040,1049": "The private field '_holdItem' is never assigned",
-								"1082,1093": "The private field '_expendable' is never assigned",
-								"1110,1122": "The private field '_hasBeenInit' is never assigned",
-								"906,918": "The private field '_displayName' is never assigned",
-								"950,959": "The private field '_maxCount' is never assigned",
-								"994,1001": "The private field '_sprite' is never assigned"
+								"3019,3029": "Parameter 'interactor' is never used",
+								"3038,3048": "Parameter 'onComplete' is never used",
+								"3078,3086": "Parameter can be declared with base type",
+								"3106,3116": "Parameter 'onComplete' is never used",
+								"3388,3393": "Method 'Plant' has the same with 'Swing'",
+								"3405,3415": "Parameter 'interactor' is never used",
+								"3424,3434": "Parameter 'onComplete' is never used"
 							},
 							"syntax": "Packages/C#/C#.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 635.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/Scripts/Model/Inventory.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5579,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3817,
+								3817
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"3859,3872": "Cannot convert from ? to System.Object",
+								"3874,3875": "Cannot convert from System.String to InventoryItem"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1064,95 +1042,31 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs",
+					"file": "Assets/Scripts/Serialization/PlayerDataController.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1947,
+						"buffer_size": 3321,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								513,
-								513
+								827,
+								827
 							]
 						],
 						"settings":
 						{
+							"oops":
+							{
+								"1466,1488": "Method 'SaveQuickSlotInventory' can be made static.",
+								"2507,2524": "Method 'SavePartInventory' can be made static.",
+								"351,364": "Method 'SaveInventory' can be made static."
+							},
 							"syntax": "Packages/C#/C#.tmLanguage",
 							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Assets/InventoryItemTemplate.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1285,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								151,
-								151
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"135,146": "Method 'GetInstance' can be made static.",
-								"155,158": "Assignment is redundant"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Assets/InventoryItemFactory.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 754,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								90,
-								90
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"139,152": "The private field '_nullTemplate' is never assigned",
-								"391,412": "Collection element type 'KeyValuePair<string, InventoryItemTemplate>' is not implicitly convertible to 'InventoryItemTemplate'",
-								"512,514": "Convert to 'return' statement",
-								"553,559": "Return type is 'void'",
-								"599,605": "Return type is 'void'",
-								"651,658": "Method 'GetItem' can be made static."
-							},
-							"syntax": "Packages/C#/C#.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1225,8 +1139,176 @@
 		"selected_items":
 		[
 			[
+				"inventor",
+				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
+			],
+			[
+				"datacont",
+				"Assets/Scripts/Serialization/PlayerDataController.cs"
+			],
+			[
+				"iventoryload",
+				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
+			],
+			[
+				"pick",
+				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+			],
+			[
+				"enem",
+				"Assets/Scripts/Creature/Enemy/EnemyInteractor.cs"
+			],
+			[
+				"playerinter",
+				"Assets/Scripts/Creature/Player/PlayerInteractor.cs"
+			],
+			[
+				"interac",
+				"Assets/Scripts/Creature/Player/Interactions/Interactor.cs"
+			],
+			[
+				"invent",
+				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
+			],
+			[
+				"inventoryir",
+				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
+			],
+			[
+				"interactda",
+				"Assets/Scripts/Model/Items/Controller/InteractData.cs"
+			],
+			[
+				"inter",
+				"Assets/Scripts/Model/Template/InteractData.cs"
+			],
+			[
+				"interact",
+				"Assets/Scripts/Model/Template/InteractData.cs"
+			],
+			[
+				"inventory",
+				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
+			],
+			[
+				"inveo",
+				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
+			],
+			[
+				"inventoryit",
+				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
+			],
+			[
+				"interactdata",
+				"Assets/Scripts/Model/Items/Controller/InteractData1.cs"
+			],
+			[
+				"shootd",
+				"Assets/Scripts/Model/Items/Data/ShootData.cs"
+			],
+			[
+				"shootda",
+				"Assets/Scripts/Model/Template/ShootData.cs"
+			],
+			[
+				"interactdat",
+				"Assets/InteractData.cs"
+			],
+			[
+				"player",
+				"Assets/Scripts/Creature/Player/Player.cs"
+			],
+			[
+				"quick",
+				"Assets/Scripts/UI/Panels/QuickSlot.cs"
+			],
+			[
+				"guncra",
+				"Assets/Scripts/UI/Panels/GunCrafting.cs"
+			],
+			[
+				"ammo",
+				"Assets/Scripts/UI/Panels/Ammo.cs"
+			],
+			[
+				"datac",
+				"Assets/Scripts/Serialization/GunDataController.cs"
+			],
+			[
+				"shoot",
+				"Assets/Scripts/Model/Items/Data/ShootData.cs"
+			],
+			[
+				"gunre",
+				"Assets/GunRef.cs"
+			],
+			[
+				"gun",
+				"Assets/Scripts/Model/Gun.cs"
+			],
+			[
+				"guncont",
+				"Assets/Scripts/Game/GunControl.cs"
+			],
+			[
+				"ays",
+				"Assets/Scripts/Game/Async.cs"
+			],
+			[
+				"data",
+				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
+			],
+			[
+				"shootdat",
+				"Assets/Scripts/Model/Items/Data/ShootData.cs"
+			],
+			[
+				"shoo",
+				"Assets/Scriptable/_Base/InventoryItems/Usable/CanShoot.cs"
+			],
+			[
+				"picku",
+				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+			],
+			[
 				"template",
 				"Assets/InventoryItemTemplate.cs"
+			],
+			[
+				"creat",
+				"Assets/Scripts/Creature/_Shared/Creature.cs"
+			],
+			[
+				"canus",
+				"Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs"
+			],
+			[
+				"can",
+				"Assets/Scriptable/_Base/InventoryItems/Usable/CanShoot.cs"
+			],
+			[
+				"playerin",
+				"Assets/Scripts/Creature/Player/PlayerInteractor.cs"
+			],
+			[
+				"interactor",
+				"Assets/Scripts/Creature/Player/Interactions/Interactor.cs"
+			],
+			[
+				"pickup",
+				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+			],
+			[
+				"game",
+				"Assets/Scripts/Game/Game.cs"
+			],
+			[
+				"itemman",
+				"Assets/Scripts/Game/ItemManager.cs"
+			],
+			[
+				"inve",
+				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
 			],
 			[
 				"inventoryitemfa",
@@ -1249,10 +1331,6 @@
 				"Assets/Scriptable/_Base/InventoryItems/Usable/CanPlace.cs"
 			],
 			[
-				"canus",
-				"Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs"
-			],
-			[
 				"mater",
 				"Assets/Scriptable/_Base/InventoryItems/MaterialItem.cs"
 			],
@@ -1269,24 +1347,12 @@
 				"Assets/Scripts/Model/Inventory1.cs"
 			],
 			[
-				"inter",
-				"Assets/Scripts/InteractableObjects/InteractableObject.cs"
-			],
-			[
-				"player",
-				"Assets/Scripts/Creature/Player/Player.cs"
-			],
-			[
 				"creature",
 				"Assets/Scripts/Creature/_Shared/Creature.cs"
 			],
 			[
 				"uipa",
 				"Assets/Scripts/UI/Panels/_Base/UiPanel.cs"
-			],
-			[
-				"inventor",
-				"Assets/ScriptableObjects/_Base/InventoryItem.cs"
 			],
 			[
 				"part",
@@ -1381,20 +1447,8 @@
 				"Assets/GunParts.cs"
 			],
 			[
-				"inventory",
-				"Assets/ScriptableObjects/_Base/InventoryItem.cs"
-			],
-			[
 				"pla",
 				"Assets/Scripts/Player/Player.cs"
-			],
-			[
-				"data",
-				"Assets/ScriptableObjects/_Base/InventoryItemData.cs"
-			],
-			[
-				"invent",
-				"Assets/Scripts/Inventory.cs"
 			],
 			[
 				"craftin",
@@ -1415,10 +1469,6 @@
 			[
 				"door",
 				"Assets/Scripts/Game/Area/Door.cs"
-			],
-			[
-				"ays",
-				"Assets/Scripts/Game/Async.cs"
 			],
 			[
 				"col",
@@ -1465,16 +1515,8 @@
 				"Assets/GunCraftingComponentVisual.cs"
 			],
 			[
-				"guncra",
-				"Assets/GunCraftingPanel.cs"
-			],
-			[
 				"cra",
 				"Assets/CraftingPanel.cs"
-			],
-			[
-				"interac",
-				"Assets/Scripts/InteractableObjects/InteractableObject.cs"
 			],
 			[
 				"holditem",
@@ -1483,10 +1525,6 @@
 			[
 				"bu",
 				"Assets/Bullet.cs"
-			],
-			[
-				"inve",
-				"Assets/ScriptableObjects/_Base/InventoryItem.cs"
 			],
 			[
 				"orbc",
@@ -1501,16 +1539,8 @@
 				"Assets/OrbPosition.cs"
 			],
 			[
-				"interact",
-				"Assets/Scripts/Player/Interactions/Interactor.cs"
-			],
-			[
 				"orb",
 				"Assets/OrbVisual.cs"
-			],
-			[
-				"pick",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
 			],
 			[
 				"swith",
@@ -1523,10 +1553,6 @@
 			[
 				"itemc",
 				"Assets/Scripts/UI/Panels/ItemCrafting.cs"
-			],
-			[
-				"quick",
-				"Assets/Scripts/UI/Panels/QuickSlot.cs"
 			],
 			[
 				"craft",
@@ -1567,10 +1593,6 @@
 			[
 				"recipep",
 				"Assets/Scripts/UI/Recipes/RecipePanel.cs"
-			],
-			[
-				"game",
-				"Assets/Scripts/Game/Game.cs"
 			],
 			[
 				"gam",
@@ -1627,114 +1649,6 @@
 			[
 				"inventoritemd",
 				"Assets/InventoryItemData.cs"
-			],
-			[
-				"intera",
-				"Assets/Scripts/InteractableObjects/InteractableObject.cs"
-			],
-			[
-				"interactableob",
-				"Assets/Scripts/InteractableObjects/InteractableObject.cs"
-			],
-			[
-				"hit",
-				"Assets/Scripts/InteractableObjects/Components/Hitable.cs"
-			],
-			[
-				"inte",
-				"Assets/Scripts/InteractableObjects/InteractableObject.cs"
-			],
-			[
-				"hea",
-				"Assets/Scripts/InteractableObjects/Components/Optional/Health.cs"
-			],
-			[
-				"playemove",
-				"Assets/Scripts/Player/PlayerMovement.cs"
-			],
-			[
-				"lyaer",
-				"Assets/Scripts/Player/Player.cs"
-			],
-			[
-				"dest",
-				"Assets/Scripts/InteractableObjects/Components/Optional/Destroyable.cs"
-			],
-			[
-				"holdi",
-				"Assets/HoldItem.cs"
-			],
-			[
-				"interactor",
-				"Assets/Scripts/Player/Interactions/Interactor.cs"
-			],
-			[
-				"itemdr",
-				"Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs"
-			],
-			[
-				"sto",
-				"Assets/Stop.cs"
-			],
-			[
-				"puc",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
-			],
-			[
-				"dro",
-				"Assets/Scripts/InteractableObjects/CustomBehaviors/DropItem.cs"
-			],
-			[
-				"aycn",
-				"Assets/Scripts/System/Async.cs"
-			],
-			[
-				"camera",
-				"Assets/Scripts/CameraMovement.cs"
-			],
-			[
-				"plat",
-				"Assets/Scripts/Player/PlayerMovement.cs"
-			],
-			[
-				"itemr",
-				"Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs"
-			],
-			[
-				"inv",
-				"Assets/Scripts/Player/Inventory.cs"
-			],
-			[
-				"laye",
-				"Assets/Scripts/Player/Player.cs"
-			],
-			[
-				"pickup",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
-			],
-			[
-				"com",
-				"Assets/Scripts/UI/Recipes/ComponentBubbleUI.cs"
-			],
-			[
-				"crear",
-				"Assets/ScriptableObjects/_Base/Editor/CreateInventoryItem.cs"
-			],
-			[
-				"invento",
-				"Assets/Scripts/ScriptableObjects/InventoryItem.cs"
-			],
-			[
-				"itemdro",
-				"Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs"
-			],
-			[
-				"inventoy",
-				"Assets/Scripts/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"",
-				"GardeningV2.userprefs"
 			]
 		],
 		"width": 0.0

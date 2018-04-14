@@ -2,7 +2,10 @@
 using UnityEngine;
 using Interactable.OptionalComponent;
 
-public abstract class Creature : Interactable.InteractableObject {
+public abstract class Creature : Interactable.InteractableObject { 
+	
+	// this class should be reanamed to something that represents 
+	// an object that performs actions but is not alive for example a turret
 
 	// **************************
 

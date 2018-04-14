@@ -5,8 +5,25 @@ public class Inventory {
 	// ***************** PUBLIC  *******************
 
 	public Inventory ( int inventoryCount ) {
+		
 		_inventoryCount = inventoryCount;
 		_inventoryItems = new InventoryItem[ _inventoryCount ];
+	}
+	public Inventory ( Serialized serializedData ) {
+
+		Debug.Log( "Deserialize! " + serializedData.InventoryCount );
+		
+		_inventoryCount = serializedData.InventoryCount;
+		_inventoryItems = new InventoryItem[ _inventoryCount ];
+
+		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
+			
+			var item = serializedData.InventoryItems[ i ];
+			
+			if ( item.ID != "" ) {
+				SetInventoryItem( i, InventoryItem.Deserialize( item ) );
+			}
+		}
 	}
 
 	// *******************************************
@@ -50,7 +67,7 @@ public class Inventory {
 		for( int i=0; i<_inventoryCount; i++ ){
 
 			var slot = _inventoryItems[ i ];
-			if ( slot != null && slot.name == item.name  ){
+			if ( slot != null && slot.ID == item.ID  ){
 
 				// take as many as possible
 				if ( slot.Count + item.Count > slot.MaxCount ){
@@ -118,7 +135,7 @@ public class Inventory {
 	}
 
 	private void FireOnInventoryItemChangedEvent ( int index, InventoryItem item ){
-	
+
 		if ( OnInventoryItemChanged != null ) {
 			OnInventoryItemChanged( index, item );
 		}
@@ -128,118 +145,26 @@ public class Inventory {
 
 	public Serialized Serialize () {
 		
+		Debug.Log( "Serialize!" );
 		return new Serialized( this );
-	}
-	public static Inventory Deserialize ( Serialized serializedData ) {
-
-		var inventory = new Inventory( serializedData.InventoryCount );
-
-		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
-				
-			var item = serializedData.InventoryItems[ i ];
-			if ( item.ID != "" ) {
-				inventory.SetInventoryItem( i, InventoryItem.Deserialize( item ) );
-			}
-		}
-
-		return inventory;
 	}
 	public class Serialized {
 
 		[SerializeField] public int InventoryCount;
-		[SerializeField] public InventoryItem.Serialized[] InventoryItems;
+		[SerializeField] public InventoryItem[] InventoryItems;
 
 		public Serialized ( Inventory inventory ) {
 
 			InventoryCount = inventory._inventoryCount;
-			InventoryItems = new InventoryItem.Serialized[ InventoryCount ];
+			InventoryItems = new InventoryItem[ InventoryCount ];
 
 			for ( int i = 0; i < InventoryCount; i++ ) {
 				
 				var item = inventory._inventoryItems[ i ];
 				if ( item != null ) {
-					InventoryItems[ i ] = InventoryItem.Serialize( item );
+					InventoryItems[ i ] = item;
 				}
 			}
 		}
-	}
-}
-
-public class QuickSlotInventory : Inventory {
-
-	public QuickSlotInventory ( int inventoryCount ) : base( inventoryCount ) {
-
-		_inventoryItems[ ConvertQuickSlotIDToIndex( ID.Center ) ] = Resources.Load( "hand" ) as InventoryItem;
-	}
-
-	// *******************************************
-
-	public ID ConvertIndexToQuickSlotID ( int index ) { 
-
-		switch( index ){
-			case TOP_INDEX:
-				return ID.Top;
-			case RIGHT_INDEX:
-				return ID.Right;
-			case BOTTOM_INDEX:
-				return ID.Bottom;
-			case LEFT_INDEX:
-				return ID.Left;
-			case CENTER_INDEX:
-				return ID.Center;
-			default:
-				return ID.Invalid;
-		}
-	}
-	public int ConvertQuickSlotIDToIndex ( ID id ) {
-
-		switch( id ){
-			case ID.Top:
-				return TOP_INDEX;
-			case ID.Right:
-				return RIGHT_INDEX;
-			case ID.Bottom:
-				return BOTTOM_INDEX;
-			case ID.Left:
-				return LEFT_INDEX;
-			case ID.Center:
-				return CENTER_INDEX;
-			default:
-				return -1;
-		}
-	}
-
-	// *******************************************
-
-	private const int TOP_INDEX    = 1;
-	private const int RIGHT_INDEX  = 2;
-	private const int BOTTOM_INDEX = 3;
-	private const int LEFT_INDEX   = 4;
-	private const int CENTER_INDEX = 0;
-
-	// *******************************************
-
-	public enum ID {
-		Invalid,
-		Top,
-		Right,
-		Bottom,
-		Left,
-		Center
-	}
-
-	public static QuickSlotInventory Deserialize ( Serialized serializedData ) {
-
-		var inventory = new QuickSlotInventory( serializedData.InventoryCount );
-
-		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
-				
-			var item = serializedData.InventoryItems[ i ];
-			if ( item.ID != "" ) {
-				inventory.SetInventoryItem( i, InventoryItem.Deserialize( item ) );
-			}
-		}
-
-		return inventory;
 	}
 }

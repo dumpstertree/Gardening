@@ -29,7 +29,7 @@ public class Interactor : MonoBehaviour {
 		_interactableObjectStack = new List<InteractableObject>();
 	}
 	private void OnTriggerEnter ( Collider collider ) {
-
+		print( collider.transform.name + " entered");
 		_interactableObjectStack.Add( collider.GetComponent<InteractableObject>() );
 	}
 	private void OnTriggerExit ( Collider collider ) {
@@ -59,8 +59,7 @@ public class Interactor : MonoBehaviour {
 
 			if ( inventoryItem.CanInteract && interactableItem.Interactable ||
 				 inventoryItem.CanHit && interactableItem.Hitable ||
-				 inventoryItem.CanPlant && interactableItem.Plantable ||
-			 	 inventoryItem.CanFeed && interactableItem.Feedable ) {
+				 inventoryItem.CanPlant && interactableItem.Plantable ) {
 					
 				return true;
 			}
@@ -81,8 +80,7 @@ public class Interactor : MonoBehaviour {
 				
 				if ( _currentItem.CanInteract && currentInteractable.Interactable ||
 					_currentItem.CanHit && currentInteractable.Hitable ||
-					_currentItem.CanPlant && currentInteractable.Plantable ||
-					_currentItem.CanFeed && currentInteractable.Feedable ) {
+					_currentItem.CanPlant && currentInteractable.Plantable ) {
 
 					valid = true;
 				}

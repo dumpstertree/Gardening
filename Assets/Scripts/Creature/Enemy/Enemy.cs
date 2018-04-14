@@ -3,7 +3,7 @@ using Interactable.OptionalComponent;
 
 public class Enemy : Creature {
 
-	[SerializeField] private InventoryItem _holdItem;
+	[SerializeField] private Model.Template.InventoryItemTemplate _holdItem;
 
 	private ItemDropper _itemDropper;
 	private bool _usingItem;
@@ -16,9 +16,8 @@ public class Enemy : Creature {
 
 		_itemDropper = GetComponent<ItemDropper>();
 
-		var itemInst = Game.ItemManager.RequestItem( _holdItem.name, _itemID );
 		var index = _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center );
-		_quickslotInventory.SetInventoryItem( index, itemInst );
+		_quickslotInventory.SetInventoryItem( index, _holdItem.GetInstance( 1 ) );
 
 		base.Init();
 	}

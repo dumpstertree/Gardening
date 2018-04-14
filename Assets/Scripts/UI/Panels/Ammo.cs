@@ -10,7 +10,6 @@ namespace UI.Panels {
 		[SerializeField] private Image _reloadTime;
 
 		private InventoryItem _item;
-		private GunRef _gunRef;
 
 		private Player _player {
 			get{ return Game.Area.LoadedPlayer; }
@@ -27,30 +26,21 @@ namespace UI.Panels {
 				// remove all old connectionss
 				if ( _item != null ) {
 
-					var id = _item.ID;
-					var gunRef = Game.GunControl.GetGun( id );
-
-					gunRef.OnAvailableBulletsChange -= newCount => { UpdateAvailableAmmo( newCount ); };
-					gunRef.OnReloadTimeChanged -= (currentReloadTime, reloadTime ) => { UpdateReloadTime( currentReloadTime, reloadTime ); };
+					item._shootData.OnAvailableBulletsChange -= newCount => { UpdateAvailableAmmo( newCount ); };
+					item._shootData.OnReloadTimeChanged -= (currentReloadTime, reloadTime ) => { UpdateReloadTime( currentReloadTime, reloadTime ); };
 				}
 
 
 				_item = null;
-				_gunRef = null;
 
 				if ( item != null && item.CanShoot ) {
 					
-					var id = item.ID;
-					var gunRef = Game.GunControl.GetGun( id );
-
 					_item = item;
-					_gunRef = gunRef;
-
 
 					// update available ammo
-					UpdateAvailableAmmo( gunRef.AvailableBullets );
-					gunRef.OnAvailableBulletsChange += newCount => { UpdateAvailableAmmo( newCount ); };
-					gunRef.OnReloadTimeChanged += (currentReloadTime, reloadTime ) => { UpdateReloadTime( currentReloadTime, reloadTime ); };
+					UpdateAvailableAmmo( item._shootData.AvailableBullets );
+					item._shootData.OnAvailableBulletsChange += newCount => { UpdateAvailableAmmo( newCount ); };
+					item._shootData.OnReloadTimeChanged += (currentReloadTime, reloadTime ) => { UpdateReloadTime( currentReloadTime, reloadTime ); };
 
 					// update max ammo
 					var gunStats = new GunDataController().LoadGun( _item.ID ).WeaponStats;
@@ -66,21 +56,19 @@ namespace UI.Panels {
 		
 		private void UpdateMaxAmmo ( int amount ) {
 
-			var gunStats = new GunDataController().LoadGun( _item.ID ).WeaponStats;
-
 			_maxAmmo.color = new Color( 1,1,1,1 );
-			_maxAmmo.text = gunStats.ClipSize.ToString();
+			_maxAmmo.text = amount.ToString();
 		}
 		private void UpdateAvailableAmmo ( int amount ) {
 			
 			_availableAmmo.color = new Color( 1,1,1,1 );
-			_availableAmmo.text = _gunRef.AvailableBullets.ToString();
+			_availableAmmo.text = amount.ToString();
 		}
 		private void UpdateReloadTime ( float currentReloadTime, float reloadTime ) {
 
 			_reloadTime.fillAmount = currentReloadTime/reloadTime;
 		}
-		private void Hide(){
+		private void Hide () {
 			
 			_availableAmmo.color = new Color( 1,1,1,0 );
 			_maxAmmo.color = new Color( 1,1,1,0 );

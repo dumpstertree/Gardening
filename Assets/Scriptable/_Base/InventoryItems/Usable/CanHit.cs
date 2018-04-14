@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿// using UnityEngine;
 
-partial class InventoryItem {
+// partial class InventoryItem {
 
-	public bool CanHit { get{ return _canHit; } }
+// 	public bool CanHit { get{ return _canHit; } }
 
-	[HeaderAttribute("Hit")]
-	[SerializeField] private bool _canHit;
-	[SerializeField] private HitData _hitData;
-}
+// 	[HeaderAttribute("Hit")]
+// 	[SerializeField] private bool _canHit;
+// 	[SerializeField] private HitData _hitData;
+// }

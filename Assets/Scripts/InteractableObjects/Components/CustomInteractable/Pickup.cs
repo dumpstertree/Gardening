@@ -14,7 +14,7 @@ namespace Interactable.Component {
 
 		public override void Interact ( Creature user, InventoryItem item ) {
 
-			if ( user.QuickslotInventory.AddInventoryItem( Item ) || user.Inventory.AddInventoryItem( Item ) ){
+			if ( user.QuickslotInventory.AddInventoryItem( _item ) || user.Inventory.AddInventoryItem( _item ) ){
 
 				_destroyable.Destroy();
 			}
@@ -26,17 +26,18 @@ namespace Interactable.Component {
 
 		// ********* PRIVATE **************
 
-		[SerializeField] private InventoryItem _item;
+		[SerializeField] private Model.Template.InventoryItemTemplate _itemTemplate;
+		[SerializeField] private int _itemStartCount;
+		
+		private InventoryItem _item;
 		private OptionalComponent.Destroyable _destroyable;
 
 		// ******************************
 
 		private void Start () {
 
-			if( _item != null) {
-			  _item = Game.ItemManager.RequestItem( _item.name );
-			};
-			
+			if ( _itemTemplate != null) { _item = _itemTemplate.GetInstance( _itemStartCount ); };
+
 			_destroyable = GetComponent<OptionalComponent.Destroyable>();
 		}
 	}

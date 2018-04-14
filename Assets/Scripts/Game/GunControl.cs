@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Model;
 
 public class GunControl : MonoBehaviour {
 
-	Dictionary<string,GunRef> _gunRefs;
+	Dictionary<string,Gun> _gunRefs;
 	GunDataController _dataController;
 
 
@@ -11,30 +12,31 @@ public class GunControl : MonoBehaviour {
 
 	public void Init () {
 		
-		_gunRefs = new Dictionary<string,GunRef>();
-		_dataController = new GunDataController();
+		 _gunRefs = new Dictionary<string,Gun>();
+		 _dataController = new GunDataController();
 	}
 
-	public GunRef GetGun ( string id ) {
+	public Gun GetGun ( string id ) {
 
 		if ( !_gunRefs.ContainsKey( id ) ) {
 
-			var gunRef = new GunRef( _dataController.LoadGun( id ) );
-			_gunRefs.Add( id, gunRef );
+			var gun = _dataController.LoadGun( id );
+			_gunRefs.Add( id, gun );
 
-			gunRef.OnGunChanged += () => { SaveGun( id ); }; 
+			// gunRef.OnGunModified += () => { SaveGun( id ); }; 
 		}
 
 		return _gunRefs[ id ];
 	}
 
-	
+	public delegate void GunModifiedEvent ( string gunID );
+	public GunModifiedEvent OnGunModified;
+
+
 	// *************** PRIVATE **************
 	
-	private void SaveGun ( string id ) {
+	private void SaveGun ( string id, Gun gun ) {
 
-		var gunRef = GetGun( id );
-
-		_dataController.SaveGun( id, gunRef.Gun );
+		_dataController.SaveGun( id, gun );
 	}
 }
