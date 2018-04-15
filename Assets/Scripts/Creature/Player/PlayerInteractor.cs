@@ -1,30 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Interactable;
 
-public class PlayerInteractor : Interactor {
+public class PlayerInteractor : Interactor, IInputReciever {
+
+	// Input Events
+	void IInputReciever.OnConfirmDown (){}
+	void IInputReciever.OnConfirmUp (){
+		
+		Use();
+	}
+	void IInputReciever.OnCancelDown (){}
+	void IInputReciever.OnCancelUp (){}
+	void IInputReciever.HorizontalChanged ( float horizontal ) {}
+	void IInputReciever.VerticalChanged ( float vertical ) {}
+
 
 	[SerializeField] protected InteractorPostion _interactorPositionPrefab;
 
-	private void Update () {
+	private void Use () {
 
-		// get interactable
-		_interactable = GetInteractableObject();
+		print( "Use!" );
 
 		// use the item
 		var canUseItem = GetCanUseItem( _currentItem, _interactable );
-		if ( !_inAction && canUseItem && Input.GetKey(KeyCode.Space) ) {
+		if ( !_inAction && canUseItem ) {
 			_inAction = true;
 			_currentItem.Use( _creature, () => _inAction = false );
 		}
+	}
+	private void Update () {
+
+		_interactable = GetInteractableObject();
 
 		// change state in interactor position
+		var canUseItem = GetCanUseItem( _currentItem, _interactable );
 		var state = GetState( canUseItem );
 		var tracking = GetTracking( _currentItem, _interactable );
 
 		_interactorPositionInstance.ChangeState( state );
 		_interactorPositionInstance.ChangeTracking( tracking );
+
 	}
 	private void Start () {
 

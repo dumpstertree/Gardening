@@ -1,26 +1,38 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : Brain {
+public class PlayerMovement : Brain, IInputReciever {
 	
+	void IInputReciever.OnConfirmDown () {}
+	void IInputReciever.OnConfirmUp () {}
+	void IInputReciever.OnCancelDown () {}
+	void IInputReciever.OnCancelUp () {}
+	void IInputReciever.HorizontalChanged ( float horizontal ) {
+		
+		_horizontal = horizontal;
+	}
+	void IInputReciever.VerticalChanged ( float vertical ) {
+
+		_vertical = vertical;
+	}
+
 	[SerializeField] private Player _player;
 	[SerializeField] private PlayerAgressiveSubBrain _agressive;
 	[SerializeField] private PlayerPassiveSubBrain _passive;
 	
 	private CameraType _cameraType;
+	private float _horizontal;
+	private float _vertical;
 
 	public override void Think () {
-
-		var h = Input.GetAxis("Horizontal");
-		var v = Input.GetAxis("Vertical");
 
 		switch ( _cameraType ) {
 			
 			case CameraType.Passive:
-				_passive.Think( h, v );
+				_passive.Think( _horizontal, _vertical );
 				break;
 			
 			case CameraType.Agressive:
-				_agressive.Think( h, v );
+				_agressive.Think( _horizontal, _vertical );
 				break;
 		}
 	}

@@ -27,6 +27,9 @@ public class Game : MonoBehaviour {
 	public static GunControl GunControl {
 		get{ return Game.Instance._gunControl; }
 	}
+	public static InputStack Input {
+		get{ return Game.Instance._input; } 
+	}
 
 	// ************ PRIVATE ****************
 
@@ -37,17 +40,18 @@ public class Game : MonoBehaviour {
 	private UIController _uiController;
 	private Area _area;
 	private GunControl _gunControl;
+	private InputStack _input;
 
 	// ******************************
 	
 	private void Update(){
 
-		if( Input.GetKeyDown( KeyCode.Alpha1 ) ){ _areaController.ChangeArea( Area.Identifier.Farm, 0 ); }
-		if( Input.GetKeyDown( KeyCode.Alpha2 ) ){ _areaController.ChangeArea( Area.Identifier.Town, 0 ); }
-		if( Input.GetKeyDown( KeyCode.Alpha3 ) ){ _areaController.ChangeArea( Area.Identifier.Dungeon, 0 ); }
+		// if( Input.GetKeyDown( KeyCode.Alpha1 ) ){ _areaController.ChangeArea( Area.Identifier.Farm, 0 ); }
+		// if( Input.GetKeyDown( KeyCode.Alpha2 ) ){ _areaController.ChangeArea( Area.Identifier.Town, 0 ); }
+		// if( Input.GetKeyDown( KeyCode.Alpha3 ) ){ _areaController.ChangeArea( Area.Identifier.Dungeon, 0 ); }
 
-		if( Input.GetKeyDown( KeyCode.Alpha9 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Farm); }
-		if( Input.GetKeyDown( KeyCode.Alpha0 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Crafting); }
+		// if( Input.GetKeyDown( KeyCode.Alpha9 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Farm); }
+		// if( Input.GetKeyDown( KeyCode.Alpha0 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Crafting); }
 	}
 	private void Awake () {
 
@@ -93,11 +97,17 @@ public class Game : MonoBehaviour {
 
 		// Gun Control
 		_gunControl = gameObject.AddComponent<GunControl>();
+
+		// Input
+		_input = gameObject.AddComponent<InputStack>();
 	}
 	private void InitGame () {
 		
 		// Gun Control
 		_gunControl.Init();
+
+		// Input
+		_input.Init();
 
 		// Area
 		_area.Init();
@@ -111,7 +121,6 @@ public class Game : MonoBehaviour {
 
 		// UIController
 		_uiController.Init();
-
 	}
 	private void PlayGame () {
 		

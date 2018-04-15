@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Player : Creature {
 
@@ -59,17 +60,26 @@ public class Player : Creature {
 			_dataController.SaveQuickSlotInventory( _quickslotInventory ); 
 		};
 		_inventory.OnInventoryItemChanged += (index, item) => {
-			print( "Inv Changed!" );
 			_dataController.SaveInventory( _inventory );
 		};
 		_gunParts.OnPartListChanged += () => {
 			_dataController.SavePartInventory( _gunParts );
 		};
 
-		Debug.Log( "Listen For Events!" );
 
 		// set hand item
 		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center ), _hand.GetInstance(1));
+
+
+		// add input reciever
+		Game.Input.AddReciever( 
+			new InputRecieverLayer(
+				new List<IInputReciever>() {
+					_interactor as PlayerInteractor,
+					_brain as PlayerMovement
+				}
+			) 
+		);
 	}
 
 

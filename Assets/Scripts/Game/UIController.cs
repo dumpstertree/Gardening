@@ -41,14 +41,16 @@ public class UIController : MonoBehaviour {
 
 			_loadedContext = _contexts[ contextToLoad ];
 			_loadedContext.Present();
+		} else { 
+			Debug.LogWarning( "Trying to load context that does not exist : " + contextToLoad ); 
 		}
-		else{ Debug.LogWarning( "Trying to load context that does not exist : " + contextToLoad ); }
 	}
 	public void PresentDialog ( Model.Dialog.Sequence sequence, System.Action onComplete ) {
 		
 		var panel = _dialogUIPanelInstance as UI.Panels.Dialog;
 		
 		if ( panel != null ) {
+			ChangeContext( UiContext.Identifier.Dialog );
 			panel.PresentDialogSequence( sequence, onComplete );
 		}
 	}
@@ -58,7 +60,6 @@ public class UIController : MonoBehaviour {
 	}
 
 	// *********** PRIVATE ********************
-	
 	
 	private GameObject _canvasPrefab {
 		get{ return Resources.Load( "Canvas" ) as GameObject; }
@@ -93,7 +94,6 @@ public class UIController : MonoBehaviour {
 	private UiPanel _craftingUIPanelInstance;
 	private UiPanel _gunCraftingUIPanelInstance;
 	private UiPanel _ammoUIPanelInstance;
-
 
 	private Dictionary<UiContext.Identifier,UiContext> _contexts;
 	private UiContext _loadedContext;
@@ -167,6 +167,7 @@ public class UIController : MonoBehaviour {
 	private void InitPanels () {
 
 		// initialize new panels 
+		_dialogUIPanelInstance.Init();
 		_quickSlotUIPanelInstance.Init();
 		_inventorySlotUIPanelInstance.Init();
 		_recipesUIPanelInstance.Init();
@@ -199,6 +200,7 @@ public class UIController : MonoBehaviour {
 	public class UiContext {
 
 		private List<UiPanel> _panels = new List<UiPanel>();
+		private InputRecieverLayer _inputLayer;
 
 		public void RegisterPanel ( UiPanel panel ) {
 			
@@ -207,13 +209,26 @@ public class UIController : MonoBehaviour {
 			}
 		}
 		public void Present () {
-			
+
+			var panelsToRecieveInput = new List<IInputReciever>();
+
 			foreach( UiPanel p in _panels) {
+				if ( p.ShouldRecieveInput ){ panelsToRecieveInput.Add( p ); }
 				p.Present();
+			}
+
+			_inputLayer = new InputRecieverLayer( panelsToRecieveInput ) ;
+
+			if ( panelsToRecieveInput.Count > 0 ) {
+				print( "dialog" );
+
+				Game.Input.AddReciever( _inputLayer );
 			}
 		}
 		public void Dismiss () { 
 			
+			Game.Input.RemoveReciever( _inputLayer );
+
 			foreach( UiPanel p in _panels) {
 				p.Dismiss();
 			}

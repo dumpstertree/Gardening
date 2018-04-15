@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler {
+public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IInputReciever {
 
 	public delegate void PointerEvent();
 	
@@ -11,18 +11,23 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	public PointerEvent OnPointerEnterEvent;
 	public PointerEvent OnPointerExitEvent;
 
+	public bool ShouldRecieveInput { 
+		get { return _shouldRecieveInput; } 
+	}
+
+
 	public void Init () {
 
 		_hasBeenInited = true;
 		OnInit();
 	}
-	public void Present(){
+	public void Present () {
 
 		_presented = true; 
 		gameObject.SetActive( true );
 		OnPresent();
 	}
-	public void Dismiss(){
+	public void Dismiss () {
 		
 		_presented = false; 
 		gameObject.SetActive( false );
@@ -46,9 +51,36 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 
 	//******************************
 
+	void IInputReciever.OnConfirmDown () {
+		OnConfirmDown ();
+	}
+	void IInputReciever.OnConfirmUp () {
+		OnConfirmUp ();
+	}
+	void IInputReciever.OnCancelDown () {
+		OnCancelDown ();
+	}
+	void IInputReciever.OnCancelUp () {
+		OnCancelUp ();
+	}
+	void IInputReciever.HorizontalChanged ( float horizontal ) {
+		HorizontalChanged ( horizontal );
+	}
+	void IInputReciever.VerticalChanged ( float vertical ) {
+		VerticalChanged ( vertical );
+	}
+
+	//******************************
+
 	protected virtual void OnInit () {}
 	protected virtual void OnPresent () {}
 	protected virtual void OnDismiss () {}
+	protected virtual void OnConfirmDown () {}
+	protected virtual void OnConfirmUp () {}
+	protected virtual void OnCancelDown () {}
+	protected virtual void OnCancelUp () {}
+	protected virtual void HorizontalChanged ( float horizontal ) {}
+	protected virtual void VerticalChanged ( float vertical ) {}
 
 	//******************************
 	
@@ -57,7 +89,10 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	[SerializeField] private bool _hasBeenInited;
 	#pragma warning restore 0414
 
+	[SerializeField] protected bool _shouldRecieveInput;
+
 	private bool _pointerDown;
+
 	
 	protected virtual void Update () {
 		

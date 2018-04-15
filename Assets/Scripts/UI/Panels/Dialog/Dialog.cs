@@ -5,17 +5,22 @@ namespace UI.Panels {
 	
 	public class Dialog : UiPanel {
 
-		[Header( "Prefab" )]
-		[SerializeField] private DialogBox _leftAlignedPrefab;
-		[SerializeField] private DialogBox _rightAlignedPrefab;
-		[SerializeField] private DialogBox _noneAlignedPrefab;
+		protected override void OnConfirmUp () {
 
-		[Header( "Refrence" )]
-		[SerializeField] private Transform _content;
+			// if is currently presenting, skip presentation
+			if ( _presentedDialog.IsPresenting ) {
+				_presentedDialog.SkipPresenting();
+				return;
+			}
 
-		private Model.Dialog.Sequence _sequence;
-		private System.Action _onComplete;
-		private DialogBox _presentedDialog;
+			// if the sequence is not done move next, else run on complete
+			if ( !_sequence.isDone ) {
+				Next ( _sequence.Next () );
+			} else {
+				_onComplete ();
+			}
+		}
+
 
 		// ************ Public **************
 
@@ -27,26 +32,21 @@ namespace UI.Panels {
 			Next ( _sequence.Next () );
 		}
 
-		// ************ Public **************
 
-		protected override void Update () {
-			
-			if ( Input.GetKeyDown( KeyCode.RightShift ) ) {
-				
-				// if is currently presenting, skip presentation
-				if ( _presentedDialog.IsPresenting ) {
-					_presentedDialog.SkipPresenting();
-					return;
-				}
+		// ************ Private **************
 
-				// if the sequence is not done move next, else run on complete
-				if ( !_sequence.isDone ) {
-					Next ( _sequence.Next () );
-				} else {
-					_onComplete ();
-				}
-			}
-		}
+		[Header( "Prefab" )]
+		[SerializeField] private DialogBox _leftAlignedPrefab;
+		[SerializeField] private DialogBox _rightAlignedPrefab;
+		[SerializeField] private DialogBox _noneAlignedPrefab;
+
+		[Header( "Refrence" )]
+		[SerializeField] private Transform _content;
+
+		private InputRecieverLayer _inputLayer;
+		private Model.Dialog.Sequence _sequence;
+		private System.Action _onComplete;
+		private DialogBox _presentedDialog;
 
 		private void Next ( Model.Dialog.Sequence.Dialog dialog ) {
 
