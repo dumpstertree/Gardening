@@ -16,6 +16,12 @@ public class InputStack : MonoBehaviour {
 			_recievers.Add( receiver );
 		}
 	}
+	public void AddReciever ( InputRecieverLayer receiver, int atIndex ) {
+
+		if ( !_recievers.Contains( receiver ) ){
+			_recievers.Insert( atIndex, receiver );
+		}
+	}
 	public void RemoveReciever ( InputRecieverLayer receiver ) {
 
 		if ( _recievers.Contains( receiver ) ){
@@ -31,7 +37,6 @@ public class InputStack : MonoBehaviour {
 	private bool _confirm;
 	private bool _cancel;
 	private bool _start;
-	private bool _select;
 	private float _horizontal;
 	private float _vertical;
 
@@ -64,6 +69,15 @@ public class InputStack : MonoBehaviour {
 				}
 			}
 
+			// Start
+			if ( _inputLayout.Start != _start ){
+				if ( _inputLayout.Start ) {
+					reciever.OnStartDown ();
+				} else {
+					reciever.OnStartUp ();
+				}
+			}
+
 			// Horizontal
 			if ( _inputLayout.Horizontal != _horizontal ){
 				reciever.HorizontalChanged( _inputLayout.Horizontal );
@@ -78,7 +92,6 @@ public class InputStack : MonoBehaviour {
 			_confirm = _inputLayout.Confirm;
 			_cancel = _inputLayout.Cancel;
 			_start = _inputLayout.Start;
-			_select = _inputLayout.Select;
 			_horizontal = _inputLayout.Horizontal;
 			_vertical = _inputLayout.Vertical;
 		}
@@ -91,7 +104,6 @@ public class InputStack : MonoBehaviour {
 		bool Confirm { get; }
 		bool Cancel { get; }
 		bool Start { get; }
-		bool Select { get; }
 		float Horizontal { get; }
 		float Vertical { get; }
 	}
@@ -109,11 +121,7 @@ public class InputStack : MonoBehaviour {
 		}
 		
 		public bool Start { 
-			get{ return Input.GetKey( KeyCode.A ); }
-		}
-		
-		public bool Select { 
-			get{ return Input.GetKey( KeyCode.A ); }
+			get{ return Input.GetKey( KeyCode.P ); }
 		}
 
 		public float Horizontal { 
@@ -140,6 +148,12 @@ public class InputRecieverLayer {
 	public void OnCancelUp () {
 		foreach( IInputReciever r in _receivers ){ r.OnCancelUp (); }
 	}
+	public void OnStartDown () {
+		foreach( IInputReciever r in _receivers ){ r.OnStartDown (); }
+	}
+	public void OnStartUp () {
+		foreach( IInputReciever r in _receivers ){ r.OnStartUp (); }
+	}
 	public void HorizontalChanged ( float horizontal ){
 		foreach( IInputReciever r in _receivers ){ r.HorizontalChanged( horizontal ); }
 	}
@@ -161,8 +175,8 @@ public interface IInputReciever {
 	void OnConfirmUp ();
 	void OnCancelDown ();
 	void OnCancelUp ();
+	void OnStartDown ();
+	void OnStartUp ();
 	void HorizontalChanged ( float horizontal );
 	void VerticalChanged ( float vertical );
 }
-
-

@@ -11,6 +11,8 @@ public class PlayerInteractor : Interactor, IInputReciever {
 	}
 	void IInputReciever.OnCancelDown (){}
 	void IInputReciever.OnCancelUp (){}
+	void IInputReciever.OnStartDown (){}
+	void IInputReciever.OnStartUp (){}
 	void IInputReciever.HorizontalChanged ( float horizontal ) {}
 	void IInputReciever.VerticalChanged ( float vertical ) {}
 

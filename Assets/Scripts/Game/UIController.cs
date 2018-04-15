@@ -127,7 +127,6 @@ public class UIController : MonoBehaviour {
 		// create farm context
 		var farmContext = new UiContext();
 		farmContext.RegisterPanel( _quickSlotUIPanelInstance );
-		farmContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		farmContext.RegisterPanel( _ammoUIPanelInstance );
 		farmContext.Dismiss();
 
@@ -139,6 +138,7 @@ public class UIController : MonoBehaviour {
 
 		// create inventory context
 		var inventoryContext = new UiContext();
+		inventoryContext.RegisterPanel( _quickSlotUIPanelInstance );
 		inventoryContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		inventoryContext.Dismiss();
 
@@ -220,8 +220,6 @@ public class UIController : MonoBehaviour {
 			_inputLayer = new InputRecieverLayer( panelsToRecieveInput ) ;
 
 			if ( panelsToRecieveInput.Count > 0 ) {
-				print( "dialog" );
-
 				Game.Input.AddReciever( _inputLayer );
 			}
 		}

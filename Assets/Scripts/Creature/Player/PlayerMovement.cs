@@ -6,6 +6,8 @@ public class PlayerMovement : Brain, IInputReciever {
 	void IInputReciever.OnConfirmUp () {}
 	void IInputReciever.OnCancelDown () {}
 	void IInputReciever.OnCancelUp () {}
+	void IInputReciever.OnStartDown (){}
+	void IInputReciever.OnStartUp (){}
 	void IInputReciever.HorizontalChanged ( float horizontal ) {
 		
 		_horizontal = horizontal;
@@ -22,7 +24,7 @@ public class PlayerMovement : Brain, IInputReciever {
 	private CameraType _cameraType;
 	private float _horizontal;
 	private float _vertical;
-
+	
 	public override void Think () {
 
 		switch ( _cameraType ) {

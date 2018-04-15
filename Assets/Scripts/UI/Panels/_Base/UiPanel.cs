@@ -63,6 +63,8 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	void IInputReciever.OnCancelUp () {
 		OnCancelUp ();
 	}
+	void IInputReciever.OnStartDown (){}
+	void IInputReciever.OnStartUp (){}
 	void IInputReciever.HorizontalChanged ( float horizontal ) {
 		HorizontalChanged ( horizontal );
 	}

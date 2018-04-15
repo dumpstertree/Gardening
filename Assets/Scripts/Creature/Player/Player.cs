@@ -1,7 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Creature {
+public class Player : Creature, IInputReciever {
+
+	void IInputReciever.OnConfirmDown () {}
+	void IInputReciever.OnConfirmUp () {}
+	void IInputReciever.OnCancelDown () {}
+	void IInputReciever.OnCancelUp () {}
+	void IInputReciever.OnStartDown () {}
+	void IInputReciever.OnStartUp () { 
+		Game.UIController.ChangeContext( UIController.UiContext.Identifier.Inventory );
+	}
+	void IInputReciever.HorizontalChanged ( float horizontal ) {}
+	void IInputReciever.VerticalChanged ( float vertical ) {}
 
 	
 	// ***************** PUBLIC *******************
@@ -73,13 +84,16 @@ public class Player : Creature {
 
 		// add input reciever
 		Game.Input.AddReciever( 
+
 			new InputRecieverLayer(
+			
 				new List<IInputReciever>() {
+					this,
 					_interactor as PlayerInteractor,
 					_brain as PlayerMovement
 				}
-			) 
-		);
+			),
+		0 );
 	}
 
 
