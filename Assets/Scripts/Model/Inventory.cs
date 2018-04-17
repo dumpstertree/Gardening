@@ -10,8 +10,6 @@ public class Inventory {
 		_inventoryItems = new InventoryItem[ _inventoryCount ];
 	}
 	public Inventory ( Serialized serializedData ) {
-
-		Debug.Log( "Deserialize! " + serializedData.InventoryCount );
 		
 		_inventoryCount = serializedData.InventoryCount;
 		_inventoryItems = new InventoryItem[ _inventoryCount ];
@@ -145,7 +143,6 @@ public class Inventory {
 
 	public Serialized Serialize () {
 		
-		Debug.Log( "Serialize!" );
 		return new Serialized( this );
 	}
 	public class Serialized {

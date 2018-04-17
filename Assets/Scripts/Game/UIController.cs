@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour {
 		CreateContexts();
 		InitPanels();
 	}
-	public void ChangeContext ( UiContext.Identifier contextToLoad ) {
+	public void ChangeContext ( UiContext.Identifier contextToLoad, System.Action onExit = null ) {
 
 		if ( _contexts.ContainsKey( contextToLoad ) ) {
 
@@ -40,23 +40,24 @@ public class UIController : MonoBehaviour {
 			}
 
 			_loadedContext = _contexts[ contextToLoad ];
+			_loadedContext.OnExit = onExit;
 			_loadedContext.Present();
 		} else { 
 			Debug.LogWarning( "Trying to load context that does not exist : " + contextToLoad ); 
 		}
 	}
-	public void PresentDialog ( Model.Dialog.Sequence sequence, System.Action onComplete ) {
-		
+	public void PresentDialog ( Model.Dialog.Sequence sequence, System.Action onExit = null ) {
+			
 		var panel = _dialogUIPanelInstance as UI.Panels.Dialog;
 		
 		if ( panel != null ) {
-			ChangeContext( UiContext.Identifier.Dialog );
-			panel.PresentDialogSequence( sequence, onComplete );
+			
+			// change to the new context
+			ChangeContext( UiContext.Identifier.Dialog, onExit );
+			
+			// set the dialog sequence to the dialog UI
+			panel.PresentDialogSequence( sequence );
 		}
-	}
-	public void PresentDialog ( Model.Dialog.Sequence sequence ) {
-		
-		PresentDialog( sequence, null );
 	}
 
 	// *********** PRIVATE ********************
@@ -202,6 +203,8 @@ public class UIController : MonoBehaviour {
 		private List<UiPanel> _panels = new List<UiPanel>();
 		private InputRecieverLayer _inputLayer;
 
+		public System.Action OnExit;
+
 		public void RegisterPanel ( UiPanel panel ) {
 			
 			if ( !_panels.Contains( panel) ) {
@@ -215,6 +218,7 @@ public class UIController : MonoBehaviour {
 			foreach( UiPanel p in _panels) {
 				if ( p.ShouldRecieveInput ){ panelsToRecieveInput.Add( p ); }
 				p.Present();
+				p.OnExit = OnExit;
 			}
 
 			_inputLayer = new InputRecieverLayer( panelsToRecieveInput ) ;

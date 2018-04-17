@@ -17,17 +17,16 @@ namespace UI.Panels {
 			if ( !_sequence.isDone ) {
 				Next ( _sequence.Next () );
 			} else {
-				_onComplete ();
+				Exit();
 			}
 		}
 
 
 		// ************ Public **************
 
-		public void PresentDialogSequence ( Model.Dialog.Sequence sequence, System.Action onComplete ) {
+		public void PresentDialogSequence ( Model.Dialog.Sequence sequence ) {
 			
 			_sequence = sequence;
-			_onComplete = onComplete;
 
 			Next ( _sequence.Next () );
 		}
@@ -45,7 +44,6 @@ namespace UI.Panels {
 
 		private InputRecieverLayer _inputLayer;
 		private Model.Dialog.Sequence _sequence;
-		private System.Action _onComplete;
 		private DialogBox _presentedDialog;
 
 		private void Next ( Model.Dialog.Sequence.Dialog dialog ) {

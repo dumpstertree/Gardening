@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IInputReciever {
@@ -11,11 +12,13 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	public PointerEvent OnPointerEnterEvent;
 	public PointerEvent OnPointerExitEvent;
 
+	public Action OnExit {
+		get { return _onExit; }
+		set { _onExit = value; }
+	}
 	public bool ShouldRecieveInput { 
 		get { return _shouldRecieveInput; } 
 	}
-
-
 	public void Init () {
 
 		_hasBeenInited = true;
@@ -63,8 +66,10 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	void IInputReciever.OnCancelUp () {
 		OnCancelUp ();
 	}
-	void IInputReciever.OnStartDown (){}
-	void IInputReciever.OnStartUp (){}
+	void IInputReciever.OnStartDown () {
+	}
+	void IInputReciever.OnStartUp () {
+	}
 	void IInputReciever.HorizontalChanged ( float horizontal ) {
 		HorizontalChanged ( horizontal );
 	}
@@ -72,17 +77,6 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 		VerticalChanged ( vertical );
 	}
 
-	//******************************
-
-	protected virtual void OnInit () {}
-	protected virtual void OnPresent () {}
-	protected virtual void OnDismiss () {}
-	protected virtual void OnConfirmDown () {}
-	protected virtual void OnConfirmUp () {}
-	protected virtual void OnCancelDown () {}
-	protected virtual void OnCancelUp () {}
-	protected virtual void HorizontalChanged ( float horizontal ) {}
-	protected virtual void VerticalChanged ( float vertical ) {}
 
 	//******************************
 	
@@ -94,6 +88,7 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	[SerializeField] protected bool _shouldRecieveInput;
 
 	private bool _pointerDown;
+	private Action _onExit;
 
 	
 	protected virtual void Update () {
@@ -136,4 +131,28 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 			OnPointerExitEvent();
 		}
     }
+
+    	//******************************
+
+	protected virtual void OnInit () {}
+	protected virtual void OnPresent () {}
+	protected virtual void OnDismiss () {}
+	protected virtual void OnConfirmDown () {}
+	protected virtual void OnConfirmUp () {}
+	protected virtual void OnCancelDown () {}
+	protected virtual void OnCancelUp () {}
+	protected virtual void HorizontalChanged ( float horizontal ) {}
+	protected virtual void VerticalChanged ( float vertical ) {}
+
+	protected void Exit () {
+		
+		if ( OnExit != null ) {
+			
+			Action onExit = OnExit;
+			OnExit = null;
+
+			onExit ();
+		}
+	}
+
 }

@@ -44,15 +44,6 @@ public class Game : MonoBehaviour {
 
 	// ******************************
 	
-	private void Update(){
-
-		// if( Input.GetKeyDown( KeyCode.Alpha1 ) ){ _areaController.ChangeArea( Area.Identifier.Farm, 0 ); }
-		// if( Input.GetKeyDown( KeyCode.Alpha2 ) ){ _areaController.ChangeArea( Area.Identifier.Town, 0 ); }
-		// if( Input.GetKeyDown( KeyCode.Alpha3 ) ){ _areaController.ChangeArea( Area.Identifier.Dungeon, 0 ); }
-
-		// if( Input.GetKeyDown( KeyCode.Alpha9 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Farm); }
-		// if( Input.GetKeyDown( KeyCode.Alpha0 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Crafting); }
-	}
 	private void Awake () {
 
 		if ( Game.Instance == null ){ Game.Instance = this; }

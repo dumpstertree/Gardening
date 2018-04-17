@@ -48,16 +48,20 @@ namespace UI.Subpanels.Dialog {
 
 		private void SetName( string name ) {
 
-			_name.text = name;
+			if ( _name != null ) {
+				_name.text = name;
+			}
 		}
 		private void SetPortrait( Sprite portrait ) {
 
-			_portrait.sprite = portrait;
+			if ( _portrait != null ) {
+				_portrait.sprite = portrait;
+			}
 		}
 		private void SetColor( Model.Dialog.ColorPalette color ) {
 		}
 		private void SetHasNextIndicator( bool hasNext ) {
-
+			
 			_hasNextIndicator.gameObject.SetActive( hasNext );
 		}
 		private IEnumerator Present( string text ) {

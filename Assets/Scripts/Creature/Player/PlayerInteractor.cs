@@ -21,8 +21,6 @@ public class PlayerInteractor : Interactor, IInputReciever {
 
 	private void Use () {
 
-		print( "Use!" );
-
 		// use the item
 		var canUseItem = GetCanUseItem( _currentItem, _interactable );
 		if ( !_inAction && canUseItem ) {

@@ -14,6 +14,7 @@ namespace UI.Panels {
 		private RecipePanel _recipePanel {
 			get{ return Game.UIController.RecipesUIPanel as RecipePanel; }
 		}
+
 		[Header("Refrence")]
 		[SerializeField] private Text _recipeName;
 		[SerializeField] private GridLayoutGroup _componentLayoutGroup;
@@ -58,15 +59,15 @@ namespace UI.Panels {
 				}
 			});
 
-			_exitButton.onClick.AddListener( () => {
-				Game.UIController.ChangeContext( UIController.UiContext.Identifier.Farm );
-			});
-
 			_craftingSlots.OnInventoryItemChanged += ( index, item ) => {
 				if ( index == CRAFTED_SLOT_INDEX ){
 					_craftButton.interactable = item == null;
 				}
 			};
+
+			_exitButton.onClick.AddListener( () => {
+				Exit();
+			});
 
 			/*
 			_recipePanel.OnRecipeChange += (recipe) => {
@@ -78,7 +79,6 @@ namespace UI.Panels {
 			};
 			*/
 		}
-
 
 		// ***************************************
 
