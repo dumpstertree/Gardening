@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Shader created with Shader Forge v1.30 
@@ -119,7 +121,7 @@ Shader "Shader Forge/GroundShader" {
                 v.vertex.xyz += (((v.normal*_node_7891_var.rgb)*_VertexHeight)-_VertexHeight);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -313,7 +315,7 @@ Shader "Shader Forge/GroundShader" {
                 v.vertex.xyz += (((v.normal*_node_7891_var.rgb)*_VertexHeight)-_VertexHeight);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -438,7 +440,7 @@ Shader "Shader Forge/GroundShader" {
                 float4 _node_7891_var = tex2Dlod(_node_7891,float4(TRANSFORM_TEX(node_6982, _node_7891),0.0,0));
                 v.vertex.xyz += (((v.normal*_node_7891_var.rgb)*_VertexHeight)-_VertexHeight);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 TRANSFER_SHADOW_CASTER(o)
                 return o;
             }

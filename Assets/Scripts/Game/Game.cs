@@ -24,11 +24,11 @@ public class Game : MonoBehaviour {
 	public static Area Area{
 		get{ return Game.Instance._area; }
 	}
-	public static ItemManager ItemManager {
-		get{ return Game.Instance._itemManager; }
-	}
 	public static GunControl GunControl {
 		get{ return Game.Instance._gunControl; }
+	}
+	public static InputStack Input {
+		get{ return Game.Instance._input; } 
 	}
 
 	// ************ PRIVATE ****************
@@ -39,20 +39,11 @@ public class Game : MonoBehaviour {
 	private AreaController _areaController;
 	private UIController _uiController;
 	private Area _area;
-	private ItemManager _itemManager;
 	private GunControl _gunControl;
+	private InputStack _input;
 
 	// ******************************
 	
-	private void Update(){
-
-		if( Input.GetKeyDown( KeyCode.Alpha1 ) ){ _areaController.ChangeArea( Area.Identifier.Farm, 0 ); }
-		if( Input.GetKeyDown( KeyCode.Alpha2 ) ){ _areaController.ChangeArea( Area.Identifier.Town, 0 ); }
-		if( Input.GetKeyDown( KeyCode.Alpha3 ) ){ _areaController.ChangeArea( Area.Identifier.Dungeon, 0 ); }
-
-		if( Input.GetKeyDown( KeyCode.Alpha9 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Farm); }
-		if( Input.GetKeyDown( KeyCode.Alpha0 ) ){ _uiController.ChangeContext( UIController.UiContext.Identifier.Crafting); }
-	}
 	private void Awake () {
 
 		if ( Game.Instance == null ){ Game.Instance = this; }
@@ -95,19 +86,19 @@ public class Game : MonoBehaviour {
 		// UIController
 		_uiController = gameObject.AddComponent<UIController>();
 
-		// ItemManager
-		_itemManager = gameObject.AddComponent<ItemManager>();
-
 		// Gun Control
 		_gunControl = gameObject.AddComponent<GunControl>();
+
+		// Input
+		_input = gameObject.AddComponent<InputStack>();
 	}
 	private void InitGame () {
-
-		// ItemManager
-		_itemManager.Init();
 		
 		// Gun Control
 		_gunControl.Init();
+
+		// Input
+		_input.Init();
 
 		// Area
 		_area.Init();
@@ -121,7 +112,6 @@ public class Game : MonoBehaviour {
 
 		// UIController
 		_uiController.Init();
-
 	}
 	private void PlayGame () {
 		

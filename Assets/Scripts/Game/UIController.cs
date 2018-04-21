@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour {
 		CreateContexts();
 		InitPanels();
 	}
-	public void ChangeContext ( UiContext.Identifier contextToLoad ) {
+	public void ChangeContext ( UiContext.Identifier contextToLoad, System.Action onExit = null ) {
 
 		if ( _contexts.ContainsKey( contextToLoad ) ) {
 
@@ -40,45 +40,61 @@ public class UIController : MonoBehaviour {
 			}
 
 			_loadedContext = _contexts[ contextToLoad ];
+			_loadedContext.OnExit = onExit;
 			_loadedContext.Present();
+		} else { 
+			Debug.LogWarning( "Trying to load context that does not exist : " + contextToLoad ); 
 		}
-		else{ Debug.LogWarning( "Trying to load context that does not exist : " + contextToLoad ); }
+	}
+	public void PresentDialog ( Model.Dialog.Sequence sequence, System.Action onExit = null ) {
+			
+		var panel = _dialogUIPanelInstance as UI.Panels.Dialog;
+		
+		if ( panel != null ) {
+			
+			// change to the new context
+			ChangeContext( UiContext.Identifier.Dialog, onExit );
+			
+			// set the dialog sequence to the dialog UI
+			panel.PresentDialogSequence( sequence );
+		}
 	}
 
 	// *********** PRIVATE ********************
 	
-	private GameObject _canvasPrefab{
+	private GameObject _canvasPrefab {
 		get{ return Resources.Load( "Canvas" ) as GameObject; }
 	}
-	private UiPanel _quickSlotUIPanelPrefab{
+	private UiPanel _dialogUIPanelPrefab {
+		get{ return (Resources.Load( "DialogUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
+	}
+	private UiPanel _quickSlotUIPanelPrefab {
 		get{ return (Resources.Load( "QuickSlotUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
-	private UiPanel _inventorySlotUIPanelPrefab{
+	private UiPanel _inventorySlotUIPanelPrefab {
 		get{ return (Resources.Load( "InventoryUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
-	private UiPanel _recipesUIPanelPrefab{
+	private UiPanel _recipesUIPanelPrefab {
 		get{ return (Resources.Load( "RecipesUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
-	private UiPanel _craftingUIPanelPrefab{
+	private UiPanel _craftingUIPanelPrefab {
 		get{ return (Resources.Load( "CraftingUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
-	private UiPanel _gunCraftingUIPanelPrefab{
+	private UiPanel _gunCraftingUIPanelPrefab {
 		get{ return (Resources.Load( "GunCraftingUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
-	private UiPanel _ammoUIPanelPrefab{
+	private UiPanel _ammoUIPanelPrefab {
 		get{ return (Resources.Load( "AmmoUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
 
-
-
 	private GameObject _canvasInstance; 
+	private UiPanel _dialogUIPanelInstance;
 	private UiPanel _quickSlotUIPanelInstance;
 	private UiPanel _inventorySlotUIPanelInstance;
 	private UiPanel _recipesUIPanelInstance;
 	private UiPanel _craftingUIPanelInstance;
 	private UiPanel _gunCraftingUIPanelInstance;
 	private UiPanel _ammoUIPanelInstance;
-
 
 	private Dictionary<UiContext.Identifier,UiContext> _contexts;
 	private UiContext _loadedContext;
@@ -92,6 +108,7 @@ public class UIController : MonoBehaviour {
 	private void CreatePanels () {
 
 		// create panels
+		_dialogUIPanelInstance		  = CreatePanel( _dialogUIPanelPrefab );
 		_quickSlotUIPanelInstance 	  = CreatePanel( _quickSlotUIPanelPrefab );
 		_inventorySlotUIPanelInstance = CreatePanel( _inventorySlotUIPanelPrefab );
 		_recipesUIPanelInstance 	  = CreatePanel( _recipesUIPanelPrefab );
@@ -103,10 +120,14 @@ public class UIController : MonoBehaviour {
 
 		_contexts = new Dictionary<UiContext.Identifier,UiContext>();
 		
+		// create dialog context
+		var dialogContext = new UiContext();
+		dialogContext.RegisterPanel( _dialogUIPanelInstance );
+		dialogContext.Dismiss();
+
 		// create farm context
 		var farmContext = new UiContext();
 		farmContext.RegisterPanel( _quickSlotUIPanelInstance );
-		farmContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		farmContext.RegisterPanel( _ammoUIPanelInstance );
 		farmContext.Dismiss();
 
@@ -118,6 +139,7 @@ public class UIController : MonoBehaviour {
 
 		// create inventory context
 		var inventoryContext = new UiContext();
+		inventoryContext.RegisterPanel( _quickSlotUIPanelInstance );
 		inventoryContext.RegisterPanel( _inventorySlotUIPanelInstance );
 		inventoryContext.Dismiss();
 
@@ -133,6 +155,7 @@ public class UIController : MonoBehaviour {
 		gunCraftingContext.Dismiss();
 
 		// register all created contexts
+		RegisterContext( UiContext.Identifier.Dialog, dialogContext );
 		RegisterContext( UiContext.Identifier.Farm, farmContext );
 		RegisterContext( UiContext.Identifier.Dungeon, dungeonContext );
 		RegisterContext( UiContext.Identifier.Inventory, inventoryContext );
@@ -145,6 +168,7 @@ public class UIController : MonoBehaviour {
 	private void InitPanels () {
 
 		// initialize new panels 
+		_dialogUIPanelInstance.Init();
 		_quickSlotUIPanelInstance.Init();
 		_inventorySlotUIPanelInstance.Init();
 		_recipesUIPanelInstance.Init();
@@ -177,6 +201,9 @@ public class UIController : MonoBehaviour {
 	public class UiContext {
 
 		private List<UiPanel> _panels = new List<UiPanel>();
+		private InputRecieverLayer _inputLayer;
+
+		public System.Action OnExit;
 
 		public void RegisterPanel ( UiPanel panel ) {
 			
@@ -185,19 +212,34 @@ public class UIController : MonoBehaviour {
 			}
 		}
 		public void Present () {
-			
+
+			var panelsToRecieveInput = new List<IInputReciever>();
+
 			foreach( UiPanel p in _panels) {
+				
+				if ( p.ShouldRecieveInput ){ panelsToRecieveInput.Add( p ); }
+				
 				p.Present();
+				p.OnExit = OnExit;
+			}
+
+			_inputLayer = new InputRecieverLayer( panelsToRecieveInput ) ;
+
+			if ( panelsToRecieveInput.Count > 0 ) {
+				Game.Input.AddReciever( _inputLayer );
 			}
 		}
 		public void Dismiss () { 
 			
+			Game.Input.RemoveReciever( _inputLayer );
+
 			foreach( UiPanel p in _panels) {
 				p.Dismiss();
 			}
 		}
 
 		public enum Identifier {
+			Dialog,
 			Farm,
 			Dungeon,
 			Inventory,

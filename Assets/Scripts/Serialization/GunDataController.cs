@@ -6,7 +6,7 @@ using Model;
 public class GunDataController : DataController {
 
 
-	// ************** GUN **********
+	// *************** PUBLIC **********
 
 	private const string GUN_SAVE_DATA_PATH = "/Users/zacharycollins/desktop/";
 
@@ -21,6 +21,9 @@ public class GunDataController : DataController {
 		var text = LoadFileFromPath( GUN_SAVE_DATA_PATH + id );
 		return (text != "") ? CreatGunFromJson( text ) : CreateBlankGun( id );
 	}
+
+	// ************** PRIVATE **********
+	
 	private Gun CreatGunFromJson ( string json ) {
 		
 		return JsonUtility.FromJson<Gun>( json );
@@ -33,5 +36,5 @@ public class GunDataController : DataController {
 		Debug.LogWarningFormat( "No Gun data found. Making a new one" );
 	
 		return newGun;
-	}	
+	}
 }

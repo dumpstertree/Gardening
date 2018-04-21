@@ -27,7 +27,7 @@ public class DropItem : MonoBehaviour {
 	}
 
 	private void Update () {
-		transform.GetChild(0).LookAt( Camera.main.transform );
+		// transform.GetChild(0).LookAt( Camera.main.transform );
 	}
 	private void Awake () {
 

@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Model.Template;
 
 namespace Interactable.OptionalComponent {
 	
@@ -51,8 +51,8 @@ namespace Interactable.OptionalComponent {
 				var q = (int)(droppedItem.MinDropQuantity + Mathf.Floor( quantityCurve*itemDelta ) );
 
 				// create item
-				var inventoryItem = ScriptableObject.Instantiate( droppedItem.Item );
-
+				var inventoryItem = droppedItem.Item.GetInstance( q );
+				
 				// return item
 				inventoryItem.SetCount( q );
 				rolledItem = inventoryItem;
@@ -74,7 +74,7 @@ namespace Interactable.OptionalComponent {
 			public float SpawnRate;
 			public float MinDropQuantity;
 			public float MaxDropQuantity;
-			public InventoryItem Item;
+			public InventoryItemTemplate Item;
 		}
 
 	}
