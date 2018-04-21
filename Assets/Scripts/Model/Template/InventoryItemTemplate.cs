@@ -11,6 +11,7 @@ namespace Model.Template {
 				startingCount, 
 				_displayName, 
 				_maxCount, 
+				_animation,
 				_sprite, 
 				_holdItem, 
 				_expendable,
@@ -63,12 +64,23 @@ namespace Model.Template {
 		[SerializeField] private bool _expendable = true;
 
 
+		[Header( "Animations" )]
+		[SerializeField] private ItemAnimation _animation;
+
+
 		[Header( "Usability" )]
 		[SerializeField] private bool _canInteract = true;
-		[SerializeField] private Model.Template.InteractData _interactor = null;
+		[SerializeField] private InteractData _interactor = null;
 		
 		[SpaceAttribute]
 		[SerializeField] private bool _canShoot = false;
-		[SerializeField] private Model.Template.ShootData _shootData = null;
+		[SerializeField] private ShootData _shootData = null;
+	}
+	
+	[System.Serializable]
+	public class ItemAnimation {
+
+		[SerializeField] public Creature.AnimationTrigger Trigger;
 	}
 }
+

@@ -30,6 +30,7 @@ public abstract class Creature : Interactable.InteractableObject {
 	public Interactor Interactor {
 		get{return _interactor; } 
 	}
+	public abstract Animations AnimationsData{ get; }
 
 	// **************************
 
@@ -135,6 +136,33 @@ public abstract class Creature : Interactable.InteractableObject {
 			transform.rotation = Quaternion.Slerp( startRot, targetRot, frac);
 			
 			yield return null;
+		}
+	}
+
+	public enum AnimationTrigger {
+		None,
+		Emote
+	}
+	public struct Animations {
+
+		public Animation None;
+		public Animation Emote;
+
+		public Animations ( Animation none, Animation emote ) {
+			None = none;
+			Emote = emote;
+		}
+	}
+	public struct Animation {
+
+		public string Trigger { get; }
+		public float Length { get; }
+		public float ActionPercentage { get; }
+
+		public Animation ( string trigger, float length, float actionPercentage ) {
+			Trigger = trigger;
+			Length = length;
+			ActionPercentage = actionPercentage;
 		}
 	}
 }

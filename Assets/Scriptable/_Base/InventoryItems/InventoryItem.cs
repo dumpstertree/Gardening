@@ -12,6 +12,7 @@ public class InventoryItem {
 		int count,
 		string displayName,
 		int maxCount,
+		Model.Template.ItemAnimation animation,
 		Sprite sprite,
 		GameObject holdItem,
 		bool expendable,
@@ -24,6 +25,7 @@ public class InventoryItem {
 		_count = count;
 		_displayName = displayName;
 		_maxCount = maxCount;
+		_animation = animation;
 		_sprite = sprite;
 		_holdItem = holdItem;
 		_expendable = expendable;
@@ -95,6 +97,7 @@ public class InventoryItem {
 	private Sprite _sprite;
 	private GameObject _holdItem;
 	private bool _expendable;
+	private Model.Template.ItemAnimation _animation;
 
 	public Controller.Item.ShootData _shootData;
 	public Controller.Item.InteractData _interactor;
@@ -110,8 +113,20 @@ public class InventoryItem {
 
 	public void Use ( Creature user, Action onComplete ) {
 
-		var objectToInteractWith = user.Interactor.InteractableObject;
+		// Play animation
+		switch ( _animation.Trigger ) {
+			
+			case Creature.AnimationTrigger.None: 
+				user.Animator.SetTrigger( user.AnimationsData.None.Trigger );
+				break;
+			
+			case Creature.AnimationTrigger.Emote: 
+				user.Animator.SetTrigger( user.AnimationsData.Emote.Trigger );
+				break;
+		}
 
+		// Use
+		var objectToInteractWith = user.Interactor.InteractableObject;
 		if ( _canInteract && objectToInteractWith != null && objectToInteractWith.Interactable ) { 
 			Interact( user, onComplete ); 
 			return; 
@@ -121,7 +136,8 @@ public class InventoryItem {
 			return; 
 		}
 
-		if ( _expendable ){
+
+		if ( _expendable ) {
 			ReduceCount( 1 );
 		}
 	}

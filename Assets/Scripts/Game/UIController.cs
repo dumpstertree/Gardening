@@ -216,7 +216,9 @@ public class UIController : MonoBehaviour {
 			var panelsToRecieveInput = new List<IInputReciever>();
 
 			foreach( UiPanel p in _panels) {
+				
 				if ( p.ShouldRecieveInput ){ panelsToRecieveInput.Add( p ); }
+				
 				p.Present();
 				p.OnExit = OnExit;
 			}

@@ -9,6 +9,15 @@ public class Enemy : Creature {
 	private bool _usingItem;
 	private string _itemID = "FUCK";
 
+	public override Animations AnimationsData {
+		get{ 
+			return new Animations(
+				new Animation( "", 0f, 0f ),
+				new Animation( "Pickup", 1.5f, 0.5f ) 
+			); 
+		}
+	}
+
 	public override void Init () {
 
 		_inventory = new Inventory( 15 );

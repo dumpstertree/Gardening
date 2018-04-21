@@ -30,7 +30,14 @@ public class Player : Creature, IInputReciever {
 	public Transform CameraFocus {
 		get{ return _cameraFocus; }
 	}
-
+	public override Animations AnimationsData {
+		get{ 
+			return new Animations(
+				new Animation( "", 0f, 0f ),
+				new Animation( "Pickup", 1.5f, 0.5f ) 
+			); 
+		}
+	}
 
 	// ***************** PRIVATE *******************
 

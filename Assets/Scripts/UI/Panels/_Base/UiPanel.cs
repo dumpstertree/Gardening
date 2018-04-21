@@ -67,8 +67,10 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 		OnCancelUp ();
 	}
 	void IInputReciever.OnStartDown () {
+		OnStartDown ();
 	}
 	void IInputReciever.OnStartUp () {
+		OnStartlUp ();
 	}
 	void IInputReciever.HorizontalChanged ( float horizontal ) {
 		HorizontalChanged ( horizontal );
@@ -90,7 +92,6 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	private bool _pointerDown;
 	private Action _onExit;
 
-	
 	protected virtual void Update () {
 		
 		if ( _pointerDown ){
@@ -132,7 +133,7 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 		}
     }
 
-    	//******************************
+    //******************************
 
 	protected virtual void OnInit () {}
 	protected virtual void OnPresent () {}
@@ -141,6 +142,8 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 	protected virtual void OnConfirmUp () {}
 	protected virtual void OnCancelDown () {}
 	protected virtual void OnCancelUp () {}
+	protected virtual void OnStartDown () {}
+	protected virtual void OnStartlUp () {}
 	protected virtual void HorizontalChanged ( float horizontal ) {}
 	protected virtual void VerticalChanged ( float vertical ) {}
 
