@@ -65,6 +65,9 @@ public class AreaController : MonoBehaviour {
 			case Area.Identifier.CraftingArea:
 				return "CraftingArea";
 
+			case Area.Identifier.SmallHome:
+				return "SmallHome";
+				
 			default:
 				return "Farm";
 		}
@@ -93,4 +96,6 @@ public class AreaController : MonoBehaviour {
 
 		_screenWipeInstance.material.SetFloat( PROPERTY_NAME, 0f );
 	}
+
+
 }

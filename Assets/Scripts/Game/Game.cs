@@ -62,6 +62,10 @@ public class Game : MonoBehaviour {
 	}
 	private void OnChangeArea ( int doorID ) {
 		
+		// reset all input	
+		_input.Reset();
+
+		// load new area
 		_area = FindObjectOfType<Area>();
 		_area.Init();
 		_area.EnterArea( doorID );
