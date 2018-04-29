@@ -28,6 +28,11 @@ public class InputStack : MonoBehaviour {
 			_recievers.Remove( receiver );
 		}
 	}
+	public void Reset () {
+
+		_recievers = new List<InputRecieverLayer>();
+		_inputLayout = new DefaultLayout();
+	}
 	
 	//  ************* Private ******************
 

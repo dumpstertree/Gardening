@@ -81,6 +81,7 @@ public class Area : MonoBehaviour {
 		Farm,
 		Dungeon,
 		Town,
-		CraftingArea
+		CraftingArea,
+		SmallHome
 	}
 }
