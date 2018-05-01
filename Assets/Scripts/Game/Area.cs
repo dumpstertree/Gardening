@@ -27,7 +27,7 @@ public class Area : MonoBehaviour {
 
 	[Header("Prefabs")]
 	[SerializeField] private Player _playerPrefab;
-	[SerializeField] private CameraMovement _camera;
+	[SerializeField] private CameraSystem _cameraSystem;
 
 	private Player _loadedPlayer;
 	
@@ -46,8 +46,7 @@ public class Area : MonoBehaviour {
 	}
 	private void LoadCamera(){
 
-		var camera = Instantiate( _camera );
-		camera.SetupCamera( _loadedPlayer.CameraTarget, _loadedPlayer.CameraFocus );
+		_cameraSystem.Init ();
 	}
 
 	// ********* Enter ****************
