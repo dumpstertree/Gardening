@@ -17,6 +17,7 @@
 		_NoiseScale("Noise Scale", Range(-2,2)) = 1
 		_TopSpread("TopSpread", Range(-2,2)) = 1
 		_EdgeWidth("EdgeWidth", Range(0,0.5)) = 1
+		_VertexHeight("Vertex Height", Range(-10.0,10.0)) = 0
 	}
 	SubShader {
 				
@@ -24,24 +25,29 @@
 		LOD 200
 		
 		CGPROGRAM
-		#pragma surface surf Standard fullforwardshadows
+		#pragma surface surf Standard fullforwardshadows vertex:vert
 		#pragma target 3.0
 
 		sampler2D _MainTexSide, _MainTex, _Normal, _EdgeNoise, _TopRamp, _SideRamp;
 		float _NoiseScale, _Scale, _SideScale, _EdgeNoiseScale;
-		float _TopSpread, _EdgeWidth;
+		float _TopSpread, _EdgeWidth, _VertexHeight;
 
 		struct Input {
 			float2 uv_MainTex;
 			float3 worldPos;
 			float3 worldNormal;
+			float4 color: Color;
 		};
+
+		void vert( inout appdata_full v ) {
+
+			v.vertex.xyz += (((1-v.color.r) * _VertexHeight/100) * v.normal.xyz);
+		}
+
 
 		void surf ( Input IN, inout SurfaceOutputStandard o ) {
 
-
 			float3 blendNormal = saturate(pow(IN.worldNormal * 1.4,4));
-
 	
 			// ************* Get Noise Texture Value *********
 
@@ -52,6 +58,7 @@
 			float3 noisetexture = zn;
 			noisetexture = lerp( noisetexture, xn, blendNormal.x );
 			noisetexture = lerp( noisetexture, yn, blendNormal.y );
+			noisetexture = IN.color.r - noisetexture ;
 
 			// ************* Get Edge Noise Texture Value *********
 
@@ -92,7 +99,7 @@
 			float worldNormalDotNoise = dot(o.Normal + (noisetexture.y + (noisetexture * 0.5)), IN.worldNormal.y);
 
 
-					// if dot product is in between the two, use edge mask
+				// if dot product is in between the two, use edge mask
 			float3 topTextureEdgeResult = step( _TopSpread, worldNormalDotNoise ) * step( worldNormalDotNoise, _TopSpread + _EdgeWidth ) * edgeNoiseTexture;
 
 			
@@ -103,9 +110,7 @@
 				// if dot product is lower than the top spread slider, multiplied by triplanar mapped side/bottom texture
 			float3 sideTextureResult = step(worldNormalDotNoise, _TopSpread + topTextureEdgeResult) * sidetexture;
 
-			
-		
-			
+
 			o.Albedo = topTextureResult + sideTextureResult;
 		}
 

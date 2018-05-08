@@ -15,6 +15,7 @@ public class Area : MonoBehaviour {
 
 		PlacePlayer( doorID );
 		LoadUIContext();
+		ApplyLighting();
 	}
 
 	// *************************
@@ -24,10 +25,11 @@ public class Area : MonoBehaviour {
 	[SerializeField] private List<Door> _doors;
 	[SerializeField] private bool _hostile;
 	[SerializeField] private Vector3 _size;
+	[SerializeField] private LightingPallete.Defaults _lighting;
 
 	[Header("Prefabs")]
 	[SerializeField] private Player _playerPrefab;
-	[SerializeField] private CameraMovement _camera;
+	[SerializeField] private CameraSystem _cameraSystem;
 
 	private Player _loadedPlayer;
 	
@@ -46,8 +48,7 @@ public class Area : MonoBehaviour {
 	}
 	private void LoadCamera(){
 
-		var camera = Instantiate( _camera );
-		camera.SetupCamera( _loadedPlayer.CameraTarget, _loadedPlayer.CameraFocus );
+		_cameraSystem.Init ();
 	}
 
 	// ********* Enter ****************
@@ -66,6 +67,15 @@ public class Area : MonoBehaviour {
 		
 		Game.UIController.ChangeContext( _startingContext );
 	}
+	private void ApplyLighting () {
+
+		var pallete = LightingPallete.FromDefault( _lighting );
+
+		UnityEngine.RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+		UnityEngine.RenderSettings.ambientSkyColor = pallete.Sky;
+		UnityEngine.RenderSettings.ambientEquatorColor = pallete.Equator;
+		UnityEngine.RenderSettings.ambientGroundColor = pallete.Ground;
+	}
 
 	// *************************
 
@@ -73,6 +83,8 @@ public class Area : MonoBehaviour {
 	
 		Gizmos.color = Color.green;
 		Gizmos.DrawWireCube( transform.position + new Vector3( 0, _size.y/2f, 0), _size );
+
+		ApplyLighting();
 	}
 
 	// *************************
@@ -82,6 +94,61 @@ public class Area : MonoBehaviour {
 		Dungeon,
 		Town,
 		CraftingArea,
-		SmallHome
+		SmallHome,
+		Home,
+		Housing
+	}
+
+	private struct LightingPallete {
+
+		public Color Sky { get; }
+		public Color Equator { get; }
+		public Color Ground { get; }
+
+		public static LightingPallete FromDefault ( Defaults pallete ) {
+			
+			switch ( pallete ){
+				case Defaults.SunnyOutside: return SunnyOutside ();
+				case Defaults.DarkInside: return DarkInside ();
+			}
+
+			return Empty();
+		}
+
+		public LightingPallete ( Color sky, Color equator, Color ground ) {
+			
+			Sky = sky;
+			Equator = equator;
+			Ground = ground;
+		}
+
+
+		// Lighting defualt definitions
+		private static LightingPallete SunnyOutside () {
+			return new LightingPallete( 
+				new Color( 42f/255f, 113f/255f,255f/255f ),
+				new Color( 255f/255f, 184f/255f, 150f/255f ),
+				new Color( 0f/255f, 84f/255f, 81f/255f ) 
+			); 
+		}
+		private static LightingPallete DarkInside () {
+			return new LightingPallete( 
+				new Color( 0/255f, 20/255f, 20/255f ),
+				new Color( 0/255f, 80/255f, 80/255f ),
+				new Color( 0f/255f, 200/255f, 200/255f ) 
+			); 
+		}
+		private static LightingPallete Empty () {
+			return new LightingPallete( 
+				new Color( 0f ,0f ,0f ),
+				new Color( 0f ,0f ,0f ),
+				new Color( 0f ,0f ,0f )
+			); 
+		}
+
+		public enum Defaults {
+			SunnyOutside,
+			DarkInside
+		}
 	}
 }
