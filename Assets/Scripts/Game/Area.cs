@@ -96,7 +96,10 @@ public class Area : MonoBehaviour {
 		CraftingArea,
 		SmallHome,
 		Home,
-		Housing
+		Housing,
+		GardeningShop,
+		GunShop,
+		GeneralStore
 	}
 
 	private struct LightingPallete {

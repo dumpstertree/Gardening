@@ -68,6 +68,15 @@ public class AreaController : MonoBehaviour {
 			case Area.Identifier.SmallHome:
 				return "SmallHome";
 
+			case Area.Identifier.GunShop:
+				return "Gun Shop";
+
+			case Area.Identifier.GardeningShop:
+				return "Gardening Shop";
+
+			case Area.Identifier.GeneralStore:
+				return "General Store";
+
 			case Area.Identifier.Home:
 				return "Home";
 
