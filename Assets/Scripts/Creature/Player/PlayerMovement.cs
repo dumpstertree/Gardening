@@ -20,11 +20,15 @@ public class PlayerMovement : Brain, IInputReciever {
 	[SerializeField] private Player _player;
 	[SerializeField] private PlayerAgressiveSubBrain _agressive;
 	[SerializeField] private PlayerPassiveSubBrain _passive;
-	
+	[SerializeField] private LayerMask _mask;
+
 	private CameraType _cameraType;
 	private float _horizontal;
 	private float _vertical;
-	
+
+	private const float RAYCAST_INSET = 0.01f;
+	private const float RAYCAST_DISTANCE = 0.1f;
+
 	public override void Think () {
 
 		switch ( _cameraType ) {
@@ -39,6 +43,14 @@ public class PlayerMovement : Brain, IInputReciever {
 		}
 	}
 
+	[SerializeField] private float _jumpVelocity = 10f;
+
+	private void Update () {
+
+		if ( _player.Physics.State.DownIsColliding && UnityEngine.Input.GetKeyDown( KeyCode.Space ) ) {
+			_player.Physics.AddVelocity( new Vector3( 0, _jumpVelocity, 0) );
+		}
+	}
 	private void Start () {
 
 		_player.QuickSlot.OnInputChanged += newSlotID => {
@@ -53,9 +65,10 @@ public class PlayerMovement : Brain, IInputReciever {
 			}
 		};
 	}
+	
 
 	private enum CameraType {
 		Passive,
 		Agressive
-	}
+	}	
 }

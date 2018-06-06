@@ -21,9 +21,6 @@ public abstract class Creature : Interactable.InteractableObject {
 	public Animator Animator { 
 		get{ return _animator;} 
 	}
-	public Rigidbody Rigidbody { 
-		get { return _rigidbody; } 
-	}
 	public Brain Brain { 
 		get{ return _brain; } 
 	}

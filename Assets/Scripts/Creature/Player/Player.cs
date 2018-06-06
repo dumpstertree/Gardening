@@ -17,6 +17,9 @@ public class Player : Creature, IInputReciever {
 	
 	// ***************** PUBLIC *******************
 
+	public Dumpster.Physics.Controller Physics {
+		get { return _physics; }
+	}
 	public Model.PartInventory GunParts { 
 		get { return _gunParts; }
 	}
@@ -44,6 +47,7 @@ public class Player : Creature, IInputReciever {
 	[Header( "Player Properties" )]
 	[SerializeField] private QuickSlot _quickslot;
 	[SerializeField] private Model.Template.InventoryItemTemplate _hand;
+	[SerializeField] private Dumpster.Physics.Controller _physics;
 
 	private Transform _cameraTarget;	
 	private Transform _cameraFocus;

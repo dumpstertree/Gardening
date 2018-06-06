@@ -65,7 +65,7 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 		newPos = newPos + transform.right * h;
 		newPos = newPos + transform.forward * v;
 
-		_player.Rigidbody.MovePosition( newPos );
+		//_player.Rigidbody.MovePosition( newPos );
 	}
 	private void Animate () {
 
