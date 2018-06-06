@@ -24,15 +24,17 @@ namespace Dumpster.Physics {
 
 		// ***************** Private *********************
 
-		[SerializeField] Core.Bounds _bounds;
+		[SerializeField] private Controller _physicController;
+		[SerializeField] private Core.Bounds _bounds;
 		[SerializeField] private Vector2 _rayAmount;
 		[SerializeField] private LayerMask _mask;
 
 		private const float ROUNDING = 0.01f;
 
-		[SerializeField] private bool _isColiding;
-		[SerializeField] private float _closestCollision;
-		[SerializeField] private float _insetIntoCollision;
+		private bool _isColiding;
+		private float _closestCollision;
+		private float _insetIntoCollision;
+		private List<Collider> _collidersToIgnore;
 
 		private Projection _hit;
 
@@ -59,16 +61,23 @@ namespace Dumpster.Physics {
 						r.direction = transform.forward;
 						r.origin = pos;
 						
-						rays.Add( new Projection( r, _mask, _bounds.Depth ) );
+						rays.Add( new Projection( r, _mask, _bounds.Depth, _collidersToIgnore ) );
 					}
 				}
 				return rays;
 			}
 		}
 		public void ForceUpdate () {
+			
 			Update ();
 		}
-		
+			
+		private void Awake () {
+
+			if ( _physicController != null ) {
+				_collidersToIgnore = new List<Collider>( _physicController.GetComponentsInChildren<Collider>() );
+			}
+		}
 		private void Update () {
 
 			_isColiding = false;

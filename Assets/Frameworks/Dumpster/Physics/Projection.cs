@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Dumpster.Physics {
 	
@@ -8,12 +10,8 @@ namespace Dumpster.Physics {
 		public bool IsColiding { get; }
 		public float ProjectedLength { get; }
 		public Vector3 ProjectedPoint { get; }
-		public Vector3 Normal {
-			get { return _hit.normal; }
-		}
-		private RaycastHit _hit;
 
-		public Projection ( Ray ray, LayerMask mask, float length  ) {
+		public Projection ( Ray ray, LayerMask mask, float length, List<Collider> exclude ) {
 
 			Ray = ray;
 
@@ -21,19 +19,33 @@ namespace Dumpster.Physics {
 			ProjectedPoint = ray.origin + ray.direction * length;
 			ProjectedLength = length;
 
+			var hits = UnityEngine.Physics.RaycastAll( ray ).OrderBy(h=>h.distance).ToArray();
+			foreach ( RaycastHit hit in hits) { 
 
-			if( UnityEngine.Physics.Raycast( ray, out _hit, Mathf.Infinity, mask )) {
+				if ( hit.collider == null ) {
+					continue;
+				}
+
+				if ( exclude.Contains( hit.collider ) ) {
+					continue;
+				}
 				
-				if ( _hit.distance <= ( length  + .01f ) ) {
+				if ( mask != (mask | (1 << hit.collider.gameObject.layer)) ) {
+					continue;
+				}
+
+
+				if ( hit.distance <= ( length + .01f ) ) {
 					
-					// set is colliding
 					IsColiding = true;
 					
 					if ( IsColiding ) {
 
-						ProjectedPoint = _hit.point;
-						ProjectedLength  = _hit.distance;
+						ProjectedPoint = hit.point;
+						ProjectedLength  = hit.distance;
 					}
+
+					return;
 				}
 			}
 		}
