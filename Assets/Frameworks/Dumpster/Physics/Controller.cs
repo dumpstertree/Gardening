@@ -110,12 +110,12 @@ namespace Dumpster.Physics {
 			ApplyVelocity ();
 
 			// offsets
-			ApplyOffset ( _downPlanes );
-			ApplyOffset ( _upPlanes );
 			ApplyOffset ( _forwardPlanes );
 			ApplyOffset ( _backPlanes );
 			ApplyOffset ( _leftPlanes );
 			ApplyOffset ( _rightPlanes );
+			ApplyOffset ( _downPlanes );
+			ApplyOffset ( _upPlanes );
 		}
 
 
@@ -129,16 +129,6 @@ namespace Dumpster.Physics {
 		private void ClampVelocity () {
 
 			// cancel velocity that has a collision
-			if ( IsColliding ( _upPlanes ) ) {
-				if ( _velocity.y > 0 ) {
-					_velocity.y = 0f;
-				}
-			}
-			if ( IsColliding ( _downPlanes ) ) {
-				if ( _velocity.y < 0 ) {
-					_velocity.y = 0f;
-				}
-			}
 			if ( IsColliding ( _forwardPlanes ) ) {
 				if ( _velocity.z > 0 ) {
 					_velocity.z = 0f;
@@ -157,6 +147,16 @@ namespace Dumpster.Physics {
 			if ( IsColliding ( _leftPlanes ) ) {
 				if ( _velocity.z < 0 ) {
 					_velocity.z = 0f;
+				}
+			}
+			if ( IsColliding ( _upPlanes ) ) {
+				if ( _velocity.y > 0 ) {
+					_velocity.y = 0f;
+				}
+			}
+			if ( IsColliding ( _downPlanes ) ) {
+				if ( _velocity.y < 0 ) {
+					_velocity.y = 0f;
 				}
 			}
 
