@@ -43,21 +43,21 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 		var adjusted = ( degrees - 90 ) * -1;
 		var y = Camera.main.transform.eulerAngles.y + adjusted;
 
-		_player.Rigidbody.MoveRotation( Quaternion.Euler( new Vector3( 0, y, 0 ) ) );
+		_player.transform.rotation = Quaternion.Euler( new Vector3( 0, y, 0 ) );
 	}
 	private void Move () {
 	
 		var h = Mathf.Abs(_horizontal);
 		var v = Mathf.Abs(_vertical);
 		var speed = ( ( h > v ) ? h : v) * Time.deltaTime * _speed;
-
-		_player.Rigidbody.MovePosition( transform.position + transform.forward * speed);
+		
+		_player.Physics.MovePosition ( transform.forward * speed ) ;
 	}
 	private void Animate () {
 		
 		var absH = Mathf.Abs(_horizontal);
 		var absV = Mathf.Abs(_vertical);
-
+		
 		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, absH > absV ? _horizontal : _vertical );
 	}
 	private void MoveCameraTarget () {

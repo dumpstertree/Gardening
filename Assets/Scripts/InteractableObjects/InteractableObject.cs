@@ -3,7 +3,7 @@
 namespace Interactable {
 
 	[RequireComponent(typeof(Animator))]
-	[RequireComponent(typeof(Rigidbody))]
+	// [RequireComponent(typeof(Rigidbody))]
 	public class InteractableObject : MonoBehaviour {
 
 		// ***************** PUBLIC *******************

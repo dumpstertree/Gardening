@@ -71,7 +71,7 @@ public class Door : MonoBehaviour {
 		RaycastHit hit;
 
 	    if ( Physics.Raycast( ray, out hit, 10.0f) ) {
-	    	return hit.point.y;
+	    	return hit.point.y + 1.0f;
 		}
 
 		return _spawnLocation.position.y;
