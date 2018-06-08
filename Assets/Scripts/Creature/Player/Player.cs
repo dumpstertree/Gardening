@@ -98,7 +98,7 @@ public class Player : Creature, IInputReciever {
 			),
 		0 );
 
-		(EdensGarden.Instance as EdensGarden).Camera.SetFocus( transform );
+		EdensGarden.Instance.Camera.SetFocus( transform );
 	}
 
 

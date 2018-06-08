@@ -7,6 +7,10 @@ namespace Dumpster.Core.BuiltInModules {
 
 		// ****************** Public *********************
 
+		public Camera.Priority Priority {
+			get{ return _priority; }
+		}
+
 		public delegate void RequestControlEvent ();
 		public RequestControlEvent OnRequestControl;
 		
@@ -23,6 +27,7 @@ namespace Dumpster.Core.BuiltInModules {
 		// ****************** Private *********************
 
 		[SerializeField] private bool _isDefaultController;
+		[SerializeField] private Camera.Priority _priority;
 
 		protected void FireRequestEvent () {
 

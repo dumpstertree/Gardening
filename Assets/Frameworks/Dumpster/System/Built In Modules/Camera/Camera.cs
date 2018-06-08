@@ -5,10 +5,23 @@ namespace Dumpster.Core.BuiltInModules {
 	
 	public class Camera : Module {
 
+		public enum Priority {
+			Low,
+			Medium,
+			High
+		}
+
 		protected override void OnInstall () {}
 		protected override void OnInit () {
 
-			// create camera instance 
+			_lowPriorityControllerStack = new List<CameraController>();
+			_mediumPriorityControllerStack = new List<CameraController>();
+			_highPriorityControllerStack = new List<CameraController>();
+			
+		}
+		protected override void OnRun () {
+
+			// Find Camera Controllers
 			foreach ( CameraController c in FindObjectsOfType<CameraController>() ) {
 
 				var cameraController = c;
@@ -21,21 +34,14 @@ namespace Dumpster.Core.BuiltInModules {
 					else { Debug.LogWarning( "More than one Default Controller in Scene" ); }
 				}
 			}
-		}
-		protected override void OnRun () {
 
+			// create camera instance 
 			_cameraInstance = Instantiate( Resources.Load( CAMERA_PATH ) ) as GameObject;
 			_cameraTarget = new GameObject( "Camera Target" ).transform;
 			
 			_cameraInstance.transform.SetParent( transform, false );
 			_cameraTarget.SetParent( transform, false );
 			_cameraFocus.SetParent( transform, false );
-
-
-			if ( _defaultController != null ) {
-
-				// set to default state
-			}
 		}
 
 
@@ -54,23 +60,60 @@ namespace Dumpster.Core.BuiltInModules {
 		}
 		public void RequestControl ( CameraController controller ) {
 
-			_controllerStack.Add( controller );
+			switch ( controller.Priority ) {
+				
+				case Priority.Low :
+					if ( !_lowPriorityControllerStack.Contains( controller ) ) {
+						_lowPriorityControllerStack.Add( controller );
+					}
+					break;
+				
+				case Priority.Medium :
+					if ( !_mediumPriorityControllerStack.Contains( controller ) ) {
+						_mediumPriorityControllerStack.Add( controller );
+					}
+					break;
+				
+				case Priority.High :
+					if ( !_highPriorityControllerStack.Contains( controller ) ) {
+						_highPriorityControllerStack.Add( controller );
+					}
+					break;
+			} 
 		}
 		public void RelinquishControl ( CameraController controller ) {
 
-			if ( _controllerStack.Contains( controller ) ) {
-				_controllerStack.Remove( controller );
+			if ( _lowPriorityControllerStack.Contains( controller ) ) {
+				_lowPriorityControllerStack.Remove( controller );
+			}
+			if ( _mediumPriorityControllerStack.Contains( controller ) ) {
+				_mediumPriorityControllerStack.Remove( controller );
+			}
+			if ( _highPriorityControllerStack.Contains( controller ) ) {
+				_highPriorityControllerStack.Remove( controller );
 			}
 		}
 
 
 		// ******************** Private *************************
 
+		private List<CameraController> _highPriorityControllerStack;
+		private List<CameraController> _mediumPriorityControllerStack;
+		private List<CameraController> _lowPriorityControllerStack;
 		private CameraController _defaultController;
-		private List<CameraController> _controllerStack = new List<CameraController>();
-
+		
 		private CameraController _controller {
-			get{  return ( _controllerStack.Count > 0 ) ? _controllerStack[ _controllerStack.Count - 1 ] : _defaultController; }
+			get{ 
+				if ( _highPriorityControllerStack .Count > 0 ) {
+					return _highPriorityControllerStack[ _highPriorityControllerStack.Count -1 ];
+				} else if ( _mediumPriorityControllerStack .Count > 0 ) {
+					return _mediumPriorityControllerStack[ _mediumPriorityControllerStack.Count -1 ];
+				} else if ( _lowPriorityControllerStack .Count > 0 ) {
+					return _lowPriorityControllerStack[ _lowPriorityControllerStack.Count -1 ];
+				} else {
+					return _defaultController;
+				}
+			}
 		}
 
 		private void Update () {

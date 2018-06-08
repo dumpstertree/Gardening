@@ -4,8 +4,7 @@ namespace Dumpster.Core {
 	
 	public abstract class Game : MonoBehaviour {
 		
-		public static Game Instance { get{ return _instance; } }
-		private static Game _instance;
+		protected static Game _instance;
 
 		private void Awake () {
 

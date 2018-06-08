@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EdensGarden : Dumpster.Core.Game {
 
+	// game
+	public static EdensGarden Instance {
+		get{ return _instance as EdensGarden; }
+	}
+
+	// modules
 	public Dumpster.Core.BuiltInModules.Async Async {
 		get; private set;
 	}
@@ -11,6 +17,7 @@ public class EdensGarden : Dumpster.Core.Game {
 		get; private set;
 	}
 
+	
 	protected override void BuildGame () {
 
 		Async  = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Async ) ) as Dumpster.Core.BuiltInModules.Async;

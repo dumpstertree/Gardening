@@ -48,7 +48,7 @@ public class Area : MonoBehaviour {
 	}
 	private void LoadCamera(){
 
-		_cameraSystem.Init ();
+		//_cameraSystem.Init ();
 	}
 
 	// ********* Enter ****************

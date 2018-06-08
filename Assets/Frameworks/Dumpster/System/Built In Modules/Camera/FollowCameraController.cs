@@ -14,7 +14,6 @@ namespace Dumpster.Core.BuiltInModules {
 			_followObject = FindObjectOfType<Player>().transform;
 
 			MoveCameraTarget( cameraTarget, cameraFocus );
-			MoveCameraFocus( cameraTarget, cameraFocus );
 		}
 
 		private void MoveCameraTarget ( Transform cameraTarget, Transform cameraFocus ) {
@@ -38,9 +37,5 @@ namespace Dumpster.Core.BuiltInModules {
 			// set rotation
 			cameraTarget.LookAt( cameraFocus );
 		}
-		private void MoveCameraFocus ( Transform cameraTarget, Transform cameraFocus ) {
-
-			cameraFocus.position = Vector3.Lerp( cameraFocus.position, _followObject.position, _lerpSpeed );
-		}	
 	}	
 }
