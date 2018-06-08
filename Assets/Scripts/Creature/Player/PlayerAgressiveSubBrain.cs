@@ -74,16 +74,16 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 	}
 	private void MoveCameraTarget () {
 		
-		var targetPosLocal = Vector3.Lerp( _targetPosLeft, _targetPosRight, (_horizontal+1) /2 );
-		var worldPos = transform.TransformPoint( targetPosLocal );
+		// var targetPosLocal = Vector3.Lerp( _targetPosLeft, _targetPosRight, (_horizontal+1) /2 );
+		// var worldPos = transform.TransformPoint( targetPosLocal );
 
-		_player.CameraTarget.position = Vector3.Lerp( _player.CameraTarget.position, worldPos, 0.2f );
-		_player.CameraTarget.rotation = Quaternion.Slerp( _player.CameraTarget.rotation, transform.rotation, 0.2f ); 
+		// _player.CameraTarget.position = Vector3.Lerp( _player.CameraTarget.position, worldPos, 0.2f );
+		// _player.CameraTarget.rotation = Quaternion.Slerp( _player.CameraTarget.rotation, transform.rotation, 0.2f ); 
 	}
 	private void MoveCameraFocus () {
 
-		var targetPos = transform.position + Quaternion.AngleAxis( xRot, transform.right ) * transform.forward * 100 ;
-		_player.CameraFocus.position = Vector3.Lerp( _player.CameraFocus.position, targetPos, 0.2f);
+		// var targetPos = transform.position + Quaternion.AngleAxis( xRot, transform.right ) * transform.forward * 100 ;
+		// _player.CameraFocus.position = Vector3.Lerp( _player.CameraFocus.position, targetPos, 0.2f);
 	}
 	private void OnDrawGizmos(){
 			

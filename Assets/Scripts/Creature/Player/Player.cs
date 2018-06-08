@@ -27,12 +27,6 @@ public class Player : Creature, IInputReciever {
 	public QuickSlot QuickSlot { 
 		get{ return _quickslot; }  
 	}
-	public Transform CameraTarget {
-		get{ return _cameraTarget; }
-	}
-	public Transform CameraFocus {
-		get{ return _cameraFocus; }
-	}
 	public override Animations AnimationsData {
 		get{ 
 			return new Animations(
@@ -49,8 +43,6 @@ public class Player : Creature, IInputReciever {
 	[SerializeField] private Model.Template.InventoryItemTemplate _hand;
 	[SerializeField] private Dumpster.Physics.Controller _physics;
 
-	private Transform _cameraTarget;	
-	private Transform _cameraFocus;
 	private PlayerDataController _dataController;
 	private Model.PartInventory _gunParts;
 	private CameraType _cameraType;
@@ -66,8 +58,6 @@ public class Player : Creature, IInputReciever {
 
 		base.Init();
 
-		CreateCameraTarget();
-		CreateCameraFocus();
 		CreateDataController();	
 		
 		
@@ -89,6 +79,8 @@ public class Player : Creature, IInputReciever {
 		};
 
 
+
+
 		// set hand item
 		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center ), _hand.GetInstance(1));
 
@@ -105,6 +97,8 @@ public class Player : Creature, IInputReciever {
 				}
 			),
 		0 );
+
+		(EdensGarden.Instance as EdensGarden).Camera.SetFocus( transform );
 	}
 
 
@@ -113,13 +107,5 @@ public class Player : Creature, IInputReciever {
 	private void CreateDataController () {
 
 		_dataController = new PlayerDataController();	
-	}
-	private void CreateCameraTarget () {
-		
-		_cameraTarget = new GameObject( CAMERA_TARGET_NAME ).transform;
-	}
-	private void CreateCameraFocus () {
-
-		_cameraFocus = new GameObject( CAMERA_FOCUS_NAME ).transform;
 	}
 }

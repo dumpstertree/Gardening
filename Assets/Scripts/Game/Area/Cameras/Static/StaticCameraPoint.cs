@@ -55,9 +55,9 @@ public class StaticCameraPoint : MonoBehaviour {
 	}
 	private void Update () {
 
-		if ( _canRotate ) {
-			_cameraPosition.LookAt( Game.Area.LoadedPlayer.CameraFocus );
-		}
+		// if ( _canRotate ) {
+		// 	_cameraPosition.LookAt( Game.Area.LoadedPlayer.CameraFocus );
+		// }
 	}
 	private void OnDrawGizmos () {
 

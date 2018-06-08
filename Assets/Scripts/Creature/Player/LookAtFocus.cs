@@ -8,6 +8,6 @@ public class LookAtFocus : MonoBehaviour {
 
 	private void Update () {
 		
-		transform.LookAt( _player.CameraFocus );
+		// transform.LookAt( _player.CameraFocus );
 	}
 }
