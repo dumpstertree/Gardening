@@ -13,9 +13,6 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 			_mouseDown = Input.mousePosition; 
 		}
 
-		MoveCameraTarget();
-		MoveCameraFocus();
-
 		if ( Input.GetMouseButton( 0 ) ) {
 			Rotate();
 		}
@@ -31,17 +28,14 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 	[SerializeField] private Player _player;
 	[SerializeField] private float _speed;
 
-	[SerializeField] private Vector3 _targetPosLeft;
-	[SerializeField] private Vector3 _targetPosRight;
-
 	private const string HORIZONTAL_ANIMATION_NAME = "Horizontal";
 	private const string VERTICAL_ANIMATION_NAME = "Vertical";
 
+	private float xRot;
 	private float _horizontal;
 	private float _vertical;
 	private Vector3 _mouseDown;
 	private Quaternion _startRot;
-	private float xRot;
 
 	private Vector3 _mouseDelta {
 		get{ return _mouseDown - Input.mousePosition; }
@@ -68,25 +62,5 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 
 		_player.Animator.SetFloat( HORIZONTAL_ANIMATION_NAME, _horizontal );
 		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, _vertical );
-	}
-	private void MoveCameraTarget () {
-		
-		// var targetPosLocal = Vector3.Lerp( _targetPosLeft, _targetPosRight, (_horizontal+1) /2 );
-		// var worldPos = transform.TransformPoint( targetPosLocal );
-
-		// _player.CameraTarget.position = Vector3.Lerp( _player.CameraTarget.position, worldPos, 0.2f );
-		// _player.CameraTarget.rotation = Quaternion.Slerp( _player.CameraTarget.rotation, transform.rotation, 0.2f ); 
-	}
-	private void MoveCameraFocus () {
-
-		// var targetPos = transform.position + Quaternion.AngleAxis( xRot, transform.right ) * transform.forward * 100 ;
-		// _player.CameraFocus.position = Vector3.Lerp( _player.CameraFocus.position, targetPos, 0.2f);
-	}
-	private void OnDrawGizmos(){
-			
-		var targetPosLocal = Vector3.Lerp( _targetPosLeft, _targetPosRight, (_horizontal+1) /2 );
-		var worldPos = transform.TransformPoint( targetPosLocal );
-
-		Gizmos.DrawWireSphere( worldPos, 0.25f );
 	}
 }

@@ -29,7 +29,6 @@ public class Area : MonoBehaviour {
 
 	[Header("Prefabs")]
 	[SerializeField] private Player _playerPrefab;
-	[SerializeField] private CameraSystem _cameraSystem;
 
 	private Player _loadedPlayer;
 	
