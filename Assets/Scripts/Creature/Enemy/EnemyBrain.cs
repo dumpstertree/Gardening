@@ -179,7 +179,7 @@ public class EnemyBrain : Brain {
 	}
 	private void MoveForward () {
 		
-		//_creature.Rigidbody.MovePosition( transform.position + transform.forward * _moveSpeed * Time.deltaTime );
+		_creature.Physics.MovePosition( transform.forward * _moveSpeed * Time.deltaTime );
 	}
 
 	// ***************************

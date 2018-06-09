@@ -34,9 +34,18 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		public GameObject LoadPlayer( GameObject playerPrefab ) {
 
 			var playerInstance = Instantiate( playerPrefab );
-			playerInstance.transform.position = _spawnLocation.position;
+			playerInstance.transform.position =  new Vector3(_spawnLocation.position.x, GetYPos(), _spawnLocation.position.z);
+			playerInstance.transform.rotation = _spawnLocation.rotation;
 
 			return playerInstance;
+		}
+		private float GetYPos () {
+
+			var ray = new Ray( _spawnLocation.position, Vector3.down);
+			RaycastHit hit;
+
+		    if ( UnityEngine.Physics.Raycast( ray, out hit, 10.0f) ) { return hit.point.y; }
+			return _spawnLocation.position.y;
 		}
 	}
 }

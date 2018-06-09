@@ -26,10 +26,12 @@ namespace Dumpster.Physics {
 					continue;
 				}
 
-				if ( exclude.Contains( hit.collider ) ) {
-					continue;
+				if ( exclude != null ) {
+					if ( exclude.Contains( hit.collider ) ) {
+						continue;
+					}
 				}
-				
+					
 				if ( mask != (mask | (1 << hit.collider.gameObject.layer)) ) {
 					continue;
 				}

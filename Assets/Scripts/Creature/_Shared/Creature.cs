@@ -27,6 +27,9 @@ public abstract class Creature : Interactable.InteractableObject {
 	public Interactor Interactor {
 		get{return _interactor; } 
 	}
+	public Dumpster.Physics.Controller Physics {
+		get{ return _physics;}
+	}
 	public abstract Animations AnimationsData{ get; }
 
 	// **************************
@@ -49,7 +52,7 @@ public abstract class Creature : Interactable.InteractableObject {
 	[SerializeField] protected Animator _animator;
 	[SerializeField] protected Health _health;
 	[SerializeField] protected Brain _brain;
-	[SerializeField] protected Rigidbody _rigidbody;
+	[SerializeField] protected Dumpster.Physics.Controller _physics;
 
 	protected QuickSlotInventory _quickslotInventory;
 	protected Inventory _inventory;
@@ -71,7 +74,6 @@ public abstract class Creature : Interactable.InteractableObject {
 
 		_dead = true;
 		_animator.SetTrigger( FAINT_TRIGGER );
-		_rigidbody.isKinematic = true;
 
 		Game.Effects.OneShot( Application.Effects.Type.Faint, transform.position, transform.rotation );
 	}
@@ -79,7 +81,6 @@ public abstract class Creature : Interactable.InteractableObject {
 
 		_dead = false;
 		_animator.SetTrigger( WAKE_UP_TRIGGER );
-		_rigidbody.isKinematic = false;
 
 		Game.Effects.OneShot( Application.Effects.Type.WakeUp, transform.position, transform.rotation );
 	}
