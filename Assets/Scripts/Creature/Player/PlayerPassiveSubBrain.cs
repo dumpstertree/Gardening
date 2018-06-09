@@ -4,6 +4,7 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 
 	public void Think ( float horizontal, float vertical ){
 
+		print( horizontal + " : " + vertical );
 		_horizontal = horizontal;
 		_vertical   = vertical;
 		

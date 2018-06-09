@@ -47,14 +47,14 @@ public class PlayerInteractor : Interactor, IInputReciever {
 		_interactorPositionInstance.transform.position = transform.position;
 		
 		// listen for quickslot changes
-		var player =  _creature as Player;
-		if ( player != null ) {
+		// var player =  _creature as Player;
+		// if ( player != null ) {
 			
-			Game.Area.LoadedPlayer.QuickSlot.OnInputChanged += newId => {
-				var index = Game.Area.LoadedPlayer.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
-				_currentItem = Game.Area.LoadedPlayer.QuickslotInventory.GetInventoryItem( index );
-			};
-		}
+		// 	Game.Area.LoadedPlayer.QuickSlot.OnInputChanged += newId => {
+		// 		var index = Game.Area.LoadedPlayer.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
+		// 		_currentItem = Game.Area.LoadedPlayer.QuickslotInventory.GetInventoryItem( index );
+		// 	};
+		// }
 	}
 
 	private OrbPosition.State GetState ( bool canUseItem ) {

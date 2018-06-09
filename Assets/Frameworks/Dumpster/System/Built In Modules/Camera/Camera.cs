@@ -11,29 +11,12 @@ namespace Dumpster.Core.BuiltInModules {
 			High
 		}
 
-		protected override void OnInstall () {}
+	
 		protected override void OnInit () {
 
 			_lowPriorityControllerStack = new List<CameraController>();
 			_mediumPriorityControllerStack = new List<CameraController>();
 			_highPriorityControllerStack = new List<CameraController>();
-			
-		}
-		protected override void OnRun () {
-
-			// Find Camera Controllers
-			foreach ( CameraController c in FindObjectsOfType<CameraController>() ) {
-
-				var cameraController = c;
-
-				cameraController.OnRequestControl += () => RequestControl( cameraController );
-				cameraController.OnRelinquishControl += () => RelinquishControl( cameraController );
-
-				if ( cameraController.IsDefaultController ) {
-					if ( _defaultController == null ) { _defaultController = cameraController; } 
-					else { Debug.LogWarning( "More than one Default Controller in Scene" ); }
-				}
-			}
 
 			// create camera instance 
 			_cameraInstance = Instantiate( Resources.Load( CAMERA_PATH ) ) as GameObject;
@@ -41,7 +24,20 @@ namespace Dumpster.Core.BuiltInModules {
 			
 			_cameraInstance.transform.SetParent( transform, false );
 			_cameraTarget.SetParent( transform, false );
-			_cameraFocus.SetParent( transform, false );
+			
+		}
+		protected override void OnRun () {
+
+			FindCameraControllers ();
+		}
+		protected override void OnReload () {
+
+			_lowPriorityControllerStack = new List<CameraController>();
+			_mediumPriorityControllerStack = new List<CameraController>();
+			_highPriorityControllerStack = new List<CameraController>();
+			_defaultController = null;
+
+			FindCameraControllers ();
 		}
 
 
@@ -115,13 +111,27 @@ namespace Dumpster.Core.BuiltInModules {
 				}
 			}
 		}
+		private void FindCameraControllers () {
+			
+			foreach ( CameraController c in FindObjectsOfType<CameraController>() ) {
 
+				var cameraController = c;
+
+				cameraController.OnRequestControl += () => RequestControl( cameraController );
+				cameraController.OnRelinquishControl += () => RelinquishControl( cameraController );
+
+				if ( cameraController.IsDefaultController ) {
+					if ( _defaultController == null ) {  print( cameraController); _defaultController = cameraController; } 
+					else { Debug.LogWarning( "More than one Default Controller in Scene" ); }
+				}
+			}
+		}
 		private void Update () {
 			
 			if ( _controller != null ) {
 				_controller.Control ( _cameraTarget, _cameraFocus );
 			}
-
+			
 			_cameraInstance.transform.position = _cameraTarget.position;
 			_cameraInstance.transform.rotation = _cameraTarget.rotation;
 		}		

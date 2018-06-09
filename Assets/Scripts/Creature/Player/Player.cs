@@ -54,12 +54,16 @@ public class Player : Creature, IInputReciever {
 	
 	// *********************************************
 	
+	private void Start() {
+
+		Init();
+	}
+
 	public override void Init () {
 
 		base.Init();
 
 		CreateDataController();	
-		
 		
 		// load data
 		_quickslotInventory = _dataController.LoadQuickSlotInventory();
@@ -99,6 +103,8 @@ public class Player : Creature, IInputReciever {
 		0 );
 
 		EdensGarden.Instance.Camera.SetFocus( transform );
+
+		print( "player init" );
 	}
 
 

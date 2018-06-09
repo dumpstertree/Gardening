@@ -29,5 +29,15 @@ namespace Dumpster.Core {
 		protected abstract void BuildGame ();
 		protected abstract void InitGame ();
 		protected abstract void PlayGame ();
+
+		public delegate void OnSceneChangedEvent ();
+		public OnSceneChangedEvent OnSceneChanged;
+
+		protected void FireOnSceneChangedEvent () {
+			
+			if ( OnSceneChanged != null ) {
+				OnSceneChanged ();
+			}
+		}
 	}
 }

@@ -9,8 +9,9 @@ namespace Dumpster.Core {
 			var m = game.gameObject.AddComponent( type ) as Module;
 			
 			if ( m != null ) {
-
+				m._game = game;
 				m.OnInstall ();
+				game.OnSceneChanged += m.OnSceneChange;
 			} else {
 
 				Debug.LogWarning( "Trying to install " + type.ToString() + " which is not a Module!" );
@@ -27,9 +28,16 @@ namespace Dumpster.Core {
 
 			OnRun ();
 		}
+		private void OnSceneChange () {
+
+			OnReload();
+		}
+
+		protected Dumpster.Core.Game _game;
 
 		protected virtual void OnInstall () {}
 		protected virtual void OnInit () {}
 		protected virtual void OnRun () {}
+		protected virtual void OnReload () {}
 	}
 }

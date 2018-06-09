@@ -54,7 +54,7 @@ public class Game : MonoBehaviour {
 
 	private void OnSetInstance () {
 		
-		DontDestroyOnLoad( gameObject );
+		// DontDestroyOnLoad( gameObject );
 
 		BuildGame();
 		InitGame();
@@ -105,7 +105,7 @@ public class Game : MonoBehaviour {
 		_input.Init();
 
 		// Area
-		_area.Init();
+		//_area.Init();
 
 		// Async
 
