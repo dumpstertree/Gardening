@@ -9,7 +9,6 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 	public class Controller : Dumpster.Core.Module {
 
 		// module
-		protected override void OnInstall () {}
 		protected override void OnInit () {
 
 			_transitionOut = new Dictionary<string,Action<Action>>();
@@ -24,6 +23,10 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		public delegate void OnChangeAreaEvent ();
 		public OnChangeAreaEvent OnChangeArea;
 
+		public Area CurrentArea {
+			get{ return _area; }
+		}
+	
 		public void ChangeArea( string areaIdentifer, string doorIdentifer, string transitionTag ) {
 
 			// set the timescake to frozen
@@ -107,15 +110,16 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		}
 		private void LoadNewArea ( string doorIdentifier ) {
 
-			var area = FindObjectOfType<Area>();
+			_area = FindObjectOfType<Area>();
 			
-			if ( area!=  null ) {
-				area.ActivateArea( doorIdentifier );
+			if ( _area!=  null ) {
+				_area.ActivateArea( doorIdentifier );
 			} else {
 				Debug.LogWarning( "No area in scene" );
 			}
 		}
 
+		private Area _area;
 		private Dictionary<string,Action<Action>> _transitionOut;
 		private Dictionary<string,Action<Action>> _transitionIn;
 

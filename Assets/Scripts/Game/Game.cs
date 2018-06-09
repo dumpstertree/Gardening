@@ -15,14 +15,8 @@ public class Game : MonoBehaviour {
 	public static Effects Effects {
 		get{ return Game.Instance._effects; } 
 	}
-	public static AreaController AreaController {
-		get{ return Game.Instance._areaController; }
-	}
 	public static UIController UIController{
 		get{ return Game.Instance._uiController; }
-	}
-	public static Area Area{
-		get{ return Game.Instance._area; }
 	}
 	public static GunControl GunControl {
 		get{ return Game.Instance._gunControl; }
@@ -36,9 +30,7 @@ public class Game : MonoBehaviour {
 	private static Game _instance;
 	private Async _async;
 	private Effects _effects;
-	private AreaController _areaController;
 	private UIController _uiController;
-	private Area _area;
 	private GunControl _gunControl;
 	private InputStack _input;
 
@@ -64,28 +56,17 @@ public class Game : MonoBehaviour {
 		
 		// reset all input	
 		_input.Reset();
-
-		// load new area
-		_area = FindObjectOfType<Area>();
-		_area.Init();
-		_area.EnterArea( doorID );
 	}
 
 	// ******************************
 
 	private void BuildGame () {
 		
-		// Area
-		_area = FindObjectOfType<Area>();
-
 		// Async
 		_async = gameObject.AddComponent<Async>();
 
 		// Effects
 		_effects = gameObject.AddComponent<Effects>();
-
-		// Area Controller
-		_areaController = gameObject.AddComponent<AreaController>();
 
 		// UIController
 		_uiController = gameObject.AddComponent<UIController>();
@@ -104,23 +85,14 @@ public class Game : MonoBehaviour {
 		// Input
 		_input.Init();
 
-		// Area
-		//_area.Init();
-
 		// Async
 
 		// Effects
-
-		// Area Controller
-		_areaController.Init();
 
 		// UIController
 		_uiController.Init();
 	}
 	private void PlayGame () {
-		
-		_areaController.OnChangeArea += OnChangeArea;
-		_area.EnterArea( 0 );
 	}
 }
 

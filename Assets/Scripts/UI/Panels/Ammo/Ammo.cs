@@ -12,7 +12,7 @@ namespace UI.Panels {
 		private InventoryItem _item;
 
 		private Player _player {
-			get{ return Game.Area.LoadedPlayer; }
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }
 		}
 
 

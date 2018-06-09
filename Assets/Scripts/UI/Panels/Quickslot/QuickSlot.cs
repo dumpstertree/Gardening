@@ -15,7 +15,7 @@ namespace UI.Panels {
 		private QuickSlotInventory.ID _id;
 
 		private Player _player {
-			get{ return Game.Area.LoadedPlayer; }
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
 		}
 		
 		// ********************************
@@ -24,7 +24,7 @@ namespace UI.Panels {
 			
 			base.OnPresent();
 			
-			Game.Area.LoadedPlayer.QuickSlot.OnInputChanged += ( newID ) => {
+			_player.QuickSlot.OnInputChanged += ( newID ) => {
 				_id = newID;
 			};
 		}
@@ -33,7 +33,7 @@ namespace UI.Panels {
 
 		protected override Inventory GetInventory () {
 
-			return Game.Area.LoadedPlayer.QuickslotInventory;	
+			return _player.QuickslotInventory;	
 		}
 		protected override ItemBubbleUI[] GetItemBubbles () {
 

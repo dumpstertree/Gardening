@@ -22,7 +22,10 @@ namespace UI.Panels {
 		private const float PADDING = 25;
 
 		private PlayerRecipes _playerRecipes {
-			get{ return Game.Area.LoadedPlayer.PlayerRecipes; }
+			get{ return _player.PlayerRecipes; }
+		}
+		private Player _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
 		}
 
 		// *************************************

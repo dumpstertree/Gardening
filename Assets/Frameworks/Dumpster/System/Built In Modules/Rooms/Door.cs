@@ -31,10 +31,12 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 				_transitionIdentifier ); 
 			};
 		}
-		public void LoadPlayer( GameObject playerPrefab ) {
+		public GameObject LoadPlayer( GameObject playerPrefab ) {
 
 			var playerInstance = Instantiate( playerPrefab );
 			playerInstance.transform.position = _spawnLocation.position;
+
+			return playerInstance;
 		}
 	}
 }

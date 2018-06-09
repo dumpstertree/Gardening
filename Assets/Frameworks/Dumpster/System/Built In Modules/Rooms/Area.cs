@@ -4,6 +4,10 @@ using UnityEngine;
 namespace Dumpster.Core.BuiltInModules.Rooms {
 
 	public class Area : MonoBehaviour {
+
+		public GameObject LoadedPlayer {
+			get { return _playerInstance; }
+		}
 			
 		public void ActivateArea ( string doorIdentider ) {
 
@@ -44,11 +48,12 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		private void LoadPlayer ( string doorIdentider ) {
 
 			var door = _doors.ContainsKey( doorIdentider ) ? _doors[ doorIdentider ] : _defaultDoor;
-			door.LoadPlayer( _playerPrefab );
+		_playerInstance = door.LoadPlayer( _playerPrefab );
 		}
 
 		private Dictionary<string,Door> _doors;
 		private Door _defaultDoor;
+		private GameObject _playerInstance;
 
 		[SerializeField] private GameObject _playerPrefab;
 	}

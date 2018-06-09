@@ -2,6 +2,10 @@
 
 public class InteractorPostion : MonoBehaviour {
 
+	private Player _player {
+		get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+	}
+
 	public void ChangeState( OrbPosition.State newState ){
 		
 		if ( _state != newState ) {
@@ -58,19 +62,19 @@ public class InteractorPostion : MonoBehaviour {
 	private void LiveInteractableTracking () {
 		
 		var startPos = transform.position;
-		var targetPos = Game.Area.LoadedPlayer.Interactor.InteractableObject.transform.position;
+		var targetPos = _player.Interactor.InteractableObject.transform.position;
 		transform.position = Vector3.Lerp( startPos, targetPos, LERP_SPEED );
 	}
 	private void LiveTrueTracking () {
 		
 		var startPos = transform.position;
-		var targetPos = Game.Area.LoadedPlayer.Interactor.transform.position;
+		var targetPos = _player.Interactor.transform.position;
 		transform.position = Vector3.Lerp( startPos, targetPos, LERP_SPEED );
 	}
 	private void LivePlayerTracking () {
 		
 		var startPos = transform.position;
-		var targetPos = Game.Area.LoadedPlayer.transform.position;
+		var targetPos = _player.transform.position;
 		transform.position = Vector3.Lerp( startPos, targetPos, LERP_SPEED );
 	}
 

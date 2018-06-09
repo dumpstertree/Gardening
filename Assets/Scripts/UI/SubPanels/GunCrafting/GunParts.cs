@@ -11,8 +11,8 @@ namespace UI.Subpanels.GunCrafting {
 		public DragEvent OnDragBegin;
 		public DragEvent OnDragEnd;
 
-		private Player _player{
-			get{ return Game.Area.LoadedPlayer; }
+		private Player _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
 		}
 
 		// *************************
