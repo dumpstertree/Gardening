@@ -247,7 +247,7 @@ namespace UI.Subpanels.GunCrafting {
 				_recalculatePath = true;
 				
 				// wait for the end of frame so it only needs to be done once
-				Game.Async.WaitForEndOfFrame( () => {
+				EdensGarden.Instance.Async.WaitForEndOfFrame( () => {
 					
 					// clear the old path
 					ClearPath();

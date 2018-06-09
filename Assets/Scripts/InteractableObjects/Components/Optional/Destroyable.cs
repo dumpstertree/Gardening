@@ -16,7 +16,7 @@ namespace Interactable.OptionalComponent {
 				_beingDestroyed = true;
 				_animator.SetTrigger( DESTROY_ANIMATION_TRIGGER );
 
-				Game.Async.WaitForSeconds( ANIMATION_LENGTH, () => {
+				EdensGarden.Instance.Async.WaitForSeconds( ANIMATION_LENGTH, () => {
 
 					Game.Effects.OneShot( _effectType, transform.position, transform.rotation );
 

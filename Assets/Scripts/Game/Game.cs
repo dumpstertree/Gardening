@@ -9,9 +9,6 @@ public class Game : MonoBehaviour {
 		set { _instance = value;  _instance.OnSetInstance(); }
 		get { return _instance; }
 	}	
-	public static Async Async {
-		get{ return Game.Instance._async; } 
-	}
 	public static Effects Effects {
 		get{ return Game.Instance._effects; } 
 	}
@@ -28,7 +25,6 @@ public class Game : MonoBehaviour {
 	// ************ PRIVATE ****************
 
 	private static Game _instance;
-	private Async _async;
 	private Effects _effects;
 	private UIController _uiController;
 	private GunControl _gunControl;
@@ -61,9 +57,6 @@ public class Game : MonoBehaviour {
 	// ******************************
 
 	private void BuildGame () {
-		
-		// Async
-		_async = gameObject.AddComponent<Async>();
 
 		// Effects
 		_effects = gameObject.AddComponent<Effects>();

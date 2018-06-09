@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour {
 		_hitData = hitData;
 
 		CreateCasing();
-		Game.Async.WaitForSeconds( BULLET_KILL_TIME, () => { Destroy( false ); } );
+		EdensGarden.Instance.Async.WaitForSeconds( BULLET_KILL_TIME, () => { Destroy( false ); } );
 	}
 
 	// *********** PRIVATE ************
@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour {
 
 		inst.GetComponent<Rigidbody>().velocity = velocity;
 
-		Game.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
+		EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
 	}
 	private void CreateContact () {
 

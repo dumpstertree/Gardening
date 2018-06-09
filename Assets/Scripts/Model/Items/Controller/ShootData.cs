@@ -57,7 +57,7 @@ namespace Controller.Item {
 				};
 
 				Debug.Log( "waiting for " + reloadTime );
-				Game.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
+				EdensGarden.Instance.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
 			}
 		}
 		public void Fire ( Creature user ) {
@@ -91,7 +91,7 @@ namespace Controller.Item {
 					_firing = false;
 				};
 
-				Game.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
+				EdensGarden.Instance.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
 			}
 		}
 

@@ -11,6 +11,7 @@ public class TransitionCreator : MonoBehaviour{
 	[SerializeField] private AudioClip _transitionInAudio;
 	[SerializeField] private AudioSource _audioSource;
 	[SerializeField] private Sprite _niaEndFrame;
+	[SerializeField] private float _waitTime;
 
 	private void Start () {
 
@@ -18,13 +19,13 @@ public class TransitionCreator : MonoBehaviour{
 	}
 	private void NiaTransitionIn( System.Action onComplete ) {
 
-		StartCoroutine( TransitionIn( _transitionFrames, _transitionInAudio, _niaEndFrame, onComplete ) );
+		StartCoroutine( TransitionIn( _transitionFrames, _transitionInAudio, _niaEndFrame, _waitTime, onComplete ) );
 	}
 	private void NiaTransitionOut( System.Action onComplete ) {
 
-		StartCoroutine( TransitionOut( _transitionFrames, _transitionInAudio, _niaEndFrame, onComplete ) );
+		StartCoroutine( TransitionOut( _transitionFrames, _transitionInAudio, _niaEndFrame, _waitTime, onComplete ) );
 	}
-	private IEnumerator TransitionIn( Sprite[] transitionSprites, AudioClip audioClip, Sprite endFrame, System.Action oncomplete ) {
+	private IEnumerator TransitionIn( Sprite[] transitionSprites, AudioClip audioClip, Sprite endFrame, float waitTime, System.Action oncomplete ) {
 
 		// play audio
 		_audioSource.PlayOneShot( audioClip );
@@ -45,7 +46,7 @@ public class TransitionCreator : MonoBehaviour{
 			oncomplete ();
 		}
 	}
-	private IEnumerator TransitionOut( Sprite[] transitionSprites, AudioClip audioClip, Sprite endFrame, System.Action oncomplete ) {
+	private IEnumerator TransitionOut( Sprite[] transitionSprites, AudioClip audioClip, Sprite endFrame,  float waitTime, System.Action oncomplete ) {
 
 		// play audio
 		_audioSource.PlayOneShot( audioClip );
@@ -63,7 +64,7 @@ public class TransitionCreator : MonoBehaviour{
 
 		// set end sprite
 		_image.sprite = endFrame;
-		yield return new WaitForSecondsRealtime( 3f );
+		yield return new WaitForSecondsRealtime( _waitTime );
 
 		// run on complete
 		if ( oncomplete != null ) {

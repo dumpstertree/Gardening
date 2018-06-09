@@ -25,7 +25,7 @@ public class HoldItem : MonoBehaviour {
 		if ( _holdItem != null ) {
 			var obj = _holdItem;
 			_holdItem.GetComponent<Animator>().SetTrigger("Destroy");
-			Game.Async.WaitForSeconds( 1.0f, () => { Destroy( obj ); } );
+			EdensGarden.Instance.Async.WaitForSeconds( 1.0f, () => { Destroy( obj ); } );
 		}
 
 		// create new
