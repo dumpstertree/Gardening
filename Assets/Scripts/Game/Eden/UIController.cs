@@ -201,7 +201,6 @@ public class UIController : MonoBehaviour {
 	public class UiContext {
 
 		private List<UiPanel> _panels = new List<UiPanel>();
-		private InputRecieverLayer _inputLayer;
 
 		public System.Action OnExit;
 
@@ -213,26 +212,14 @@ public class UIController : MonoBehaviour {
 		}
 		public void Present () {
 
-			var panelsToRecieveInput = new List<IInputReciever>();
-
 			foreach( UiPanel p in _panels) {
-				
-				if ( p.ShouldRecieveInput ){ panelsToRecieveInput.Add( p ); }
-				
+								
 				p.Present();
 				p.OnExit = OnExit;
-			}
-
-			_inputLayer = new InputRecieverLayer( panelsToRecieveInput ) ;
-
-			if ( panelsToRecieveInput.Count > 0 ) {
-				Game.Input.AddReciever( _inputLayer );
 			}
 		}
 		public void Dismiss () { 
 			
-			Game.Input.RemoveReciever( _inputLayer );
-
 			foreach( UiPanel p in _panels) {
 				p.Dismiss();
 			}

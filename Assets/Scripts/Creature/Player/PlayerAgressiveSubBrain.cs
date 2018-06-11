@@ -2,7 +2,6 @@
 
 public class PlayerAgressiveSubBrain : MonoBehaviour {
 
-
 	public void Think ( float horizontal, float vertical ){
 		
 		_horizontal = horizontal;

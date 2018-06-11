@@ -1,29 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Dumpster.Core.BuiltInModules.Input;
 
-public class Player : Creature, IInputReciever<Eden.Input.Package>, IInputReciever {
+public class Player : Creature, IInputReciever<Eden.Input.Package> {
 
-	void IInputReciever.OnConfirmDown () {}
-	void IInputReciever.OnConfirmUp () {}
-	void IInputReciever.OnCancelDown () {}
-	void IInputReciever.OnCancelUp () {}
-	void IInputReciever.OnStartDown () {}
-	void IInputReciever.OnStartUp () { 
-		Game.UIController.ChangeContext( UIController.UiContext.Identifier.Inventory );
-	}
-	void IInputReciever.HorizontalChanged ( float horizontal ) {}
-	void IInputReciever.VerticalChanged ( float vertical ) {}
-
-	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
-		print( "Player Recieved Input" );
-	}
-	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
-		print( "Player Input Entered Focus" );
-	}
-	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
-		print( "Player Input Exited Focus" );
-	}
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 	
 	// ***************** PUBLIC *******************
 
@@ -60,7 +42,7 @@ public class Player : Creature, IInputReciever<Eden.Input.Package>, IInputReciev
 	
 	// *********************************************
 	
-	private void Start() {
+	private void Awake() {
 
 		Init();
 	}
@@ -94,19 +76,6 @@ public class Player : Creature, IInputReciever<Eden.Input.Package>, IInputReciev
 
 		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
 		
-		// add input reciever
-		Game.Input.AddReciever( 
-
-			new InputRecieverLayer(
-			
-				new List<IInputReciever>() {
-					this,
-					_interactor as PlayerInteractor,
-					_brain as PlayerMovement
-				}
-			),
-		0 );
-
 		EdensGarden.Instance.Camera.SetFocus( transform );
 	}
 

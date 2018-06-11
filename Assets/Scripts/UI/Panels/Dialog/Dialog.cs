@@ -67,7 +67,6 @@ namespace UI.Panels {
 		[Header( "Refrence" )]
 		[SerializeField] private Transform _content;
 
-		private InputRecieverLayer _inputLayer;
 		private Model.Dialog.Sequence _sequence;
 		private DialogBox _presentedDialog;
 

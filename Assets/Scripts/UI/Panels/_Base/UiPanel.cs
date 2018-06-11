@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Dumpster.Core.BuiltInModules.Input;
 
-public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IInputReciever {
+public class UiPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IInputReciever<Eden.Input.Package> {
 
 	public delegate void PointerEvent();
 	
@@ -54,30 +55,22 @@ public class UiPanel : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, I
 
 	//******************************
 
-	void IInputReciever.OnConfirmDown () {
-		OnConfirmDown ();
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+		
+		if ( package.ConfirmDown ) { OnConfirmDown (); }
+		if ( package.ConfirmUp ) { OnConfirmUp (); }
+		
+		if ( package.BackDown ) { OnCancelDown (); }
+		if ( package.BackDown ) { OnCancelUp (); }
+		
+		if ( package.StartDown ) { OnStartDown (); }
+		if ( package.StartUp ) { OnStartlUp (); }
+
+		HorizontalChanged( package.Horizontal );
+		VerticalChanged( package.Vertical );
 	}
-	void IInputReciever.OnConfirmUp () {
-		OnConfirmUp ();
-	}
-	void IInputReciever.OnCancelDown () {
-		OnCancelDown ();
-	}
-	void IInputReciever.OnCancelUp () {
-		OnCancelUp ();
-	}
-	void IInputReciever.OnStartDown () {
-		OnStartDown ();
-	}
-	void IInputReciever.OnStartUp () {
-		OnStartlUp ();
-	}
-	void IInputReciever.HorizontalChanged ( float horizontal ) {
-		HorizontalChanged ( horizontal );
-	}
-	void IInputReciever.VerticalChanged ( float vertical ) {
-		VerticalChanged ( vertical );
-	}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 
 
 	//******************************

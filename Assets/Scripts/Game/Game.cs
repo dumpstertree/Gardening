@@ -18,9 +18,6 @@ public class Game : MonoBehaviour {
 	public static GunControl GunControl {
 		get{ return Game.Instance._gunControl; }
 	}
-	public static InputStack Input {
-		get{ return Game.Instance._input; } 
-	}
 
 	// ************ PRIVATE ****************
 
@@ -28,7 +25,6 @@ public class Game : MonoBehaviour {
 	private Effects _effects;
 	private UIController _uiController;
 	private GunControl _gunControl;
-	private InputStack _input;
 
 	// ******************************
 	
@@ -50,8 +46,6 @@ public class Game : MonoBehaviour {
 	}
 	private void OnChangeArea ( int doorID ) {
 		
-		// reset all input	
-		_input.Reset();
 	}
 
 	// ******************************
@@ -68,15 +62,11 @@ public class Game : MonoBehaviour {
 		_gunControl = gameObject.AddComponent<GunControl>();
 
 		// Input
-		_input = gameObject.AddComponent<InputStack>();
 	}
 	private void InitGame () {
 		
 		// Gun Control
 		_gunControl.Init();
-
-		// Input
-		_input.Init();
 
 		// Async
 

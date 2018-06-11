@@ -1,20 +1,14 @@
 ﻿using UnityEngine;
 using Interactable;
+using Dumpster.Core.BuiltInModules.Input;
 
-public class PlayerInteractor : Interactor, IInputReciever {
+public class PlayerInteractor : Interactor, IInputReciever<Eden.Input.Package> {
 
-	// Input Events
-	void IInputReciever.OnConfirmDown (){}
-	void IInputReciever.OnConfirmUp (){
-		
-		Use();
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+		if( package.ConfirmUp ) { Use(); }
 	}
-	void IInputReciever.OnCancelDown (){}
-	void IInputReciever.OnCancelUp (){}
-	void IInputReciever.OnStartDown (){}
-	void IInputReciever.OnStartUp (){}
-	void IInputReciever.HorizontalChanged ( float horizontal ) {}
-	void IInputReciever.VerticalChanged ( float vertical ) {}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 
 	private Player _player {
 		get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
@@ -47,6 +41,8 @@ public class PlayerInteractor : Interactor, IInputReciever {
 	}
 	private void Start () {
 
+		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
+		
 		_interactorPositionInstance = Instantiate( _interactorPositionPrefab );
 		_interactorPositionInstance.transform.position = transform.position;
 		

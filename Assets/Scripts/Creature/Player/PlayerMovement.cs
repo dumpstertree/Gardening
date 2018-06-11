@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
+using Dumpster.Core.BuiltInModules.Input;
 
-public class PlayerMovement : Brain, IInputReciever {
+public class PlayerMovement : Brain, IInputReciever<Eden.Input.Package> {
+
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+		print( "recieved" );
+		if ( _horizontal != package.Horizontal ){ _horizontal = package.Horizontal; }
+		if ( _vertical != package.Vertical ){ _vertical = package.Vertical; }
+	}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 	
-	void IInputReciever.OnConfirmDown () {}
-	void IInputReciever.OnConfirmUp () {}
-	void IInputReciever.OnCancelDown () {}
-	void IInputReciever.OnCancelUp () {}
-	void IInputReciever.OnStartDown (){}
-	void IInputReciever.OnStartUp (){}
-	void IInputReciever.HorizontalChanged ( float horizontal ) {
-		
-		_horizontal = horizontal;
-	}
-	void IInputReciever.VerticalChanged ( float vertical ) {
-
-		_vertical = vertical;
-	}
 
 	[SerializeField] private Player _player;
 	[SerializeField] private PlayerAgressiveSubBrain _agressive;
@@ -52,6 +47,8 @@ public class PlayerMovement : Brain, IInputReciever {
 		}
 	}
 	private void Start () {
+
+		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
 
 		_player.QuickSlot.OnInputChanged += newSlotID => {
 			

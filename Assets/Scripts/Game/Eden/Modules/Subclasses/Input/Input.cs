@@ -23,7 +23,7 @@ namespace Eden {
 
 			if ( _lastPackage == null || ShouldUpdate( package, _lastPackage ) ) {
 				
-				PushInputPackage( GetEmptyPackage() );
+				PushInputPackage( package );
 				_lastPackage = package;
 			}
 		}
