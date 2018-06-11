@@ -63,23 +63,23 @@ namespace UI.Panels {
 
 		protected override void OnPresent () {
 			
-			_player.GunParts.OnPartListChanged += _gunPartsSubpanel.Reload;
+			// _player.GunParts.OnPartListChanged += _gunPartsSubpanel.Reload;
 
-			_gunPartsSubpanel.OnDragBegin += part => {
+			// _gunPartsSubpanel.OnDragBegin += part => {
 
-				_player.GunParts.RemovePart( part );				
-				_partGraphSubpanel.AddPartToGraph( part, true );
-			};
+			// 	_player.GunParts.RemovePart( part );				
+			// 	_partGraphSubpanel.AddPartToGraph( part, true );
+			// };
 		}
 		protected override void OnDismiss () {
 
-			_player.GunParts.OnPartListChanged -= _gunPartsSubpanel.Reload;
+			// _player.GunParts.OnPartListChanged -= _gunPartsSubpanel.Reload;
 
-			_gunPartsSubpanel.OnDragBegin -= part => {
+			// _gunPartsSubpanel.OnDragBegin -= part => {
 
-				_player.GunParts.RemovePart( part );				
-				_partGraphSubpanel.AddPartToGraph( part, true );
-			};
+			// 	_player.GunParts.RemovePart( part );				
+			// 	_partGraphSubpanel.AddPartToGraph( part, true );
+			// };
 		}
 
 		[SerializeField] private Text FireRateText;

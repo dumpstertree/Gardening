@@ -16,6 +16,10 @@ public class PlayerInteractor : Interactor, IInputReciever {
 	void IInputReciever.HorizontalChanged ( float horizontal ) {}
 	void IInputReciever.VerticalChanged ( float vertical ) {}
 
+	private Player _player {
+		get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+	}
+
 
 	[SerializeField] protected InteractorPostion _interactorPositionPrefab;
 
@@ -47,14 +51,10 @@ public class PlayerInteractor : Interactor, IInputReciever {
 		_interactorPositionInstance.transform.position = transform.position;
 		
 		// listen for quickslot changes
-		// var player =  _creature as Player;
-		// if ( player != null ) {
-			
-		// 	Game.Area.LoadedPlayer.QuickSlot.OnInputChanged += newId => {
-		// 		var index = Game.Area.LoadedPlayer.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
-		// 		_currentItem = Game.Area.LoadedPlayer.QuickslotInventory.GetInventoryItem( index );
-		// 	};
-		// }
+		_player.QuickSlot.OnInputChanged += newId => {
+			var index = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
+			_currentItem = _player.QuickslotInventory.GetInventoryItem( index );
+		};
 	}
 
 	private OrbPosition.State GetState ( bool canUseItem ) {

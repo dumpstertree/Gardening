@@ -121,7 +121,7 @@ namespace Dumpster.Core.BuiltInModules {
 				cameraController.OnRelinquishControl += () => RelinquishControl( cameraController );
 
 				if ( cameraController.IsDefaultController ) {
-					if ( _defaultController == null ) {  print( cameraController); _defaultController = cameraController; } 
+					if ( _defaultController == null ) { _defaultController = cameraController; } 
 					else { Debug.LogWarning( "More than one Default Controller in Scene" ); }
 				}
 			}

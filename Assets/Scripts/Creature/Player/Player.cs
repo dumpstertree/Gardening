@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Dumpster.Core.BuiltInModules.Input;
 
-public class Player : Creature, IInputReciever {
+public class Player : Creature, IInputReciever<Eden.Input.Package>, IInputReciever {
 
 	void IInputReciever.OnConfirmDown () {}
 	void IInputReciever.OnConfirmUp () {}
@@ -14,6 +15,15 @@ public class Player : Creature, IInputReciever {
 	void IInputReciever.HorizontalChanged ( float horizontal ) {}
 	void IInputReciever.VerticalChanged ( float vertical ) {}
 
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+		print( "Player Recieved Input" );
+	}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
+		print( "Player Input Entered Focus" );
+	}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
+		print( "Player Input Exited Focus" );
+	}
 	
 	// ***************** PUBLIC *******************
 
@@ -79,12 +89,11 @@ public class Player : Creature, IInputReciever {
 		};
 
 
-
-
 		// set hand item
 		_quickslotInventory.SetInventoryItem( _quickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center ), _hand.GetInstance(1));
 
-
+		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
+		
 		// add input reciever
 		Game.Input.AddReciever( 
 
@@ -99,8 +108,6 @@ public class Player : Creature, IInputReciever {
 		0 );
 
 		EdensGarden.Instance.Camera.SetFocus( transform );
-
-		print( "player init" );
 	}
 
 

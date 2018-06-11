@@ -1,9 +1,34 @@
 ﻿using UnityEngine;
 using UI.Subpanels.Dialog;
+using Dumpster.Core.BuiltInModules.Input;
 
 namespace UI.Panels {
 	
-	public class Dialog : UiPanel {
+	public class Dialog : UiPanel, IInputReciever<Eden.Input.Package> {
+
+
+		void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+			print( "Dialog Recieved Input" );
+		}
+		void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
+			print( "Dialog Input Entered Focus" );
+		}
+		void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
+			print( "Dialog Input Exited Focus" );
+		}
+		
+		protected override void OnInit () { 
+
+			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Dialog, this );
+		}
+		protected override void OnPresent () {
+
+			EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Dialog );
+		}
+		protected override void OnDismiss () {
+			
+			EdensGarden.Instance.Input.RelinquishInput( EdensGarden.Constants.InputLayers.Dialog );
+		}
 
 		protected override void OnConfirmUp () {
 

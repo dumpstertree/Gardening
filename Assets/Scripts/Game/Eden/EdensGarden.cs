@@ -17,15 +17,23 @@ public class EdensGarden : Dumpster.Core.Game {
 	public Dumpster.Core.BuiltInModules.Rooms.Controller Rooms {
 		get; private set;
 	}
+	public Eden.Input Input {
+		get; private set;
+	}
 
 	[SerializeField] private TransitionCreator _transitionCreator;
 	
 	protected override void BuildGame () {
 
+		// Default Modules
 		Async  = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Async ) ) as Dumpster.Core.BuiltInModules.Async;
 		Camera = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Camera ) ) as Dumpster.Core.BuiltInModules.Camera;
 		Rooms  = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Rooms.Controller ) ) as Dumpster.Core.BuiltInModules.Rooms.Controller;
+		
+		// Subclass Modules
+		Input  = Dumpster.Core.Module.Install( this, typeof( Eden.Input )) as Eden.Input;
 
+		// Custom Modules
 		var t = Instantiate( Instance._transitionCreator );
 		t.transform.SetParent( Instance.transform, false );
 	}
@@ -34,14 +42,31 @@ public class EdensGarden : Dumpster.Core.Game {
 		Async.Init ();
 		Camera.Init ();
 		Rooms.Init ();
+		Input.Init ();
 	}
 	protected override void PlayGame () {
 
 		Rooms.OnChangeArea += FireOnSceneChangedEvent;
 
-		Rooms.Run();
+		Input.RequestInput( Constants.InputLayers.Player );
+
+		Rooms.Run ();
 		Async.Run ();
 		Camera.Run ();
+		Input.Run ();
+	}
+
+	public struct Constants {
+		
+		public struct InputLayers {
+
+			public static string Player = "PLAYER";
+			public static string Dialog = "DIALOG";
+		}
+
+		public struct UILayers {
+
+		}
 	}
 }
 
