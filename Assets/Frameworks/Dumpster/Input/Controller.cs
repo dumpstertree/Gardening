@@ -33,9 +33,11 @@ namespace Dumpster.Core.BuiltInModules.Input {
 
 				// dimiss old input layer
 				PushInputPackage( GetEmptyPackage() );
-				
+				ExitFocus ();
+
 				// push input into new layer
 				_layers.Add( layer );
+				EnterFocus ();
 				PushInputPackage( PollPackage() );
 			}
 		}
@@ -48,10 +50,12 @@ namespace Dumpster.Core.BuiltInModules.Input {
 					
 					// dimiss old input layer
 					PushInputPackage( GetEmptyPackage() );
+					ExitFocus ();
 					_layers.Remove( layer );
 
 					// push input into new input layer
 					PushInputPackage( PollPackage() );
+					EnterFocus();
 				}
 			}
 		}
@@ -68,6 +72,18 @@ namespace Dumpster.Core.BuiltInModules.Input {
 
 			if ( _currentLayer != null ) {
 				_currentLayer.RecieveInput( package );
+			}
+		}
+		private void EnterFocus () {
+
+			if ( _currentLayer != null ) {
+				_currentLayer.EnterFocus ();
+			}
+		}
+		private void ExitFocus () {
+
+			if ( _currentLayer != null ) {
+				_currentLayer.ExitFocus ();
 			}
 		}
 

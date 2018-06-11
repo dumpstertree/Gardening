@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Dumpster.Core.BuiltInModules.Effects;
 
 namespace Interactable.Component {
 
@@ -20,7 +21,7 @@ namespace Interactable.Component {
 			}
 			else{
 
-				Game.Effects.OneShot( Application.Effects.Type.Hit, transform.position, transform.rotation );
+				EdensGarden.Instance.Effects.OneShot( ParticleType.Hit, transform.position, transform.rotation );
 			}
 		}
 

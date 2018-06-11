@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Dumpster.Core.BuiltInModules.Effects;
 
 public class AttackObject : MonoBehaviour {
 
@@ -79,7 +80,7 @@ public class AttackObject : MonoBehaviour {
 		[SerializeField] public Transform Transform;
 		[SerializeField] public float TimeToNext;
 		[SerializeField] public float WaitTime;
-		[SerializeField] public Application.Effects.Type Effect;
+		[SerializeField] public ParticleType Effect;
 
 		public void Move ( AttackObject attack, Transform attackObject, Action onComplete ) {
 			
@@ -102,8 +103,8 @@ public class AttackObject : MonoBehaviour {
 
 			yield return new WaitForSeconds ( WaitTime );
 
-			if ( Effect != Application.Effects.Type.None ) {
-				Game.Effects.OneShot( Effect, Transform.position, Transform.rotation );
+			if ( Effect != ParticleType.None ) {
+				EdensGarden.Instance.Effects.OneShot( Effect, Transform.position, Transform.rotation );
 			}
 
 			onComplete();

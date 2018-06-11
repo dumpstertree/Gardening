@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Interactable.OptionalComponent;
+using Dumpster.Core.BuiltInModules.Effects;
 
 public abstract class Creature : Interactable.InteractableObject { 
 	
@@ -75,14 +76,14 @@ public abstract class Creature : Interactable.InteractableObject {
 		_dead = true;
 		_animator.SetTrigger( FAINT_TRIGGER );
 
-		Game.Effects.OneShot( Application.Effects.Type.Faint, transform.position, transform.rotation );
+		EdensGarden.Instance.Effects.OneShot( ParticleType.Faint, transform.position, transform.rotation );
 	}
 	protected virtual void WakeUp () {
 
 		_dead = false;
 		_animator.SetTrigger( WAKE_UP_TRIGGER );
 
-		Game.Effects.OneShot( Application.Effects.Type.WakeUp, transform.position, transform.rotation );
+		EdensGarden.Instance.Effects.OneShot( ParticleType.WakeUp, transform.position, transform.rotation );
 	}
 
 

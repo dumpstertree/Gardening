@@ -86,6 +86,9 @@ public class UIController : MonoBehaviour {
 	private UiPanel _ammoUIPanelPrefab {
 		get{ return (Resources.Load( "AmmoUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
 	}
+	private UiPanel _menuButtonsUIPanelPrefab {
+		get{ return (Resources.Load( "MenuButtonsUIPanel" ) as GameObject).GetComponent<UiPanel>(); }
+	}
 
 	private GameObject _canvasInstance; 
 	private UiPanel _dialogUIPanelInstance;
@@ -95,6 +98,7 @@ public class UIController : MonoBehaviour {
 	private UiPanel _craftingUIPanelInstance;
 	private UiPanel _gunCraftingUIPanelInstance;
 	private UiPanel _ammoUIPanelInstance;
+	private UiPanel _menuButtonsUIPanelInstance;
 
 	private Dictionary<UiContext.Identifier,UiContext> _contexts;
 	private UiContext _loadedContext;
@@ -115,6 +119,8 @@ public class UIController : MonoBehaviour {
 		_craftingUIPanelInstance 	  = CreatePanel( _craftingUIPanelPrefab );
 		_gunCraftingUIPanelInstance   = CreatePanel( _gunCraftingUIPanelPrefab );
 		_ammoUIPanelInstance 		  = CreatePanel( _ammoUIPanelPrefab );
+
+		_menuButtonsUIPanelInstance   = CreatePanel( _menuButtonsUIPanelPrefab ); 
 	}
 	private void CreateContexts () {
 
@@ -129,6 +135,7 @@ public class UIController : MonoBehaviour {
 		var farmContext = new UiContext();
 		farmContext.RegisterPanel( _quickSlotUIPanelInstance );
 		farmContext.RegisterPanel( _ammoUIPanelInstance );
+		farmContext.RegisterPanel( _menuButtonsUIPanelInstance );
 		farmContext.Dismiss();
 
 		// create dungeon context
@@ -175,6 +182,7 @@ public class UIController : MonoBehaviour {
 		_craftingUIPanelInstance.Init();
 		_gunCraftingUIPanelInstance.Init();
 		_ammoUIPanelInstance.Init();
+		_menuButtonsUIPanelInstance.Init();
 	}
 
 	// **********************************

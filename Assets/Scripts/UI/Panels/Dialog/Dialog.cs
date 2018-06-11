@@ -8,14 +8,10 @@ namespace UI.Panels {
 
 
 		void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
-			print( "Dialog Recieved Input" );
+			if( package.ConfirmUp ){ OnConfirmUp (); }
 		}
-		void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
-			print( "Dialog Input Entered Focus" );
-		}
-		void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
-			print( "Dialog Input Exited Focus" );
-		}
+		void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+		void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 		
 		protected override void OnInit () { 
 
@@ -30,19 +26,22 @@ namespace UI.Panels {
 			EdensGarden.Instance.Input.RelinquishInput( EdensGarden.Constants.InputLayers.Dialog );
 		}
 
-		protected override void OnConfirmUp () {
+		private void OnConfirmUp () {
 
-			// if is currently presenting, skip presentation
-			if ( _presentedDialog.IsPresenting ) {
-				_presentedDialog.SkipPresenting();
-				return;
-			}
+			if( _sequence != null ) {
+			
+				// if is currently presenting, skip presentation
+				if ( _presentedDialog.IsPresenting ) {
+					_presentedDialog.SkipPresenting();
+					return;
+				}
 
-			// if the sequence is not done move next, else run on complete
-			if ( !_sequence.isDone ) {
-				Next ( _sequence.Next () );
-			} else {
-				Exit();
+				// if the sequence is not done move next, else run on complete
+				if ( !_sequence.isDone ) {
+					Next ( _sequence.Next () );
+				} else {
+					Exit();
+				}
 			}
 		}
 

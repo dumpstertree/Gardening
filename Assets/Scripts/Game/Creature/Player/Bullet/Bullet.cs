@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Dumpster.Core.BuiltInModules.Effects;
 
 public class Bullet : MonoBehaviour {
 
@@ -60,7 +61,7 @@ public class Bullet : MonoBehaviour {
 			}
 		
 			// Effects
-			Game.Effects.OneShot( Application.Effects.Type.Fireworks, transform.position, transform.rotation );
+			EdensGarden.Instance.Effects.OneShot( ParticleType.Fireworks, transform.position, transform.rotation );
 
 			// Destroy
 			Destroy( gameObject );

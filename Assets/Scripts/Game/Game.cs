@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Application;
 
 public class Game : MonoBehaviour {
 
@@ -9,9 +8,6 @@ public class Game : MonoBehaviour {
 		set { _instance = value;  _instance.OnSetInstance(); }
 		get { return _instance; }
 	}	
-	public static Effects Effects {
-		get{ return Game.Instance._effects; } 
-	}
 	public static UIController UIController{
 		get{ return Game.Instance._uiController; }
 	}
@@ -22,7 +18,6 @@ public class Game : MonoBehaviour {
 	// ************ PRIVATE ****************
 
 	private static Game _instance;
-	private Effects _effects;
 	private UIController _uiController;
 	private GunControl _gunControl;
 
@@ -52,25 +47,16 @@ public class Game : MonoBehaviour {
 
 	private void BuildGame () {
 
-		// Effects
-		_effects = gameObject.AddComponent<Effects>();
-
 		// UIController
 		_uiController = gameObject.AddComponent<UIController>();
 
 		// Gun Control
 		_gunControl = gameObject.AddComponent<GunControl>();
-
-		// Input
 	}
 	private void InitGame () {
 		
 		// Gun Control
 		_gunControl.Init();
-
-		// Async
-
-		// Effects
 
 		// UIController
 		_uiController.Init();

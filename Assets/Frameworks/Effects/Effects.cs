@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Application {
-	
-	public class Effects : MonoBehaviour {
+namespace Dumpster.Core.BuiltInModules.Effects {
+
+	public class Controller : Module {
 
 		private GameObject _smoke {
 			get{ return Resources.Load( "SmokeEffect" ) as GameObject; }
@@ -20,32 +20,32 @@ namespace Application {
 			get{ return Resources.Load( "WakeUpEffect" ) as GameObject; }
 		}
 
-		public void OneShot( Type type, Vector3 position, Quaternion rotation ) {
+		public void OneShot( ParticleType type, Vector3 position, Quaternion rotation ) {
 
 			GameObject prefab = null;
 
 			switch( type ) {
 				
-				case Type.None:
+				case ParticleType.None:
 					return;
 
-				case Type.Fireworks:
+				case ParticleType.Fireworks:
 					prefab =_fireworks;
 					break;
 
-				case Type.Hit:
+				case ParticleType.Hit:
 					prefab = _hit;
 					break;
 
-				case Type.Smoke:
+				case ParticleType.Smoke:
 					prefab = _smoke;
 					break;
 
-				case Type.Faint:
+				case ParticleType.Faint:
 					prefab = _faint;
 					break;
 
-				case Type.WakeUp:
+				case ParticleType.WakeUp:
 					prefab = _wakeUp;
 					break;
 			}
@@ -56,15 +56,15 @@ namespace Application {
 				go.transform.position = position;
 				go.transform.rotation = rotation;
 			}
-		}
+		}		
+	}
 
-		public enum Type {
-			None,
-			Fireworks,
-			Hit,
-			Smoke,
-			Faint,
-			WakeUp
-		}
+	public enum ParticleType {
+		None,
+		Fireworks,
+		Hit,
+		Smoke,
+		Faint,
+		WakeUp
 	}
 }

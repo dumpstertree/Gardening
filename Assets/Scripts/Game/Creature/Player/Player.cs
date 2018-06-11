@@ -4,8 +4,12 @@ using Dumpster.Core.BuiltInModules.Input;
 public class Player : Creature, IInputReciever<Eden.Input.Package> {
 
 	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {}
-	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
-	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
+		print( "player enter focus" );
+	}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
+		print( "player left focus" );
+	}
 	
 	// ***************** PUBLIC *******************
 
