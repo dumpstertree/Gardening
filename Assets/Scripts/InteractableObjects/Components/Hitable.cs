@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Application;
+using Dumpster.Core.BuiltInModules.Effects;
 
 namespace Interactable.Component {
 
@@ -9,7 +9,8 @@ namespace Interactable.Component {
 		// ***************** PUBLIC *******************
 
 		public void Hit( Creature user, HitData data ){
-			Game.Effects.OneShot( Effects.Type.Hit, transform.position, transform.rotation );
+			
+			EdensGarden.Instance.Effects.OneShot( ParticleType.Hit, transform.position, transform.rotation );
 			_health.RemoveHealth( data.Power );
 		}
 

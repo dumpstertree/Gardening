@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Dumpster.Core.BuiltInModules.Effects;
 
 namespace Interactable.OptionalComponent {
 
@@ -16,9 +17,9 @@ namespace Interactable.OptionalComponent {
 				_beingDestroyed = true;
 				_animator.SetTrigger( DESTROY_ANIMATION_TRIGGER );
 
-				Game.Async.WaitForSeconds( ANIMATION_LENGTH, () => {
+				EdensGarden.Instance.Async.WaitForSeconds( ANIMATION_LENGTH, () => {
 
-					Game.Effects.OneShot( _effectType, transform.position, transform.rotation );
+					EdensGarden.Instance.Effects.OneShot( _effectType, transform.position, transform.rotation );
 
 					if ( _itemDropper ) {
 						_itemDropper.DropItems();
@@ -31,7 +32,7 @@ namespace Interactable.OptionalComponent {
 
 		// ***************** PRIVATE ***************
 
-		[SerializeField] private Application.Effects.Type _effectType;
+		[SerializeField] private ParticleType _effectType;
 
 		private const string DESTROY_ANIMATION_TRIGGER = "Destroy";
 		private const float ANIMATION_LENGTH = 0.4f;

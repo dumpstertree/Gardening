@@ -69,7 +69,7 @@ namespace UI.Subpanels.GunCrafting {
 			// if part is on the graph but not part of the gun add it back to the parts list
 			if ( !_gunComponents.Contains( part ) ){
 
-				Game.Area.LoadedPlayer.GunParts.AddPart( new Model.Gun.Part( part ) );
+				_player.GunParts.AddPart( new Model.Gun.Part( part ) );
 			}
 
 			// destroy the part controller
@@ -142,6 +142,10 @@ namespace UI.Subpanels.GunCrafting {
 		private List<Part> _gunComponents;	
 		private List<Part> _partsOnGraph;
 		private Model.PartGraph _partGraph;
+
+		private Player _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		}
 
 		// **********************************
  		
@@ -243,7 +247,7 @@ namespace UI.Subpanels.GunCrafting {
 				_recalculatePath = true;
 				
 				// wait for the end of frame so it only needs to be done once
-				Game.Async.WaitForEndOfFrame( () => {
+				EdensGarden.Instance.Async.WaitForEndOfFrame( () => {
 					
 					// clear the old path
 					ClearPath();

@@ -8,7 +8,7 @@ namespace UI.Panels {
 	public class InventoryUISub : InventoryUI {
 
 		private Player _player {
-			get{ return Game.Area.LoadedPlayer; }
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
 		}
 		[SerializeField] private GridLayoutGroup _layoutGroup;
 
@@ -16,7 +16,7 @@ namespace UI.Panels {
 		private const float PADDING = 25;
 
 		protected override Inventory GetInventory () {
-			return Game.Area.LoadedPlayer.Inventory;
+			return _player.Inventory;
 		}
 		protected override ItemBubbleUI[] GetItemBubbles () {
 

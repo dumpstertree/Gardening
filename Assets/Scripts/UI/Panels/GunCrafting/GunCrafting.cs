@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Panels {
@@ -40,6 +41,9 @@ namespace UI.Panels {
 		[SerializeField] private UI.Subpanels.GunCrafting.GunParts _gunPartsSubpanel;
 
 		private InventoryItem _itemBeingEdited;
+		private Player _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		}
 
 		// ************************************
 
@@ -59,23 +63,23 @@ namespace UI.Panels {
 
 		protected override void OnPresent () {
 			
-			Game.Area.LoadedPlayer.GunParts.OnPartListChanged += _gunPartsSubpanel.Reload;
+			// _player.GunParts.OnPartListChanged += _gunPartsSubpanel.Reload;
 
-			_gunPartsSubpanel.OnDragBegin += part => {
+			// _gunPartsSubpanel.OnDragBegin += part => {
 
-				Game.Area.LoadedPlayer.GunParts.RemovePart( part );				
-				_partGraphSubpanel.AddPartToGraph( part, true );
-			};
+			// 	_player.GunParts.RemovePart( part );				
+			// 	_partGraphSubpanel.AddPartToGraph( part, true );
+			// };
 		}
 		protected override void OnDismiss () {
 
-			Game.Area.LoadedPlayer.GunParts.OnPartListChanged -= _gunPartsSubpanel.Reload;
+			// _player.GunParts.OnPartListChanged -= _gunPartsSubpanel.Reload;
 
-			_gunPartsSubpanel.OnDragBegin -= part => {
+			// _gunPartsSubpanel.OnDragBegin -= part => {
 
-				Game.Area.LoadedPlayer.GunParts.RemovePart( part );				
-				_partGraphSubpanel.AddPartToGraph( part, true );
-			};
+			// 	_player.GunParts.RemovePart( part );				
+			// 	_partGraphSubpanel.AddPartToGraph( part, true );
+			// };
 		}
 
 		[SerializeField] private Text FireRateText;
