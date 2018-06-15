@@ -1,25 +1,32 @@
-﻿using UnityEngine;
-
-namespace Eden {
+﻿namespace Eden {
 	
 	public class Input : Dumpster.Core.BuiltInModules.Input.Controller<Input.Package> {
 
-		private KeyCode _confirm = KeyCode.RightShift;
-		private KeyCode _back = KeyCode.LeftShift;
-		private KeyCode _start = KeyCode.S;
+		private Package _lastPackage;
+		private IInput _ps4Controller = new PS4InputDelegate();
+		private IInput _keyboardController = new KeyboardInputDelegate(); 
+
+		private bool _hasController {
+			get{ return UnityEngine.Input.GetJoystickNames().Length > 0; }
+		}
 
 		protected override Package PollPackage () {
-			return new Package( this );
+			
+			if ( _hasController ) {
+				return _ps4Controller.GetPackage();
+			} else {
+				return _keyboardController.GetPackage();
+			}
 		} 	
 		protected override Package GetEmptyPackage () {
+			
 			return new Package ();
 		}
 
-		private Package _lastPackage;
 
 		private void Update () {
 
-			var package = new Package( this );
+			var package = PollPackage();
 
 			if ( _lastPackage == null || ShouldUpdate( package, _lastPackage ) ) {
 				
@@ -29,71 +36,138 @@ namespace Eden {
 		}
 		private bool ShouldUpdate ( Package package1, Package package2 ) {
 
-			if ( package1.Confirm != package2.Confirm ) { return true; }
-			if ( package1.ConfirmDown != package2.ConfirmDown ) { return true; }
-			if ( package1.ConfirmUp != package2.ConfirmUp ) { return true; }
-			if ( package1.Back != package2.Back ) { return true; }
-			if ( package1.BackDown != package2.BackDown ) { return true; }
-			if ( package1.BackUp != package2.BackUp ) { return true; }
-			if ( package1.Start != package2.Start ) { return true; }
-			if ( package1.StartDown != package2.StartDown ) { return true; }
-			if ( package1.StartUp != package2.StartUp ) { return true; }
-			if ( package1.Horizontal != package2.Horizontal ) { return true; }
-			if ( package1.Vertical != package2.Vertical ) { return true; }
+			if ( !Package.Buttons.Equal( package1.Face, package2.Face) ) return true;
+			if ( !Package.Buttons.Equal( package1.Dpad, package2.Dpad) ) return true;
+
+			if ( !Package.Analog.Equal( package1.LeftAnalog, package2.LeftAnalog) ) return true;
+			if ( !Package.Analog.Equal( package1.RightAnalog, package2.RightAnalog) ) return true;
 
 			return false;
 		}
 
 		public class Package {
 			
-			public bool Confirm { get; }
-			public bool ConfirmDown { get; }
-			public bool ConfirmUp { get; }
+			public Buttons Face { get; } 
+			public Buttons Dpad { get; } 
+			public Analog LeftAnalog { get; }
+			public Analog RightAnalog { get; }
 
-			public bool Back { get; }
-			public bool BackDown { get; }
-			public bool BackUp { get; }
+			public class Buttons {
 
-			public bool Start { get; }
-			public bool StartDown { get; }
-			public bool StartUp { get; }
+				public bool Up { get; }
+				public bool Up_Down { get; }
+				public bool Up_Up { get; }
 
-			public float Horizontal { get; }
-			public float Vertical { get; }
+				public bool Down { get; }
+				public bool Down_Down { get; }
+				public bool Down_Up { get; }
 
-			public Package ( Input input ) {
+				public bool Left { get; }
+				public bool Left_Down { get; }
+				public bool Left_Up { get; }
 
-				Confirm = UnityEngine.Input.GetKey( input._confirm );
-				ConfirmDown = UnityEngine.Input.GetKeyDown( input._confirm );
-				ConfirmUp = UnityEngine.Input.GetKeyUp( input._confirm );
+				public bool Right { get; }
+				public bool Right_Down { get; }
+				public bool Right_Up { get; }
 
-				Back = UnityEngine.Input.GetKey( input._back );
-				BackDown = UnityEngine.Input.GetKeyDown( input._back );
-				BackUp = UnityEngine.Input.GetKeyUp( input._back );
+				public Buttons () {
 
-				Start = UnityEngine.Input.GetKey( input._start );
-				StartDown = UnityEngine.Input.GetKeyDown( input._start );
-				StartUp = UnityEngine.Input.GetKeyUp( input._start );
+					Up = false;
+					Up_Down = false;
+					Up_Up = false;
 
-				Horizontal = UnityEngine.Input.GetAxis( "Horizontal" );
-				Vertical = UnityEngine.Input.GetAxis( "Vertical" );
+					Down = false;
+					Down_Down = false;
+					Down_Up = false;
+					
+					Left = false;
+					Left_Down = false;
+					Left_Up = false;
+					
+					Right = false;
+					Right_Down = false;
+					Right_Up = false;
+				}
+				public Buttons ( bool up, bool up_down, bool up_up,  
+								 bool down, bool down_down, bool down_up,   
+								 bool left, bool left_down, bool left_up,   
+								 bool right, bool right_down, bool right_up ) {
+					
+					Up = up;
+					Up_Down = up_down;
+					Up_Up = up_up;
+
+					Down = down;
+					Down_Down = down_down;
+					Down_Up = down_up;
+
+					Left = left;
+					Left_Down = left_down;
+					Left_Up = left_up;
+
+					Right = right;
+					Right_Down = right_down;
+					Right_Up = right_up;
+				}
+
+				public static bool Equal ( Buttons buttons1, Buttons buttons2 ) {
+
+					if (buttons1.Up != buttons2.Up) return false;
+					if (buttons1.Up_Down != buttons2.Up_Down) return false;
+					if (buttons1.Up_Up != buttons2.Up_Up) return false;
+
+					if (buttons1.Down != buttons2.Down) return false;
+					if (buttons1.Down_Down != buttons2.Down_Down) return false;
+					if (buttons1.Down_Up != buttons2.Down_Up) return false;
+
+					if (buttons1.Left != buttons2.Left) return false;
+					if (buttons1.Left_Down != buttons2.Left_Down) return false;
+					if (buttons1.Left_Up != buttons2.Left_Up) return false;
+
+					if (buttons1.Right != buttons2.Up) return false;
+					if (buttons1.Right_Down != buttons2.Right_Down) return false;
+					if (buttons1.Right_Up != buttons2.Right_Up) return false;
+
+					return true;
+				}
 			}
+			public class Analog {
+				
+				public float Horizontal { get; }
+				public float Vertical { get; }
+
+				public Analog ( float horizontal, float vertical ) {
+					
+					Horizontal = horizontal;
+					Vertical = vertical;
+				}
+				public Analog () {
+
+					Horizontal = 0f;
+					Vertical = 0f;  
+				}
+				public static bool Equal ( Analog analog1, Analog analog2 ) {
+
+					if ( analog1.Horizontal != analog2.Horizontal ) return false;
+					if ( analog1.Vertical != analog2.Vertical ) return false;
+
+					return true;
+				}
+			}
+
 			public Package () {
 
-				Confirm = false;
-				ConfirmDown = false;
-				ConfirmUp = false;
+				Face = new Buttons ();
+				Dpad = new Buttons ();
+				LeftAnalog = new Analog ();
+				RightAnalog = new Analog ();
+			}
+			public Package ( Buttons face, Buttons dpad, Analog leftAnalog, Analog rightAnalog )  {
 
-				Back = false;
-				BackDown = false;
-				BackUp = false;
-
-				Start = false;
-				StartDown = false;
-				StartUp = false;
-
-				Horizontal = 0f;
-				Vertical = 0f;
+				Face = face;
+				Dpad = dpad;
+				LeftAnalog = leftAnalog;
+				RightAnalog = rightAnalog;
 			}
 		}
 	}

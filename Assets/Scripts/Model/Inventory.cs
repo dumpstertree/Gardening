@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Eden.UI;
 
 public class Inventory {
 
@@ -100,7 +101,7 @@ public class Inventory {
 
 	// *******************************************
 
-	public static void MoveItem( InventoryUI.DragObject fromObject, InventoryUI.DragObject toObject ){
+	public static void MoveItem( InventoryUI1.DragObject fromObject, InventoryUI1.DragObject toObject ){
 
 		var fromItem = fromObject.Inventory.GetInventoryItem( fromObject.Index );
 		var toItem = toObject.Inventory.GetInventoryItem( toObject.Index );

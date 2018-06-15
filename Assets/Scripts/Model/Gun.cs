@@ -28,7 +28,7 @@ namespace Model {
 			[SerializeField] public Vector3 Rotation;
 			[SerializeField] public Stats Stats;
 
-			public Part ( UI.Elements.GunCrafting.Part gunComponent ) {
+			public Part ( Eden.UI.Elements.GunCrafting.Part gunComponent ) {
 
 				PrefabName = gunComponent.PrefabName;
 				Position = gunComponent.transform.position;

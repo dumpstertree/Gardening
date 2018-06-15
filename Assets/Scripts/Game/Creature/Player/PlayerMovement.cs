@@ -1,17 +1,7 @@
 ﻿using UnityEngine;
-using Dumpster.Core.BuiltInModules.Input;
 
-public class PlayerMovement : Brain, IInputReciever<Eden.Input.Package> {
-
-	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
-		print( "recieved" );
-		if ( _horizontal != package.Horizontal ){ _horizontal = package.Horizontal; }
-		if ( _vertical != package.Vertical ){ _vertical = package.Vertical; }
-	}
-	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
-	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
+public class PlayerMovement : Brain {
 	
-
 	[SerializeField] private Player _player;
 	[SerializeField] private PlayerAgressiveSubBrain _agressive;
 	[SerializeField] private PlayerPassiveSubBrain _passive;
@@ -20,6 +10,7 @@ public class PlayerMovement : Brain, IInputReciever<Eden.Input.Package> {
 	private CameraType _cameraType;
 	private float _horizontal;
 	private float _vertical;
+	private bool _jump;
 
 	private const float RAYCAST_INSET = 0.01f;
 	private const float RAYCAST_DISTANCE = 0.1f;
@@ -42,13 +33,14 @@ public class PlayerMovement : Brain, IInputReciever<Eden.Input.Package> {
 
 	private void Update () {
 
-		if ( _player.Physics.State.DownIsColliding && UnityEngine.Input.GetKeyDown( KeyCode.Space ) ) {
+		if ( _player.Physics.State.DownIsColliding && _jump ) {
 			_player.Physics.AddVelocity( new Vector3( 0, _jumpVelocity, 0) );
 		}
 	}
-	private void Start () {
 
-		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
+	private void Awake () {
+		
+		_player.OnRecieveInput += RecieveInput;
 
 		_player.QuickSlot.OnInputChanged += newSlotID => {
 			
@@ -61,6 +53,12 @@ public class PlayerMovement : Brain, IInputReciever<Eden.Input.Package> {
 				_cameraType = CameraType.Passive;
 			}
 		};
+	}
+	private void RecieveInput ( Eden.Input.Package package ) {
+		
+		_horizontal = package.LeftAnalog.Horizontal;
+		_vertical = package.LeftAnalog.Vertical;
+		_jump = package.Face.Down_Down;
 	}
 	
 

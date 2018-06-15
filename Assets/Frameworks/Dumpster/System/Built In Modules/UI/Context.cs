@@ -25,17 +25,18 @@ namespace Dumpster.Core.BuiltInModules.UI {
 			Init ();
 		}
 
+		private void Init () {
+			
+			foreach ( Panel p in _registeredPanels ) {
+				p.Init ();
+			}
+		}
+
 		public virtual void Destroy () {
 
 			foreach ( Panel p in _registeredPanels ) {
 				GameObject.Destroy( p.gameObject );
 			}	
-		}
-		public virtual void Init () {
-			
-			foreach ( Panel p in _registeredPanels ) {
-				p.Init ();
-			}
 		}
 		public virtual void Present () {
 

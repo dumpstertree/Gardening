@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using UI.Elements.GunCrafting;
+using Eden.UI.Elements.GunCrafting;
 
 namespace Model {
 	
@@ -64,15 +64,15 @@ namespace Model {
 		}
 
 
-		public List<UI.Elements.GunCrafting.Projector> GetProjectors( int x, int y ) {
+		public List<Eden.UI.Elements.GunCrafting.Projector> GetProjectors( int x, int y ) {
 
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
-				return new List<UI.Elements.GunCrafting.Projector>();
+				return new List<Eden.UI.Elements.GunCrafting.Projector>();
 			}
 
 			return _slotGraph[ x, y ].Projectors;
 		}
-		public void AddProjector( int x, int y, UI.Elements.GunCrafting.Projector projector ) {
+		public void AddProjector( int x, int y, Eden.UI.Elements.GunCrafting.Projector projector ) {
 			
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
 				return;
@@ -80,7 +80,7 @@ namespace Model {
 			
 			_slotGraph[ x, y ].Projectors.Add( projector );
 		}
-		public void RemoveProjector( int x, int y, UI.Elements.GunCrafting.Projector projector ) {
+		public void RemoveProjector( int x, int y, Eden.UI.Elements.GunCrafting.Projector projector ) {
 			
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
 				return;
@@ -92,15 +92,15 @@ namespace Model {
 		}
 
 
-		public List<UI.Elements.GunCrafting.Reciever> GetRecievers( int x, int y ) {
+		public List<Eden.UI.Elements.GunCrafting.Reciever> GetRecievers( int x, int y ) {
 
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
-				return new List<UI.Elements.GunCrafting.Reciever>();
+				return new List<Eden.UI.Elements.GunCrafting.Reciever>();
 			}
 
 			return _slotGraph[ x, y ].Recievers;
 		}
-		public void AddReciever( int x, int y, UI.Elements.GunCrafting.Reciever reciever ) {
+		public void AddReciever( int x, int y, Eden.UI.Elements.GunCrafting.Reciever reciever ) {
 
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
 				return;
@@ -108,7 +108,7 @@ namespace Model {
 
 			_slotGraph[ x, y ].Recievers.Add( reciever );
 		}
-		public void RemoveReciever( int x, int y, UI.Elements.GunCrafting.Reciever reciever ) {
+		public void RemoveReciever( int x, int y, Eden.UI.Elements.GunCrafting.Reciever reciever ) {
 			
 			if ( x < 0 || y < 0 || x >= _slotGraph.GetLength(0) || y >= _slotGraph.GetLength(1) ){
 				return;
@@ -129,13 +129,13 @@ namespace Model {
 		private class Slot {
 
 			public Part Component;
-			public List<UI.Elements.GunCrafting.Projector> Projectors;
-			public List<UI.Elements.GunCrafting.Reciever> Recievers; 
+			public List<Eden.UI.Elements.GunCrafting.Projector> Projectors;
+			public List<Eden.UI.Elements.GunCrafting.Reciever> Recievers; 
 
 			public Slot () {
 
-				Projectors = new List<UI.Elements.GunCrafting.Projector>();
-				Recievers = new List<UI.Elements.GunCrafting.Reciever>(); 
+				Projectors = new List<Eden.UI.Elements.GunCrafting.Projector>();
+				Recievers = new List<Eden.UI.Elements.GunCrafting.Reciever>(); 
 			}
 		}
 	}

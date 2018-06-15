@@ -56,7 +56,7 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 				go.transform.position = position;
 				go.transform.rotation = rotation;
 			}
-		}		
+		}
 	}
 
 	public enum ParticleType {

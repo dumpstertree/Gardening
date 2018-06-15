@@ -3,21 +3,23 @@ using Dumpster.Core.BuiltInModules.Input;
 
 public class Player : Creature, IInputReciever<Eden.Input.Package> {
 
-	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {}
-	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {
-		print( "player enter focus" );
+	void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
+		FireRecieveInputEvent ( package );
 	}
-	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {
-		print( "player left focus" );
-	}
+	void IInputReciever<Eden.Input.Package>.EnteredInputFocus () {}
+	void IInputReciever<Eden.Input.Package>.ExitInputFocus () {}
 	
+	public delegate void RecieveInputEvent ( Eden.Input.Package package );
+	public RecieveInputEvent OnRecieveInput;
+
+
 	// ***************** PUBLIC *******************
 
 	public Model.PartInventory GunParts { 
 		get { return _gunParts; }
 	}
 
-	public QuickSlot QuickSlot { 
+	public Eden.BlackBox.QuickSlot QuickSlot { 
 		get{ return _quickslot; }  
 	}
 	public override Animations AnimationsData {
@@ -32,7 +34,7 @@ public class Player : Creature, IInputReciever<Eden.Input.Package> {
 	// ***************** PRIVATE *******************
 
 	[Header( "Player Properties" )]
-	[SerializeField] private QuickSlot _quickslot;
+	[SerializeField] private Eden.BlackBox.QuickSlot _quickslot;
 	[SerializeField] private Model.Template.InventoryItemTemplate _hand;
 
 	private PlayerDataController _dataController;
@@ -89,5 +91,11 @@ public class Player : Creature, IInputReciever<Eden.Input.Package> {
 	private void CreateDataController () {
 
 		_dataController = new PlayerDataController();	
+	}
+	private void FireRecieveInputEvent ( Eden.Input.Package package ) {
+
+		if ( OnRecieveInput != null ) {
+			OnRecieveInput ( package );
+		}
 	}
 }

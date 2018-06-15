@@ -8,9 +8,6 @@ public class Game : MonoBehaviour {
 		set { _instance = value;  _instance.OnSetInstance(); }
 		get { return _instance; }
 	}	
-	public static UIController UIController{
-		get{ return Game.Instance._uiController; }
-	}
 	public static GunControl GunControl {
 		get{ return Game.Instance._gunControl; }
 	}
@@ -18,7 +15,6 @@ public class Game : MonoBehaviour {
 	// ************ PRIVATE ****************
 
 	private static Game _instance;
-	private UIController _uiController;
 	private GunControl _gunControl;
 
 	// ******************************
@@ -47,9 +43,6 @@ public class Game : MonoBehaviour {
 
 	private void BuildGame () {
 
-		// UIController
-		_uiController = gameObject.AddComponent<UIController>();
-
 		// Gun Control
 		_gunControl = gameObject.AddComponent<GunControl>();
 	}
@@ -58,8 +51,6 @@ public class Game : MonoBehaviour {
 		// Gun Control
 		_gunControl.Init();
 
-		// UIController
-		_uiController.Init();
 	}
 	private void PlayGame () {
 	}

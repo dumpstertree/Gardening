@@ -28,9 +28,11 @@ namespace Dumpster.Core.BuiltInModules.UI {
 
 		protected virtual void OnInit () {}
 		protected virtual void OnPresent () {
+			
 			gameObject.SetActive( true );
 		}
 		protected virtual void OnDismiss () {
+			
 			gameObject.SetActive( false );
 		}
 		protected virtual void OnEnterFocus () {}
