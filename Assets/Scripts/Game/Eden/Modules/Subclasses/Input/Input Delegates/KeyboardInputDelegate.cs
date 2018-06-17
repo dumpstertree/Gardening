@@ -5,7 +5,7 @@ namespace Eden {
 	public class KeyboardInputDelegate : IInput {
 
 		private KeyCode FACE_UP = KeyCode.W;
-		private KeyCode FACE_DOWN = KeyCode.S;
+		private KeyCode FACE_DOWN = KeyCode.Space;
 		private KeyCode FACE_LEFT = KeyCode.A;
 		private KeyCode FACE_RIGHT = KeyCode.D;
 
