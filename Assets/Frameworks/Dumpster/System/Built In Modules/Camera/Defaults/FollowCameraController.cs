@@ -10,8 +10,6 @@ namespace Dumpster.Core.BuiltInModules {
 		[SerializeField] private float _height = 1.0f;
 
 		public override void Control( Transform cameraTarget, Transform cameraFocus ) {
-			
-			_followObject = FindObjectOfType<Player>().transform;
 
 			MoveCameraTarget( cameraTarget, cameraFocus );
 		}

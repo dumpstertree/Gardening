@@ -24,7 +24,7 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 	}
 
 	[SerializeField] private float _maxRotation;
-	[SerializeField] private Player _player;
+	[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 	[SerializeField] private float _speed;
 
 	private const string HORIZONTAL_ANIMATION_NAME = "Horizontal";

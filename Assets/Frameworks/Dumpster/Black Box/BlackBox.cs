@@ -13,6 +13,9 @@ namespace Dumpster.Core.Life {
 		public T Visual {
 			get{ return GetVisual(); }
 		}
+		public Animator Animator {
+			get { return _animator; }
+		}
 
 		[SerializeField] private Animator _animator;
 		[SerializeField] private LogicChip _logicChip;

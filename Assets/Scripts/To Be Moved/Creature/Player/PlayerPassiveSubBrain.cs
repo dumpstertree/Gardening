@@ -22,7 +22,7 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 
 	//***************************
 
-	[SerializeField] private Player _player;
+	[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 	[SerializeField] private float _speed;
 
 	private const string RESTRICTED_INPUT_TAG = "InputRestricted";

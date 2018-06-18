@@ -17,8 +17,6 @@ namespace Dumpster.Core.BuiltInModules {
 
 		public override void Control( Transform cameraTarget, Transform cameraFocus ) {
 
-			_followObject = FindObjectOfType<Player>().transform;
-
 			MoveCameraTarget( cameraTarget, cameraFocus );
 		}
 

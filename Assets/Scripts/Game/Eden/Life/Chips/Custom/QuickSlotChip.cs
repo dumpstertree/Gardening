@@ -5,7 +5,7 @@ namespace Eden.Life.Chip {
 	
 	public class QuickSlotChip: MonoBehaviour {
 
-		[SerializeField] private Player _player;
+		[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 
 		// ***************** PUBLIC *******************
 
@@ -29,7 +29,7 @@ namespace Eden.Life.Chip {
 		private void Awake () {
 			
 			_inputStack = new List<KeyCode>();
-			if(_player)  _player.OnRecieveInput += RecieveInput;
+			_player.OnRecieveInput += RecieveInput;
 		}
 		private void RecieveInput( Input.Package package ) {
 
@@ -65,6 +65,7 @@ namespace Eden.Life.Chip {
 		private void FireOnInputChange ( QuickSlotInventory.ID id  ) {
 
 			if (OnInputChanged != null){
+				print( id );
 				OnInputChanged( id );  
 			}
 		}
