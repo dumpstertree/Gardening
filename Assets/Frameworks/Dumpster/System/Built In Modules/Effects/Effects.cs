@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace Dumpster.Core.BuiltInModules.Effects {
 
@@ -57,6 +58,19 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 				go.transform.rotation = rotation;
 			}
 		}
+		public void FreezeFrame ( float time ) {
+
+			StartCoroutine( FreezeFrameCoroutine(time) );
+		}
+		IEnumerator FreezeFrameCoroutine ( float time ) {
+
+			Time.timeScale = 0f;
+
+			yield return new WaitForSecondsRealtime ( time );
+			
+			Time.timeScale = 1f;
+		}	
+
 	}
 
 	public enum ParticleType {
