@@ -9,6 +9,9 @@ namespace Eden.Life {
 		public Transform ProjectileSpawner {
 			get{ return _projectileSpawner; }
 		}
+		public Transform MeleeSpawner {
+			get{ return _projectileSpawner; }
+		}
 
 		public SightChip SightChip {
 			get{ return _sightChip; }
@@ -52,6 +55,7 @@ namespace Eden.Life {
 
 		[Header( "Spawners" )]
 		[SerializeField] private Transform _projectileSpawner;
+		[SerializeField] private Transform _meleeSpawner;
 
 
 		private Inventory _inventory;
@@ -84,9 +88,9 @@ namespace Eden.Life {
 			
 			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.GetInstance( 0 ) ); }
 			if( _equippedItemTop != null ) { _equipedItems.AddInventoryItem( _equippedItemTop.GetInstance( 1 ) ); }
-			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.GetInstance( 2 ) ); }
-			if( _equippedItemLeft != null ) { _equipedItems.AddInventoryItem( _equippedItemLeft.GetInstance( 3 ) ); }
-			if( _equippedItemRight != null ) { _equipedItems.AddInventoryItem( _equippedItemRight.GetInstance( 4 ) ); }
+			if( _equippedItemRight != null ) { _equipedItems.AddInventoryItem( _equippedItemRight.GetInstance( 2 ) ); }
+			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.GetInstance( 3 ) ); }
+			if( _equippedItemLeft != null ) { _equipedItems.AddInventoryItem( _equippedItemLeft.GetInstance( 4 ) ); }
 		}
 
 

@@ -56,7 +56,7 @@ namespace Eden.Life.Chip {
 				return false;
 			}
 
-			if ( inventoryItem.CanShoot ){
+			if ( inventoryItem.CanShoot || inventoryItem.CanHit ){
 				return true;
 			}
 

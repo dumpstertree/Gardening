@@ -22,7 +22,10 @@ namespace Model.Template {
 				
 				// shoot data
 				_canShoot,
-				_shootData.GetController()
+				_shootData.GetController(),
+
+				// hit data
+				_canHit
 			);
 
 			return item;
@@ -75,6 +78,9 @@ namespace Model.Template {
 		[SpaceAttribute]
 		[SerializeField] private bool _canShoot = false;
 		[SerializeField] private ShootData _shootData = null;
+
+		[SpaceAttribute]
+		[SerializeField] private bool _canHit = false;
 	}
 	
 	[System.Serializable]
