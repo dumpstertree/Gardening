@@ -80,7 +80,7 @@ namespace Model.Template {
 	[System.Serializable]
 	public class ItemAnimation {
 
-		[SerializeField] public Creature.AnimationTrigger Trigger;
+		//[SerializeField] public Eden.Life.BlackBox.AnimationTrigger Trigger;
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Interactable.Component;
@@ -34,3 +34,4 @@ public class DropItem : MonoBehaviour {
 		_pickup = GetComponent<Pickup>();
 	}
 }
+*/

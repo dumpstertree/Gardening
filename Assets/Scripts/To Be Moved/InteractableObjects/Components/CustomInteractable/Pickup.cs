@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using Dumpster.Core.BuiltInModules.Effects;
 
 namespace Interactable.Component {
@@ -13,7 +13,7 @@ namespace Interactable.Component {
 			set{ _item = value; }
 		}
 
-		public override void Interact ( Creature user, InventoryItem item ) {
+		public override void Interact ( Eden.Life.BlackBox user, InventoryItem item ) {
 
 			if ( user.QuickslotInventory.AddInventoryItem( _item ) || user.Inventory.AddInventoryItem( _item ) ){
 
@@ -43,3 +43,4 @@ namespace Interactable.Component {
 		}
 	}
 }
+*/

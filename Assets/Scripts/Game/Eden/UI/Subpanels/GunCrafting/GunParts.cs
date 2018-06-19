@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 namespace Eden.UI.Subpanels.GunCrafting {
 	
@@ -11,8 +11,8 @@ namespace Eden.UI.Subpanels.GunCrafting {
 		public DragEvent OnDragBegin;
 		public DragEvent OnDragEnd;
 
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		private Eden.Life.BlackBox _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
 
 		// *************************
@@ -63,3 +63,4 @@ namespace Eden.UI.Subpanels.GunCrafting {
 	    }
 	}
 }
+*/

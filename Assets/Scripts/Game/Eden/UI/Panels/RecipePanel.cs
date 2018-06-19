@@ -23,10 +23,10 @@ namespace Eden.UI.Panels {
 		private const float PADDING = 25;
 
 		private PlayerRecipes _playerRecipes {
-			get{ return _player.PlayerRecipes; }
+			get{ return null; }
 		}
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		private Eden.Life.BlackBox _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
 
 		// *************************************

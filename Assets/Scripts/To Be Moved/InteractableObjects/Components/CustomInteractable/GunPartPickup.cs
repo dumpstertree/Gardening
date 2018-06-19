@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections.Generic;
 
 namespace Interactable.Component {
@@ -8,7 +8,7 @@ namespace Interactable.Component {
 
 		// ********* PUBLIC **************
 		
-		public override void Interact ( Creature user, InventoryItem item ) {
+		public override void Interact ( Eden.Life.BlackBox user, InventoryItem item ) {
  			
  			var player = user as Player;
  			
@@ -44,3 +44,4 @@ namespace Interactable.Component {
 		}
 	}
 }
+*/

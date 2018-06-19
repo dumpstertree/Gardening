@@ -13,13 +13,13 @@ namespace Dumpster.Triggers {
 
 		private void OnTriggerEnter ( Collider collider ) {
 
-			if ( collider.gameObject.GetComponent<Player>() ) {
+			if ( collider.gameObject.GetComponent<Eden.Life.BlackBox>() ) {
 				FireOnTriggerZoneEnter ();
 			}
 		}
 		private void OnTriggerExit ( Collider collider ) {
 			
-			if ( collider.gameObject.GetComponent<Player>() ) {
+			if ( collider.gameObject.GetComponent<Eden.Life.BlackBox>() ) {
 				FireOnTriggerZoneExit ();
 			}
 		}

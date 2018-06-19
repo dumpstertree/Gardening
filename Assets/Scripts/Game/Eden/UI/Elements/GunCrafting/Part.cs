@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 
 namespace Eden.UI.Elements.GunCrafting {
@@ -332,4 +332,4 @@ namespace Eden.UI.Elements.GunCrafting {
 			}
 		}
 	}
-}
+}*/

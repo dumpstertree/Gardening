@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Model.Template;
@@ -78,4 +78,4 @@ namespace Interactable.OptionalComponent {
 		}
 
 	}
-}
+}*/

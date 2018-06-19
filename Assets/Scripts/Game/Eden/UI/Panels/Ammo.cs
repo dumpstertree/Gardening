@@ -12,8 +12,8 @@ namespace Eden.UI.Panels {
 
 		private InventoryItem _item;
 
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }
+		private Eden.Life.BlackBoxes.Player _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBoxes.Player>(); }
 		}
 
 
@@ -21,10 +21,9 @@ namespace Eden.UI.Panels {
 
 			base.OnInit();
 			
-			_player.QuickSlot.OnInputChanged += newId => { 
+			_player.QuickslotChip.OnInputChanged += index => { 
 
-				var index = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( newId );
-				var item = _player.QuickslotInventory.GetInventoryItem( index );
+				var item = _player.EquipedItems.GetInventoryItem( index );
 
 				// remove all old connectionss
 				if ( _item != null ) {

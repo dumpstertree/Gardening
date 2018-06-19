@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using Dumpster.Core.BuiltInModules.Effects;
 
 namespace Interactable.OptionalComponent {
@@ -51,4 +51,4 @@ namespace Interactable.OptionalComponent {
 			_beingDestroyed = false;
 		}
 	}
-}
+}*/

@@ -185,10 +185,6 @@ namespace Eden.Life.Chips.Logic {
 
 		// ***************************
 
-		private Creature FindBestTarget ( List<Creature> validTargets ) {
-			
-			return validTargets[ 0 ];
-		}
 		private float GetDistanceToTarget () {
 
 			if ( _target != null ) {

@@ -1,8 +1,8 @@
-﻿namespace Interactable.Component {
+﻿/*namespace Interactable.Component {
 
 	public class SwitchToCraftingContext : Interactable {
 
-		public override void Interact( Creature user, InventoryItem item ) {
+		public override void Interact( Eden.Life.BlackBox user, InventoryItem item ) {
 			
 			// Game.UIController.PresentDialog( Dialogs.NPC.Crafting.Hello, () => {
 				
@@ -16,4 +16,4 @@
 			// });
 		}
 	}
-}
+}*/

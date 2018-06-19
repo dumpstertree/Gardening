@@ -8,6 +8,7 @@ namespace Eden.UI {
 
 		Context IContextDelgate.GetContext ( string forContextIdentifier ) {
 
+			print( forContextIdentifier );
 			switch ( forContextIdentifier ) {
 				
 				case EdensGarden.Constants.UIContexts.None: 
@@ -36,6 +37,10 @@ namespace Eden.UI {
 		// ******************* Context *******************
 
 		private Context GetPlayerContext () {
+
+			print( _quickslotPanel  );
+			print(_menuButtonsPanel );
+
 			return new InteractiveContext( 
 				
 				EdensGarden.Constants.UIContexts.Player, 
@@ -97,7 +102,7 @@ namespace Eden.UI {
 		private InteractivePanel ConditionForCanvas ( InteractivePanel panel ) {
 
 			panel.transform.SetParent( _canvas.transform, false );
-			return panel;
+			return panel; 
 		}		
 	}
 }

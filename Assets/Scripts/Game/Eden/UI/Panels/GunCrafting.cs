@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEngine.UI;
 using Dumpster.Core.BuiltInModules.UI;
 
@@ -41,9 +41,9 @@ namespace Eden.UI.Panels {
 		[SerializeField] private UI.Subpanels.GunCrafting.GunParts _gunPartsSubpanel;
 
 		private InventoryItem _itemBeingEdited;
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
-		}
+		//private Player _player {
+		//	get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		//}
 
 		// ************************************
 
@@ -98,5 +98,4 @@ namespace Eden.UI.Panels {
 		}
 	}
 }
-
-
+*/

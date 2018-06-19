@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using UnityEngine;
 using Eden.UI.Elements.GunCrafting;
 
@@ -143,8 +143,8 @@ namespace Eden.UI.Subpanels.GunCrafting {
 		private List<Part> _partsOnGraph;
 		private Model.PartGraph _partGraph;
 
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		private Eden.Life.BlackBox _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
 
 		// **********************************
@@ -287,4 +287,4 @@ namespace Eden.UI.Subpanels.GunCrafting {
 
 		void Inject ( UI.Subpanels.GunCrafting.PartGraph subpanel );
 	}
-}
+}*/

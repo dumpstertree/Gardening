@@ -1,18 +1,16 @@
-﻿namespace Eden.Cameras {
+﻿using UnityEngine;
+namespace Eden.Cameras {
 
 	public class ShoulderCamQuickslotLink : Dumpster.Core.BuiltInModules.ShoulderCameraController {
 
-		private Player _player {
-			get { return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }
-		}
+		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
 		private InventoryItem _item;
 		private void Start () {
 			
-			_player.QuickSlot.OnInputChanged += id => {
+			_blackBox.QuickslotChip.OnInputChanged += index => {
 				
-				var index = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( id );
-				var item = _player.QuickslotInventory.GetInventoryItem( index );
+				var item = _blackBox.EquipedItems.GetInventoryItem( index );
 
 				if ( item != null ) {
 					if ( _item == null ) {

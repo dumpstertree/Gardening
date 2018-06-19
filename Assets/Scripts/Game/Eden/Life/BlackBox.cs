@@ -19,6 +19,9 @@ namespace Eden.Life {
 		public QuickSlotChip QuickslotChip {
 			get { return _quickslotChip; }
 		}
+		public Inventory Inventory {
+			get{ return _inventory; }
+		}
 		public Inventory EquipedItems {
 			get{ return _equipedItems; }
 		}

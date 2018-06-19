@@ -7,8 +7,8 @@ namespace Eden.UI.Panels {
 	
 	public class InventoryUISub1 : InventoryUI1 {
 
-		private Player _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Player>(); }		
+		private Eden.Life.BlackBox _player {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
 		
 		[SerializeField] private GridLayoutGroup _layoutGroup;
