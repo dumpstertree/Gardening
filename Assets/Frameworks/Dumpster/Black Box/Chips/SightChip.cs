@@ -10,19 +10,19 @@ namespace Dumpster.Core.Life {
 
 		private const float LOOK_DISTANCE = 10f;
 
-		public List<Eden.Life.Brain.BlackBoxBrain> LookForTargets () {
+		public List<Eden.Life.BlackBox> LookForTargets () {
 		
 			RaycastHit hit;
 
 			if ( UnityEngine.Physics.Raycast( _eyeProjector.position, _eyeProjector.forward, out hit, LOOK_DISTANCE, _lookingFor )) {
 					
-				var c = hit.collider.GetComponents<Eden.Life.Brain.BlackBoxBrain>();	
+				var c = hit.collider.GetComponents<Eden.Life.BlackBox>();	
 				if ( c != null ) {
-					return new List<Eden.Life.Brain.BlackBoxBrain>( c );	
+					return new List<Eden.Life.BlackBox>( c );	
 				}
 			}
 
-			return new List<Eden.Life.Brain.BlackBoxBrain>();
+			return new List<Eden.Life.BlackBox>();
   		}
   		
   		private void OnDrawGizmos () {

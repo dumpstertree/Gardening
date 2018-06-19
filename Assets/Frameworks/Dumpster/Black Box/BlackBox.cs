@@ -10,6 +10,13 @@ namespace Dumpster.Core.Life {
 		public delegate void RunEvent();
 		public RunEvent OnRun;
 
+		public delegate void StartupEvent();
+		public StartupEvent OnStartup;
+
+		public delegate void ShutdownEvent();
+		public ShutdownEvent OnShutDown;
+
+
 		public T Visual {
 			get{ return GetVisual(); }
 		}
@@ -48,6 +55,19 @@ namespace Dumpster.Core.Life {
 				OnRun ();
 			}
 		}
+		private void FireShutdownEvent() {
+
+			if ( OnShutDown != null ) {
+				OnShutDown ();
+			}
+		}
+
+		private void FireStartupEvent () {
+			
+			if ( OnStartup != null ) {
+				OnStartup ();
+			}
+		}
 
 
 		// **************** Virtual ********************
@@ -67,10 +87,14 @@ namespace Dumpster.Core.Life {
 		protected virtual void Shutdown () {
 
 			_isPowered = false;
+
+			FireShutdownEvent();
 		}
 		protected virtual void Reboot () {
 
 			_isPowered = true;
+
+			FireStartupEvent();
 		}		
 		protected virtual bool CanThink () {
 			return ( _animator != null && _animator.tag != "RestrictInput" || _animator == null );

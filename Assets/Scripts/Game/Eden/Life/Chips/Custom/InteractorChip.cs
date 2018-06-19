@@ -7,7 +7,7 @@ namespace Eden.Life.Chip {
 	[RequireComponent( typeof( Collider ) )]
 	public class InteractorChip : MonoBehaviour {
 		
-		[SerializeField] private Eden.Life.Brain.BlackBoxBrain _blackBox;
+		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
 		private List<Eden.Interactable.InteractableObject> _interactableObjectStack;
 		private InventoryItem _currentItem;
@@ -35,7 +35,9 @@ namespace Eden.Life.Chip {
 			}
 		}
 
-		private void OnItemChanged ( QuickSlotInventory.ID id ) {
+		private void OnItemChanged ( int index ) {
+
+			_currentItem = _blackBox.EquipedItems.GetInventoryItem( index );
 		}
 		private void OnTriggerEnter ( Collider collider ) {
 		

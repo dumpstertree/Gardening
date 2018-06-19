@@ -2,9 +2,9 @@
 using Eden.Life.Chip;
 using Dumpster.Core.Life;
 
-namespace Eden.Life.Brain {
+namespace Eden.Life {
 	
-	public class BlackBoxBrain : Dumpster.Core.Life.BlackBox<Model2.Life.Visual> {
+	public class BlackBox : Dumpster.Core.Life.BlackBox<Model2.Life.Visual> {
 			
 		public Transform ProjectileSpawner {
 			get{ return _projectileSpawner; }
@@ -39,7 +39,12 @@ namespace Eden.Life.Brain {
 
 		[Header( "Misc" )]
 		[SerializeField] private Dumpster.Physics.Controller _physics;
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemTemp;
+
+		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemCenter;
+		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemTop;
+		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemBottom;
+		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemLeft;
+		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemRight;
 
 
 		[Header( "Spawners" )]
@@ -73,7 +78,12 @@ namespace Eden.Life.Brain {
 		private void BuildEquipedItems () {
 
 			_equipedItems = new Inventory( INVENTORY_ITEMS_COUNT );
-			_equipedItems.AddInventoryItem( _equippedItemTemp.GetInstance( 1 ) );
+			
+			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.GetInstance( 0 ) ); }
+			if( _equippedItemTop != null ) { _equipedItems.AddInventoryItem( _equippedItemTop.GetInstance( 1 ) ); }
+			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.GetInstance( 2 ) ); }
+			if( _equippedItemLeft != null ) { _equipedItems.AddInventoryItem( _equippedItemLeft.GetInstance( 3 ) ); }
+			if( _equippedItemRight != null ) { _equipedItems.AddInventoryItem( _equippedItemRight.GetInstance( 4 ) ); }
 		}
 
 

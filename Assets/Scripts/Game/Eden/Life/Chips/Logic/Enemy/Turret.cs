@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Eden.Life.Chip.Logic {
+namespace Eden.Life.Chips.Logic {
 		
 	public class Turret : Dumpster.Core.Life.LogicChip {
 
@@ -10,9 +10,9 @@ namespace Eden.Life.Chip.Logic {
 			Attacking
 		}
 
-		[SerializeField] private Eden.Life.Brain.BlackBoxBrain _blackBox;
+		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
-		private Eden.Life.Brain.BlackBoxBrain _target;
+		private Eden.Life.BlackBox _target;
 		private State _state;
 
 		[SerializeField] private Transform _hook;

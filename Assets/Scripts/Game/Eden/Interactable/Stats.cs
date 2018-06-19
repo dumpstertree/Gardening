@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Eden.Life.Brain;
+using Eden.Life;
 
 namespace Eden.Interactable {
 	
@@ -53,7 +53,7 @@ namespace Eden.Interactable {
 
 			_hitable.OnHit += HandleOnHit;
 		}
-		private void HandleOnHit( BlackBoxBrain user, HitData data ) {
+		private void HandleOnHit( BlackBox user, HitData data ) {
 
 			RemoveHealth( 1 );
 		}

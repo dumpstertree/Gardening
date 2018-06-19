@@ -111,7 +111,7 @@ public class InventoryItem {
 
 	// ********************************************
 
-	public void Use ( Eden.Life.Brain.BlackBoxBrain user, Eden.Interactable.InteractableObject interactable , Action onComplete ) {
+	public void Use ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable , Action onComplete ) {
 
 		// Play animation
 		// switch ( _animation.Trigger ) {
@@ -168,21 +168,21 @@ public class InventoryItem {
 
 	// ******************* Private  *************************
 	
-	private void Interact ( Eden.Life.Brain.BlackBoxBrain user, Action onComplete ) {
+	private void Interact ( Eden.Life.BlackBox user, Action onComplete ) {
 
 		// _interactor.Interact( user, this );
 		// if ( onComplete != null ) { onComplete(); }
 	}
-	private void Shoot ( Eden.Life.Brain.BlackBoxBrain user, Action onComplete ) {
+	private void Shoot ( Eden.Life.BlackBox user, Action onComplete ) {
 		
 		_shootData.Fire( user );
  		if ( onComplete != null ) { onComplete(); }
 	}
-	private void Swing ( Eden.Life.Brain.BlackBoxBrain user, Action onComplete ) {
+	private void Swing ( Eden.Life.BlackBox user, Action onComplete ) {
 	}
-	private void Place ( Eden.Life.Brain.BlackBoxBrain user, Action onComplete ) {
+	private void Place ( Eden.Life.BlackBox user, Action onComplete ) {
 	}
-	private void Plant ( Eden.Life.Brain.BlackBoxBrain user, Action onComplete  ) {
+	private void Plant ( Eden.Life.BlackBox user, Action onComplete  ) {
 	}
 
 	

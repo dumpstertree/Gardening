@@ -9,87 +9,69 @@ namespace Eden.Life.Chip {
 
 		// ***************** PUBLIC *******************
 
-		public delegate void OnInputChangedEvent( QuickSlotInventory.ID newId );
+		public delegate void OnInputChangedEvent( int index );
 		public OnInputChangedEvent OnInputChanged;
 
 		
 		// ***************** PRIVATE *******************
 
-		private const KeyCode _topKey    = KeyCode.I;
-		private const KeyCode _rightKey  = KeyCode.L;
-		private const KeyCode _bottomKey = KeyCode.K;
-		private const KeyCode _leftKey   = KeyCode.J;
+		private const int CENTER_INDEX = 0;
+		private const int TOP_INDEX    = 1;
+		private const int RIGHT_INDEX  = 2;
+		private const int BOTTOM_INDEX = 3;
+		private const int LEFT_INDEX   = 4;
 
-		private List<KeyCode> _inputStack;
-		private QuickSlotInventory.ID _id;
+		private List<int> _inputStack;
+		private int _index;
 
 
 		// ********************** Private  ************************
 
 		private void Awake () {
 			
-			_inputStack = new List<KeyCode>();
+			_inputStack = new List<int>();
 			_player.OnRecieveInput += RecieveInput;
 		}
 		private void RecieveInput( Input.Package package ) {
 
-			if ( package.Dpad.Up_Down )    { AddInput( _topKey ); }
-			if ( package.Dpad.Right_Down ) { AddInput( _rightKey );}
-			if ( package.Dpad.Down_Down )  { AddInput( _bottomKey ); }
-			if ( package.Dpad.Left_Down )  { AddInput( _leftKey ); }
+			if ( package.Dpad.Up_Down )    { AddInput( TOP_INDEX ); }
+			if ( package.Dpad.Right_Down ) { AddInput( RIGHT_INDEX );}
+			if ( package.Dpad.Down_Down )  { AddInput( BOTTOM_INDEX ); }
+			if ( package.Dpad.Left_Down )  { AddInput( LEFT_INDEX ); }
 
-			if ( package.Dpad.Up_Up )    { RemoveInput( _topKey ); }
-			if ( package.Dpad.Right_Up ) { RemoveInput( _rightKey ); }
-			if ( package.Dpad.Down_Up )  { RemoveInput( _bottomKey ); }
-			if ( package.Dpad.Left_Up )  { RemoveInput( _leftKey ); }
+			if ( package.Dpad.Up_Up )    { RemoveInput( TOP_INDEX ); }
+			if ( package.Dpad.Right_Up ) { RemoveInput( RIGHT_INDEX ); }
+			if ( package.Dpad.Down_Up )  { RemoveInput( BOTTOM_INDEX ); }
+			if ( package.Dpad.Left_Up )  { RemoveInput( LEFT_INDEX ); }
 
-			var newID = GetID();
-			if ( _id != newID ){
+			var newIndex = GetID();
+			if ( _index != newIndex ){
 
-				_id = newID;
-				FireOnInputChange( _id );
+				_index = newIndex;
+				FireOnInputChange( newIndex );
 			}
 		}
-		private void AddInput ( KeyCode key ) {
+		private void AddInput ( int index ) {
 
-			if ( !_inputStack.Contains( key ) ){
-				_inputStack.Add( key );
+			if ( !_inputStack.Contains( index ) ){
+				_inputStack.Add( index );
 			}
 		}
-		private void RemoveInput ( KeyCode key ) {
+		private void RemoveInput ( int index ) {
 
-			if ( _inputStack.Contains( key ) ){
-				_inputStack.Remove( key );
+			if ( _inputStack.Contains( index ) ){
+				_inputStack.Remove( index );
 			}
 		}
-		private void FireOnInputChange ( QuickSlotInventory.ID id  ) {
+		private void FireOnInputChange ( int index  ) {
 
 			if (OnInputChanged != null){
-				print( id );
-				OnInputChanged( id );  
+				OnInputChanged( index );  
 			}
 		}
-		private QuickSlotInventory.ID GetID () {
+		private int GetID () {
 
-			if ( _inputStack.Count != 0 ){
-				
-				var input = _inputStack[ _inputStack.Count-1 ];
-
-				if ( input == _topKey ){
-					return QuickSlotInventory.ID.Top;
-				}
-				if ( input == _rightKey ){
-					return QuickSlotInventory.ID.Right;
-				}
-				if ( input == _bottomKey ){
-					return QuickSlotInventory.ID.Bottom;
-				}
-				if ( input == _leftKey ){
-					return QuickSlotInventory.ID.Left;
-				}
-			}
-
-			return QuickSlotInventory.ID.Center;
+			return ( _inputStack.Count != 0 ) ? _inputStack[ _inputStack.Count-1 ] : CENTER_INDEX;
 		}
 	}
 }

@@ -60,7 +60,7 @@ namespace Controller.Item {
 				EdensGarden.Instance.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
 			}
 		}
-		public void Fire ( Eden.Life.Brain.BlackBoxBrain user ) {
+		public void Fire ( Eden.Life.BlackBox user ) {
 
 			Debug.Log( "try to fire" );
 			// if trying to fire and no bullets reload
@@ -105,7 +105,7 @@ namespace Controller.Item {
 
 		private GameObject _bulletPrefab; // this should be moved to be pulled from the gun
 
-		private void CreateBullet ( Eden.Life.Brain.BlackBoxBrain user ) {
+		private void CreateBullet ( Eden.Life.BlackBox user ) {
 
 			var go = GameObject.Instantiate( _bulletPrefab );
 			var bulletSpread = 0;

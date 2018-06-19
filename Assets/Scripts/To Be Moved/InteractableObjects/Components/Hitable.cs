@@ -8,7 +8,7 @@ namespace Interactable.Component {
 
 		// ***************** PUBLIC *******************
 
-		public void Hit( Eden.Life.Brain.BlackBoxBrain user, HitData data ){
+		public void Hit( Eden.Life.BlackBox user, HitData data ){
 			
 			EdensGarden.Instance.Effects.OneShot( ParticleType.Hit, transform.position, transform.rotation );
 			_health.RemoveHealth( data.Power );

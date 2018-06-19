@@ -2,7 +2,7 @@
 
 namespace Eden.Life.BlackBoxes {
 
-	public class Player : Eden.Life.Brain.BlackBoxBrain, IInputReciever<Input.Package> {
+	public class Player : Eden.Life.BlackBox, IInputReciever<Input.Package> {
 
 
 		// *************** Public ******************
@@ -29,6 +29,13 @@ namespace Eden.Life.BlackBoxes {
 
 
 		// *************** Override ******************
+		protected override void Shutdown () {
+
+			// Clear all current input
+			FireRecieveInputEvent( new Input.Package() );
+
+			base.Shutdown ();
+		}
 		
 		protected override void Init () {
 			
