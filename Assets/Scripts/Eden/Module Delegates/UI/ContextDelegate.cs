@@ -8,7 +8,6 @@ namespace Eden.UI {
 
 		Context IContextDelgate.GetContext ( string forContextIdentifier ) {
 
-			print( forContextIdentifier );
 			switch ( forContextIdentifier ) {
 				
 				case EdensGarden.Constants.UIContexts.None: 
@@ -47,10 +46,10 @@ namespace Eden.UI {
 				EdensGarden.Constants.InputLayers.Player, 
 				
 				new List<InteractivePanel>{
-					ConditionForCanvas( _quickslotPanel ) 
 				}, 
 				new List<Panel>{ 
-					ConditionForCanvas( _menuButtonsPanel ) 
+					ConditionForCanvas( _menuButtonsPanel ),
+					ConditionForCanvas( _quickslotPanel ) 
 				}
 			);
 		}
@@ -77,6 +76,9 @@ namespace Eden.UI {
 		private Panel _menuButtonsPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "MenuButtonsUIPanel" ) ).GetComponent<Panel>();  }
 		}
+		private Panel _quickslotPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "QuickslotUIPanel" ) ).GetComponent<Panel>(); }
+		}
 		
 		
 
@@ -85,9 +87,7 @@ namespace Eden.UI {
 		private InteractivePanel _inventoryPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "InventoryUIPanel" ) ).GetComponent<InteractivePanel>(); }
 		}
-		private InteractivePanel _quickslotPanel {
-			get { return GameObject.Instantiate( Resources.Load<GameObject>( "QuickslotUIPanel" ) ).GetComponent<InteractivePanel>(); }
-		}
+		
 
 
 		// ******************* Private *******************

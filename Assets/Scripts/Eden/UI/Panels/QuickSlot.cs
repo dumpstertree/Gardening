@@ -1,97 +1,101 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Eden.UI.Panels {
 	
-	public class QuickSlot: InventoryUI1 {
+	public class QuickSlot: Dumpster.Core.BuiltInModules.UI.Panel {
 
-		// [Header( "Selection Asset" )]
-		// [SerializeField] private Image _selection;
+		[SerializeField] private ItemBubbleUI _itemPrefab;
+		[SerializeField] private RectTransform _content;
+		[SerializeField] private List<ItemBubbleUI> _itemInstances;
 
-		// [Header( "Slot Positions" )]
-		// [SerializeField] private ItemBubbleUI _topItem;
-		// [SerializeField] private ItemBubbleUI _rightItem;
-		// [SerializeField] private ItemBubbleUI _bottomItem;
-		// [SerializeField] private ItemBubbleUI _leftItem;
-		// [SerializeField] private ItemBubbleUI _centerItem;
+		[SerializeField] private float _animationDuration = 0.5f;
+		[SerializeField] private float _xSpacing= 50;
+		[SerializeField] private int _numVisibleItems = 3;
 
-		// private QuickSlotInventory.ID _id;
-
-		// private Eden.Life.BlackBox _player {
-		// 	get { 
-		// 		return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
-		// 	}		
-		// }
-		
-		
-		// // ******************* Panel Events *************
-
-		// protected override void OnInit () {
-			
-		// 	base.OnInit ();
-			
-		// 	_player.QuickSlot.OnInputChanged += ( newID ) => {
-		// 		_id = newID;
-		// 	};
-		// }
-		
-
-		// **************** Inventory ****************
-
-		protected override Inventory GetInventory () {
-			
-			return null;
-
-			//return _player.QuickslotInventory;
+		private Eden.Life.BlackBox _blackBox {
+			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }
 		}
-		protected override ItemBubbleUI[] GetItemBubbles () {
 
-			return null;
+		//***************** Override **********************
 
-			// var itemBubbles = new ItemBubbleUI[ _player.QuickslotInventory.InventoryCount ];
+		protected override void OnInit () {
 
-			// _topItem.Index    = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Top );
-			// _rightItem.Index  = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Right );
-			// _bottomItem.Index = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Bottom );
-			// _leftItem.Index   = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Left );
-			// _centerItem.Index = _player.QuickslotInventory.ConvertQuickSlotIDToIndex( QuickSlotInventory.ID.Center );
+			base.OnInit ();
 
-			// itemBubbles[ _topItem.Index ]    = _topItem;
-			// itemBubbles[ _rightItem.Index ]  = _rightItem;
-			// itemBubbles[ _bottomItem.Index ] = _bottomItem;
-			// itemBubbles[ _leftItem.Index ]   = _leftItem;
-			// itemBubbles[ _centerItem.Index ] = _centerItem;
+			_itemInstances = new List<ItemBubbleUI>();
+		}
+		protected override void OnPresent () {
+			
+			base.OnPresent ();
 
-			// return itemBubbles;
+			_blackBox.QuickslotChip.OnIndexChanged += index => { SetIndex( index, false ); };
+
+			Clear ();
+			Reload ();
+			SetIndex( _blackBox.QuickslotChip.Index, true ); 
+		}
+		protected override void OnDismiss () {
+			
+			_blackBox.QuickslotChip.OnIndexChanged -= index => { SetIndex( index, false ); };
+
+			base.OnDismiss ();
 		}
 
 
-		// ****************** Private **************
+		//***************** Private **********************
+		
+		private void Clear () {
 
-		// private void Update () {
+			for ( int i=0; i<_itemInstances.Count; i++ ) {
+				Destroy( _itemInstances[ 0 ] );
+				_itemInstances.RemoveAt( 0 );
+			}
+		}
+		private void Reload () {
 
-		// 	switch( _id ) {
-				
-		// 		case QuickSlotInventory.ID.Top:
-		// 			_selection.transform.position = Vector3.Lerp( _selection.transform.position, _topItem.transform.position, 0.5f );
-		// 			break;
-				
-		// 		case QuickSlotInventory.ID.Right:
-		// 			_selection.transform.position = Vector3.Lerp( _selection.transform.position, _rightItem.transform.position, 0.5f );
-		// 			break;
-				
-		// 		case QuickSlotInventory.ID.Bottom:
-		// 			_selection.transform.position = Vector3.Lerp( _selection.transform.position, _bottomItem.transform.position, 0.5f );
-		// 			break;
-				
-		// 		case QuickSlotInventory.ID.Left:
-		// 			_selection.transform.position = Vector3.Lerp( _selection.transform.position, _leftItem.transform.position, 0.5f );
-		// 			break;
-				
-		// 		case QuickSlotInventory.ID.Center:
-		// 			_selection.transform.position = Vector3.Lerp( _selection.transform.position, _centerItem.transform.position, 0.5f );
-		// 			break;
-		// 	}
-		// }
+			for ( int i =1; i<_blackBox.EquipedItems.InventoryCount; i++ ) {
+				CreateItem ( _blackBox.EquipedItems.GetInventoryItem( i ) );
+			}
+		}
+		private void CreateItem ( InventoryItem item ) {
+
+			var inst = Instantiate( _itemPrefab );
+			inst.transform.SetParent( _content );
+			inst.SetItem( item );
+
+			_itemInstances.Add( inst );
+		}
+		private void SetIndex ( int index, bool instant ) {
+
+			StopAllCoroutines();
+
+			for ( int i=0; i< _itemInstances.Count; i++ ){
+
+				var item = _itemInstances[ i ];
+				var dif = index - i - 1;
+
+				var pos = new Vector3( -_xSpacing * dif, 0, 0 );
+				var scale = ( Mathf.Abs(dif) > _numVisibleItems/2 ) ? 0f : 1f;
+
+				StartCoroutine( Animate( item.gameObject,  pos, new Vector3( scale, scale, scale ) ) );
+			}
+		}
+		private IEnumerator Animate ( GameObject go, Vector3 targetPos, Vector3 targetScale ) {
+
+			var startPos = go.transform.localPosition;
+			var startScale = go.transform.localScale;
+
+			for ( float t=0f; t<_animationDuration; t+= Time.deltaTime ) {
+				var frac = t/_animationDuration;
+				go.transform.localPosition = Vector3.Lerp( startPos, targetPos, frac );
+				go.transform.localScale = Vector3.Lerp( startScale, targetScale, frac );
+				yield return null;
+			}
+			
+			go.transform.localPosition = targetPos;
+			go.transform.localScale = targetScale;
+		}	
 	}
 }

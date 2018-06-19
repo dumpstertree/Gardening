@@ -8,8 +8,15 @@ namespace Eden.Life.Chip {
 
 		// ***************** PUBLIC *******************
 
-		public delegate void OnInputChangedEvent( int index );
-		public OnInputChangedEvent OnInputChanged;
+		public delegate void InputChangedEvent( int index );
+		public InputChangedEvent OnInputChanged;
+
+		public delegate void IndexChangedEvent( int index );
+		public IndexChangedEvent OnIndexChanged;
+
+		public int Index {
+			get{ return _index; }
+		}
 
 		
 		// ***************** PRIVATE *******************
@@ -56,6 +63,8 @@ namespace Eden.Life.Chip {
 			_index -= 1;
 			WrapIndex();
 
+			FireIndexChangedEvent ( _index );
+
 			if( _equipIsDown ) {
 				FireOnInputChange( _index );
 			}
@@ -65,23 +74,35 @@ namespace Eden.Life.Chip {
 			_index += 1;
 			WrapIndex();
 
+			FireIndexChangedEvent ( _index );
+
 			if( _equipIsDown ) {
 				FireOnInputChange( _index );
 			}
 		}
 		private void WrapIndex () {
 
-			if( _index <= 0) {
-				_index = _numOfItems - 1;
-			}
-			if( _index >= _numOfItems) {
-				_index = 1;
-			}
+			_index = Mathf.Clamp( _index, 1, _numOfItems - 1 );
+
+			// eventauly this should wrap probably
+
+			// if( _index <= 0) {
+			// 	_index = _numOfItems - 1;
+			// }
+			// if( _index >= _numOfItems) {
+			// 	_index = 1;
+			// }
 		}
 		private void FireOnInputChange ( int index  ) {
 
 			if (OnInputChanged != null){
 				OnInputChanged( index );  
+			}
+		}
+		private void FireIndexChangedEvent ( int index  ) {
+
+			if (OnIndexChanged != null){
+				OnIndexChanged( index );  
 			}
 		}
 	}
