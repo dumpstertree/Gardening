@@ -26,7 +26,6 @@ public class Slash : MonoBehaviour {
   		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
 			
 			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
-			Debug.Log( interactable, interactable.gameObject );
 
 			if ( interactable && interactable.Hitable ){
 				interactable.HitDelegate.Hit( _attacker, _hitData );

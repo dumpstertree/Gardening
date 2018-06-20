@@ -21,12 +21,12 @@ public class GunRef {
 	
 	// ************ PUBLIC *****************
 
- 	public Model.Gun Gun {
- 		get{ return _gun; }
- 	}
+ 	//public Model.Gun Gun {
+ 	//	get{ return _gun; }
+ 	//}
 
  	// *********** PRIVATE *****************
 
- 	private Model.Gun _gun;
+ 	//private Model.Gun _gun;
 
 }

@@ -16,7 +16,6 @@ namespace Eden.Life.Chips.Logic {
 		private float _cameraHorizontal;
 		private float _cameraVertical;
 		private bool _jump;
-		private InventoryItem _item;
 
 		private const float RAYCAST_INSET = 0.01f;
 		private const float RAYCAST_DISTANCE = 0.1f;
@@ -60,8 +59,6 @@ namespace Eden.Life.Chips.Logic {
 			} else {
 				_cameraType = CameraType.Passive;
 			}
-
-			_item = item;
 		}
 		
 

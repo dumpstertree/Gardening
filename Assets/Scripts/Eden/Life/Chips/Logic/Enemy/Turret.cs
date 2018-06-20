@@ -5,15 +5,10 @@ namespace Eden.Life.Chips.Logic {
 		
 	public class Turret : Dumpster.Core.Life.LogicChip {
 
-		private enum State {
-			Searching,
-			Attacking
-		}
 
 		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
 		private Eden.Life.BlackBox _target;
-		private State _state;
 
 		[SerializeField] private Transform _hook;
 		[SerializeField] private Transform _turret;
@@ -42,10 +37,7 @@ namespace Eden.Life.Chips.Logic {
 
 			if ( targets.Count > 0 ) {
 				_target = targets[ 0 ];
-				_state = State.Attacking;
-			} else {
-				_state = State.Searching;
-			}
+			} 
 		}
 	}
 }

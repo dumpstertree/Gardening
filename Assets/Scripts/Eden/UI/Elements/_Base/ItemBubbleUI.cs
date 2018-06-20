@@ -14,7 +14,7 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		set { _index = value; }
 	}
  	public void SetItem ( InventoryItem item ) {
- 		_item = item;
+
 		if (item == null){
 			SetUnfilledSlot();
 		}
@@ -76,7 +76,6 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	private Animator _animator;
 	private int _index = -1;
-	private InventoryItem _item;
 
 	private void Awake () {
 	

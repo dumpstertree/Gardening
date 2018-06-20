@@ -32,8 +32,6 @@ namespace Controller.Item {
 		}
 
 		public void Reload () {
-			
-			Debug.Log( "reload" );
 
 			if ( !_reloading ) {
 
@@ -56,14 +54,12 @@ namespace Controller.Item {
 					Debug.Log( Gun.WeaponStats.ClipSize );
 					_reloading = false;
 				};
-
-				Debug.Log( "waiting for " + reloadTime );
+					
 				EdensGarden.Instance.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
 			}
 		}
 		public void Fire ( Eden.Life.BlackBox user ) {
-
-			Debug.Log( "try to fire" );
+			
 			// if trying to fire and no bullets reload
 			if ( _availableBullets <= 0 ) {
 				
@@ -73,8 +69,6 @@ namespace Controller.Item {
 
 			// if not already firing start
 			if ( !_firing ) {
-
-				Debug.Log( "fire" );
 
 				var fireRate = 1f / Gun.WeaponStats.FireRate;
 				var numOfBullets = Gun.WeaponStats.NumberOfBullets;

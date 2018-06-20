@@ -16,9 +16,9 @@ namespace Eden.Life.Chip {
 		private void Start () {
 
 			_interactableObjectStack = new List<Eden.Interactable.InteractableObject>();
-			_blackBox.QuickslotChip.OnInputChanged += OnItemChanged;
+			if( _blackBox.QuickslotChip ) _blackBox.QuickslotChip.OnInputChanged += OnItemChanged;
 
-			_currentItem = _blackBox.EquipedItems.GetInventoryItem( 0 ); // TODO this is placeholder
+			_currentItem = _blackBox.EquipedItems.GetInventoryItem( 0 ); // TODO this is placeholder 
 		}
 		public void Use () {
 
@@ -59,11 +59,7 @@ namespace Eden.Life.Chip {
 			if ( inventoryItem.CanShoot || inventoryItem.CanHit ){
 				return true;
 			}
-
-			if ( inventoryItem.CanPlace && interactableItem == null ){
-				return true;
-			}
-
+				
 			if ( inventoryItem != null && interactableItem != null ){
 
 

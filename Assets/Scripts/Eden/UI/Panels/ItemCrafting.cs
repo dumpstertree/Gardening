@@ -33,7 +33,7 @@ namespace Eden.UI.Panels {
 		private const float COMPONENT_PADDING = 25;
 		private const int COMPONENT_COLLUMNS = 3;
 
-		private Crafting.Recipe _recipe;
+		//private Crafting.Recipe _recipe;
 		private Inventory _craftingSlots = new Inventory( CRAFTING_SLOTS + NUM_OF_CUSTOM_SLOTS);
 
 		// ***************************************
@@ -118,7 +118,7 @@ namespace Eden.UI.Panels {
 		}
 		private void Craft () {
 			
-			_craftingSlots.SetInventoryItem( CRAFTED_SLOT_INDEX, _recipe.OutputObject );
+//			_craftingSlots.SetInventoryItem( CRAFTED_SLOT_INDEX, _recipe.OutputObject );
 		}
 
 		// ***************************************

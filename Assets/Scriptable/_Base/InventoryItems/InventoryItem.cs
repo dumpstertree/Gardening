@@ -26,7 +26,7 @@ public class InventoryItem {
 		_count = count;
 		_displayName = displayName;
 		_maxCount = maxCount;
-		_animation = animation;
+		//_animation = animation;
 		_sprite = sprite;
 		_holdItem = holdItem;
 		_expendable = expendable;
@@ -79,14 +79,11 @@ public class InventoryItem {
 	public bool CanInteract {
 		get { return _canInteract; }
 	}
-	public bool CanPlace {
-		get { return _canPlace; }
-	}
 	public bool CanHit {
 		get { return _canHit; }
 	}
 	public bool CanPlant {
-		get { return _canPlant; }
+		get { return false; }
 	}
 
 
@@ -100,7 +97,7 @@ public class InventoryItem {
 	private Sprite _sprite;
 	private GameObject _holdItem;
 	private bool _expendable;
-	private Model.Template.ItemAnimation _animation;
+//	private Model.Template.ItemAnimation _animation;
 
 	public Controller.Item.ShootData _shootData;
 	public Controller.Item.InteractData _interactor;
@@ -108,9 +105,9 @@ public class InventoryItem {
 
 	private bool _canShoot;
 	private bool _canInteract;
-	private bool _canPlace;
+	//private bool _canPlace;
 	private bool _canHit;
-	private bool _canPlant;
+	//private bool _canPlant;
 
 
 	// ********************************************
@@ -128,8 +125,6 @@ public class InventoryItem {
 		// 		user.Body.Animator.SetTrigger( "" );
 		// 		break;
 		// }
-
-		Debug.Log( "use" );
 
 		// Use
 		if ( _canInteract && interactable != null && interactable.Interactable ) { 

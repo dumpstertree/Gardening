@@ -37,9 +37,6 @@ namespace Eden.UI {
 
 		private Context GetPlayerContext () {
 
-			print( _quickslotPanel  );
-			print(_menuButtonsPanel );
-
 			return new InteractiveContext( 
 				
 				EdensGarden.Constants.UIContexts.Player, 
