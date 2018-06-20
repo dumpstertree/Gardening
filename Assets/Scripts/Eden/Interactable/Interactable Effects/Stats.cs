@@ -15,6 +15,9 @@ namespace Eden.Interactable {
 		public int CurrentHealth {
 			get{ return _currentHealth; }
 		}
+		public int MaxHealth {
+			get{ return _maxHealth; }
+		}
 		public void AddHealth( int amount ) {
 			OnSetHealth( _currentHealth + amount );
 		}
