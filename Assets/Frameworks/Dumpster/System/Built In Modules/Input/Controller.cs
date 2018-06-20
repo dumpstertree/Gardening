@@ -8,7 +8,7 @@ namespace Dumpster.Core.BuiltInModules.Input {
 		
 		public void RegisterToInputLayer( string identifier, IInputReciever<T> reciever ) {
 
-			Layer<T>  layer;
+			Layer<T> layer;
 
 			if ( _registeredLayers.ContainsKey( identifier ) ) {
 				layer = _registeredLayers[ identifier ];
@@ -18,6 +18,13 @@ namespace Dumpster.Core.BuiltInModules.Input {
 			}
 
 			layer.AddToLayer( reciever );
+		}
+		public void DeregisterFromInputLayer( string identifier, IInputReciever<T> reciever ) {
+
+			if ( _registeredLayers.ContainsKey( identifier ) ) {
+				var layer = _registeredLayers[ identifier ];
+				layer.RemoveFromLayer( reciever );
+			}
 		}
 		public void RequestInput( string identifier ) {
 
@@ -58,6 +65,8 @@ namespace Dumpster.Core.BuiltInModules.Input {
 					EnterFocus();
 				}
 			}
+
+
 		}
 
 

@@ -1,36 +1,53 @@
 ﻿using UnityEngine;
 using UI.Subpanels.Dialog;
-using Dumpster.Core.BuiltInModules.UI;
 
 namespace Eden.UI.Panels {
 	
-	public class Dialog : Panel {
+	public class Dialog : InteractivePanel {
 
-		private void OnConfirmUp () {
+		public override void ReciveInput ( Eden.Input.Package package ) {
 
-			if( _sequence != null ) {
+			if ( package.Face.Down_Down ) {
+				Progress ();
+			}
+		}
+		protected override void OnDismiss () {
+
+			base.OnDismiss();
+			Destroy( _presentedDialog.gameObject );
+		}
+
+		private void Progress () {
 			
-				// if is currently presenting, skip presentation
-				if ( _presentedDialog.IsPresenting ) {
-					_presentedDialog.SkipPresenting();
-					return;
-				}
+			// if is currently presenting, skip presentation
+			if ( _presentedDialog.IsPresenting ) {
+				_presentedDialog.SkipPresenting();
+				return;
+			}
 
-				// if the sequence is not done move next, else run on complete
-				if ( !_sequence.isDone ) {
-					Next ( _sequence.Next () );
-				} else {
-					// Exit ();
-				}
+			// if the sequence is not done move next, else run on complete
+			if ( !_sequence.isDone ) {
+				Next ( _sequence.Next () );
+			} else {
+				Exit ();
+			}
+		}
+		private void Exit () {
+
+			EdensGarden.Instance.UI.Dismiss( EdensGarden.Constants.NewUILayers.Foreground, EdensGarden.Constants.UIContexts.Dialog );
+
+			if ( _onExit != null ) {
+				_onExit();
 			}
 		}
 
 
 		// ************ Public **************
 
-		public void PresentDialogSequence ( Model.Dialog.Sequence sequence ) {
-			
+		public void PresentDialogSequence ( Eden.Controller.Dialog.Sequence sequence, System.Action onExit = null ) {
+				
 			_sequence = sequence;
+			_onExit = onExit;
 
 			Next ( _sequence.Next () );
 		}
@@ -46,16 +63,18 @@ namespace Eden.UI.Panels {
 		[Header( "Refrence" )]
 		[SerializeField] private Transform _content;
 
-		private Model.Dialog.Sequence _sequence;
+		private Eden.Controller.Dialog.Sequence _sequence;
+		private System.Action _onExit;
+
 		private DialogBox _presentedDialog;
 
-		private void Next ( Model.Dialog.Sequence.Dialog dialog ) {
+		private void Next ( Model.Dialog.Dialog dialog ) {
 
 			if ( _presentedDialog != null ) {
 				Destroy( _presentedDialog.gameObject );
 			}
 
-			_presentedDialog = GetDialogBox( dialog.Alignment );
+			_presentedDialog = GetDialogBox( dialog.Speaker.Alignment );
 			_presentedDialog.Present( dialog, !_sequence.isDone );
 		}
 		private DialogBox GetDialogBox ( Model.Dialog.PortraitAlignment alignment ) {

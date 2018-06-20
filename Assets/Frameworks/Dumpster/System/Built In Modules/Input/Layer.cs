@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Dumpster.Core.BuiltInModules.Input {
 
@@ -8,25 +6,34 @@ namespace Dumpster.Core.BuiltInModules.Input {
 
 		private List< IInputReciever<T>> _recievers = new List< IInputReciever<T>>();
 
-		public void AddToLayer (  IInputReciever<T> reciever ) {
+		public void AddToLayer(  IInputReciever<T> reciever ) {
 
 			_recievers.Add( reciever );
 		}
+		public void RemoveFromLayer( IInputReciever<T> reciever ){
+
+			if ( _recievers.Contains( reciever ) ) {
+				_recievers.Remove( reciever );
+			}
+		}
 		public void RecieveInput ( T package ){
 			
-			foreach( IInputReciever<T> r in _recievers ){
+			for ( int i=_recievers.Count-1; i>=0; i-- ){
+				var r = _recievers[ i ];
 				r.RecieveInput( package );
 			}
 		}
 		public void EnterFocus () {
 
-			foreach( IInputReciever<T> r in _recievers ){
+			for ( int i=_recievers.Count-1; i>=0; i-- ){
+				var r = _recievers[ i ];
 				r.EnteredInputFocus ();
 			}
 		}
 		public void ExitFocus () {
 
-			foreach( IInputReciever<T> r in _recievers ){
+			for ( int i=_recievers.Count-1; i>=0; i-- ){
+				var r = _recievers[ i ];
 				r.ExitInputFocus ();
 			}
 		}

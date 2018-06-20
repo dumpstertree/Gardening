@@ -28,22 +28,12 @@ namespace Eden.UI {
 			}
 
 			_inputLayer = inputLayer;
-			EdensGarden.Instance.Input.RegisterToInputLayer( inputLayer, this );
-
+			
 			Init ();
 		}
 
-		public class Parent {
-			public Parent ( int value ) {}
-			}
-
-			public class Child : Parent {
-			public Child ( int value ) : base( value ) {}
-		}
 		protected string _inputLayer;
 		protected List<InteractivePanel> _registeredInteractivePanels;
-
-		protected void OnRecieverInput( Eden.Input.Package package ) {}
 		
 		private void Init () {
 			
@@ -66,7 +56,7 @@ namespace Eden.UI {
 			foreach ( Panel p in _registeredInteractivePanels ) {
 				p.Present ();
 			}
-
+			EdensGarden.Instance.Input.RegisterToInputLayer( _inputLayer, this );
 			EdensGarden.Instance.Input.RequestInput( _inputLayer );
 		}
 		public override void Dismiss () {
@@ -78,6 +68,7 @@ namespace Eden.UI {
 			}
 
 			EdensGarden.Instance.Input.RelinquishInput( _inputLayer );
+			EdensGarden.Instance.Input.DeregisterFromInputLayer( _inputLayer, this ); // this should probably be tied to destroy
 		}
 		public override void EnterFocus () {
 
@@ -94,6 +85,16 @@ namespace Eden.UI {
 			foreach ( Panel p in _registeredInteractivePanels ) {
 				p.ExitFocus ();
 			}
+		}
+		public override Panel GetContext( string panelIdentifier ) {
+			
+			foreach ( InteractivePanel p in _registeredInteractivePanels ) {
+				if ( p.name == panelIdentifier ) {
+					return p;
+				}
+			}
+
+			return base.GetContext( panelIdentifier );
 		}
 	}
 }

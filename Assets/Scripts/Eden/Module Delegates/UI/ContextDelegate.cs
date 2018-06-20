@@ -52,7 +52,18 @@ namespace Eden.UI {
 			);
 		}
 		private Context GetDialogContext () {
-			return null;
+			
+			return new InteractiveContext( 
+				
+				EdensGarden.Constants.UIContexts.Dialog, 
+				EdensGarden.Constants.InputLayers.ForegroundUI, 
+				
+				new List<InteractivePanel>{
+					ConditionForCanvas( _dialogPanel )
+				}, 
+				new List<Panel>{ 
+				}
+			);
 		}
 		private Context GetInventoryContext () {
 			return new InteractiveContext( 
@@ -87,6 +98,9 @@ namespace Eden.UI {
 
 		private InteractivePanel _inventoryPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "InventoryUIPanel" ) ).GetComponent<InteractivePanel>(); }
+		}
+		private InteractivePanel _dialogPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "DialogUIPanel" ) ).GetComponent<InteractivePanel>(); }
 		}
 		
 

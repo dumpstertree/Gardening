@@ -16,13 +16,13 @@ namespace Dumpster.Core.BuiltInModules.UI {
 			private get; set;
 		}
 
-		public void Present( int layer, string contextIdentifier ) {
+		public void Present( int layer, string contextIdentifier, System.Action<Context> onComplete = null ) {
 
 			if ( _layers[ layer ] == null ) {
 				_layers[ layer ] = new Layer( ContextDelgate );
 			}
 
-			_layers[ layer ].Present( contextIdentifier );
+			_layers[ layer ].Present( contextIdentifier, onComplete );
 		}
 		public void Dismiss( int layer, string contextIdentifier ) {
 

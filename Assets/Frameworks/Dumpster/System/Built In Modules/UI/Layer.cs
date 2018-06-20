@@ -20,13 +20,18 @@ namespace Dumpster.Core.BuiltInModules.UI {
 		}
 
 	
-		public void Present ( string contextIdentifier ) {
+		public void Present ( string contextIdentifier, System.Action<Context> onComplete = null ) {
 			
 			if ( _layerHistory.Count > 0 ) {
 				_layerHistory[ _layerHistory.Count - 1 ].Dismiss();
 			}
 
 			var context = _contextDelegate.GetContext( contextIdentifier );
+
+			if ( onComplete != null ) {
+				onComplete( context );
+			}
+
 			_layerHistory.Add( context );
 			
 			context.Present();
@@ -45,7 +50,9 @@ namespace Dumpster.Core.BuiltInModules.UI {
 				}
 			}
 
-			_layerHistory[ _layerHistory.Count - 1 ].Present();
+			if( _layerHistory.Count > 0 ) {
+				_layerHistory[ _layerHistory.Count - 1 ].Present();
+			}
 		}
 		public void ChangeFocusLevel( int newLevel )  {
 		}

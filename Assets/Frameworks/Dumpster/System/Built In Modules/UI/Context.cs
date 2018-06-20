@@ -10,6 +10,17 @@ namespace Dumpster.Core.BuiltInModules.UI {
 		}
 		private List<Panel> _registeredPanels;
 
+		public virtual Panel GetContext( string panelIdentifier ) {
+
+			foreach ( Panel p in _registeredPanels ) {
+				if ( p.name == panelIdentifier ) {
+					return p;
+				}
+			}
+
+			return null;
+		}
+
 		public Context ( string contextIdentidier, List<Panel> panels ) {
 			
 			Identifier = contextIdentidier;
@@ -62,5 +73,6 @@ namespace Dumpster.Core.BuiltInModules.UI {
 				p.ExitFocus ();
 			}
 		}
+
 	}
 }

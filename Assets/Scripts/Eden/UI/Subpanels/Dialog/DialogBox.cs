@@ -8,13 +8,13 @@ namespace UI.Subpanels.Dialog {
 
 		// *************** Public ******************
 
-		public void Present ( Model.Dialog.Sequence.Dialog dialog, bool hasNext ) {
+		public void Present ( Model.Dialog.Dialog dialog, bool hasNext ) {
 
 			_dialog = dialog;
 			
-			SetName( dialog.Name );
-			SetColor( dialog.Color );
-			SetPortrait( dialog.Portrait );
+			SetName( dialog.Speaker.name );
+			SetColor( dialog.Speaker.Color );
+			SetPortrait( dialog.Speaker.Portrait );
 			SetHasNextIndicator( hasNext );
 
 			_presentingAnimation = StartCoroutine( Present( dialog.Text ) );
@@ -43,7 +43,7 @@ namespace UI.Subpanels.Dialog {
 
 
 		private Coroutine _presentingAnimation;
-		private Model.Dialog.Sequence.Dialog _dialog;
+		private Model.Dialog.Dialog _dialog;
 
 
 		private void SetName( string name ) {
