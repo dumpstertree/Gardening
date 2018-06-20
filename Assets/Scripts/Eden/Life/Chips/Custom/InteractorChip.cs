@@ -5,6 +5,10 @@ namespace Eden.Life.Chip {
 
 	[RequireComponent( typeof( Collider ) )]
 	public class InteractorChip : MonoBehaviour {
+
+		public Interactable.InteractableObject InteractableObject {
+			get{ return _interactable; }
+		}
 		
 		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
@@ -24,7 +28,7 @@ namespace Eden.Life.Chip {
 
 			// get interactable
 			_interactable = GetInteractableObject();
-
+		
 			// use the item
 			var canUseItem = CanUseItem( _currentItem, _interactable );
 
@@ -39,12 +43,12 @@ namespace Eden.Life.Chip {
 			_currentItem = _blackBox.EquipedItems.GetInventoryItem( index );
 		}
 		private void OnTriggerEnter ( Collider collider ) {
-		
-			_interactableObjectStack.Add( collider.GetComponent<Eden.Interactable.InteractableObject>() );
+			
+			_interactableObjectStack.Add( collider.GetComponentInChildren<Eden.Interactable.InteractableObject>() );
 		}
 		private void OnTriggerExit ( Collider collider ) {
 
-			_interactableObjectStack.Remove( collider.GetComponent<Eden.Interactable.InteractableObject>() );
+			_interactableObjectStack.Remove( collider.GetComponentInChildren<Eden.Interactable.InteractableObject>() );
 		}
 
 		
@@ -63,10 +67,10 @@ namespace Eden.Life.Chip {
 			if ( inventoryItem != null && interactableItem != null ){
 
 
-				if ( inventoryItem.CanInteract && interactableItem.Interactable ||
+				if ( inventoryItem.CanInteract && interactableItem.Actionable ||
 					 inventoryItem.CanHit && interactableItem.Hitable ||
 					 inventoryItem.CanPlant && interactableItem.Plantable ) {
-						
+
 					return true;
 				}
 			}
@@ -84,7 +88,7 @@ namespace Eden.Life.Chip {
 
 				if ( _currentItem != null && currentInteractable != null ){
 					
-					if ( _currentItem.CanInteract && currentInteractable.Interactable ||
+					if ( _currentItem.CanInteract && currentInteractable.Actionable ||
 						_currentItem.CanHit && currentInteractable.Hitable ||
 						_currentItem.CanPlant && currentInteractable.Plantable ) {
 

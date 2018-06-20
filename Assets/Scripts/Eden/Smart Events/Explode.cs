@@ -4,7 +4,6 @@ namespace Eden.Interactable {
 	
 	public class Explode : Dumpster.Events.SmartEvent {
 			
-		[SerializeField] private Stats _stats; 
 		[SerializeField] private GameObject _objectRoot;
 		[SerializeField] private HitData _hitData;
 		[SerializeField] private Explosion _explosionPrefab;

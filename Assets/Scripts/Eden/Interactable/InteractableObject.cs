@@ -20,13 +20,17 @@ namespace Eden.Interactable {
 		public bool Feedable { 
 			get{ return false; } 
 		}
-		public bool Interactable { 
-			get{ return false; }
+		public bool Actionable { 
+			get{ return _actionDelegate != null; }
 		}
 
 		public Interactable.Hitable HitDelegate {
 			get { return _hitDelegate; }
 		}
+		public Interactable.Actionable ActionDelegate {
+			get{ return _actionDelegate; }
+		}
+
 		// public Interactable.Component.Plantable PlantDelegate {
 		// 	get { return _plantDelegate; }
 		// }
@@ -44,6 +48,7 @@ namespace Eden.Interactable {
 		[SerializeField] private Transform _interactablePivot;
 
 		private Hitable _hitDelegate;
+		private Actionable _actionDelegate;
 		// private Component.Plantable _plantDelegate;
 		// private Component.Feedable _feedDelegate;
 		// private Component.Interactable _interactDelegate;
@@ -53,6 +58,7 @@ namespace Eden.Interactable {
 		protected virtual void Awake () {
 
 			_hitDelegate = GetComponent<Hitable>();
+			_actionDelegate = GetComponent<Actionable>();
 			// _plantDelegate = GetComponent<Component.Plantable>();
 			// _feedDelegate = GetComponent<Component.Feedable>();
 			// _interactDelegate = GetComponent<Component.Interactable>();

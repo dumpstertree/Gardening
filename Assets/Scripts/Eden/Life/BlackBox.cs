@@ -98,7 +98,7 @@ namespace Eden.Life {
 		
 		private void HandleOnHealthChanged( int currentHealth ) {
 			
-			if ( currentHealth < 0 ) {
+			if ( currentHealth <= 0 ) {
 				Shutdown ();
 			}
 		}

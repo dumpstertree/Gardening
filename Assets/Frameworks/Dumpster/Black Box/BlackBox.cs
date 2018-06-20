@@ -27,7 +27,7 @@ namespace Dumpster.Core.Life {
 		[SerializeField] private Animator _animator;
 		[SerializeField] private LogicChip _logicChip;
 
-		private bool _isPowered = true;
+		protected bool _isPowered = true;
 		
 		// **************** Private ********************
 

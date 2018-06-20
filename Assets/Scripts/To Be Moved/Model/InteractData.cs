@@ -6,27 +6,27 @@ namespace Controller.Item {
 
 		private string _animationTrigger;		
 		
-		public void Interact ( Eden.Life.BlackBox interactor, InventoryItem item ) {
+		public void Interact ( Eden.Life.BlackBox user, InventoryItem item, System.Action onComplete ) {
 
-			//if ( interactor.Interactor ){
-			//	interactor.FaceInteractableObject( interactor.Interactor.transform.position );
-			//}
+			// if ( interactor.Interactor ){
+			// 	interactor.FaceInteractableObject( interactor.Interactor.transform.position );
+			// }
 			
 			// play animation
 			//interactor.Animator.SetTrigger( _animationTrigger );
 
-			//interactor.Interactor.InteractableObject.InteractDelegate.Interact( interactor, item );
+			user.Interactor.InteractableObject.ActionDelegate.Action( user );
+			EdensGarden.Instance.Async.WaitForSeconds( 0.5f, () => { 
+				onComplete();
+			});
+			
+			// interactor.Interactor.InteractableObject.InteractDelegate.Interact( interactor, item );
 
-			// // use action
-			// Game.Async.WaitForSeconds( useData.AnimationUseFraction * useData.AnimationLength, () => {
-			// 	action();
-			// });
-
-			// // run onComplete
-			// Game.Async.WaitForSeconds( useData.AnimationLength, () => { 
-			// 	onComplete();
-			// });
-			// }
+			// run onComplete
+		// 	Game.Async.WaitForSeconds( useData.AnimationLength, () => { 
+		// 		onComplete();
+		// 	});
+		
 		}
 	}
 }

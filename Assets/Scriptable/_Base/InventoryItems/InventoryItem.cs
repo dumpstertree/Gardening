@@ -31,7 +31,7 @@ public class InventoryItem {
 		_holdItem = holdItem;
 		_expendable = expendable;
 
-		_canInteract = canInteract;
+		_canAction = canInteract;
 		_interactor = interactData;
 		
 		_canShoot = canShoot;
@@ -77,7 +77,7 @@ public class InventoryItem {
 		get{ return _canShoot; }
 	}
 	public bool CanInteract {
-		get { return _canInteract; }
+		get { return _canAction; }
 	}
 	public bool CanHit {
 		get { return _canHit; }
@@ -104,7 +104,7 @@ public class InventoryItem {
 	public Controller.Item.HitData2 _hitData = new Controller.Item.HitData2();
 
 	private bool _canShoot;
-	private bool _canInteract;
+	private bool _canAction;
 	//private bool _canPlace;
 	private bool _canHit;
 	//private bool _canPlant;
@@ -127,7 +127,7 @@ public class InventoryItem {
 		// }
 
 		// Use
-		if ( _canInteract && interactable != null && interactable.Interactable ) { 
+		if ( _canAction ) { 
 			Interact( user, onComplete ); 
 			return; 
 		}
@@ -176,8 +176,7 @@ public class InventoryItem {
 	
 	private void Interact ( Eden.Life.BlackBox user, Action onComplete ) {
 
-		// _interactor.Interact( user, this );
-		// if ( onComplete != null ) { onComplete(); }
+		_interactor.Interact( user, this, onComplete );
 	}
 	private void Shoot ( Eden.Life.BlackBox user, Action onComplete ) {
 		
@@ -186,7 +185,6 @@ public class InventoryItem {
 	}
 	private void Hit ( Eden.Life.BlackBox user, Action onComplete ) {
 
-		Debug.Log( "hit" );
 		_hitData.Hit( user );
 		if ( onComplete != null ) { onComplete(); }
 	}

@@ -22,8 +22,12 @@ namespace Eden.Life.BlackBoxes {
 		
 		private void FireRecieveInputEvent ( Input.Package package ) {
 
-			if ( OnRecieveInput != null ) {
-				OnRecieveInput ( package );
+			if ( _isPowered ) {
+			
+				if ( OnRecieveInput != null ) {
+					
+					OnRecieveInput ( package );
+				}
 			}
 		}
 
