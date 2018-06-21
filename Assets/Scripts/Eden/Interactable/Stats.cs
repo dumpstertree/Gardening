@@ -47,6 +47,10 @@ namespace Eden.Interactable {
 
 		private void OnSetHealth ( int health ) {
 
+			if ( _currentHealth <= 0 ){
+				return;
+			}
+			
 			if ( _currentHealth > 0 && health <= 0 ) {
 				FireDeathEvent();
 			} else {

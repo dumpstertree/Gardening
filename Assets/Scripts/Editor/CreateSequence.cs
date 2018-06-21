@@ -4,9 +4,9 @@ using UnityEditor;
 public class CreateSequence {
    
     [MenuItem("Assets/Create/Dialog/Sequence")]
-	public static Model.Dialog.Sequence Create() {
+	public static Eden.Model.Dialog.Sequence Create() {
 		
-		Model.Dialog.Sequence asset = ScriptableObject.CreateInstance<Model.Dialog.Sequence>();
+		Eden.Model.Dialog.Sequence asset = ScriptableObject.CreateInstance<Eden.Model.Dialog.Sequence>();
 
         AssetDatabase.CreateAsset(asset, "Assets/New Sequence.asset");
         AssetDatabase.SaveAssets();

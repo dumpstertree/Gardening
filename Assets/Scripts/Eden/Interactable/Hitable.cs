@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Eden.Life;
+using Dumpster.Events;
 
 namespace Eden.Interactable {
 	
@@ -7,6 +8,8 @@ namespace Eden.Interactable {
 
 		public delegate void HitEvent ( BlackBox user, HitData data );
 		public HitEvent OnHit;
+
+		[SerializeField] private SmartEvent[] _onHit;
 
 		public void Hit( BlackBox user, HitData data ){
 
@@ -16,6 +19,10 @@ namespace Eden.Interactable {
 			
 			if ( OnHit != null ) {
 				OnHit ( user, data );
+			}
+
+			foreach ( SmartEvent e in _onHit ){
+				e.EventTriggered();
 			}
 		}
 	}

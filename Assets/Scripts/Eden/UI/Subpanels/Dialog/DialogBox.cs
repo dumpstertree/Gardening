@@ -8,7 +8,7 @@ namespace UI.Subpanels.Dialog {
 
 		// *************** Public ******************
 
-		public void Present ( Model.Dialog.Dialog dialog, bool hasNext ) {
+		public void Present ( Eden.Model.Dialog.Dialog dialog, bool hasNext ) {
 
 			_dialog = dialog;
 			
@@ -43,7 +43,7 @@ namespace UI.Subpanels.Dialog {
 
 
 		private Coroutine _presentingAnimation;
-		private Model.Dialog.Dialog _dialog;
+		private Eden.Model.Dialog.Dialog _dialog;
 
 
 		private void SetName( string name ) {
@@ -58,7 +58,7 @@ namespace UI.Subpanels.Dialog {
 				_portrait.sprite = portrait;
 			}
 		}
-		private void SetColor( Model.Dialog.ColorPalette color ) {
+		private void SetColor( Eden.Model.Dialog.ColorPalette color ) {
 		}
 		private void SetHasNextIndicator( bool hasNext ) {
 			

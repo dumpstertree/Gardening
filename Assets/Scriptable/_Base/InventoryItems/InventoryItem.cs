@@ -12,7 +12,6 @@ public class InventoryItem {
 		int count,
 		string displayName,
 		int maxCount,
-		Model.Template.ItemAnimation animation,
 		Sprite sprite,
 		GameObject holdItem,
 		bool expendable,
@@ -199,7 +198,7 @@ public class InventoryItem {
 	public static InventoryItem Deserialize ( InventoryItem serializedData ) {
 		
 		var id = serializedData.ID;
-		var template = Model.Template.InventoryItemTemplate.GetTemplate( id );
+		var template = Eden.Model.Template.InventoryItemTemplate.GetTemplate( id );
 		var count = serializedData.Count;
 
 		return template.GetInstance( count );

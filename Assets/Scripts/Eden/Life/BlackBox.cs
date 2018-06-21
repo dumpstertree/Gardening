@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Eden.Life.Chip;
 using Dumpster.Core.Life;
+using System.Collections.Generic;
 
 namespace Eden.Life {
 	
@@ -31,17 +32,17 @@ namespace Eden.Life {
 		public Dumpster.Physics.Controller Physics {
 			get{ return _physics; }
 		}
-
+		public List<Collider> Colliders {
+			get { return new List<Collider>( GetComponentsInChildren<Collider>() ); } 
+		}
 
 		[Header( "Chips" )]
 		[SerializeField] private InteractorChip _interactorChip;
 		[SerializeField] private QuickSlotChip  _quickslotChip;
 		[SerializeField] private SightChip _sightChip;
 
-
 		[Header( "Interactables" )]
 		[SerializeField] private Interactable.Stats _stats;
-
 
 		[Header( "Misc" )]
 		[SerializeField] private Dumpster.Physics.Controller _physics;
@@ -51,7 +52,6 @@ namespace Eden.Life {
 		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemBottom;
 		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemLeft;
 		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemRight;
-
 
 		[Header( "Spawners" )]
 		[SerializeField] private Transform _projectileSpawner;

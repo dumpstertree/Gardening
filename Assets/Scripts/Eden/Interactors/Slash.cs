@@ -24,12 +24,22 @@ public class Slash : MonoBehaviour {
 
 
   		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
-			
+
+  			if ( _attacker.Colliders.Contains( collision ) ) {
+  				return;
+  			}
+
+			// if ( _attacker.Colliders. )
 			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
 
 			if ( interactable && interactable.Hitable ){
 				interactable.HitDelegate.Hit( _attacker, _hitData );
 			}
   		}
+	}
+	private void Update () {
+
+		transform.position = _attacker.MeleeSpawner.position;
+		transform.rotation = _attacker.MeleeSpawner.rotation;
 	}
 }

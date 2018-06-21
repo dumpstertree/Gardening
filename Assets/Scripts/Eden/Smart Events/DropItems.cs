@@ -73,7 +73,7 @@ namespace Eden.Events {
 			public float SpawnRate;
 			public float MinDropQuantity;
 			public float MaxDropQuantity;
-			public InventoryItemTemplate Item;
+			public Eden.Model.Template.InventoryItemTemplate Item;
 		}
 	}
 }

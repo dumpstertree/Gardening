@@ -14,8 +14,9 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 		_shoulderCameraController.CameraHorizontal = _cameraHorizontal;
 		_shoulderCameraController.CameraVertical = _cameraVertical;
 
+		Rotate();
+
 		if (_horizontal != 0 || _vertical != 0){
-			Rotate();
 			Move();
 		}
 

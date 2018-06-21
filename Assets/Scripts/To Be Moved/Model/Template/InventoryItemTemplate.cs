@@ -1,6 +1,7 @@
 using UnityEngine;
+using Model.Template;
 
-namespace Model.Template {
+namespace Eden.Model.Template {
 	
 	public class InventoryItemTemplate : ScriptableObject {
 
@@ -11,7 +12,6 @@ namespace Model.Template {
 				startingCount, 
 				_displayName, 
 				_maxCount, 
-				_animation,
 				_sprite, 
 				_holdItem, 
 				_expendable,

@@ -38,38 +38,6 @@ public class PlayerDataController : DataController {
 		return newInventory;
 	}
 
-	
-	// ************ QUICKSLOT ************
-
-	private const string QUICKSLOT_PATH = "/Users/zacharycollins/desktop/";
-	private const string QUICKSLOT_FILE_NAME = "QuickSlot";
-	private const int NUMBER_OF_QUICKSLOT_SLOTS = 5;
-
-	
-	public void SaveQuickSlotInventory ( QuickSlotInventory quickslot ) {
-
-       	var json = JsonUtility.ToJson( quickslot.Serialize(), true );
-        File.WriteAllText( QUICKSLOT_PATH + QUICKSLOT_FILE_NAME, json );
-	}
-	public QuickSlotInventory LoadQuickSlotInventory () {
-
-		var text = LoadFileFromPath( QUICKSLOT_PATH + QUICKSLOT_FILE_NAME );
-		return (text != "") ? CreateQuickSlotFromJson( text ) : CreateBlankQuickSlot();
-	}
-	private QuickSlotInventory CreateQuickSlotFromJson ( string json ) {
-	
-		var inventory = JsonUtility.FromJson<QuickSlotInventory.Serialized>( json );
-		return new QuickSlotInventory( inventory );
-	}
-	private QuickSlotInventory CreateBlankQuickSlot () {
-	
-		var newQuickSlot = new QuickSlotInventory( NUMBER_OF_QUICKSLOT_SLOTS );
-		SaveQuickSlotInventory( newQuickSlot );
-
-		Debug.LogWarningFormat( "No Quickslot data found. Making a new one" );
-		
-		return newQuickSlot;
-	}
 
 	// ************ PARTS ************
 

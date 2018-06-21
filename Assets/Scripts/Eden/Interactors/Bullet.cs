@@ -37,8 +37,10 @@ public class Bullet : MonoBehaviour {
 	private void OnTriggerEnter( Collider collision ) {
 
   		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
-			
-			Debug.LogWarning( collision.name, collision.transform );
+
+  			if ( _shooter.Colliders.Contains( collision ) ) {
+  				return;
+  			}
 
 			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
 			if ( interactable && interactable.Hitable ){

@@ -51,7 +51,6 @@ namespace Controller.Item {
 				Action onComplete = () => {
 					HandleOnReloadTimeChanged( reloadTime, reloadTime );
 					AvailableBullets = Gun.WeaponStats.ClipSize;
-					Debug.Log( Gun.WeaponStats.ClipSize );
 					_reloading = false;
 				};
 					
