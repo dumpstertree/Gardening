@@ -16,11 +16,11 @@ public class PlayerDataController : DataController {
 		Debug.Log( "Save!" );
       
        	var json = JsonUtility.ToJson( inventory.Serialize(), true );
-        File.WriteAllText( INVENTORY_SAVE_PATH + INVENTORY_SAVE_FILE_NAME, json );
+        File.WriteAllText( Application.persistentDataPath + INVENTORY_SAVE_FILE_NAME, json );
 	}
 	public Inventory LoadInventory () {
 
-		var text = LoadFileFromPath( INVENTORY_SAVE_PATH + INVENTORY_SAVE_FILE_NAME );
+		var text = LoadFileFromPath( Application.persistentDataPath + INVENTORY_SAVE_FILE_NAME );
 		return (text != "") ? CreateInventoryFromJson( text ) : CreateBlankInventory();
 	}
 	private Inventory CreateInventoryFromJson ( string json ) {
@@ -49,11 +49,11 @@ public class PlayerDataController : DataController {
 	public void SavePartInventory ( PartInventory partInventory ) {
 
        	var json = JsonUtility.ToJson( partInventory, true );
-        File.WriteAllText( PARTS_PATH + PARTS_FILE_NAME, json );
+        File.WriteAllText( Application.persistentDataPath + PARTS_FILE_NAME, json );
 	}
 	public PartInventory LoadPartInventory () {
 
-		var text = LoadFileFromPath( PARTS_PATH + PARTS_FILE_NAME );
+		var text = LoadFileFromPath( Application.persistentDataPath + PARTS_FILE_NAME );
 		return (text != "") ? CreatePartInventoryFromJson( text ) : CreateBlankPartInventory();
 	}
 	private PartInventory CreatePartInventoryFromJson ( string json ) {

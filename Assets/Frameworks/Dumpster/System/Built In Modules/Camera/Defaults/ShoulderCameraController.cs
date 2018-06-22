@@ -16,6 +16,7 @@ namespace Dumpster.Core.BuiltInModules {
 
 		[SerializeField] private float _horizontalSensitivity= 0.1f;
 		[SerializeField] private float _verticalSensitivity= 0.05f;
+		[SerializeField] private float _lerpSpeed = 0.5f;
 
 		private float _horizontalRot = 0f;
 		private float _verticalRot = 0f;
@@ -34,7 +35,7 @@ namespace Dumpster.Core.BuiltInModules {
 			_verticalRot -=  CameraVertical * _verticalSensitivity;
 			_verticalRot = Mathf.Clamp( _verticalRot, -0.5f, 0.5f);
 
-			cameraTarget.position = Vector3.Lerp( cameraTarget.position, worldPos, 0.2f );
+			cameraTarget.position = Vector3.Lerp( cameraTarget.position, worldPos, _lerpSpeed );
 			cameraTarget.rotation = Quaternion.AxisAngle( Vector3.up, _horizontalRot ) * Quaternion.AxisAngle( Vector3.right, _verticalRot );
 		}
 		private void OnDrawGizmos(){

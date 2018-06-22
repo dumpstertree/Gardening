@@ -17,20 +17,24 @@ namespace Eden.Life.Chips.Logic {
 
 			if ( _target != null ) {
 
-				var hookStart = _hook.rotation.eulerAngles;
-				var turretStart = _turret.rotation.eulerAngles;
-				
-				_hook.LookAt( _target.transform );
-				_turret.LookAt( _target.transform );
+				if ( !_target.IsPowered ) {
+					_target = null;
+				} else {
+					var hookStart = _hook.rotation.eulerAngles;
+					var turretStart = _turret.rotation.eulerAngles;
+					
+					_hook.LookAt( _target.transform );
+					_turret.LookAt( _target.transform );
 
-				var hookTarget = _hook.rotation.eulerAngles;
-				var turretTarget = _turret.rotation.eulerAngles;
+					var hookTarget = _hook.rotation.eulerAngles;
+					var turretTarget = _turret.rotation.eulerAngles;
 
-				_hook.transform.rotation = Quaternion.Euler( new Vector3( hookStart.x, hookTarget.y, hookStart.z  ) );
-				_turret.transform.rotation = Quaternion.Euler( new Vector3( turretTarget.x, hookTarget.y, turretStart.z  ) );
+					_hook.transform.rotation = Quaternion.Euler( new Vector3( hookStart.x, hookTarget.y, hookStart.z  ) );
+					_turret.transform.rotation = Quaternion.Euler( new Vector3( turretTarget.x, hookTarget.y, turretStart.z  ) );
 
-				_blackBox.Interactor.Use ();
-				return;
+					_blackBox.Interactor.Use ();
+					return;
+				}
 			}
 				
 			var targets = _blackBox.SightChip.LookForTargets();

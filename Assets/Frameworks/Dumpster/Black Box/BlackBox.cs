@@ -23,6 +23,9 @@ namespace Dumpster.Core.Life {
 		public Animator Animator {
 			get { return _animator; }
 		}
+		public bool IsPowered {
+			get{ return _isPowered; }
+		}
 
 		[SerializeField] private Animator _animator;
 		[SerializeField] private LogicChip _logicChip;

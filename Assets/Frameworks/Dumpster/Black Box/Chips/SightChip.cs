@@ -17,7 +17,7 @@ namespace Dumpster.Core.Life {
 			if ( UnityEngine.Physics.Raycast( _eyeProjector.position, _eyeProjector.forward, out hit, LOOK_DISTANCE, _lookingFor )) {
 					
 				var c = hit.collider.GetComponents<Eden.Life.BlackBox>();	
-				if ( c != null ) {
+				if ( c != null && c.Length >0 && c[0].IsPowered ) {
 					return new List<Eden.Life.BlackBox>( c );	
 				}
 			}

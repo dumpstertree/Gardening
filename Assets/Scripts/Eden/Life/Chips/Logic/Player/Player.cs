@@ -55,9 +55,10 @@ namespace Eden.Life.Chips.Logic {
 			
 			if ( item != null && item.CanShoot ) {
 				_cameraType = CameraType.Agressive;
-
+				_passive.Think( 0, 0, 0, 0 );
 			} else {
 				_cameraType = CameraType.Passive;
+				_agressive.Think( 0, 0, 0, 0 );
 			}
 		}
 		
@@ -67,17 +68,17 @@ namespace Eden.Life.Chips.Logic {
 			Agressive
 		}	
 		public override void Analayze () {
+			
 			switch ( _cameraType ) {
 				
 				case CameraType.Passive:
-					_passive.Think( _horizontal, _vertical );
+					_passive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical );
 					break;
 				
 				case CameraType.Agressive:
-					_agressive.Think( _horizontal, _vertical,  _cameraHorizontal, _cameraVertical );
+					_agressive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical );
 					break;
 			}
-
 		}
 	}
 }

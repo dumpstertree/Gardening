@@ -9,6 +9,15 @@ namespace Eden.Interactable {
 		public delegate void HealthChangedEvent( int currentHealth );
 		public HealthChangedEvent OnHealthChanged;
 
+		public delegate void DeathEvent();
+		public DeathEvent OnDeath;
+
+		public delegate void ReviveEvent();
+		public ReviveEvent OnRevive;
+
+		public delegate void HurtEvent();
+		public HurtEvent OnHurt;
+
 
 		// **************** PUBLIC *****************
 		
@@ -46,14 +55,14 @@ namespace Eden.Interactable {
 		// *****************************************
 
 		private void OnSetHealth ( int health ) {
-
-			if ( _currentHealth <= 0 ){
-				return;
-			}
 			
-			if ( _currentHealth > 0 && health <= 0 ) {
+			health = Mathf.Clamp( health, 0, MaxHealth );
+
+			if ( _currentHealth > 0 && health == 0 ) {
 				FireDeathEvent();
-			} else {
+			} 
+
+			if ( health < _currentHealth ){
 				FireHurtEvent();
 			}
 
@@ -78,17 +87,23 @@ namespace Eden.Interactable {
 		}
 		private void FireHurtEvent() {
 
+			if ( OnHurt != null ) {
+				OnHurt();
+			}
+
 			foreach ( SmartEvent e in _onHurt ) {
 				e.EventTriggered();
 			}
 		}
 		private void FireDeathEvent() {
 
+			if ( OnDeath != null ) {
+				OnDeath();
+			}	
+
 			foreach ( SmartEvent e in _onDeath ) {
 				e.EventTriggered();
 			}
 		}
-
-
 	}
 }

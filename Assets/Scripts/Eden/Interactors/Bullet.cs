@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour {
 
 		CreateCasing();
 
-		EdensGarden.Instance.Async.WaitForSeconds( BULLET_KILL_TIME, () => { Destroy( gameObject ); } );
+		EdensGarden.Instance.Async.WaitForSeconds( BULLET_KILL_TIME, () => { var go = gameObject; if ( go != null ) Destroy( go ); } );
 	}
 
 	// *********** PRIVATE ************

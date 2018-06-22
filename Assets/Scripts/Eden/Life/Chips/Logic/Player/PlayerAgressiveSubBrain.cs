@@ -4,23 +4,18 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 
 	public void Think ( float horizontal, float vertical, float cameraHorizontal, float cameraVertical ){
 		
-		_horizontal = horizontal;
-		_vertical = vertical;
-		_cameraHorizontal = cameraHorizontal;
-		_cameraVertical = cameraVertical;
+		_shoulderCameraController.MovementHorizontal = horizontal;
+		_shoulderCameraController.MovementVertical = vertical;
+		_shoulderCameraController.CameraHorizontal = cameraHorizontal;
+		_shoulderCameraController.CameraVertical = cameraVertical;
 
-		_shoulderCameraController.MovementHorizontal = _horizontal;
-		_shoulderCameraController.MovementVertical = _vertical;
-		_shoulderCameraController.CameraHorizontal = _cameraHorizontal;
-		_shoulderCameraController.CameraVertical = _cameraVertical;
+		Rotate( horizontal, vertical );
 
-		Rotate();
-
-		if (_horizontal != 0 || _vertical != 0){
-			Move();
+		if (horizontal != 0 || vertical != 0){
+			Move( horizontal, vertical );
 		}
 
-		Animate();
+		Animate( horizontal, vertical );
 	}
 
 	[SerializeField] private Dumpster.Core.BuiltInModules.ShoulderCameraController _shoulderCameraController;
@@ -30,13 +25,7 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 	private const string HORIZONTAL_ANIMATION_NAME = "Horizontal";
 	private const string VERTICAL_ANIMATION_NAME = "Vertical";
 
-	private float _horizontal;
-	private float _vertical;
-	private float _cameraHorizontal;
-	private float _cameraVertical;
-
-
-	private void Rotate () {
+	private void Rotate ( float horizontal, float vertical ) {
 		
 		var worldUp = Vector3.up;
 		var camLeft = -Camera.main.transform.right;
@@ -44,17 +33,18 @@ public class PlayerAgressiveSubBrain : MonoBehaviour {
 
 		_player.transform.forward = newForward;
 	}
-	private void Move () {
+	private void Move ( float horizontal, float vertical  ) {
 
-		var h = _horizontal * _speed * Time.deltaTime;
-		var v = _vertical * _speed * Time.deltaTime;
+		var h = horizontal * _speed * Time.deltaTime;
+		var v = vertical * _speed * Time.deltaTime;
 
 		_player.Physics.MovePosition( transform.right * h );
 		_player.Physics.MovePosition( transform.forward * v );
 	}
-	private void Animate () {
+	private void Animate ( float horizontal, float vertical  ) {
 
-		_player.Animator.SetFloat( HORIZONTAL_ANIMATION_NAME, _horizontal );
-		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, _vertical );
+		_player.Animator.SetFloat( HORIZONTAL_ANIMATION_NAME, horizontal );
+		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, vertical );
 	}
+
 }

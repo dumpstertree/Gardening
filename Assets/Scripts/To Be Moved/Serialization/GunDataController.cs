@@ -14,11 +14,11 @@ public class GunDataController : DataController {
 	public void SaveGun ( string id, Gun gun ) {
 
        	var json = JsonUtility.ToJson( gun, true );
-        File.WriteAllText( GUN_SAVE_DATA_PATH + id, json );
+        File.WriteAllText( Application.persistentDataPath + id, json );
 	}
 	public Gun LoadGun ( string id ) {
 
-		var text = LoadFileFromPath( GUN_SAVE_DATA_PATH + id );
+		var text = LoadFileFromPath(  Application.persistentDataPath + id );
 		return (text != "") ? CreatGunFromJson( text ) : CreateBlankGun( id );
 	}
 

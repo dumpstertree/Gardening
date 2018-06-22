@@ -17,6 +17,9 @@ namespace Eden.Life.Chip {
 		public int Index {
 			get{ return _index; }
 		}
+		public bool ItemIsEquiped{
+			get{ return _equipIsDown; }
+		}
 
 		
 		// ***************** PRIVATE *******************

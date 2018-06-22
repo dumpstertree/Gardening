@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Dumpster.Events {
 	
@@ -18,7 +17,7 @@ namespace Dumpster.Events {
 		public override void EventTriggered() {
 
 			var rand = Random.Range( _minWait, _maxWait );
-			StartCoroutine( Wait( rand, FireOnWaited ) );
+			EdensGarden.Instance.Async.WaitForSeconds( rand, FireOnWaited );
 		}
 
 
@@ -29,11 +28,6 @@ namespace Dumpster.Events {
 			foreach ( SmartEvent e in _onWaited ) {
 				e.EventTriggered();
 			}
-		}
-		private IEnumerator Wait ( float forSeconds, System.Action onComplete ) {
-
-			yield return new WaitForSeconds( forSeconds );
-			if ( onComplete != null ) { onComplete(); }
 		}
 	}
 }

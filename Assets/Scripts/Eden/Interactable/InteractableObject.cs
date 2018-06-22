@@ -6,7 +6,14 @@ namespace Eden.Interactable {
 	// [RequireComponent(typeof(Rigidbody))]
 	public class InteractableObject : MonoBehaviour {
 
+
 		// ***************** PUBLIC *******************
+
+		public bool Active {
+			set{ gameObject.SetActive( value ); }
+			get{ return gameObject.activeSelf; }
+		}
+
 
 		public Transform InteractablePivot {
 			get { return _interactablePivot ? _interactablePivot : transform; }

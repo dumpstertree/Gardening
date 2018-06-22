@@ -13,6 +13,7 @@ namespace Eden.UI.Panels {
 
 		[SerializeField] private Transform _healthFill;
 		[SerializeField] private Transform _energyFill;
+		[SerializeField] private Transform _reticle;
 
 		protected override void OnInit () {
 
@@ -59,6 +60,22 @@ namespace Eden.UI.Panels {
 		private void HandleReloadTimeChanged ( float currentReloadTime, float maxReloadTime ) {
 
 			_energyFill.transform.localScale =  new Vector3( 1, currentReloadTime / maxReloadTime, 1 );
+		}
+
+		[SerializeField] private LayerMask _layerMask;
+		private void Update () {
+
+			_reticle.gameObject.SetActive( _item != null && _item.CanShoot && _blackBox.QuickslotChip.ItemIsEquiped );
+
+			if ( _item != null && _item.CanShoot ) {
+				
+				RaycastHit hit;
+				if (Physics.Raycast( _blackBox.ProjectileSpawner.position, _blackBox.ProjectileSpawner.forward, out hit, Mathf.Infinity, _layerMask )) {
+        		
+        			_reticle.position = Vector3.Lerp( _reticle.position, Camera.main.WorldToScreenPoint( hit.point ), 0.2f );
+        		}
+			}
+        	
 		}
 	}
 }

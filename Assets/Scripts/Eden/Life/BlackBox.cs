@@ -36,10 +36,13 @@ namespace Eden.Life {
 			get { return new List<Collider>( GetComponentsInChildren<Collider>() ); } 
 		}
 
+
+
 		[Header( "Chips" )]
 		[SerializeField] private InteractorChip _interactorChip;
 		[SerializeField] private QuickSlotChip  _quickslotChip;
 		[SerializeField] private SightChip _sightChip;
+		[SerializeField] private Interactable.InteractableObject _interactableObject;
 
 		[Header( "Interactables" )]
 		[SerializeField] private Interactable.Stats _stats;
@@ -69,10 +72,13 @@ namespace Eden.Life {
 
 			base.Init ();
 
-			_stats.OnHealthChanged += HandleOnHealthChanged;
-
 			BuildInventory ();
 			BuildEquipedItems ();
+
+			_stats.OnDeath += Shutdown;
+
+			OnStartup += () => { _interactableObject.Active = true; };
+			OnShutDown += () => { _interactableObject.Active = false; };
 		}
 
 		
@@ -91,16 +97,6 @@ namespace Eden.Life {
 			if( _equippedItemRight != null ) { _equipedItems.AddInventoryItem( _equippedItemRight.GetInstance( 2 ) ); }
 			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.GetInstance( 3 ) ); }
 			if( _equippedItemLeft != null ) { _equipedItems.AddInventoryItem( _equippedItemLeft.GetInstance( 4 ) ); }
-		}
-
-
-		// ****************** Handler ****************
-		
-		private void HandleOnHealthChanged( int currentHealth ) {
-			
-			if ( currentHealth <= 0 ) {
-				Shutdown ();
-			}
 		}
 
 

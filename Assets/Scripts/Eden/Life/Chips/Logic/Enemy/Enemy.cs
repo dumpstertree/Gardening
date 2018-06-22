@@ -7,11 +7,38 @@ namespace Eden.Life.Chips.Logic {
 
 		public override void Analayze () {
 
-			switch ( _state ) {
+			if ( _target == null ) {
 				
-				case State.Idle:
-					OnIdle ();
-					break;
+				var targets = _blackBox.SightChip.LookForTargets();
+				if ( targets.Count > 0 ) {
+					_target = targets[ 0 ];
+				} 
+			}
+
+			if ( _target != null ) {
+
+				if ( !_target.IsPowered ) {
+					
+					_target = null;
+					ChangeState( State.Roam );
+				} 
+				else {
+
+					var dist = GetDistanceToTarget();
+						
+					if ( dist > _minDistance && dist < _maxDistance ){
+						ChangeState( State.Attack );
+					}
+					if ( dist < _minDistance ){
+						ChangeState( State.Run );
+					}
+					if ( dist > _maxDistance ){
+						ChangeState( State.Chase );
+					}
+				}
+			}
+
+			switch ( _state ) {
 				
 				case State.Chase:
 					OnChase ();
@@ -24,11 +51,16 @@ namespace Eden.Life.Chips.Logic {
 				case State.Attack:
 					OnAttack ();
 					break;
+
+				case State.Roam:
+					OnRoam ();
+					break;
 			}
 		}
 
 		// ***************************
 
+		[SerializeField] private Eden.Interactable.Hitable _hitable;
 		[SerializeField] private float _moveSpeed;
 		[SerializeField] private Eden.Life.BlackBox _blackBox;
 		[SerializeField] private Dumpster.Core.Life.SightChip _eyes;
@@ -42,83 +74,40 @@ namespace Eden.Life.Chips.Logic {
 		// *********** STATE MACHINE ****************
 
 		private void Start () {
-		
-			ChangeState( State.Idle );
+			
+			_hitable.OnHit += HandleOnHit;
+			ChangeState( State.Roam );
 		}
 		private void ChangeState ( State newState ) {
 
 			if ( _state != newState ) {
 
 				switch ( _state ) {
-					case State.Idle: OnExitIdle(); break;
 					case State.Chase: OnExitChase(); break;
 					case State.Attack: OnExitAttack(); break;
+					case State.Run: OnExitRun(); break;
+					case State.Roam: OnExitRoam(); break;
 				}
 
 				_state = newState;
 
 				switch ( _state ) {
-					case State.Idle: OnEnterIdle(); break;
 					case State.Chase: OnEnterChase(); break;
 					case State.Attack: OnEnterAttack(); break;
+					case State.Run: OnEnterRun(); break;
+					case State.Roam: OnEnterRoam(); break;
 				}
 			}
 		}
 
-		private void OnEnterIdle () {
-		}
-		private void OnIdle () {
-			
-			if ( _target != null ) {
-
-				var dist = GetDistanceToTarget();
-					
-				if ( dist > _minDistance && dist < _maxDistance ){
-					ChangeState( State.Attack );
-					return;
-				}
-				if ( dist < _minDistance ){
-					ChangeState( State.Run );
-					return;
-				}
-				if ( dist > _maxDistance ){
-					ChangeState( State.Chase );
-					return;
-				}
-			}
-
-			var targets = _blackBox.SightChip.LookForTargets();
-
-			if ( targets.Count > 0 ) {
-				_target = targets[ 0 ];
-				_state = State.Chase;
-			} else {
-				_state = State.Idle;
-			}
-		}
-		private void OnExitIdle () {
-		}
 
 		private void OnEnterChase () {
 		}
 		private void OnChase () {
-			
-			if ( _target != null ) {
-				
-				var dist = GetDistanceToTarget();
-				if ( dist < _maxDistance ) {
-					ChangeState( State.Idle );
-				} else {
-					_blackBox.Animator.SetFloat( "Vertical", 1.0f );
-					LookAtTarget();
-					MoveForward();	
-				}
-			}
 
-			if ( _target == null ) {
-				
-				ChangeState( State.Idle );
-			}
+			_blackBox.Animator.SetFloat( "Vertical", 1.0f );
+			LookAtTarget();
+			MoveForward();
 		}
 		private void OnExitChase () {
 		}
@@ -127,24 +116,10 @@ namespace Eden.Life.Chips.Logic {
 		private void OnEnterRun () {
 		}
 		private void OnRun () {
-			
-			if ( _target != null ) {
-				
-				var dist = GetDistanceToTarget();
 
-				if ( dist > _minDistance ) {
-					ChangeState( State.Idle );
-				} else {
-					_blackBox.Animator.SetFloat( "Vertical", 1.0f );
-					LookAwayFromTarget();
-					MoveForward();	
-				}
-			}
-
-			if ( _target == null ) {
-				
-				ChangeState( State.Idle );
-			}
+			_blackBox.Animator.SetFloat( "Vertical", 1.0f );
+			LookAwayFromTarget();
+			MoveForward();	
 		}
 		private void OnExitRun () {
 		}
@@ -161,10 +136,26 @@ namespace Eden.Life.Chips.Logic {
 		private void OnAttack () {
 			
 			_blackBox.Interactor.Use();
-			ChangeState( State.Chase );
 		}
 		private void OnExitAttack () {
 		}
+
+
+		private void OnEnterRoam () {
+		}
+		private void OnRoam () {
+
+			var roll = Random.Range( 0, 50 );
+			if ( roll == 1 ) {
+				_blackBox.transform.rotation = Quaternion.Euler( new Vector3( _blackBox.transform.rotation.x, Random.Range( 0f, 360f ) ,_blackBox.transform.rotation.x ));
+			} else {
+				_blackBox.Animator.SetFloat( "Vertical", 1.0f );
+				MoveForward();	
+			}
+		}
+		private void OnExitRoam () {
+		}
+
 
 
 		// ***************************
@@ -183,6 +174,7 @@ namespace Eden.Life.Chips.Logic {
 			_blackBox.Physics.MovePosition( transform.forward * (_moveSpeed * Time.deltaTime) );
 		}
 
+
 		// ***************************
 
 		private float GetDistanceToTarget () {
@@ -196,8 +188,12 @@ namespace Eden.Life.Chips.Logic {
 
 		// ***************************
 
+		private void HandleOnHit ( BlackBox user, HitData data ) {
+			
+			_target = user;
+		}
 		private enum State {
-			Idle,
+			None,
 			Roam, 
 			Chase,
 			Run,

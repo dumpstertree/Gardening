@@ -2,11 +2,15 @@
 
 public class PlayerPassiveSubBrain : MonoBehaviour {
 
-	public void Think ( float horizontal, float vertical ){
+	public void Think ( float horizontal, float vertical, float cameraHorizontal, float cameraVertical ){
 
 		_horizontal = horizontal;
 		_vertical   = vertical;
-		
+		_cameraHorizontal = cameraHorizontal;
+		_cameraVertical = cameraVertical;
+
+		_followCamera.CameraHorizontal = _cameraHorizontal;
+
 		if ( _player.Animator.GetCurrentAnimatorStateInfo(0).IsTag( RESTRICTED_INPUT_TAG ) ) {
 			return;
 		}
@@ -22,6 +26,7 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 
 	//***************************
 
+	[SerializeField] private Dumpster.Core.BuiltInModules.FollowCameraController _followCamera;
 	[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 	[SerializeField] private float _speed;
 
@@ -31,6 +36,8 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 
 	private float _horizontal;
 	private float _vertical;
+	private float _cameraHorizontal;
+	private float _cameraVertical;
 
 	//***************************
 
