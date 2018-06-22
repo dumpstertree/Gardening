@@ -45,18 +45,18 @@ namespace Eden.Properties {
 		}
 		private void OnTriggerEnter ( Collider collision ){
 
-			var magnet = collision.GetComponentInChildren<Magnet>();
+			var propertiesObject = collision.GetComponent<PropertiesObject>();
 
-			if ( magnet != null ) {
-				_activeMagnets.Add( magnet );
+			if ( propertiesObject != null && propertiesObject.IsMagnet ) {
+				_activeMagnets.Add( propertiesObject.MagnetDelegate );
 			}
 		}
 		private void OnTriggerExit ( Collider collision ){
 
-			var magnet = collision.GetComponentInChildren<Magnet>();
+			var propertiesObject = collision.GetComponent<PropertiesObject>();
 				
-			if ( magnet != null && _activeMagnets.Contains( magnet )) {
-				_activeMagnets.Remove( magnet );
+			if ( propertiesObject != null && propertiesObject.IsMagnet && _activeMagnets.Contains( propertiesObject.MagnetDelegate )) {
+				_activeMagnets.Remove( propertiesObject.MagnetDelegate );
 			}
 		}
 		
