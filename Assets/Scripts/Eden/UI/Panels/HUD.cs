@@ -72,7 +72,8 @@ namespace Eden.UI.Panels {
 				RaycastHit hit;
 				if (Physics.Raycast( _blackBox.ProjectileSpawner.position, _blackBox.ProjectileSpawner.forward, out hit, Mathf.Infinity, _layerMask )) {
         		
-        			_reticle.position = Vector3.Lerp( _reticle.position, Camera.main.WorldToScreenPoint( hit.point ), 0.2f );
+        			// _reticle.position = Vector3.Lerp( _reticle.position, Camera.main.WorldToScreenPoint( hit.point ), 0.2f );
+        			_reticle.position = new Vector3( Screen.width/2f, Screen.height/2f, 0 );
         		}
 			}
         	

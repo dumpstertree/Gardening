@@ -11,7 +11,12 @@ namespace Eden.Life.Chips.Logic {
 				
 				var targets = _blackBox.SightChip.LookForTargets();
 				if ( targets.Count > 0 ) {
-					_target = targets[ 0 ];
+					foreach ( Eden.Life.BlackBox b in targets ) {
+						if ( b.Visual.Alignment == Eden.Life.Alignment.Player || b.Visual.Alignment == Eden.Life.Alignment.Friendly ){
+							_target = b;
+							break;
+						}
+					}
 				} 
 			}
 
@@ -67,7 +72,7 @@ namespace Eden.Life.Chips.Logic {
 
 		[SerializeField] private float _minDistance;
 		[SerializeField] private float _maxDistance;
-		
+
 		private Eden.Life.BlackBox _target;
 		private State _state;
 

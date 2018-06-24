@@ -67,26 +67,18 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 
 			Time.timeScale = 0f;
 
-			yield return new WaitForSecondsRealtime ( time );
+			for ( float t=0; t<time; t+=Time.unscaledDeltaTime ){
+				Time.timeScale = t/time;
+				yield return null;
+			}
+			// yield return new WaitForSecondsRealtime ( time );
 			
 			Time.timeScale = 1f;
 		}	
 
 		private List<Shakable>_shakables = new List<Shakable>();
 		
-		public enum ShakePower {
-			Miniscule,
-			Light,
-			Medium,
-			Heavy,
-			Colossal,
-			PlanetShattering
-		}
-		public enum DecayRate {
-			Quick,
-			Medium,
-			Long
-		}
+		
 
 		private float _magnitude;
 		private float _decay;
@@ -153,6 +145,21 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 
 			_shakables.Clear();
 		}
+	}
+	public enum ShakePower {
+		
+		Miniscule,
+		Light,
+		Medium,
+		Heavy,
+		Colossal,
+		PlanetShattering
+	}
+	
+	public enum DecayRate {
+		Quick,
+		Medium,
+		Long
 	}
 
 	public enum ParticleType {

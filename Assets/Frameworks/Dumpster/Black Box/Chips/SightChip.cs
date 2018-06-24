@@ -7,6 +7,8 @@ namespace Dumpster.Core.Life {
 
 		[SerializeField] private Transform _eyeProjector;
 		[SerializeField] private LayerMask _lookingFor;
+		[SerializeField] private float _FOV = 45f;
+		[SerializeField] private int _numOfRays = 10;
 
 		private const float LOOK_DISTANCE = 10f;
 
@@ -14,20 +16,36 @@ namespace Dumpster.Core.Life {
 		
 			RaycastHit hit;
 
-			if ( UnityEngine.Physics.Raycast( _eyeProjector.position, _eyeProjector.forward, out hit, LOOK_DISTANCE, _lookingFor )) {
+			var blackBoxes = new List<Eden.Life.BlackBox>();
+
+			for ( int i=0; i<_numOfRays; i++ )  {
+
+				var offset = _FOV/_numOfRays;
+				var angle = Quaternion.AngleAxis( -(_FOV / 2f) + (offset * i), _eyeProjector.up );
+				var angleVector = angle * _eyeProjector.forward;
+
+				if ( UnityEngine.Physics.Raycast( _eyeProjector.position, angleVector, out hit, LOOK_DISTANCE, _lookingFor )) {
 					
-				var c = hit.collider.GetComponents<Eden.Life.BlackBox>();	
-				if ( c != null && c.Length >0 && c[0].IsPowered ) {
-					return new List<Eden.Life.BlackBox>( c );	
+					var c = hit.collider.GetComponent<Eden.Life.BlackBox>();	
+					if ( c != null && c.IsPowered ) {
+						blackBoxes.Add( c );
+					}
 				}
 			}
 
-			return new List<Eden.Life.BlackBox>();
+			return blackBoxes;
   		}
   		
   		private void OnDrawGizmos () {
 
-  			Debug.DrawRay( _eyeProjector.position, _eyeProjector.forward * LOOK_DISTANCE );
+  			for ( int i=0; i<_numOfRays; i++ )  {
+
+				var offset = _FOV/_numOfRays;
+				var angle = Quaternion.AngleAxis( -(_FOV / 2f) + (offset * i), _eyeProjector.up );
+				var angleVector = angle * _eyeProjector.forward;
+  				
+  				Debug.DrawRay( _eyeProjector.position, angleVector * LOOK_DISTANCE );
+  			}
   		}
 	}
 }

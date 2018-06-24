@@ -26,6 +26,7 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 
 	//***************************
 
+	[SerializeField] private LayerMask _layerMask;
 	[SerializeField] private Dumpster.Core.BuiltInModules.FollowCameraController _followCamera;
 	[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 	[SerializeField] private float _speed;

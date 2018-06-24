@@ -22,7 +22,8 @@ namespace Dumpster.Core.BuiltInModules {
 		}
 
 		public abstract void Control ( Transform cameraInstance, Transform focus );
-
+		public virtual void WillGainControl () {}
+		public virtual void WillLoseControl () {}
 
 		// ****************** Private *********************
 

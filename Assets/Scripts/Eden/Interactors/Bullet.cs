@@ -12,51 +12,83 @@ public class Bullet : MonoBehaviour {
 
 		CreateCasing();
 
-		EdensGarden.Instance.Async.WaitForSeconds( BULLET_KILL_TIME, () => { var go = gameObject; if ( go != null ) Destroy( go ); } );
+		_startPos = user.ProjectileSpawner.position;
+
+		EdensGarden.Instance.Effects.Shake( _startPos, ShakePower.Miniscule, DecayRate.Quick );
+		EdensGarden.Instance.Effects.FreezeFrame( 0.05f );
+
+		if (Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _targetHit, Mathf.Infinity, _layermask )) {
+
+			var interactable = _targetHit.collider.GetComponentInChildren<Eden.Interactable.InteractableObject>();
+			if( interactable != null ) {
+				_targetObject = interactable;
+			}
+
+			_randomPoint1 = Vector3.Lerp( _startPos , _targetPos,  .2f ) + new Vector3( Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ) );
+			_randomPoint2 = Vector3.Lerp( _startPos , _targetPos,  .8f ) + new Vector3( Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ) );
+		} 
 	}
 
 	// *********** PRIVATE ************
 
-	[SerializeField] private float _speed;
+	[SerializeField] private AnimationCurve _speedCurve;
+	[SerializeField] private float _speed = 1.0f;
+	[SerializeField] private float _randomPoint1MaxOffset = 1.0f;
+	[SerializeField] private float _randomPoint2MaxOffset = 0.5f;
+
 	[SerializeField] private GameObject _casingPrefab;
 	[SerializeField] private LayerMask _layermask;
+	[SerializeField] private GameObject _dustEffectPrefab;
+	[SerializeField] private GameObject _collideEffectPrefab;
 
 	private const float CASING_KILL_TIME = 60.0f;
-	private const float BULLET_KILL_TIME = 10.0f;
-	private const float CONTACT_OFFSET = 0.01f;
 
+	private Vector3 _startPos;
 	private Eden.Life.BlackBox _shooter;
 	private HitData _hitData;
-	
+	private Eden.Interactable.InteractableObject _targetObject;
+	private RaycastHit _targetHit;
+
+	private float _time;
+	private Vector3 _randomPoint1;
+	private Vector3 _randomPoint2;
+
+	private Vector3 _targetPos {
+		get{ return _targetObject != null ? _targetObject.transform.position + (_targetHit.point - _targetObject.transform.position) : _targetHit.point; }
+	}
+
 	// ***********************
 
 	private void Update () {
 
-		transform.Translate( Vector3.forward * ( _speed * Time.deltaTime ) );
-	}
-	private void OnTriggerEnter( Collider collision ) {
+		var distance = Vector3.Distance( transform.position, _targetPos );
+		if ( distance > 0.1f ) {
+			var frac = _speedCurve.Evaluate( _time += (Time.deltaTime * _speed) );
+			transform.position = CalculateCubicBezierPoint( frac, _startPos, _randomPoint1, _randomPoint2, _targetPos ); 
 
-  		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
-
-  			if ( _shooter.Colliders.Contains( collision ) ) {
-  				return;
-  			}
-
-			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
-			if ( interactable && interactable.Hitable ){
-				interactable.HitDelegate.Hit( _shooter, _hitData );
+			RaycastHit hit;
+			if (Physics.Raycast( transform.position, Vector3.down, out hit, Mathf.Infinity, _layermask )) {
+				var inst = Instantiate( _dustEffectPrefab );
+				inst.transform.position = hit.point; 
 			}
 
-			EdensGarden.Instance.Effects.OneShot( ParticleType.Fireworks, transform.position, transform.rotation );
-
-			// Destroy
-			Destroy( gameObject );
-  		}
+		} else {
+			Collide();
+		}
 	}
+	
 
+	private void Collide () {
 
-	// ***********************
+		if ( _targetObject != null ) {
+			_targetObject.HitDelegate.Hit( _shooter, _hitData );
+		}
 
+		var inst = Instantiate( _collideEffectPrefab );
+		inst.transform.position = transform.position;
+		
+		Destroy( gameObject );
+	}
 	private void CreateCasing () {
 		
 		var inst = Instantiate( _casingPrefab );
@@ -71,5 +103,20 @@ public class Bullet : MonoBehaviour {
 		inst.GetComponent<Rigidbody>().velocity = velocity;
 
 		EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
+	}
+	private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
+	        
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        float uuu = uu * u;
+        float ttt = tt * t;
+        
+        Vector3 p = uuu * p0; 
+        p += 3 * uu * t * p1; 
+        p += 3 * u * tt * p2; 
+        p += ttt * p3; 
+        
+        return p;
 	}
 }

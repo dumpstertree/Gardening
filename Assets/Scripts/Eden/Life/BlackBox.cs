@@ -4,8 +4,15 @@ using Dumpster.Core.Life;
 using System.Collections.Generic;
 
 namespace Eden.Life {
+
+	public enum Alignment {
+		Nuetral,
+		Hostile,
+		Friendly,
+		Player
+	}
 	
-	public class BlackBox : Dumpster.Core.Life.BlackBox<Model2.Life.Visual> {
+	public class BlackBox : Dumpster.Core.Life.BlackBox<Model.Life.Visual> {
 			
 		public Transform ProjectileSpawner {
 			get{ return _projectileSpawner; }
@@ -60,6 +67,9 @@ namespace Eden.Life {
 		[SerializeField] private Transform _projectileSpawner;
 		[SerializeField] private Transform _meleeSpawner;
 
+		[Header( "Properties" )]
+		[SerializeField] private Alignment _alignment;
+
 
 		private Inventory _inventory;
 		private Inventory _equipedItems;
@@ -102,9 +112,9 @@ namespace Eden.Life {
 
 		// ****************** Handler ****************
 
-		protected override Eden.Model2.Life.Visual GetVisual () {
+		protected override Eden.Model.Life.Visual GetVisual () {
 			
-			return new Model2.Life.Visual();
+			return new Model.Life.Visual( _alignment );
 		}
 	}
 }

@@ -16,6 +16,7 @@ namespace Eden.Life.Chips.Logic {
 		private float _cameraHorizontal;
 		private float _cameraVertical;
 		private bool _jump;
+		private bool _dash;
 
 		private const float RAYCAST_INSET = 0.01f;
 		private const float RAYCAST_DISTANCE = 0.1f;
@@ -44,6 +45,7 @@ namespace Eden.Life.Chips.Logic {
 			_cameraVertical = package.RightAnalog.Vertical;
 
 			_jump = package.Face.Down_Down;
+			_dash = package.Face.Left_Down;
 
 			if ( package.BackRight.Bumper ) {
 				_player.Interactor.Use();
@@ -54,11 +56,12 @@ namespace Eden.Life.Chips.Logic {
 			var item = _player.EquipedItems.GetInventoryItem( index );			
 			
 			if ( item != null && item.CanShoot ) {
+				_agressive.WillBecomeActive();
 				_cameraType = CameraType.Agressive;
 				_passive.Think( 0, 0, 0, 0 );
 			} else {
 				_cameraType = CameraType.Passive;
-				_agressive.Think( 0, 0, 0, 0 );
+				_agressive.Think( 0, 0, 0, 0 , false);
 			}
 		}
 		
@@ -76,7 +79,7 @@ namespace Eden.Life.Chips.Logic {
 					break;
 				
 				case CameraType.Agressive:
-					_agressive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical );
+					_agressive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical, _dash );
 					break;
 			}
 		}

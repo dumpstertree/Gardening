@@ -49,7 +49,7 @@ namespace Model {
 
 			public Stats () {
 
-				FireRate = 0.3f;
+				FireRate = 5f;
 				ReloadTime = 0.5f;
 				BulletSpeed = 3;
 				ClipSize = 30;

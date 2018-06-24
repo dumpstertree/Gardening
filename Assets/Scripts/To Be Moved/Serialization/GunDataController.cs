@@ -15,9 +15,12 @@ public class GunDataController : DataController {
 
        	var json = JsonUtility.ToJson( gun, true );
         File.WriteAllText( Application.persistentDataPath + id, json );
+        Debug.Log( Application.persistentDataPath);
 	}
 	public Gun LoadGun ( string id ) {
 
+		return CreateBlankGun( id );
+			Debug.Log( Application.persistentDataPath);
 		var text = LoadFileFromPath(  Application.persistentDataPath + id );
 		return (text != "") ? CreatGunFromJson( text ) : CreateBlankGun( id );
 	}

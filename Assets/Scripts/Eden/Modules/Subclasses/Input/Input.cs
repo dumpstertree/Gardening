@@ -44,6 +44,20 @@
 
 			if ( !Package.Back.Equal( package1.BackLeft, package2.BackLeft) ) return true;
 			if ( !Package.Back.Equal( package1.BackRight, package2.BackRight) ) return true;
+			
+			if ( package2.Dpad.Up ) return true;
+			if ( package2.Dpad.Down ) return true;
+			if ( package2.Dpad.Left ) return true;
+			if ( package2.Dpad.Right ) return true;
+
+			if ( package2.Face.Up ) return true;
+			if ( package2.Face.Down ) return true;
+			if ( package2.Face.Left ) return true;
+			if ( package2.Face.Right ) return true;
+
+			if ( package2.BackLeft.Bumper ) return true;
+			if ( package2.BackRight.Bumper ) return true;
+
 
 			return false;
 		}
@@ -86,7 +100,7 @@
 					if (back1.Bumper != back2.Bumper) return false;
 					if (back1.Bumper_Down != back2.Bumper_Down) return false;
 					if (back1.Bumper_Up != back2.Bumper_Up) return false;
-					if ( back1.Trigger != back2.Trigger ) return false;
+					if (back1.Trigger != back2.Trigger ) return false;
 					
 					return true;
 				}
