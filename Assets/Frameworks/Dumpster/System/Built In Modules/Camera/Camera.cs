@@ -98,6 +98,7 @@ namespace Dumpster.Core.BuiltInModules {
 		private List<CameraController> _lowPriorityControllerStack;
 		private CameraController _defaultController;
 		
+		private CameraController _lastController;
 		private CameraController _controller {
 			get{ 
 				if ( _highPriorityControllerStack .Count > 0 ) {
@@ -128,12 +129,24 @@ namespace Dumpster.Core.BuiltInModules {
 		}
 		private void Update () {
 			
+			if ( _controller != _lastController ) {
+
+				if ( _controller != null ) {
+					_controller.WillGainControl ();
+				}
+				if( _lastController != null ) {
+					_lastController.WillLoseControl ();
+				}
+			}
+
 			if ( _controller != null ) {
 				_controller.Control ( _cameraTarget, _cameraFocus );
 			}
 			
 			_cameraInstance.transform.position = _cameraTarget.position;
 			_cameraInstance.transform.rotation = _cameraTarget.rotation;
+
+			_lastController = _controller;
 		}		
 	}
 }

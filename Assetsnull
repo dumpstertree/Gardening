@@ -1,0 +1,10 @@
+{
+    "WeaponParts": [],
+    "WeaponStats": {
+        "FireRate": 1.0,
+        "ReloadTime": 1.0,
+        "BulletSpeed": 1.0,
+        "ClipSize": 30,
+        "NumberOfBullets": 1
+    }
+}

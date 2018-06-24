@@ -4,521 +4,630 @@
 		"selected_items":
 		[
 			[
-				"is",
-				"IsFalling	bool { get; }"
-			],
-			[
-				"anima",
-				"Animator	Animator"
-			],
-			[
-				"Phys",
-				"PhysicAnimator	PhysicAnimator"
-			],
-			[
-				"p",
-				"PhysicsPlane	PhysicsPlane"
-			],
-			[
-				"nor",
-				"normalized	Vector3 { get; }"
-			],
-			[
-				"Inve",
-				"InverseTransformVector(Vector3 vector)	Vector3"
-			],
-			[
-				"for",
-				"Forward	Vector3 { get; }"
-			],
-			[
-				"hit",
-				"_hit	RaycastHit"
-			],
-			[
-				"_",
-				"_hit	Projection"
-			],
-			[
-				"bound",
-				"_bounds	Bounds"
-			],
-			[
-				"h",
-				"HitPoint	Vector3 { get; }"
-			],
-			[
-				"Rayc",
+				"raycas",
 				"RaycastHit	RaycastHit"
 			],
 			[
-				"_s",
-				"_bounds	Bounds"
+				"del",
+				"delta	Vector3"
 			],
 			[
-				"o",
-				"Offset	Vector3 { get; }"
+				"this",
+				"thisFrameTarget	Vector3"
 			],
 			[
-				"vect",
-				"Vector3	Vector3"
+				"unsc",
+				"unscaledDeltaTime	float { get; }"
 			],
 			[
-				"loc",
-				"localScale	Vector3 { get; set; }"
+				"_da",
+				"_dashTime	float"
+			],
+			[
+				"ienu",
+				"IEnumerator	IEnumerator"
+			],
+			[
+				"anima",
+				"AnimationCurve	AnimationCurve"
+			],
+			[
+				"new",
+				"newForward	Vector3"
+			],
+			[
+				"uns",
+				"unscaledDeltaTime	float { get; }"
+			],
+			[
+				"pr",
+				"private	private"
+			],
+			[
+				"h",
+				"Hit(BlackBox user, HitData data)	void"
+			],
+			[
+				"hi",
+				"HitDelegate	Hitable { get; }"
+			],
+			[
+				"_tar",
+				"_targetObject	InteractableObject"
+			],
+			[
+				"in",
+				"Interactable	Interactable"
+			],
+			[
+				"ede",
+				"Eden	Eden"
+			],
+			[
+				"_targ",
+				"_targetObject	Transform"
+			],
+			[
+				"hit",
+				"_hitData	HitData"
+			],
+			[
+				"_ta",
+				"_targetHit	RaycastHit"
+			],
+			[
+				"targ",
+				"_targetPos	Vector3 { get; }"
+			],
+			[
+				"_tr",
+				"_targetPos	Vector3"
+			],
+			[
+				"sped",
+				"_speed	float"
+			],
+			[
+				"_tag",
+				"_targetPos	Vector3"
+			],
+			[
+				"ani",
+				"AnimationCurve	AnimationCurve"
+			],
+			[
+				"Ede",
+				"EdensGarden	EdensGarden"
+			],
+			[
+				"back",
+				"BackRight	Back { get; }"
+			],
+			[
+				"pack",
+				"package2	Package"
+			],
+			[
+				"_ra",
+				"_randomPoint2	Vector3"
+			],
+			[
+				"start",
+				"_startPos	Vector3"
 			],
 			[
 				"vec",
 				"Vector3()	Vector3()"
 			],
 			[
-				"_phy",
-				"_physicsSize	Vector3"
+				"proper",
+				"PropertiesObject	PropertiesObject"
 			],
 			[
-				"_for",
-				"_forwardCollisionPlane	CollisionPlane"
+				"ma",
+				"IsMagnet	bool { get; }"
 			],
 			[
-				"_up",
-				"_upCollisionPlane	CollisionPlane"
+				"_mag",
+				"_magnet	Magnet"
 			],
 			[
-				"ispl",
-				"isPlaying	bool { get; }"
+				"_magn",
+				"_magnetic	Magnetic"
 			],
 			[
-				"ap",
-				"Application	Application"
+				"gam",
+				"GameObject	GameObject"
 			],
 			[
-				"mat",
-				"Mathf	Mathf"
+				"Gaem",
+				"GameObject	GameObject"
 			],
 			[
-				"_do",
-				"_downCollisionPlane	CollisionPlane"
+				"on",
+				"WaitForSeconds(float seconds, Action onComplete)	void"
 			],
 			[
-				"_down",
-				"_downRays	List<Ray> { get; }"
+				"hurt",
+				"OnHurt	HurtEvent"
 			],
 			[
-				"_dow",
-				"_downCollisionPlane	CollisionPlane"
+				"ac",
+				"Active	bool { get; set; }"
 			],
 			[
-				"_col",
-				"_downCollisionPlane	CollisionPlane"
-			],
-			[
-				"colliso",
-				"CollisionPlane	CollisionPlane"
-			],
-			[
-				"Vec",
-				"Vector3	Vector3"
-			],
-			[
-				"rays",
-				"rays	List<Ray>"
-			],
-			[
-				"Ray",
-				"Ray	Ray"
-			],
-			[
-				"_hadl",
-				"_halfWidth	float"
-			],
-			[
-				"_ha",
-				"_halfHeight	float"
-			],
-			[
-				"poin",
-				"point1	Vector3"
-			],
-			[
-				"point",
-				"point2	Vector3"
-			],
-			[
-				"str",
-				"struct	struct"
-			],
-			[
-				"app",
-				"Apply()	void"
-			],
-			[
-				"_co",
-				"_isDownColliding	bool { get; }"
-			],
-			[
-				"_phys",
-				"_physicsSize	Vector3"
-			],
-			[
-				"transform",
-				"TransformPoint(Vector3 position)	Vector3"
-			],
-			[
-				"in",
-				"InverseTransformDirection(Vector3 direction)	Vector3"
-			],
-			[
-				"loca",
-				"localPosition	Vector3 { get; set; }"
-			],
-			[
-				"sc",
-				"localScale	Vector3 { get; set; }"
-			],
-			[
-				"raycase",
-				"RAYCAST_DISTANCE	float"
-			],
-			[
-				"local",
-				"localPosition	Vector3 { get; set; }"
-			],
-			[
-				"size",
-				"_physicsSize	Vector3"
-			],
-			[
-				"raysca",
-				"RAYCAST_DISTANCE	float"
-			],
-			[
-				"_is",
-				"_isUpColliding	bool { get; }"
-			],
-			[
-				"_ph",
-				"_physicsSize	Vector3"
-			],
-			[
-				"drawire",
-				"DrawWireCube(Vector3 center, Vector3 size)	void"
-			],
-			[
-				"_p",
-				"_physicsSize	Vector3"
-			],
-			[
-				"drawwi",
-				"DrawWireCube(Vector3 center, Vector3 size)	void"
-			],
-			[
-				"num",
-				"numZRays	int"
-			],
-			[
-				"roun",
-				"RoundToInt(float f)	int"
-			],
-			[
-				"m",
-				"min	Vector3 { get; set; }"
-			],
-			[
-				"Anima",
-				"Animator	Animator"
-			],
-			[
-				"ri",
-				"Rigidbody	Rigidbody { get; }"
-			],
-			[
-				"pos",
-				"MovePosition(Vector3 position)	void"
-			],
-			[
-				"clam",
-				"Clamp(float value, float min, float max)	float"
-			],
-			[
-				"_d",
-				"_isDownColliding	bool { get; }"
-			],
-			[
-				"dista",
-				"RAYCAST_DISTANCE	float"
-			],
-			[
-				"box",
-				"_boxCollider	BoxCollider"
-			],
-			[
-				"_f",
-				"_isFalling	bool { get; }"
-			],
-			[
-				"_ra",
-				"_fallingRay	Ray { get; }"
-			],
-			[
-				"ra",
-				"Ray()	Ray()"
-			],
-			[
-				"Ra",
-				"Ray()	Ray()"
-			],
-			[
-				"draw",
-				"DrawRay(Ray r)	void"
-			],
-			[
-				"raycas",
-				"RaycastHit	RaycastHit"
-			],
-			[
-				"getcom",
-				"GetComponent(Type type)	Component"
+				"inter",
+				"_interactableObject	InteractableObject"
 			],
 			[
 				"game",
 				"gameObject	GameObject { get; }"
 			],
 			[
+				"gameob",
+				"gameObject	GameObject { get; }"
+			],
+			[
+				"_",
+				"_onMagnet	SmartEvent[]"
+			],
+			[
+				"Mage",
+				"Magnetic	Magnetic"
+			],
+			[
+				"magnet",
+				"Magnetic	Magnetic"
+			],
+			[
+				"getcom",
+				"GetComponent<T>()	T"
+			],
+			[
+				"vect",
+				"Vector3	Vector3"
+			],
+			[
+				"d",
+				"Distance(Vector3 a, Vector3 b)	float"
+			],
+			[
+				"best",
+				"bestDist	float"
+			],
+			[
+				"magn",
+				"_activeMagnets	List<Magnet>"
+			],
+			[
+				"remove",
+				"Remove(T item)	bool"
+			],
+			[
+				"Mag",
+				"Magnet	Magnet"
+			],
+			[
+				"getcomponein",
+				"GetComponentsInChildren<T>()	T[]"
+			],
+			[
+				"ran",
+				"Range(float min, float max)	float"
+			],
+			[
+				"Heal",
+				"HEALTH_DROP_PATH	string"
+			],
+			[
+				"lo",
+				"Load<T>(string path)	T"
+			],
+			[
+				"_ma",
+				"_maxHealth	int"
+			],
+			[
+				"_max",
+				"_maxNumOfDrops	float"
+			],
+			[
+				"Max",
+				"MAX_ORB_SIZE	float"
+			],
+			[
+				"Min",
+				"MIN_ORB_SZIE	float"
+			],
+			[
+				"ve",
+				"Vector3()	Vector3()"
+			],
+			[
+				"cl",
+				"Clamp01(float value)	float"
+			],
+			[
+				"trans",
+				"transform	Transform { get; }"
+			],
+			[
+				"is",
+				"IsPowered	bool { get; }"
+			],
+			[
+				"vc",
+				"Vector3()	Vector3()"
+			],
+			[
+				"rt",
+				"rotation	Quaternion { get; set; }"
+			],
+			[
+				"target",
+				"_target	BlackBox"
+			],
+			[
+				"hand",
+				"HandleOnHit()	void"
+			],
+			[
 				"ca",
-				"case	case"
+				"CanShoot	bool { get; }"
 			],
 			[
-				"appl",
-				"ApplyLighting()	void"
+				"_a",
+				"_cameraHorizontal	float"
 			],
 			[
-				"amnb",
-				"ambientMode	AmbientMode { get; set; }"
+				"camer",
+				"cameraHorizontal	float"
 			],
 			[
-				"amsk",
-				"ambientSkyColor	Color { get; set; }"
+				"UNi",
+				"UnityEngine	UnityEngine"
 			],
 			[
-				"groun",
-				"Ground	Color { get; }"
+				"coll",
+				"collision	Collider"
 			],
 			[
-				"eq",
-				"equator	Color"
+				"loca",
+				"localPosition	Vector3 { get; set; }"
 			],
 			[
-				"sky",
-				"Sky	Color { get; }"
+				"o",
+				"OnShake	ShakeEvent"
 			],
 			[
-				"rending",
+				"n",
+				"null	null"
+			],
+			[
+				"re",
+				"RegisterShakableForFrame(Shakable shakable)	void"
+			],
+			[
+				"_h",
+				"_horizontal	float"
+			],
+			[
+				"_num",
+				"_numOfTimesCanPass	int"
+			],
+			[
+				"st",
+				"startRotation	Quaternion"
+			],
+			[
+				"s",
+				"Sequence	Sequence"
+			],
+			[
+				"spe",
+				"_speaker	SpeakerInfo"
+			],
+			[
+				"spea",
+				"SpeakerInfo	SpeakerInfo"
+			],
+			[
+				"pres",
+				"PresentDialogSequence(Sequence sequence)	void"
+			],
+			[
+				"getc",
+				"GetComponent<T>()	T"
+			],
+			[
+				"get",
+				"GetContext(string panelIdentifier)	Panel"
+			],
+			[
+				"u",
+				"UI	Controller { get; set; }"
+			],
+			[
+				"i",
+				"Item	InventoryItem { get; }"
+			],
+			[
+				"Invn",
+				"InventoryItem	InventoryItem"
+			],
+			[
+				"ed",
+				"EdensGarden	EdensGarden"
+			],
+			[
+				"can",
+				"CanInteract	bool { get; }"
+			],
+			[
+				"In",
+				"Interactable	Interactable"
+			],
+			[
+				"an",
+				"AxisAngle(Vector3 axis, float angle)	Quaternion"
+			],
+			[
+				"_an",
+				"_animationTrigger	string"
+			],
+			[
+				"wa",
+				"WeaponStats	Stats"
+			],
+			[
+				"invento",
+				"InventoryItem	InventoryItem"
+			],
+			[
+				"pos",
+				"posInCurve	float"
+			],
+			[
+				"targe",
+				"targetScale	Vector3"
+			],
+			[
+				"star",
+				"startScale	Vector3"
+			],
+			[
+				"local",
+				"localScale	Vector3 { get; set; }"
+			],
+			[
+				"animatio",
+				"animationDuration	float"
+			],
+			[
+				"anim",
+				"Animation	Animation"
+			],
+			[
+				"Anima",
+				"AnimationCurve	AnimationCurve"
+			],
+			[
+				"ednes",
 				"RenderSettings	RenderSettings"
+			],
+			[
+				"b",
+				"BlackBox	BlackBox"
+			],
+			[
+				"Game",
+				"GameObject	GameObject"
+			],
+			[
+				"Movem",
+				"MovementVertical	float { get; set; }"
+			],
+			[
+				"_ver",
+				"_verticalRot	float"
+			],
+			[
+				"_hor",
+				"_horizontalRot	float"
+			],
+			[
+				"cam",
+				"camLeft	Vector3"
+			],
+			[
+				"ver",
+				"CameraVertical	float { get; set; }"
+			],
+			[
+				"_ho",
+				"_cameraHorizontal	float"
 			],
 			[
 				"unity",
 				"UnityEngine	UnityEngine"
 			],
 			[
-				"lightn",
-				"LightingPalleteColors	LightingPalleteColors"
+				"anc",
+				"AxisAngle(Vector3 axis, float angle)	Quaternion"
 			],
 			[
-				"_cam",
-				"_cameraPrefab	Camera"
+				"eden",
+				"EdensGarden	EdensGarden"
 			],
 			[
-				"targ",
-				"TargetCameraRotation	Quaternion { get; }"
+				"camera",
+				"cameraVertical	float"
 			],
 			[
-				"statca",
-				"StaticCameraPoint	StaticCameraPoint"
+				"_ca",
+				"_cameraHorizontal	float"
 			],
 			[
-				"Game",
-				"GameObject()	GameObject()"
+				"_came",
+				"_cameraVertical	float"
 			],
 			[
 				"_camer",
-				"_cameraInstance	CameraMovement"
+				"_cameraHorizontal	float"
 			],
 			[
-				"Staticcam",
-				"StaticCameraPoint	StaticCameraPoint"
+				"_camera",
+				"_cameraHorizontal	float"
 			],
 			[
-				"getcompoinet",
-				"GetComponentInChildren<T>()	T"
+				"bum",
+				"Bumper_Down	bool { get; }"
 			],
 			[
-				"fo",
-				"CameraFocus	Transform { get; }"
+				"bu",
+				"Bumper	bool { get; }"
 			],
 			[
-				"fireont",
-				"FireOnRangeExitEvent()	void"
+				"bac",
+				"BackRight	Back { get; }"
 			],
 			[
-				"de",
-				"delegate	delegate"
+				"getbac",
+				"GetRightBackAnalog()	Back"
 			],
 			[
-				"cubs",
-				"DrawWireCube(Vector3 center, Vector3 size)	void"
+				"gebac",
+				"GetRightBackAnalog()	Back"
 			],
 			[
-				"caer",
-				"CameraFocus	Transform { get; }"
+				"Bac",
+				"BackRight	Back { get; }"
 			],
 			[
-				"ta",
-				"CameraTarget	Transform { get; }"
+				"Back",
+				"BackLeft	Back { get; }"
 			],
 			[
-				"load",
-				"LoadedPlayer	Player { get; }"
+				"Bum",
+				"Bumper_Up	bool { get; }"
 			],
 			[
-				"camer",
-				"CameraSystem	CameraSystem"
-			],
-			[
-				"prefab",
-				"PrefabUtility	PrefabUtility"
-			],
-			[
-				"_pai",
-				"_paintingDensity	float"
-			],
-			[
-				"key",
-				"KeyDown	EventType"
-			],
-			[
-				"on",
-				"onSceneGUIDelegate	OnSceneFunc"
-			],
-			[
-				"scene",
-				"SceneView	SceneView"
-			],
-			[
-				"Mouseu",
-				"mouseUp	EventType"
-			],
-			[
-				"mouse",
-				"MouseUp	EventType"
-			],
-			[
-				"mous",
-				"MouseUp	EventType"
-			],
-			[
-				"get",
-				"GetTypeForControl(int controlID)	EventType"
-			],
-			[
-				"typ",
-				"GetTypeForControl(int controlID)	EventType"
-			],
-			[
-				"Event",
-				"EventType	EventType"
-			],
-			[
-				"Handel",
-				"HandleUtility	HandleUtility"
-			],
-			[
-				"hande",
-				"HandleUtility	HandleUtility"
-			],
-			[
-				"sphe",
-				"DrawSphere(int controlID, Vector3 position, Quaternion rotation, float size)	void"
-			],
-			[
-				"dsp",
-				"DrawWireSphere(Vector3 center, float radius)	void"
-			],
-			[
-				"Even",
-				"EventType	EventType"
-			],
-			[
-				"keyu",
-				"KeyUp	EventType"
-			],
-			[
-				"Eve",
-				"EventType	EventType"
-			],
-			[
-				"update",
-				"UpdateTransform(Transform t)	void"
-			],
-			[
-				"rem",
-				"RemoveAt(int index)	void"
-			],
-			[
-				"_paint",
-				"_paintingPrefabs	List<GameObject>"
-			],
-			[
-				"new",
-				"newItem	GameObject"
-			],
-			[
-				"_pain",
-				"_paintingPrefabs	List<GameObject>"
-			],
-			[
-				"ser",
-				"serialized	SerializedObject"
-			],
-			[
-				"Editor",
-				"Editor	Editor"
-			],
-			[
-				"gma",
-				"GameObject	GameObject"
-			],
-			[
-				"edit",
-				"EditorGUILayout	EditorGUILayout"
-			],
-			[
-				"edi",
-				"EditorGUILayout	EditorGUILayout"
-			],
-			[
-				"Editorgu",
-				"EditorGUILayout	EditorGUILayout"
-			],
-			[
-				"_pa",
-				"_paintingPrefabs	GameObject[]"
-			],
-			[
-				"guila",
-				"GUILayout	GUILayout"
-			],
-			[
-				"scale",
-				"scaleZ	float"
-			],
-			[
-				"_minro",
-				"_minZRotation	float"
+				"Down",
+				"Down_Up	bool { get; }"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "Assets/Scripts/Eden/Interactors/Bullet.cs",
+			"settings":
+			{
+				"buffer_size": 4089,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Frameworks/Dumpster/Model/Life/Visual.cs",
+			"settings":
+			{
+				"buffer_size": 123,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/Life/BlackBox.cs",
+			"settings":
+			{
+				"buffer_size": 3372,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
+			"settings":
+			{
+				"buffer_size": 2936,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs",
+			"settings":
+			{
+				"buffer_size": 2257,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 298 files for \"corss\"\n\n0 matches\n\nSearching 298 files for \"cross\"\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/VertexPaint-master/ReadMe.txt:\n   29  Additional Vertex Streams\n   30  \n   31: 	This package allows you to paint information onto the vertices of a mesh in the Unity editor as well as modify any attribute of the mesh. It uses the new 'additionalVertexStream' system of Unity5, which allows you to override per-instance data on meshes without paying the cost of duplicating a full mesh. This makes it ideal for painting vertex information across many instances of a mesh. The tool also allows you to easily bake that information back to mesh assets if you'd prefer to make a modified mesh and store that in disk, instead of with the instance in the scene. \n   32  \n   33  Features\n   ..\n   64  	Each layer has controls for texture scaling, parallax height, and a contrast which controls the width of the blending area between each layer. \n   65  \n   66: 	The shader also allows you to designate one layer of the shader to flow mode. This distorts the texture along directional vectors painted into the third UV set (The first UV set is used for your UV mapping, and Unity uses the second UV set for enlighten data). This is useful to create flowing water, lava, or other effects. The flow layer contains controls for speed and intensity, allowing you to modify the effect globally across the material. The flow layer can optionally use alpha and refraction to distort the layers below it. The normal map will be used as the refraction direction.  \n   67  \n   68  	There is also an option for Distance UV blending- this is mostly useful for terrain type features. What this does is generate a scaled set of UVs and blend between two samples based on the distance from the camera. \n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/VertexPaint-master/Editor/PaintJob.cs:\n   10        public Renderer renderer;\n   11        public VertexInstanceStream _stream;\n   12:       // cache of data we often need so we don't have to cross the c#->cpp bridge often \n   13        public Vector3[] verts;\n   14        public Vector3[] normals;\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/VertexPaint-master/Editor/VertexPainterWindow_Painting.cs:\n 1778                    if (flowBrushType == FlowBrushType.Direction)\n 1779                    {\n 1780:                      Vector3 b = Vector3.Cross(n, new Vector3(t.x, t.y, t.z) * t.w);\n 1781  \n 1782  \n ....\n 1979              tangents[a].z = t.z;\n 1980              \n 1981:             tangents[a].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[a]) < 0.0f) ? -1.0f : 1.0f;\n 1982           }\n 1983           \n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Demo Level.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/Dungeon.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/Farm.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/Housing.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/Movement.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/SmallHome.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/TestLevel.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/Town.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/_Rooms/Farm/Home.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/_Rooms/Town/CraftingArea.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/_Rooms/Town/Gardening Shop.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/_Rooms/Town/General Shop.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Areas/_Rooms/Town/Gun Shop.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Prefabs/Camera.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Prefabs/Creatures.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Prefabs/Grass.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Prefabs/Modular.unity:\n    <binary>\n\n~/Documents/Unity Projects/Games/Gardening/Assets/Scenes/Prefabs/UI.unity:\n    <binary>\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs:\n   30  		var worldUp = Vector3.up;\n   31  		var camLeft = -Camera.main.transform.right;\n   32: 		var newForward = Vector3.Cross( worldUp , camLeft );\n   33  \n   34  		_player.transform.forward = newForward;\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/Grass.shader:\n   87                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n   88                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n   89:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n   90                  float4 node_392 = _Time + _TimeEditor;\n   91                  v.vertex.xyz += (normalize((float3(1,0.5,0.5)+v.normal))*o.vertexColor.r*sin(((o.vertexColor.b*3.141592654)+node_392.g))*_node_9613);\n   ..\n  226                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  227                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  228:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  229                  float4 node_392 = _Time + _TimeEditor;\n  230                  v.vertex.xyz += (normalize((float3(1,0.5,0.5)+v.normal))*o.vertexColor.r*sin(((o.vertexColor.b*3.141592654)+node_392.g))*_node_9613);\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/GroundShader.shader:\n  115                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  116                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  117:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  118                  float2 node_2643 = float2(mul(unity_ObjectToWorld, v.vertex).r,mul(unity_ObjectToWorld, v.vertex).b);\n  119                  float2 node_6982 = (node_2643*_VertexNoiseTiling);\n  ...\n  309                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  310                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  311:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  312                  float2 node_2643 = float2(mul(unity_ObjectToWorld, v.vertex).r,mul(unity_ObjectToWorld, v.vertex).b);\n  313                  float2 node_6982 = (node_2643*_VertexNoiseTiling);\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/InteractableObject.shader:\n  109                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  110                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  111:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  112                  o.posWorld = mul(unity_ObjectToWorld, v.vertex);\n  113                  o.pos = UnityObjectToClipPos(v.vertex );\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/Water.shader:\n   99                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  100                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  101:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  102                  float node_5675 = 0.0;\n  103                  float2 node_6951 = float2(mul(unity_ObjectToWorld, v.vertex).r,mul(unity_ObjectToWorld, v.vertex).b);\n  ...\n  274                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  275                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  276:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  277                  float node_5675 = 0.0;\n  278                  float2 node_6951 = float2(mul(unity_ObjectToWorld, v.vertex).r,mul(unity_ObjectToWorld, v.vertex).b);\n\n/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/WSGrid.shader:\n   78                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n   79                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n   80:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n   81                  o.posWorld = mul(unity_ObjectToWorld, v.vertex);\n   82                  float3 lightColor = _LightColor0.rgb;\n   ..\n  233                  o.normalDir = UnityObjectToWorldNormal(v.normal);\n  234                  o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );\n  235:                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);\n  236                  o.posWorld = mul(unity_ObjectToWorld, v.vertex);\n  237                  float3 lightColor = _LightColor0.rgb;\n\n35 matches across 27 files\n",
+			"settings":
+			{
+				"buffer_size": 9521,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs",
+			"settings":
+			{
+				"buffer_size": 1851,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/Smart Events/Shake.cs",
+			"settings":
+			{
+				"buffer_size": 463,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using UnityEngine;\nusing System.Collections;\nusing System.Collections.Generic;\n\nnamespace Dumpster.Core.BuiltInModules.Effects {\n\n	public class Controller : Module {\n\n		private GameObject _smoke {\n			get{ return Resources.Load( \"SmokeEffect\" ) as GameObject; }\n		}\n		private GameObject _fireworks {\n			get{ return Resources.Load( \"FireworksEffect\" ) as GameObject; }\n		}\n		private GameObject _hit {\n			get{ return Resources.Load( \"HitEffect\" ) as GameObject; }\n		}\n		private GameObject _faint {\n			get{ return Resources.Load( \"FaintEffect\" ) as GameObject; }\n		}\n		private GameObject _wakeUp {\n			get{ return Resources.Load( \"WakeUpEffect\" ) as GameObject; }\n		}\n\n		public void OneShot( ParticleType type, Vector3 position, Quaternion rotation ) {\n\n			GameObject prefab = null;\n\n			switch( type ) {\n				\n				case ParticleType.None:\n					return;\n\n				case ParticleType.Fireworks:\n					prefab =_fireworks;\n					break;\n\n				case ParticleType.Hit:\n					prefab = _hit;\n					break;\n\n				case ParticleType.Smoke:\n					prefab = _smoke;\n					break;\n\n				case ParticleType.Faint:\n					prefab = _faint;\n					break;\n\n				case ParticleType.WakeUp:\n					prefab = _wakeUp;\n					break;\n			}\n\n			if ( prefab != null ) {\n				\n				var go = Instantiate( prefab );\n				go.transform.position = position;\n				go.transform.rotation = rotation;\n			}\n		}\n		public void FreezeFrame ( float time ) {\n\n			StartCoroutine( FreezeFrameCoroutine(time) );\n		}\n		IEnumerator FreezeFrameCoroutine ( float time ) {\n\n			Time.timeScale = 0f;\n\n			for ( float t=0; t<time; t+=Time.unscaledDeltaTime ){\n				Time.timeScale = t/time;\n				yield return null;\n			}\n			\n			Time.timeScale = 1f;\n		}	\n\n		private List<Shakable>_shakables = new List<Shakable>();\n		\n		\n\n		private float _magnitude;\n		private float _decay;\n		private float _maxDistance = 30;\n		private Vector3 _startPos;\n\n		public void Shake ( Vector3 position, ShakePower power, DecayRate rate )  {\n\n			_startPos = position;\n			\n			switch ( power ) {\n				case ShakePower.Miniscule:\n					_magnitude += 1;\n					break;\n				case ShakePower.Light:\n					_magnitude += 2;\n					break;\n				case ShakePower.Medium :\n					_magnitude += 3;\n					break;\n				case ShakePower.Heavy :\n					_magnitude += 4;\n					break;\n				case ShakePower.Colossal:\n					_magnitude += 5;\n					break;\n				case ShakePower.PlanetShattering:\n					_magnitude += 6;\n					break;\n			}\n\n			switch ( rate ) {\n				case DecayRate.Quick :\n					_decay = 0.2f;\n					break;\n				case DecayRate.Medium:\n					_decay = 0.4f;\n					break;\n				case DecayRate.Long :\n					_decay = 0.6f;\n					break;\n			}\n		}\n		public void RegisterShakableForFrame ( Shakable shakable ) {\n			\n			_shakables.Add( shakable );\n		}\n		public void LateUpdate () {\n\n			_magnitude = _magnitude * _decay;\n			\n			if ( _magnitude > 0.01 ) {\n				\n				foreach ( Shakable s in _shakables ) {\n					\n					var d = Vector3.Distance( s.transform.position, _startPos ); \n					if ( d < _maxDistance ) {\n\n						var distDecay = 1 - d/_maxDistance;\n						s.Shake( _magnitude * distDecay );\n					}\n				}\n			}\n\n			_shakables.Clear();\n		}\n	}\n	public enum ShakePower {\n		\n		Miniscule,\n		Light,\n		Medium,\n		Heavy,\n		Colossal,\n		PlanetShattering\n	}\n	\n	public enum DecayRate {\n		Quick,\n		Medium,\n		Long\n	}\n\n	public enum ParticleType {\n		None,\n		Fireworks,\n		Hit,\n		Smoke,\n		Faint,\n		WakeUp\n	}\n}",
+			"file": "Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs",
+			"file_size": 3360,
+			"file_write_time": 131741772820000000,
+			"settings":
+			{
+				"buffer_size": 3301,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/To Be Moved/Model/Gun.cs",
+			"settings":
+			{
+				"buffer_size": 1691,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/To Be Moved/GunControl.cs",
+			"settings":
+			{
+				"buffer_size": 820,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/To Be Moved/Serialization/GunDataController.cs",
+			"settings":
+			{
+				"buffer_size": 1093,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Eden/UI/Panels/HUD.cs",
+			"settings":
+			{
+				"buffer_size": 2625,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -584,134 +693,134 @@
 	],
 	"file_history":
 	[
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/PhysicsPlane.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PhysicAnimator.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PlayerPhysicsAnimator.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/Physics.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/Projection.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/PlayerMovement.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Bounds.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/Projector.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PhysicsPlane.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Physics.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Area/Door.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/PlayerPassiveSubBrain.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Player.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/_Shared/Creature.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Enemy/EnemyBrain.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/InteractableObject.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/Vegetation.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/AreaController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Area.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Area/Cameras/Static/StaticCamera.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Area/Cameras/CameraSystem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/_External/VertexPaint-master/Editor/CustomUtilities/CombineMeshes.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/_External/VertexPaint-master/VertexInstanceStream.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/Worldv2.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Game.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/InputStack.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/StaticCameraPoint.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/StaticCamera.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CameraSystem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DynamicCamera.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/UIController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/TriPlanar/Shader/ToonLitMerge.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Vegetation.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Worldv2.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/TriPlanar/Shader/ToonLitTriPlanar.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/WorldShader.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/World.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/TriPlanar/TriPlanar.unity",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ObjectRandomizer.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/WorldShader.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/NewSurfaceShader.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/_Base/UiPanel.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Enemy/Enemy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/InteractableObject.shader",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Magnetic.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DropHealthDrop.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Black Box/BlackBox.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBox.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBoxes/Player.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Billboard.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DropItem.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/DropItems.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Rooms/Area.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Properties.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/HealthDrop.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Magnet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/InteractableObject.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Magnet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Magnetic.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/RandomWait.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Stats.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/DropItem.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/AddHealth.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Enemy/Turret.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Black Box/Chips/SightChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Enemy/Enemy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactors/Bullet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Gun.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/ShoulderCameraController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Health.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Hitable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/LookAtCenter.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/HUD.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/GunControl.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Serialization/PlayerDataController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Serialization/GunDataController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactors/Slash.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Custom/QuickSlotChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/AddItemsToInventory.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shakable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Subpanels/Dialog/DialogBox.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/InventoryItemTemplate.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Inventory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/Dialog/Dialog.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/ItemCrafting/ItemCrafting.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Sign.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/Dialog/DialogBox.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Dialogs.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/CustomInteractable/SwitchToCraftingContext.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/Editor/CreateDialog.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Interactions/QuickSlot.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/PlayerAgressiveSubBrain.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InputStack.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/PlayerInteractor.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/_Shared/Brain.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Player/Interactions/Interactor.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Input.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/Dialog/Dialog1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Dialog1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DialogSequence.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ShakeIn3DSpace.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/Worldv2.shader",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/PresentDialog1.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/UnlitWithShadows.shader",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Textures/UnlitWithShadows.shader",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/LimitedPass.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Dialog.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Template/InventoryItemTemplate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Actionable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/Rotate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Sequence.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Dialog/Sequence.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/SpeakerInfo.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Sequence.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Dialog.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/QuickSlotInventory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Serialization/PlayerDataController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Input/Layer.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/Dialog.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Dialog/Dialogs.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/Editor/CreateDialog.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/SpeakerInfo.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/Editor/CreateSequence.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/PresentDialog.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Dialog/DialogSequence.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/Editor/CreateSpeakerInfo.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/Editor/CreateSpeaker.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/UI/InteractivePanel.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Speaker.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Input/Controller.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/UI/InteractiveContext.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Module Delegates/UI/ContextDelegate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/UI/Layer.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/Controller.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/InteractData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/UI/Context.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/UI/Controller.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/InteractableObjects/Components/CustomInteractable/SwitchToCraftingContext.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PresentDialog.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/InteractableObjects/CustomBehaviors/DropItem.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Interactions/HoldItem.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/Explode.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/DropItemsFromInventory.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/InteractableObjects/Components/Optional/ItemDropper.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/AnimateBool.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/AnimateTrigger.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/Destroy1.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/QuickSlot.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/UI/Panel.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Interactable Effects/Stats.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/Ammo.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Items/Controller/ShootData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Input/Input Delegates/KeyboardInputDelegate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Input/Input Delegates/PS4InputDelegate.cs",
+		"/Users/zacharycollins/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/SmartEvent.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/EnemyShutdownChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/Instantiate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/Destroy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/ExplodeOnDeath.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Explosion.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Slash.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/HitParticle.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/FreezeFrameOnHit.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/Stats.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/RandomWait.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Wait.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Items/Controller/HitData2.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Life/BlackBox.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/FreezeFrameOnDeath.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/DeathParticle.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/FreezeFrameOnHit.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Bullet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Life/Chips/Custom/InteractorChip.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Controller/InteractData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/UseAnimation.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanPlant.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanPlace.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanHit.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/CustomBehaviors/DropItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Creature/Enemy/EnemyInteractor.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/InteractData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Data/ShootData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Template/ShootData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InteractData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Items/Controller/InteractData1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/QuickSlot.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/GunCrafting.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/Ammo.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Async.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Serialization/GunDataController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunRef.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/GunControl.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Gun.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanShoot.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InventoryItemTemplate.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/RefObjects/GunRef.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/InventoryItemFactory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/ItemManager.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/Usable/CanFeed.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CreateCraftingRecipe1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/MaterialItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scriptable/_Base/InventoryItems/NonUsableInventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/Inventory1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/InteractableObjects/Components/CustomInteractable/GunPartPickup.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Player/Player.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartInventory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/GunCrafting/CraftedGun.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/Reciever.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/Part.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/GunPartsRow.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ScriptableObjects/_Base/InventoryItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/GunCrafting/PartGraph.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/SubPanels/GunCrafting/GunParts.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ScriptableObjects/_Base/InventoryItemData.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Model/GunCrafting/PartGraph.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/GunCrafting/Collider.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CraftedGun.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartGraph.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Component.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunParts.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunCraftingPanel.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/PartGraph.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ObjectAnimator.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Elements/_Base/ItemBubbleUI.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Projector.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/PartGraph1.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunPartsRow.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/ItemCrafting.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Inventory.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/UI/Panels/_Base/InventoryUI.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Reciever.cs"
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Interactable Effects/Destroy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Items/Controller/HitData.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Interactable/Hitable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/UI/Panels/QuickSlot.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Module Delegates/UI/ContextDelegate.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Life/Chips/Custom/QuickSlotChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Game/Eden/Life/BlackBoxes/Player.cs"
 	],
 	"find":
 	{
@@ -730,6 +839,42 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cross",
+			"corss",
+			"inchildren",
+			"roam",
+			"onro",
+			"change",
+			"idle",
+			"void",
+			"Transform",
+			"public",
+			"part",
+			"lookawa",
+			"_equippedItemCenter",
+			"ser",
+			"RequestControl",
+			"if",
+			"_bottomKey",
+			"false",
+			"{\n",
+			"Core",
+			"animato",
+			"debu",
+			"print",
+			"int",
+			"public",
+			"namespace",
+			"_contextStack",
+			"None",
+			"ini",
+			"private",
+			"Keycode.L",
+			"void",
+			"using",
+			"CameraTarget",
+			"IsDefaultCamera",
+			"Public",
 			";\n",
 			"_rays_pro",
 			"_rays_",
@@ -821,43 +966,7 @@
 			"mouse",
 			"data",
 			"GameResources",
-			"Instantiate",
-			"target",
-			"playercom",
-			"uiwheelmen",
-			"currentmenu",
-			"change",
-			"changeinde",
-			"update",
-			"dest",
-			"initial",
-			"game",
-			".enable",
-			"ini",
-			"initi",
-			"intitia",
-			"battlemana",
-			"inti",
-			"intial",
-			"intiali",
-			"active",
-			"player",
-			"partici",
-			"input",
-			"inputdata",
-			"battleManagercont",
-			"battleMan",
-			"bma",
-			"image",
-			"text.tex",
-			"persis",
-			"move",
-			"average",
-			"visualizer",
-			"battle",
-			"EnemyTransferData",
-			"setstart",
-			"Calcshort"
+			"Instantiate"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -938,8 +1047,521 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Assets/Scripts/Eden/Interactors/Bullet.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4089,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3143,
+								3143
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"1423,1434": "The private field '_speedCurve' is never assigned",
+								"1647,1660": "The private field '_casingPrefab' is never assigned",
+								"1747,1764": "The private field '_dustEffectPrefab' is never assigned",
+								"1803,1823": "The private field '_collideEffectPrefab' is never assigned"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/Frameworks/Dumpster/Model/Life/Visual.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 123,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								79,
+								79
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"63,72": "'Alignment' is not a known identifier"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Assets/Scripts/Eden/Life/BlackBox.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3372,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								256,
+								256
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"1040,1055": "The private field '_interactorChip' is never assigned",
+								"1099,1113": "The private field '_quickslotChip' is never assigned",
+								"1152,1162": "The private field '_sightChip' is never assigned",
+								"1223,1242": "The private field '_interactableObject' is never assigned",
+								"1321,1327": "The private field '_stats' is never assigned",
+								"1406,1414": "The private field '_physics' is never assigned",
+								"1481,1500": "The private field '_equippedItemCenter' is never assigned",
+								"1566,1582": "The private field '_equippedItemTop' is never assigned",
+								"1648,1667": "The private field '_equippedItemBottom' is never assigned",
+								"1733,1750": "The private field '_equippedItemLeft' is never assigned",
+								"1816,1834": "The private field '_equippedItemRight' is never assigned",
+								"1899,1917": "The private field '_projectileSpawner' is never assigned",
+								"1956,1969": "The private field '_meleeSpawner' is never assigned",
+								"223,231": "Qualifier is redundant"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								45,
+								45
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"1158,1168": "Parameter 'horizontal' is never used",
+								"1176,1184": "Parameter 'vertical' is never used",
+								"1759,1760": "Assignment is redundant",
+								"504,514": "Comparison of floating point numbers can be unequal due to the differing precision of the two values.",
+								"523,531": "Comparison of floating point numbers can be unequal due to the differing precision of the two values.",
+								"749,774": "The private field '_shoulderCameraController' is never assigned",
+								"830,837": "The private field '_player' is never assigned",
+								"871,877": "The private field '_speed' is never assigned",
+								"920,930": "The private field '_dashCurve' is never assigned",
+								"964,973": "The private field '_dashTime' is never assigned"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2257,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1839,
+								1839
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"1126,1130": "Qualifier is redundant",
+								"165,172": "The private field '_player' is never assigned",
+								"225,235": "The private field '_agressive' is never assigned",
+								"286,294": "The private field '_passive' is never assigned",
+								"421,436": "The private field '_shoulderCamera' is never assigned"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 208.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9521,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										597,
+										602
+									],
+									[
+										1439,
+										1444
+									],
+									[
+										2111,
+										2116
+									],
+									[
+										2506,
+										2511
+									],
+									[
+										2688,
+										2693
+									],
+									[
+										4758,
+										4763
+									],
+									[
+										5171,
+										5176
+									],
+									[
+										5681,
+										5686
+									],
+									[
+										6284,
+										6289
+									],
+									[
+										6774,
+										6779
+									],
+									[
+										7363,
+										7368
+									],
+									[
+										7876,
+										7881
+									],
+									[
+										8338,
+										8343
+									],
+									[
+										8887,
+										8892
+									],
+									[
+										9311,
+										9316
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								4765,
+								4765
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1023.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1851,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1343,
+								1159
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Assets/Scripts/Eden/Smart Events/Shake.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 463,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								242,
+								242
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"144,158": "The private field '_shakePosition' is never assigned"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3301,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1716,
+								1716
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"1732,1742": "Convert to readonly"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 385.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Assets/Scripts/To Be Moved/Model/Gun.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1220,
+								1220
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Assets/Scripts/To Be Moved/GunControl.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 820,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								450,
+								450
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Assets/Scripts/To Be Moved/Serialization/GunDataController.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1093,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								547,
+								547
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"268,275": "Method 'SaveGun' can be made static.",
+								"552,557": "Code is unreachable",
+								"607,608": "Assignment is redundant"
+							},
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Assets/Scripts/Eden/UI/Panels/HUD.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2601,
+								2305
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 143.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1004,516 +1626,516 @@
 		"selected_items":
 		[
 			[
-				"physic",
-				"Assets/PhysicAnimator.cs"
+				"black",
+				"Assets/Scripts/Eden/Life/BlackBox.cs"
+			],
+			[
+				"vis",
+				"Assets/Frameworks/Dumpster/Model/Life/Visual.cs"
+			],
+			[
+				"bull",
+				"Assets/Scripts/Eden/Interactors/Bullet.cs"
 			],
 			[
 				"player",
-				"Assets/PlayerPhysicsAnimator.cs"
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs"
 			],
 			[
-				"playermo",
-				"Assets/Scripts/Creature/Player/PlayerMovement.cs"
+				"passib",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
 			],
 			[
-				"project",
-				"Assets/Frameworks/Dumpster/Physics/Projection.cs"
+				"agre",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs"
 			],
 			[
-				"proj",
-				"Assets/Scripts/UI/Elements/GunCrafting/Projector.cs"
+				"effe",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs"
 			],
 			[
-				"proje",
-				"Assets/Scripts/UI/Elements/GunCrafting/Projector.cs"
+				"sha",
+				"Assets/Scripts/Eden/Smart Events/Shake.cs"
 			],
 			[
-				"phys",
-				"Assets/Physics.cs"
+				"inp",
+				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs"
 			],
 			[
-				"bounds",
-				"Assets/Bounds.cs"
+				"gunlo",
+				"Assets/Scripts/To Be Moved/GunControl.cs"
 			],
 			[
-				"enemybrain",
-				"Assets/Scripts/Creature/Enemy/EnemyBrain.cs"
+				"gun",
+				"Assets/Scripts/To Be Moved/Model/Gun.cs"
+			],
+			[
+				"hud",
+				"Assets/Scripts/Eden/UI/Panels/HUD.cs"
+			],
+			[
+				"b",
+				"Assets/Billboard.cs"
+			],
+			[
+				"drop",
+				"Assets/DropItem.cs"
+			],
+			[
+				"dropit",
+				"Assets/Scripts/Eden/Smart Events/DropItems.cs"
+			],
+			[
+				"magnet",
+				"Assets/Scripts/Eden/Properties/Magnetic.cs"
+			],
+			[
+				"magne",
+				"Assets/Scripts/Eden/Properties/Magnet.cs"
+			],
+			[
+				"pro",
+				"Assets/Properties.cs"
+			],
+			[
+				"area",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Rooms/Area.cs"
+			],
+			[
+				"blac",
+				"Assets/Scripts/Eden/Life/BlackBox.cs"
+			],
+			[
+				"head",
+				"Assets/HealthDrop.cs"
+			],
+			[
+				"hea",
+				"Assets/HealthDrop.cs"
+			],
+			[
+				"mage",
+				"Assets/Scripts/Eden/Properties/Magnetic.cs"
+			],
+			[
+				"magen",
+				"Assets/Scripts/Eden/Properties/Magnet.cs"
+			],
+			[
+				"wait",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/RandomWait.cs"
+			],
+			[
+				"ran",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/RandomWait.cs"
+			],
+			[
+				"interac",
+				"Assets/Scripts/Eden/Interactable/InteractableObject.cs"
+			],
+			[
+				"interact",
+				"Assets/Shader/InteractableObject.shader"
+			],
+			[
+				"sta",
+				"Assets/Scripts/Eden/Interactable/Stats.cs"
+			],
+			[
+				"mag",
+				"Assets/Magnetic.cs"
+			],
+			[
+				"health",
+				"Assets/HealthDrop.cs"
+			],
+			[
+				"addhe",
+				"Assets/AddHealth.cs"
+			],
+			[
+				"ma",
+				"Assets/Magnetic.cs"
+			],
+			[
+				"turre",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Enemy/Turret.cs"
+			],
+			[
+				"sigh",
+				"Assets/Frameworks/Dumpster/Black Box/Chips/SightChip.cs"
 			],
 			[
 				"enem",
-				"Assets/Scripts/Creature/Enemy/EnemyBrain.cs"
+				"Assets/Scripts/Eden/Life/Chips/Logic/Enemy/Enemy.cs"
 			],
 			[
-				"crea",
-				"Assets/Scripts/Creature/_Shared/Creature.cs"
+				"hit",
+				"Assets/Scripts/Eden/Interactable/Hitable.cs"
 			],
 			[
-				"door",
-				"Assets/Scripts/Game/Area/Door.cs"
+				"agres",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs"
 			],
 			[
-				"pla",
-				"Assets/Scripts/Creature/Player/Player.cs"
+				"quicks",
+				"Assets/Scripts/Eden/Life/Chips/Custom/QuickSlotChip.cs"
 			],
 			[
-				"creat",
-				"Assets/Scripts/Creature/_Shared/Creature.cs"
+				"look",
+				"Assets/LookAtCenter.cs"
 			],
 			[
-				"passive",
-				"Assets/Scripts/Creature/Player/PlayerPassiveSubBrain.cs"
+				"should",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/ShoulderCameraController.cs"
 			],
 			[
-				"playerm",
-				"Assets/Scripts/Creature/Player/PlayerMovement.cs"
+				"camera",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs"
 			],
 			[
-				"playe",
-				"Assets/Scripts/Creature/Player/PlayerMovement.cs"
+				"pass",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
 			],
 			[
-				"playerpas",
-				"Assets/Scripts/Creature/Player/PlayerPassiveSubBrain.cs"
+				"shoulder",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/ShoulderCameraController.cs"
 			],
 			[
-				"areaco",
-				"Assets/Scripts/Game/AreaController.cs"
+				"follow",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
 			],
 			[
-				"veg",
-				"Assets/Shader/Vegetation.shader"
+				"datacon",
+				"Assets/Scripts/To Be Moved/Serialization/PlayerDataController.cs"
 			],
 			[
-				"comb",
-				"Assets/_External/VertexPaint-master/Editor/CustomUtilities/CombineMeshes.cs"
+				"bu",
+				"Assets/Scripts/Eden/Interactors/Bullet.cs"
 			],
 			[
-				"verte",
-				"Assets/_External/VertexPaint-master/VertexInstanceStream.cs"
+				"additem",
+				"Assets/Scripts/Eden/Smart Events/AddItemsToInventory.cs"
 			],
 			[
-				"vege",
-				"Assets/Shader/Vegetation.shader"
+				"sla",
+				"Assets/Scripts/Eden/Interactors/Slash.cs"
+			],
+			[
+				"blackb",
+				"Assets/Scripts/Eden/Life/BlackBox.cs"
+			],
+			[
+				"stat",
+				"Assets/Scripts/Eden/Interactable/Stats.cs"
+			],
+			[
+				"s",
+				"Assets/ShakeIn3DSpace.cs"
+			],
+			[
+				"presne",
+				"Assets/Scripts/Eden/Smart Events/PresentDialog1.cs"
+			],
+			[
+				"efe",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs"
+			],
+			[
+				"shak",
+				"Assets/Shakable.cs"
 			],
 			[
 				"world",
 				"Assets/Shader/Worldv2.shader"
 			],
 			[
-				"area",
-				"Assets/Scripts/Game/AreaController.cs"
+				"u",
+				"Assets/UnlitWithShadows.shader"
 			],
 			[
-				"staticca",
-				"Assets/Scripts/Game/Area/Cameras/Static/StaticCamera.cs"
+				"unlitwi",
+				"Assets/Textures/UnlitWithShadows.shader"
 			],
 			[
-				"camerea",
-				"Assets/Scripts/Game/Area/Cameras/CameraSystem.cs"
+				"aggress",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs"
 			],
 			[
-				"stat",
-				"Assets/StaticCameraPoint.cs"
+				"limit",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/LimitedPass.cs"
 			],
 			[
-				"dyna",
-				"Assets/DynamicCamera.cs"
+				"rota",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/Rotate.cs"
 			],
 			[
-				"camera",
-				"Assets/CameraSystem.cs"
+				"hita",
+				"Assets/Scripts/Eden/Interactable/Hitable.cs"
 			],
 			[
-				"game",
-				"Assets/Scripts/Game/Game.cs"
-			],
-			[
-				"inputst",
-				"Assets/Scripts/Game/InputStack.cs"
-			],
-			[
-				"merge",
-				"Assets/TriPlanar/Shader/ToonLitMerge.shader"
-			],
-			[
-				"wor",
-				"Assets/Worldv2.shader"
-			],
-			[
-				"ve",
-				"Assets/Vegetation.shader"
-			],
-			[
-				"tripla",
-				"Assets/TriPlanar/Shader/ToonLitTriPlanar.shader"
-			],
-			[
-				"trippla",
-				"Assets/TriPlanar/TriPlanar.unity"
-			],
-			[
-				"random",
-				"Assets/ObjectRandomizer.cs"
-			],
-			[
-				"new",
-				"Assets/NewSurfaceShader.shader"
-			],
-			[
-				"trip",
-				"Assets/TriPlanar/Shader/ToonLitTriPlanar.shader"
-			],
-			[
-				"ene",
-				"Assets/Scripts/Creature/Enemy/Enemy.cs"
-			],
-			[
-				"item",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"inventor",
-				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
-			],
-			[
-				"dialogb",
-				"Assets/Scripts/UI/SubPanels/Dialog/DialogBox.cs"
-			],
-			[
-				"creatd",
-				"Assets/Scriptable/_Base/Editor/CreateDialog.cs"
-			],
-			[
-				"sign",
-				"Assets/Sign.cs"
-			],
-			[
-				"dial",
-				"Assets/Scripts/UI/Panels/Dialog/Dialog.cs"
-			],
-			[
-				"dialo",
-				"Assets/Scripts/UI/Panels/Dialog/Dialog.cs"
-			],
-			[
-				"uipan",
-				"Assets/Scripts/UI/Panels/_Base/UiPanel.cs"
-			],
-			[
-				"uipane",
-				"Assets/Scripts/UI/Panels/ItemCrafting/ItemCrafting.cs"
-			],
-			[
-				"dialogs",
-				"Assets/Dialogs.cs"
-			],
-			[
-				"uicont",
-				"Assets/Scripts/Game/UIController.cs"
+				"act",
+				"Assets/Scripts/Eden/Interactable/Actionable.cs"
 			],
 			[
 				"dialog",
-				"Assets/Dialogs.cs"
+				"Assets/Scripts/Eden/UI/Subpanels/Dialog/DialogBox.cs"
 			],
 			[
-				"craftin",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/SwitchToCraftingContext.cs"
+				"inven",
+				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
 			],
 			[
-				"pick",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+				"temple",
+				"Assets/Scripts/To Be Moved/Model/Template/InventoryItemTemplate.cs"
 			],
 			[
-				"toonli",
-				"Assets/TriPlanar/Shader/ToonLitMerge.shader"
+				"dialo",
+				"Assets/Scripts/Eden/Model/Dialog.cs"
 			],
 			[
-				"playermove",
-				"Assets/Scripts/Creature/Player/PlayerMovement.cs"
+				"sepa",
+				"Assets/Scripts/Eden/Model/SpeakerInfo.cs"
 			],
 			[
-				"uicon",
-				"Assets/Scripts/Game/UIController.cs"
+				"seq",
+				"Assets/Scripts/Eden/Sequence.cs"
 			],
 			[
-				"input",
-				"Assets/Scripts/Game/InputStack.cs"
+				"dailo",
+				"Assets/Scripts/Eden/Model/Dialog.cs"
 			],
 			[
-				"craft",
-				"Assets/Scripts/UI/Panels/ItemCrafting/ItemCrafting.cs"
+				"presen",
+				"Assets/Scripts/Eden/Smart Events/PresentDialog.cs"
 			],
 			[
-				"panel",
-				"Assets/Scripts/UI/Panels/_Base/UiPanel.cs"
+				"spear",
+				"Assets/SpeakerInfo.cs"
 			],
 			[
-				"plyaer",
-				"Assets/Scripts/Creature/Player/Player.cs"
+				"dialogbo",
+				"Assets/Scripts/Eden/UI/Subpanels/Dialog/DialogBox.cs"
 			],
 			[
-				"playerbrain",
-				"Assets/Scripts/Creature/Player/PlayerPassiveSubBrain.cs"
+				"dial",
+				"Assets/Scripts/Eden/UI/Panels/Dialog.cs"
 			],
 			[
-				"brain",
-				"Assets/Scripts/Creature/_Shared/Brain.cs"
+				"sequence",
+				"Assets/Scriptable/_Base/Editor/CreateSequence.cs"
 			],
 			[
-				"crafting",
-				"Assets/Scripts/UI/Panels/ItemCrafting/ItemCrafting.cs"
+				"sequ",
+				"Assets/Scripts/To Be Moved/Model/Dialog/Sequence.cs"
 			],
 			[
-				"plyaerint",
-				"Assets/Scripts/Creature/Player/PlayerInteractor.cs"
+				"speak",
+				"Assets/SpeakerInfo.cs"
 			],
 			[
-				"inp",
-				"Assets/InputStack.cs"
+				"creadi",
+				"Assets/Scriptable/_Base/Editor/CreateDialog.cs"
 			],
 			[
-				"playerinter",
-				"Assets/Scripts/Creature/Player/PlayerInteractor.cs"
-			],
-			[
-				"interac",
-				"Assets/Scripts/Creature/Player/Interactions/Interactor.cs"
-			],
-			[
-				"play",
-				"Assets/Scripts/Creature/Player/Player.cs"
-			],
-			[
-				"uic",
-				"Assets/Scripts/Game/UIController.cs"
-			],
-			[
-				"ui",
-				"Assets/Scripts/Game/UIController.cs"
+				"creates",
+				"Assets/Scriptable/_Base/Editor/CreateSpeakerInfo.cs"
 			],
 			[
 				"dia",
-				"Assets/Scripts/UI/SubPanels/Dialog/DialogBox.cs"
+				"Assets/Scripts/To Be Moved/Model/Dialog/Dialogs.cs"
 			],
 			[
-				"dio",
-				"Assets/DialogSequence.cs"
+				"spea",
+				"Assets/SpeakerInfo.cs"
 			],
 			[
-				"data",
-				"Assets/Scripts/Serialization/PlayerDataController.cs"
+				"createspe",
+				"Assets/Scriptable/_Base/Editor/CreateSpeaker.cs"
 			],
 			[
-				"quick",
-				"Assets/QuickSlotInventory.cs"
+				"layer",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Input/Layer.cs"
 			],
 			[
-				"inventoryitemda",
-				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
+				"controller",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Input/Controller.cs"
 			],
 			[
-				"can",
-				"Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs"
+				"layr",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/UI/Layer.cs"
 			],
 			[
-				"itemdro",
-				"Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs"
+				"cont",
+				"Assets/Frameworks/Dumpster/Physics/Controller.cs"
 			],
 			[
-				"quicke",
-				"Assets/QuickSlotInventory.cs"
+				"contex",
+				"Assets/Scripts/Eden/Module Delegates/UI/ContextDelegate.cs"
 			],
 			[
-				"itemtep",
-				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
+				"conte",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/UI/Context.cs"
+			],
+			[
+				"diao",
+				"Assets/Scripts/Eden/UI/Panels/Dialog.cs"
+			],
+			[
+				"craftin",
+				"Assets/Scripts/To Be Moved/InteractableObjects/Components/CustomInteractable/SwitchToCraftingContext.cs"
+			],
+			[
+				"inter",
+				"Assets/Scripts/Eden/Modules/Subclasses/UI/InteractiveContext.cs"
+			],
+			[
+				"contr",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/UI/Controller.cs"
+			],
+			[
+				"invent",
+				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
+			],
+			[
+				"interactd",
+				"Assets/Scripts/To Be Moved/Model/InteractData.cs"
+			],
+			[
+				"dropi",
+				"Assets/Scripts/To Be Moved/InteractableObjects/CustomBehaviors/DropItem.cs"
+			],
+			[
+				"holdi",
+				"Assets/Scripts/To Be Moved/Interactions/HoldItem.cs"
+			],
+			[
+				"add",
+				"Assets/Scripts/Eden/Smart Events/AddItemsToInventory.cs"
+			],
+			[
+				"expl",
+				"Assets/Scripts/Eden/Smart Events/Explode.cs"
+			],
+			[
+				"actio",
+				"Assets/Scripts/Eden/Interactable/Actionable.cs"
+			],
+			[
+				"interactoc",
+				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
 			],
 			[
 				"inve",
 				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
 			],
 			[
-				"invent",
-				"Assets/Scripts/Model/Inventory.cs"
+				"interactbal",
+				"Assets/Scripts/Eden/Interactable/InteractableObject.cs"
 			],
 			[
-				"picku",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+				"action",
+				"Assets/Scripts/Eden/Interactable/Actionable.cs"
 			],
 			[
-				"droptie",
-				"Assets/Scripts/InteractableObjects/CustomBehaviors/DropItem.cs"
+				"itemd",
+				"Assets/Scripts/To Be Moved/InteractableObjects/Components/Optional/ItemDropper.cs"
 			],
 			[
-				"qui",
-				"Assets/QuickSlotInventory.cs"
+				"dropitems",
+				"Assets/Scripts/Eden/Smart Events/DropItemsFromInventory.cs"
 			],
 			[
-				"datacont",
-				"Assets/Scripts/Serialization/PlayerDataController.cs"
+				"anima",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/AnimateBool.cs"
 			],
 			[
-				"iventoryload",
-				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
-			],
-			[
-				"inventoryir",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"interactda",
-				"Assets/Scripts/Model/Items/Controller/InteractData.cs"
-			],
-			[
-				"inter",
-				"Assets/Scripts/Model/Template/InteractData.cs"
-			],
-			[
-				"interact",
-				"Assets/Scripts/Model/Template/InteractData.cs"
-			],
-			[
-				"inventory",
-				"Assets/Scripts/Model/Template/InventoryItemTemplate.cs"
-			],
-			[
-				"inveo",
-				"Assets/Scriptable/_Base/InventoryItems/_Serialized/InventoryItemData.cs"
-			],
-			[
-				"inventoryit",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"interactdata",
-				"Assets/Scripts/Model/Items/Controller/InteractData1.cs"
-			],
-			[
-				"shootd",
-				"Assets/Scripts/Model/Items/Data/ShootData.cs"
-			],
-			[
-				"shootda",
-				"Assets/Scripts/Model/Template/ShootData.cs"
-			],
-			[
-				"interactdat",
-				"Assets/InteractData.cs"
-			],
-			[
-				"guncra",
-				"Assets/Scripts/UI/Panels/GunCrafting.cs"
-			],
-			[
-				"ammo",
-				"Assets/Scripts/UI/Panels/Ammo.cs"
-			],
-			[
-				"datac",
-				"Assets/Scripts/Serialization/GunDataController.cs"
+				"des",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/Destroy1.cs"
 			],
 			[
 				"shoot",
-				"Assets/Scripts/Model/Items/Data/ShootData.cs"
+				"Assets/Scripts/To Be Moved/Model/Items/Controller/ShootData.cs"
 			],
 			[
-				"gunre",
-				"Assets/GunRef.cs"
+				"amm",
+				"Assets/Scripts/Eden/UI/Panels/Ammo.cs"
 			],
 			[
-				"gun",
-				"Assets/Scripts/Model/Gun.cs"
+				"quic",
+				"Assets/Scripts/Eden/Life/Chips/Custom/QuickSlotChip.cs"
 			],
 			[
-				"guncont",
-				"Assets/Scripts/Game/GunControl.cs"
+				"quick",
+				"Assets/Scripts/Eden/UI/Panels/QuickSlot.cs"
 			],
 			[
-				"ays",
-				"Assets/Scripts/Game/Async.cs"
+				"uide",
+				"Assets/Scripts/Eden/Module Delegates/UI/ContextDelegate.cs"
 			],
 			[
-				"shootdat",
-				"Assets/Scripts/Model/Items/Data/ShootData.cs"
+				"shoul",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/ShoulderCameraController.cs"
 			],
 			[
-				"shoo",
-				"Assets/Scriptable/_Base/InventoryItems/Usable/CanShoot.cs"
+				"cmaera",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs"
 			],
 			[
-				"template",
-				"Assets/InventoryItemTemplate.cs"
+				"keyb",
+				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input Delegates/KeyboardInputDelegate.cs"
 			],
 			[
-				"canus",
-				"Assets/Scriptable/_Base/InventoryItems/Usable/CanUse.cs"
+				"ps4",
+				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input Delegates/PS4InputDelegate.cs"
 			],
 			[
-				"playerin",
-				"Assets/Scripts/Creature/Player/PlayerInteractor.cs"
+				"input",
+				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs"
 			],
 			[
-				"interactor",
-				"Assets/Scripts/Creature/Player/Interactions/Interactor.cs"
+				"exp",
+				"Assets/Scripts/Eden/Smart Events/Explode.cs"
 			],
 			[
-				"pickup",
-				"Assets/Scripts/InteractableObjects/Components/CustomInteractable/Pickup.cs"
+				"free",
+				"Assets/Scripts/Eden/Smart Events/FreezeFrameOnHit.cs"
 			],
 			[
-				"itemman",
-				"Assets/Scripts/Game/ItemManager.cs"
+				"freeze",
+				"Assets/Scripts/Eden/Smart Events/FreezeFrameOnHit.cs"
 			],
 			[
-				"inventoryitemfa",
-				"Assets/InventoryItemFactory.cs"
+				"inst",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/Instantiate.cs"
 			],
 			[
-				"dropp",
-				"Assets/Scripts/InteractableObjects/Components/Optional/ItemDropper.cs"
+				"dest",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/Destroy.cs"
 			],
 			[
-				"create",
-				"Assets/CreateCraftingRecipe1.cs"
+				"rand",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/RandomWait.cs"
 			],
 			[
-				"invenr",
-				"Assets/InventoryItemTemplate.cs"
+				"rando",
+				"Assets/Frameworks/Dumpster/SmartEvents/Events/RandomWait.cs"
 			],
 			[
-				"place",
-				"Assets/Scriptable/_Base/InventoryItems/Usable/CanPlace.cs"
+				"random",
+				"Assets/Frameworks/Dumpster/SmartEvents/RandomWait.cs"
 			],
 			[
-				"mater",
-				"Assets/Scriptable/_Base/InventoryItems/MaterialItem.cs"
+				"ecplo",
+				"Assets/Scripts/Game/Eden/Interactable/Interactable Effects/ExplodeOnDeath.cs"
 			],
 			[
-				"usable",
-				"Assets/Scriptable/_Base/InventoryItems/NonUsableInventoryItem.cs"
+				"smart",
+				"Assets/Frameworks/Dumpster/SmartEvents/SmartEvent.cs"
 			],
 			[
-				"inventoryitem",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"invern",
-				"Assets/Scripts/Model/Inventory1.cs"
-			],
-			[
-				"creature",
-				"Assets/Scripts/Creature/_Shared/Creature.cs"
-			],
-			[
-				"uipa",
-				"Assets/Scripts/UI/Panels/_Base/UiPanel.cs"
-			],
-			[
-				"part",
-				"Assets/Scripts/UI/Elements/GunCrafting/Part.cs"
-			],
-			[
-				"gunpars",
-				"Assets/Scripts/UI/Elements/GunCrafting/GunPartsRow.cs"
+				"explo",
+				"Assets/Scripts/Game/Eden/Interactable/Interactable Effects/ExplodeOnDeath.cs"
 			]
 		],
 		"width": 0.0

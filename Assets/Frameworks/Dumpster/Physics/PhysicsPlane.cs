@@ -36,8 +36,6 @@ namespace Dumpster.Physics {
 		private float _insetIntoCollision;
 		private List<Collider> _collidersToIgnore;
 
-		private Projection _hit;
-
 		private List<Projection> _projections {
 			get {
 				
@@ -93,7 +91,6 @@ namespace Dumpster.Physics {
 				if ( _closestCollision > p.ProjectedLength ) {
 					_closestCollision = p.ProjectedLength;
 					_insetIntoCollision = _bounds.Depth - _closestCollision;
-					_hit = p;
 				}
 			}
 		}

@@ -12,29 +12,31 @@ public class InventoryItem {
 		int count,
 		string displayName,
 		int maxCount,
-		Model.Template.ItemAnimation animation,
 		Sprite sprite,
 		GameObject holdItem,
 		bool expendable,
 		bool canInteract,
 		Controller.Item.InteractData interactData,
 		bool canShoot,
-		Controller.Item.ShootData shootData ) {
+		Controller.Item.ShootData shootData,
+		bool canHit ) {
 
 		_id = id;
 		_count = count;
 		_displayName = displayName;
 		_maxCount = maxCount;
-		_animation = animation;
+		//_animation = animation;
 		_sprite = sprite;
 		_holdItem = holdItem;
 		_expendable = expendable;
 
-		_canInteract = canInteract;
+		_canAction = canInteract;
 		_interactor = interactData;
 		
 		_canShoot = canShoot;
 		_shootData = shootData;
+
+		_canHit = canHit;
 	}
 
 	// ********************************************
@@ -74,16 +76,13 @@ public class InventoryItem {
 		get{ return _canShoot; }
 	}
 	public bool CanInteract {
-		get { return _canInteract; }
-	}
-	public bool CanPlace {
-		get { return _canPlace; }
+		get { return _canAction; }
 	}
 	public bool CanHit {
 		get { return _canHit; }
 	}
 	public bool CanPlant {
-		get { return _canPlant; }
+		get { return false; }
 	}
 
 
@@ -97,37 +96,37 @@ public class InventoryItem {
 	private Sprite _sprite;
 	private GameObject _holdItem;
 	private bool _expendable;
-	private Model.Template.ItemAnimation _animation;
+//	private Model.Template.ItemAnimation _animation;
 
 	public Controller.Item.ShootData _shootData;
 	public Controller.Item.InteractData _interactor;
+	public Controller.Item.HitData2 _hitData = new Controller.Item.HitData2();
 
 	private bool _canShoot;
-	private bool _canInteract;
-	private bool _canPlace;
+	private bool _canAction;
+	//private bool _canPlace;
 	private bool _canHit;
-	private bool _canPlant;
+	//private bool _canPlant;
 
 
 	// ********************************************
 
-	public void Use ( Creature user, Action onComplete ) {
+	public void Use ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable , Action onComplete ) {
 
 		// Play animation
-		switch ( _animation.Trigger ) {
+		// switch ( _animation.Trigger ) {
 			
-			case Creature.AnimationTrigger.None: 
-				user.Animator.SetTrigger( user.AnimationsData.None.Trigger );
-				break;
+		// 	case Creature.AnimationTrigger.None: 
+		// 		user.Body.Animator.SetTrigger( "" );
+		// 		break;
 			
-			case Creature.AnimationTrigger.Emote: 
-				user.Animator.SetTrigger( user.AnimationsData.Emote.Trigger );
-				break;
-		}
+		// 	case Creature.AnimationTrigger.Emote: 
+		// 		user.Body.Animator.SetTrigger( "" );
+		// 		break;
+		// }
 
 		// Use
-		var objectToInteractWith = user.Interactor.InteractableObject;
-		if ( _canInteract && objectToInteractWith != null && objectToInteractWith.Interactable ) { 
+		if ( _canAction ) { 
 			Interact( user, onComplete ); 
 			return; 
 		}
@@ -135,6 +134,11 @@ public class InventoryItem {
 			Shoot( user, onComplete ); 
 			return; 
 		}
+		if ( _canHit) {
+			Hit( user, onComplete ); 
+			return; 
+		}
+
 
 
 		if ( _expendable ) {
@@ -169,29 +173,23 @@ public class InventoryItem {
 
 	// ******************* Private  *************************
 	
-	private void Interact ( Creature interactor, Action onComplete ) {
+	private void Interact ( Eden.Life.BlackBox user, Action onComplete ) {
 
-		_interactor.Interact( interactor, this );
-		if ( onComplete != null ) { onComplete(); }
+		_interactor.Interact( user, this, onComplete );
 	}
-	private void Shoot ( Creature interactor, Action onComplete ) {
+	private void Shoot ( Eden.Life.BlackBox user, Action onComplete ) {
 		
-		_shootData.Fire( interactor );
+		_shootData.Fire( user );
  		if ( onComplete != null ) { onComplete(); }
 	}
-	private void Swing ( Creature interactor, Action onComplete ) {
+	private void Hit ( Eden.Life.BlackBox user, Action onComplete ) {
+
+		_hitData.Hit( user );
+		if ( onComplete != null ) { onComplete(); }
 	}
-	private void Place ( Creature interactor, Action onComplete ) {
-		
-		// RaycastHit hit;
-		// if (Physics.Raycast( interactor.transform.position, Vector3.down, out hit )){
-		
-		// 	var go = GameObject.Instantiate( _placeData.Prefab );
-		// 	go.transform.position = hit.point;
-		// 	go.transform.rotation = interactor.transform.rotation;
-		// }
+	private void Place ( Eden.Life.BlackBox user, Action onComplete ) {
 	}
-	private void Plant ( Creature interactor, Action onComplete  ) {
+	private void Plant ( Eden.Life.BlackBox user, Action onComplete  ) {
 	}
 
 	
@@ -200,7 +198,7 @@ public class InventoryItem {
 	public static InventoryItem Deserialize ( InventoryItem serializedData ) {
 		
 		var id = serializedData.ID;
-		var template = Model.Template.InventoryItemTemplate.GetTemplate( id );
+		var template = Eden.Model.Template.InventoryItemTemplate.GetTemplate( id );
 		var count = serializedData.Count;
 
 		return template.GetInstance( count );
