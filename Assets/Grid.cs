@@ -37,11 +37,6 @@ public class Grid : MonoBehaviour {
 		get{ return _currentCollumn < _collumns - 1; }
 	}
 
-
-	private void Awake () {
-
-		MoveCursor( _currentRow, _currentCollumn );
-	}
 	private void Update () {
 
 		if ( Input.GetKeyDown( KeyCode.UpArrow ) ) {
@@ -65,12 +60,13 @@ public class Grid : MonoBehaviour {
 		if ( Input.GetKeyDown( KeyCode.W ) ) {
 			RotateRight();
 		}
+
+		_cursor.localPosition = Vector3.Lerp( _cursor.localPosition , PositionForRowAndCollumn( _currentRow, _currentCollumn ), 0.5f );
 	}
 	private void ShiftUp () {
 
 		if ( _canShiftUp ) {
 			_currentRow++;
-			MoveCursor( _currentRow, _currentCollumn );
 			FireShiftEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn) );
 		}
 	}
@@ -78,7 +74,6 @@ public class Grid : MonoBehaviour {
 
 		if ( _canShiftDown ) {
 			_currentRow--;
-			MoveCursor( _currentRow, _currentCollumn );
 			FireShiftEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn) );		
 		}
 	}
@@ -86,7 +81,6 @@ public class Grid : MonoBehaviour {
 
 		if ( _canShiftLeft ) {
 			_currentCollumn--;
-			MoveCursor( _currentRow, _currentCollumn );
 			FireShiftEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn) );
 		}
 	}
@@ -94,13 +88,8 @@ public class Grid : MonoBehaviour {
 
 		if ( _canShiftRight ) {
 			_currentCollumn++;
-			MoveCursor( _currentRow, _currentCollumn );
 			FireShiftEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn) );
 		}
-	}
-	private void MoveCursor ( int row, int collumn ) {
-
-		_cursor.localPosition = PositionForRowAndCollumn( row, collumn );
 	}
 	private void RotateLeft () {
 

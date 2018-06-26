@@ -1,21 +1,15 @@
 fileFormatVersion: 2
-guid: 2f9f4d69dbef14c59a90cc7bccbea060
+guid: e0a23f69f61d54a119b332c91e1f4fb0
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cap
-    100002: //RootNode
-    100004: Cap 1
-    400000: Cap
-    400002: //RootNode
-    400004: Cap 1
+    100000: //RootNode
+    400000: //RootNode
     2100000: lambert1
     2100002: lambert2
-    2300000: Cap
-    2300002: Cap 1
-    3300000: Cap
-    3300002: Cap 1
-    4300000: Cap
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cap_Female
   externalObjects: {}
   materials:
     importMaterials: 1
