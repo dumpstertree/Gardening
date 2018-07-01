@@ -16,7 +16,8 @@
                 "*.anim",
                 "*.controller",
                 "*.physicMaterial",
-                "*.userprefs"
+                "*.userprefs",
+                "*.wav"
             ],
             "folder_include_patterns": [
                 "Assets",
