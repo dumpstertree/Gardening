@@ -12,11 +12,12 @@ public class Piece : MonoBehaviour {
 	public ReleaseEvent OnRelease;
 
 	public void SetPart ( Part part, int startRow, int startCollumn, GunCrafting crafting ) {
-		
-		_stats = part.BuilderStats;
-		_height = 5;
-		_targetPos = new Vector3( transform.position.x, transform.position.y, _height );
-		
+			
+		_targetPos = crafting.PositionInWorldSpace( startRow, startCollumn );
+		_targetPos.z = GRABBED_HEIGHT;
+
+		transform.position = _targetPos;
+
 		for( int x=0; x<part.Blocks.GetLength(0); x++) {
 			
 			for( int y=0; y<part.Blocks.GetLength(1); y++) {
@@ -24,15 +25,17 @@ public class Piece : MonoBehaviour {
 				var inst = Block.GetInstance( part.Blocks[ x, y ] );
 				
 				if ( inst != null ) {
-					
-					var blockPos = crafting.PositionInWorldSpace( startRow + x, startCollumn + y );
 
-					inst.transform.SetParent( transform );
-					inst.transform.position = new Vector3( blockPos.x, blockPos.y );
+					var worldSpacePos = crafting.PositionInWorldSpace( startRow + x, startCollumn + y );
+					var blockPos = new Vector3( worldSpacePos.x, worldSpacePos.y, transform.position.z );
+
+					inst.transform.SetParent( transform, false );
+					inst.transform.position = blockPos;
 				}
 			}
 		}
 
+		_stats = part.BuilderStats;
 		_renderers = GetComponentsInChildren<MeshRenderer>();
 		_blocks = GetComponentsInChildren<Block>();
 		_projectors = GetComponentsInChildren<Projector>();
@@ -63,7 +66,6 @@ public class Piece : MonoBehaviour {
 		Shift( row, collumn );
 	}
 	public void RequestReturnToOrigin () {
-
 	}
 
 	
@@ -77,9 +79,11 @@ public class Piece : MonoBehaviour {
 	private bool _isGrabbed;
 	private Vector3 _grabPoint;
 	private Vector3 _grabOffset;
-	private float _height = 0;
 
-	private Vector2 _targetPos;
+	private const float IDLE_HEIGHT = 0;
+	private const float GRABBED_HEIGHT = -1;
+
+	private Vector3 _targetPos;
 	private Quaternion _targetRotation = Quaternion.identity;
 
 	private GunCrafting _crafting;
@@ -97,7 +101,7 @@ public class Piece : MonoBehaviour {
 	
 	private void Update () {
 
-		transform.position = Vector3.Lerp( transform.position, new Vector3( _targetPos.x, _targetPos.y, _height), 0.5f );
+		transform.position = Vector3.Lerp( transform.position, _targetPos, 0.5f );
 		transform.rotation = Quaternion.Slerp( transform.rotation, _targetRotation, 0.5f );
 		
 		ActivateLights( false );
@@ -107,22 +111,21 @@ public class Piece : MonoBehaviour {
 		_isGrabbed = true;
 		_grabPoint = block.transform.position;
 		_grabOffset = transform.position - _grabPoint;
-		_height = _isGrabbed ? 4 : 5;
+		_targetPos.z = GRABBED_HEIGHT;
 
 		FireGrabEvent ();
 	}
 	private void Release () {
 
 		_isGrabbed = false;
-		_height = _isGrabbed ? 4 : 5;
+		_targetPos.z = IDLE_HEIGHT;
 
 		FireReleaseEvent ();
 	}
 	private void Shift ( int row, int collumn ) {
 
-		print( row );
 		var pos = _crafting.PositionInWorldSpace( row, collumn );
-		_targetPos = new Vector3( pos.x, pos.y, _height) + _grabOffset;
+		_targetPos = new Vector3( pos.x, pos.y, _targetPos.z ) + _grabOffset;
 	}
 	private void Rotate ( float rotation ) {
 		
@@ -145,6 +148,7 @@ public class Piece : MonoBehaviour {
 	
 	private void HandlePerformActionEvent ( Block block ) {
 
+		print( "handle" );
 		if ( !_isGrabbed ) {
 			Grab( block );
 		} else {

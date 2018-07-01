@@ -1,22 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PartList : MonoBehaviour {
+public class PartList : BuildSubpanel {
 
 	
 	//******************* Public ***************************
-
-	public bool Enabled {
-		get {
-			return _enabled;
-		}
-		set { 
-			if ( _enabled != value ) {
-				if ( value ) { Enable();
-				} else { Disable(); }
-			} 
-		}
-	}
 	
 	public Part TakePart ( int atIndex ) {
 
@@ -25,7 +13,7 @@ public class PartList : MonoBehaviour {
 			var part = _parts[ atIndex ];
 			_parts.RemoveAt( atIndex );
 			RemovePartVisual( atIndex );
-			_index --;
+			__index = 0;
 			
 			return part;
 		}
@@ -33,13 +21,10 @@ public class PartList : MonoBehaviour {
 		return null;
 	}
 	public Part PeakAtPart ( int atIndex  ) {
-
-		if ( _parts.Count > atIndex - 1 ) {
-			return _parts[ atIndex ];
-		}
-
-		return null;
+		
+		return  ( _parts.Count > atIndex - 1 ) ? _parts[ atIndex ] : null;
 	}
+
 
 	public delegate void ShiftEvent( int index );
 	public ShiftEvent OnShift;
@@ -54,14 +39,28 @@ public class PartList : MonoBehaviour {
 	public TriedToBreakFreeEvent OnTriedToBreakFreeRight;
 
 	
-	//******************* Private ***************************
+	//******************* Protected ***************************
+	
+	protected override void Enable () {
+	
+		_partVisuals[ _index ].IsSelected = true;
+		FireShiftEvent( _index );
+	}
+	protected override void Disable () {
+	
+		foreach ( PartVisual p in _partVisuals ) {
+			p.IsSelected = false;
+		}
+	}
+
+
+	//*************≠****** Private ***************************
 
 	[SerializeField] private PartVisual _partVisualPrefab;
 	[SerializeField] private Transform _content;
 
 	private List<PartVisual> _partVisuals;
 	private List<Part> _parts;
-	private bool _enabled = true;
 	private int __index;
 	
 	
@@ -94,17 +93,6 @@ public class PartList : MonoBehaviour {
 		}
 	}
 
-
-	private void Enable () {
-			
-		_enabled = true;
-	}
-	private void Disable () {
-			
-		_enabled = false;
-	}
-
-
 	private void Awake () {
 
 		_parts = new List<Part>();
@@ -120,7 +108,7 @@ public class PartList : MonoBehaviour {
 	}
 	private void Update () {
 
-		if ( !_enabled ) {
+		if ( !Enabled ) {
 			return;
 		}
 
@@ -237,34 +225,5 @@ public class PartList : MonoBehaviour {
 		if ( OnShift != null ) {
 			OnShift( index );
 		}
-	}
-}
-
-
-public class Part {
-
-	public string Name { get; }
-	public char[,] Blocks { get; }
-	public BuiltStats BuilderStats { get; }
-
-	public Part( string name ) {
-
-		// Projectors 	⇡ ⇢ ⇣ ⇠
-		// Recievers  	∪ ⊂ ∩ ⊃
-
-		Name = name;
-		BuilderStats = new BuiltStats( Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ),
-									   Random.Range( -2, 2 ) );
-		Blocks = new char[3,3] {
-			
-			{ 'o','x','⇢' },
-			{ 'x',' ',' ' },
-			{ '∩',' ',' ' }
-		};
 	}
 }

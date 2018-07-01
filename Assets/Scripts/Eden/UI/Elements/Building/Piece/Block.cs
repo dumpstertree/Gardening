@@ -8,24 +8,9 @@ public class Block : MonoBehaviour {
 	public delegate void ActionEvent ( Block block );
 	public ActionEvent OnAction;
 
-	public delegate void GrabEvent ( Block block );
-	public GrabEvent OnGrab;
-
-	public delegate void ReleaseEvent ( Block block );
-	public ReleaseEvent OnRelease;
-	
-	public delegate void ShiftEvent ( Vector3 newCursorPoint );
-	public ShiftEvent OnShift;
-
-	public delegate void RotateEvent ( float rotation );
-	public RotateEvent OnRotate;
-
 	
 	// ****************** Public *********************
 
-	public bool IsGrabbed { 
-		set; get;
-	}
 	public bool IsValid {
 		get { return GetIsValid(); }
 	}
@@ -42,37 +27,11 @@ public class Block : MonoBehaviour {
 
  		return true;
 	}
-	
 
 	public void PerformAction () {
 
 		if ( OnAction != null ) {
 			OnAction( this );
-		}
-	}
-	public void Grab () {
-
-		if ( OnGrab != null ) {
-			OnGrab ( this );
-		} 
-	}
-	public void Release () {
-		
-		if ( OnRelease != null ) {
-			OnRelease ( this );
-		} 	
-	}
-
-	public void Shift ( Vector3 cameraSpace ) {
-
-		if ( OnShift != null ) {
-			OnShift ( cameraSpace );
-		}
-	}
-	public void Rotate ( float rotation ) {
-
-		if ( OnRotate != null ) {
-			OnRotate ( rotation );
 		}
 	}
 

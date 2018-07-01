@@ -9,6 +9,6 @@ public class StatVisual : MonoBehaviour {
 
 	public void SetStat ( Stat stat ) {
 
-		_text.text = stat.Name + " : " + stat.Level;
+		_text.text = stat.Level.ToString();
 	}
 }

@@ -1,21 +1,10 @@
 ﻿using UnityEngine;
 
-public class Grid : MonoBehaviour {
+public class Grid : BuildSubpanel {
 
 
 	// ********************* Public *****************
 		
-	public bool Enabled {
-		get {
-			return _enabled;
-		}
-		set { 
-			if ( _enabled != value ) {
-				if ( value ) { Enable();
-				} else { Disable(); }
-			} 
-		}
-	}
 	public int Rows {
 		get {
 			return _rows; 
@@ -62,8 +51,6 @@ public class Grid : MonoBehaviour {
 	[SerializeField] private Transform _cursor;
 	[SerializeField] private Camera _camera;
 
-	private bool _enabled = true;
-
 
 	private bool _canShiftDown {
 		get{ 
@@ -87,21 +74,19 @@ public class Grid : MonoBehaviour {
 	}
 
 
-	private void Enable () {
+	protected override void Enable () {
 			
-		_enabled = true;
 		_cursor.gameObject.SetActive( true );
 	}
-	private void Disable () {
+	protected override void Disable () {
 			
-		_enabled = false;
 		_cursor.gameObject.SetActive( false );
 	}
 
 
 	private void Update () {
 
-		if ( !_enabled )  {
+		if ( !Enabled )  {
 			return;
 		}
 
