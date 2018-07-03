@@ -16,9 +16,6 @@ namespace Controller.Item {
 		
 		// ************ PUBLIC *****************
 
-		public Model.Gun Gun {
-			get{ return Game.GunControl.GetGun( _gunGUIDToLookup ); }
-		}
 		public int AvailableBullets {
 			get{ return _availableBullets; }
 			set{ HandleOnAvailableBulletsChanged( value ); }
@@ -31,11 +28,11 @@ namespace Controller.Item {
 			_bulletPrefab = prefab;
 		}
 
-		public void Reload () {
+		public void Reload ( Eden.Model.Building.Stats.Gun stats  ) {
 
 			if ( !_reloading ) {
 
-				var reloadTime = Gun.WeaponStats.ReloadTime;
+				var reloadTime = stats.ReloadSpeed;
 
 				// start reloading.
 				Action onStart = () => {
@@ -50,27 +47,28 @@ namespace Controller.Item {
 				// tell others you are no longer loading. finish reloading.
 				Action onComplete = () => {
 					HandleOnReloadTimeChanged( reloadTime, reloadTime );
-					AvailableBullets = Gun.WeaponStats.ClipSize;
+					AvailableBullets = 5;
 					_reloading = false;
 				};
 					
 				EdensGarden.Instance.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
 			}
 		}
-		public void Fire ( Eden.Life.BlackBox user ) {
+		public void Fire ( Eden.Life.BlackBox user, Eden.Model.Building.Stats.Gun stats ) {
 			
 			// if trying to fire and no bullets reload
 			if ( _availableBullets <= 0 ) {
 				
-				Reload();
+				Reload( stats );
 				return;
 			}
 
 			// if not already firing start
 			if ( !_firing ) {
 
-				var fireRate = 1f / Gun.WeaponStats.FireRate;
-				var numOfBullets = Gun.WeaponStats.NumberOfBullets;
+				var reloadTime = stats.ReloadSpeed;
+				var fireRate = 1f / stats.RateOfFire;
+				var numOfBullets = 1; //stats.NumberOfBullets;
 				
 				// create all the bullets
 				Action onStart = () => {

@@ -48,15 +48,15 @@ namespace Eden.UI.Panels {
 		
 		private void Clear () {
 
-			for ( int i=0; i<_itemInstances.Count; i++ ) {
-				Destroy( _itemInstances[ 0 ] );
-				_itemInstances.RemoveAt( 0 );
+			for ( int i=_itemInstances.Count-1; i>=0; i-- ) {
+				Destroy( _itemInstances[ i ].gameObject );
+				_itemInstances.RemoveAt( i );
 			}
 		}
 		private void Reload () {
 
 			for ( int i =1; i<_blackBox.EquipedItems.InventoryCount; i++ ) {
-				CreateItem ( _blackBox.EquipedItems.GetInventoryItem( i ) );
+				CreateItem( _blackBox.EquipedItems.GetInventoryItem( i ) );
 			}
 		}
 		private void CreateItem ( InventoryItem item ) {

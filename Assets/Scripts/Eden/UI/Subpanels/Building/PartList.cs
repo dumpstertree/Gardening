@@ -21,6 +21,29 @@ namespace Eden.UI.Subpanels.Building {
 		public TriedToBreakFreeEvent OnTriedToBreakFreeLeft;
 		public TriedToBreakFreeEvent OnTriedToBreakFreeRight;
 
+		public override void ReciveInput( Input.Package package ) {
+
+			if ( !Enabled )  {
+				return;
+			}
+
+			if ( package.Dpad.Up_Down ) {
+				ShiftUp();
+			}
+			if ( package.Dpad.Down_Down ) {
+				ShiftDown();
+			}
+			if ( package.Dpad.Left_Down ) {
+				ShiftLeft();
+			}
+			if ( package.Dpad.Right_Down ) {
+				ShiftRight();
+			}
+			if ( package.Face.Down_Down ) {
+				FirePartClickedEvent( _index );	
+			}
+		}
+
 		public Eden.Model.Building.Parts.Gun TakePart ( int atIndex ) {
 
 			if ( _parts.Count > atIndex - 1 ) {
@@ -107,28 +130,6 @@ namespace Eden.UI.Subpanels.Building {
 			_parts.Add( new Eden.Model.Building.Parts.Gun( "5", null, null ) );
 
 			BuildPartVisuals ();
-		}
-		private void Update () {
-
-			if ( !Enabled ) {
-				return;
-			}
-
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.UpArrow ) ) {
-				ShiftUp ();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.DownArrow ) ) {
-				ShiftDown ();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.LeftArrow ) ){
-				ShiftLeft ();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.RightArrow ) ) {
-				ShiftRight ();	
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.Space ) ) {
-				FirePartClickedEvent( _index );	
-			}
 		}
 		private void ShiftUp () {
 

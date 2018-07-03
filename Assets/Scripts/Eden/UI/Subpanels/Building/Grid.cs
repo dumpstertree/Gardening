@@ -6,7 +6,35 @@ namespace Eden.UI.Subpanels.Building {
 
 
 		// ********************* Public *****************
-			
+		
+		public override void ReciveInput( Input.Package package ) {
+
+			if ( !Enabled )  {
+				return;
+			}
+
+			if ( package.Dpad.Up_Down ) {
+				ShiftUp();
+			}
+			if ( package.Dpad.Down_Down ) {
+				ShiftDown();
+			}
+			if ( package.Dpad.Left_Down ) {
+				ShiftLeft();
+			}
+			if ( package.Dpad.Right_Down ) {
+				ShiftRight();
+			}
+			if ( package.Face.Down_Down ) {
+				FireClickedEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn ) );
+			}
+			if ( package.BackLeft.Bumper_Down ) {
+				RotateLeft();
+			}
+			if ( package.BackRight.Bumper_Down) {
+				RotateRight();
+			}
+		}
 		public int Rows {
 			get {
 				return _rows; 
@@ -88,32 +116,6 @@ namespace Eden.UI.Subpanels.Building {
 
 		private void Update () {
 
-			if ( !Enabled )  {
-				return;
-			}
-
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.UpArrow ) ) {
-				ShiftUp();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.DownArrow ) ) {
-				ShiftDown();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.LeftArrow ) ) {
-				ShiftLeft();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.RightArrow ) ) {
-				ShiftRight();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.Space ) ) {
-				FireClickedEvent( PositionInCameraSpaceForRowAndCollumn( _currentRow, _currentCollumn ) );
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.Q ) ) {
-				RotateLeft();
-			}
-			if ( UnityEngine.Input.GetKeyDown( KeyCode.W ) ) {
-				RotateRight();
-			}
-
 			_cursor.localPosition = Vector3.Lerp( _cursor.localPosition , PositionForRowAndCollumn( _currentRow, _currentCollumn ), 0.5f );
 		}
 		private void ShiftUp () {
@@ -154,11 +156,11 @@ namespace Eden.UI.Subpanels.Building {
 		}
 		private void RotateLeft () {
 
-			FireRotateEvent( -90f );
+			FireRotateEvent( 90f );
 		}
 		private void RotateRight () {
 		
-			FireRotateEvent( 90f );
+			FireRotateEvent( -90f );
 		}	
 		private void OnDrawGizmos () {
 

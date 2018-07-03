@@ -2,10 +2,13 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
+public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ISelectHandler, IDeselectHandler {
 
 	// ********* PUBLIC ******************
 
+	public InventoryItem Item {
+		get { return _item; }
+	}
 	public bool Indestuctable {
 		get{ return _indestuctable; }
 	}
@@ -15,6 +18,7 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	}
  	public void SetItem ( InventoryItem item ) {
 
+ 		_item = item;
 		if (item == null){
 			SetUnfilledSlot();
 		}
@@ -22,17 +26,8 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 			SetFilledSlot( item );
 		}
 	}
-	public void SetAnimationState( State state ){
-
-		switch( state ){
-
-		case State.Default:
-			_animator.SetTrigger( DEFAULT_STATE_TRIGGER );
-			break;
-		case State.Hover:
-			_animator.SetTrigger( HOVER_STATE_TRIGGER );
-			break;
-		}
+	public bool HasItem {
+		get{ return _item != null;  }
 	}
 
 	public delegate void OnPointerEvent ();
@@ -40,6 +35,30 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	public OnPointerEvent PointerExit;
 	public OnPointerEvent PointerDown;
 	public OnPointerEvent PointerUp;
+	
+	public delegate void SelectEvent ();
+	public SelectEvent OnSelect;
+	public SelectEvent OnDeselect;
+
+	public delegate void ClickEvent ();
+	public ClickEvent OnClick;
+
+
+	private void FireClickEvent () {
+		if ( OnClick != null ) {
+			OnClick ();
+		}
+	}
+	void ISelectHandler.OnSelect( BaseEventData eventData ) {
+    	if (OnSelect != null) {
+    		OnSelect ();
+    	}
+    }
+    void IDeselectHandler.OnDeselect( BaseEventData eventData ) {
+    	if (OnDeselect != null) {
+    		OnDeselect ();
+    	}
+    }
 
 	void IPointerEnterHandler.OnPointerEnter( PointerEventData eventData ) {
 		if (PointerEnter != null){
@@ -69,24 +88,19 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	[SerializeField] private Image _sprite;
 	[SerializeField] private Text _countText;
 	[SerializeField] private bool _indestuctable;
-	[SerializeField] private Button _editButton;
+	[SerializeField] private Button _button;
 
 	private const string DEFAULT_STATE_TRIGGER = "Default";
 	private const string HOVER_STATE_TRIGGER = "Hover";
 
 	private Animator _animator;
 	private int _index = -1;
+	private InventoryItem _item;
 
 	private void Awake () {
 	
 		_animator = GetComponent<Animator>();
-
-		if (_editButton != null) {
-
-			 _editButton.onClick.AddListener( ()=> {
-
-			});
-		}
+		_button.onClick.AddListener( () => FireClickEvent()  );
 	}
 	private void SetFilledSlot ( InventoryItem item) {
 

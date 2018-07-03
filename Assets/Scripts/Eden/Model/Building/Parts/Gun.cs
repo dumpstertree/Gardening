@@ -6,13 +6,14 @@ namespace Eden.Model.Building.Parts {
 
 		public Gun ( string name, char[,] blocks, Eden.Model.Building.Stats.Gun stats ) : base( name, blocks, stats ) {
 
-			BuilderStats = new Eden.Model.Building.Stats.Gun( Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ),
-							   Random.Range( -2, 2 ));
+			BuilderStats = new Eden.Model.Building.Stats.Gun( 
+							   Random.Range( 1, 10 ),
+							   Random.Range( 0, 2 ),
+							   Random.Range( 0, 2 ),
+							   Random.Range( 0, 2 ),
+							   Random.Range( 0, 2 ),
+							   Random.Range( 0, 2 ),
+							   Random.Range( 0, 2 ));
 			
 
 			var r = Random.Range( 0, 3);

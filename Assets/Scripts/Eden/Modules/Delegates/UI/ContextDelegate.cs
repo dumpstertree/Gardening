@@ -22,6 +22,9 @@ namespace Eden.UI {
 				case EdensGarden.Constants.UIContexts.Inventory:
 					return GetInventoryContext ();
 
+				case EdensGarden.Constants.UIContexts.Building:
+					return GetBuildingContext ();
+
 				default:
 					return null;
 
@@ -72,7 +75,21 @@ namespace Eden.UI {
 				EdensGarden.Constants.InputLayers.InventoryUI, 
 				
 				new List<InteractivePanel>{
-					ConditionForCanvas( _inventoryPanel ) 
+					ConditionForCanvas( _inventoryPanel ),
+					ConditionForCanvas( _quickslotInventoryPanel )
+				}, 
+				new List<Panel>{ 
+				}
+			);
+		}
+		private Context GetBuildingContext () {
+			return new InteractiveContext( 
+				
+				EdensGarden.Constants.UIContexts.Building, 
+				EdensGarden.Constants.InputLayers.BuildingUI, 
+				
+				new List<InteractivePanel>{
+					ConditionForCanvas( _buildingPanel ) 
 				}, 
 				new List<Panel>{ 
 				}
@@ -99,8 +116,14 @@ namespace Eden.UI {
 		private InteractivePanel _inventoryPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "InventoryUIPanel" ) ).GetComponent<InteractivePanel>(); }
 		}
+		private InteractivePanel _quickslotInventoryPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "QuickslotInventory" ) ).GetComponent<InteractivePanel>(); }
+		}
 		private InteractivePanel _dialogPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "DialogUIPanel" ) ).GetComponent<InteractivePanel>(); }
+		}
+		private InteractivePanel _buildingPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Building" ) ).GetComponent<InteractivePanel>(); }
 		}
 		
 

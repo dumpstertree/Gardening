@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Eden.UI {
 	
@@ -18,12 +19,14 @@ namespace Eden.UI {
 		
 		// *******************************
 
-		protected override void OnPresent(){
+		protected override void OnPresent () {
 			
 			base.OnPresent();
 			
 			Clear();
 			Load();
+
+			EventSystem.current.SetSelectedGameObject( _itemBubbles[ 0 ].gameObject );
 		}
 
 		
@@ -56,23 +59,24 @@ namespace Eden.UI {
 			foreach( ItemBubbleUI itemBubble in _itemBubbles ){
 
 				var index = itemBubble.Index;
+				var ib = itemBubble;
 				SetItemBubble( index, _inventory.GetInventoryItem( index ) );
 
-				itemBubble.PointerEnter += () => {
-					itemBubble.SetAnimationState( ItemBubbleUI.State.Hover );
+				itemBubble.OnSelect += () => {
 					HOVER_OBJECT = new DragObject( _inventory, itemBubble.Index );
 				};
 
-				itemBubble.PointerExit += () => {
-					itemBubble.SetAnimationState( ItemBubbleUI.State.Default );
-				};
+				itemBubble.OnClick += () => {
 
-				itemBubble.PointerDown += () => {
-					DRAG_OBJECT = HOVER_OBJECT;
-				};
-
-				itemBubble.PointerUp += () => {
-					Inventory.MoveItem( DRAG_OBJECT, HOVER_OBJECT );
+					if ( DRAG_OBJECT == null ) {
+						if ( ib.HasItem ) {
+							DRAG_OBJECT = HOVER_OBJECT; 
+							return;
+						}
+					} else {
+						Inventory.MoveItem( DRAG_OBJECT, HOVER_OBJECT );
+						DRAG_OBJECT = null;
+					}
 				};
 			}
 		}
@@ -93,7 +97,7 @@ namespace Eden.UI {
 
 		// *******************************
 
-		public struct DragObject {
+		public class DragObject {
 
 			public Inventory Inventory{get;}
 			public int Index{get;}

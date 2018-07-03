@@ -9,6 +9,7 @@ public class EdensGarden : Dumpster.Core.Game {
 			public const string Player = "PLAYER";
 			public const string Dialog = "DIALOG";
 			public const string InventoryUI = "INVENTORY_UI";
+			public const string BuildingUI = "BUILDING_UI";
 			public const string ForegroundUI = "FOREGROUND";
 			public const string MidgroundUI = "MIDGROUND";
 			public const string BackgroundUI = "BACKGROUND";
@@ -27,14 +28,9 @@ public class EdensGarden : Dumpster.Core.Game {
 			public const string Player = "PLAYER";
 			public const string Dialog = "DIALOG";
 			public const string Inventory = "INVENTORY";
+			public const string Building = "BUILDING";
 		}
 		
-		public struct UILayers {
-
-			public const string Foreground = "FOREGROUND";
-			public const string Midground = "MIDGROUND";
-			public const string Background = "BACKGROUND";
-		}
 		public struct NewUILayers {
 
 			public const int Foreground = 2;

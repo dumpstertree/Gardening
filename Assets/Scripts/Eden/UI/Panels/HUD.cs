@@ -55,7 +55,7 @@ namespace Eden.UI.Panels {
 		}
 		private void HandleAvailableBulletsChanged ( int numOfBullets ) {
 
-			_energyFill.transform.localScale =  new Vector3( 1, (float)numOfBullets / (float)_item._shootData.Gun.WeaponStats.ClipSize, 1 );
+			_energyFill.transform.localScale =  new Vector3( 1, (float)numOfBullets / (float)_item._gunStats.ClipSize, 1 );
 		}
 		private void HandleReloadTimeChanged ( float currentReloadTime, float maxReloadTime ) {
 

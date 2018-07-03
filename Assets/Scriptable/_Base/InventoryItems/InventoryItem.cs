@@ -25,7 +25,6 @@ public class InventoryItem {
 		_count = count;
 		_displayName = displayName;
 		_maxCount = maxCount;
-		//_animation = animation;
 		_sprite = sprite;
 		_holdItem = holdItem;
 		_expendable = expendable;
@@ -84,6 +83,9 @@ public class InventoryItem {
 	public bool CanPlant {
 		get { return false; }
 	}
+	public bool HasGunBuilding {
+		get { return true; }
+	}
 
 
 	// ********************************************
@@ -96,35 +98,22 @@ public class InventoryItem {
 	private Sprite _sprite;
 	private GameObject _holdItem;
 	private bool _expendable;
-//	private Model.Template.ItemAnimation _animation;
 
 	public Controller.Item.ShootData _shootData;
 	public Controller.Item.InteractData _interactor;
 	public Controller.Item.HitData2 _hitData = new Controller.Item.HitData2();
+	public Eden.Model.Building.Stats.Gun _gunStats = new Eden.Model.Building.Stats.Gun();
 
 	private bool _canShoot;
 	private bool _canAction;
-	//private bool _canPlace;
 	private bool _canHit;
-	//private bool _canPlant;
 
 
 	// ********************************************
 
 	public void Use ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable , Action onComplete ) {
 
-		// Play animation
-		// switch ( _animation.Trigger ) {
-			
-		// 	case Creature.AnimationTrigger.None: 
-		// 		user.Body.Animator.SetTrigger( "" );
-		// 		break;
-			
-		// 	case Creature.AnimationTrigger.Emote: 
-		// 		user.Body.Animator.SetTrigger( "" );
-		// 		break;
-		// }
-
+		
 		// Use
 		if ( _canAction ) { 
 			Interact( user, onComplete ); 
@@ -138,7 +127,6 @@ public class InventoryItem {
 			Hit( user, onComplete ); 
 			return; 
 		}
-
 
 
 		if ( _expendable ) {
@@ -179,7 +167,7 @@ public class InventoryItem {
 	}
 	private void Shoot ( Eden.Life.BlackBox user, Action onComplete ) {
 		
-		_shootData.Fire( user );
+		_shootData.Fire( user, _gunStats );
  		if ( onComplete != null ) { onComplete(); }
 	}
 	private void Hit ( Eden.Life.BlackBox user, Action onComplete ) {
@@ -187,11 +175,6 @@ public class InventoryItem {
 		_hitData.Hit( user );
 		if ( onComplete != null ) { onComplete(); }
 	}
-	private void Place ( Eden.Life.BlackBox user, Action onComplete ) {
-	}
-	private void Plant ( Eden.Life.BlackBox user, Action onComplete  ) {
-	}
-
 	
 	// *********************************************
 

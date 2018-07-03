@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using Eden.Life;
 
 namespace Eden.UI.Panels {
-	
-	public class InventoryUISub1 : InventoryUI1 {
+
+	public class PlayerQuickslotInventory : InventoryUI1 {
 
 		[SerializeField] private GridLayoutGroup _layoutGroup;
 		[SerializeField] private ButtonActions _buttonActions;
@@ -28,7 +28,7 @@ namespace Eden.UI.Panels {
 
 		// ************** Override ****************
 		
-		public override void ReciveInput( Input.Package package ) {
+		public override void ReciveInput( Eden.Input.Package package ) {
 
 			if ( package.Face.Right_Down ) {
 				Exit ();	
@@ -41,11 +41,11 @@ namespace Eden.UI.Panels {
 		
 		protected override Inventory GetInventory () {
 			
-			return _player.Inventory;
+			return _player.EquipedItems;
 		}
 		protected override ItemBubbleUI[] GetItemBubbles () {
 
-			var itemBubbles = new ItemBubbleUI[ _player.Inventory.InventoryCount ];
+			var itemBubbles = new ItemBubbleUI[ _player.EquipedItems.InventoryCount ];
 			for ( int i = 0; i<itemBubbles.Length; i++  ){
 
 				var itemBubble = Instantiate( _itemBubblePrefab );
@@ -59,14 +59,6 @@ namespace Eden.UI.Panels {
 
 			return itemBubbles;
 		}
-		protected override void OnInit () {
-
-			_layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-			_layoutGroup.constraintCount = COLLUMNS;
-			_layoutGroup.cellSize = _itemBubblePrefab.GetComponent<RectTransform>().sizeDelta;
-			_layoutGroup.spacing = new Vector2( PADDING, PADDING );
-		}
-
 
 		private void Start () {
 

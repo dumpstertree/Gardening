@@ -3,13 +3,32 @@ using Eden.UI.Elements.Building;
 
 namespace Eden.UI.Panels {
 	
-	public class Building : MonoBehaviour {
+	public class Building : Eden.UI.InteractivePanel {
 
 		public enum State {
 			Invalid,
 			PickingPartFromList,
 			PickingPartFromGrid,
 			MovingPartOnGrid
+		}
+
+		public void SetItemToEdit ( InventoryItem item ) {
+
+			_item = item;
+		}
+		public override void ReciveInput( Input.Package package ){
+			
+			if ( package.Face.Right_Down ) {
+				EdensGarden.Instance.UI.Dismiss( 
+					EdensGarden.Constants.NewUILayers.Midground,
+					EdensGarden.Constants.UIContexts.Building 
+				);
+				return;
+			}
+
+			_grid.ReciveInput( package );
+			_partList.ReciveInput( package );
+			_partOverlay.ReciveInput( package );
 		}
 
 		public Vector2 PositionInCameraSpaceForRowAndCollumn ( int row, int collumn ) {
@@ -64,6 +83,7 @@ namespace Eden.UI.Panels {
 
 		private int _spawnRow = 5;
 		private int _spawnCollumn = 5;
+		private InventoryItem _item;
 
 		private State _state;
 		private Part _grabbedPiece;
@@ -93,6 +113,8 @@ namespace Eden.UI.Panels {
 			_rootProjector.Project( _stats );
 
 			_gunStatsBlock.SetBlock( _stats );
+
+			_item._gunStats = _stats;
 		}
 		private void CreatePart ( Eden.Model.Building.Parts.Gun part ) {
 
@@ -115,21 +137,6 @@ namespace Eden.UI.Panels {
 		private void ChangeState ( State state ) {
 			
 			if ( _state != state ) {
-			
-				switch ( _state ) {
-			
-					case State.PickingPartFromList:
-						ExitPickingFromPartList ();
-						break;
-			
-					case State.PickingPartFromGrid:
-						ExitPickingFromGrid ();
-						break;
-			
-					case State.MovingPartOnGrid:
-						ExitMovingPartOnGrid ();
-						break;
-				}
 				
 				_state = state;
 			
@@ -148,12 +155,6 @@ namespace Eden.UI.Panels {
 						break;
 				}
 			}
-		}
-		private void ExitPickingFromPartList () {
-		}
-		private void ExitPickingFromGrid () {
-		}
-		private void ExitMovingPartOnGrid () {
 		}
 		private void EnterPickingFromPartList () {
 		
@@ -265,6 +266,7 @@ namespace Eden.UI.Subpanels.Building {
 				} 
 			}
 		}
+		public virtual void ReciveInput( Input.Package package ) {}
 
 		private bool _enabled = true;
 

@@ -74,8 +74,8 @@ namespace Eden.Life {
 		private Inventory _inventory;
 		private Inventory _equipedItems;
 
-		private const int INVENTORY_ITEMS_COUNT = 10;
-		private const int EQUIPED_ITEMS_COUNT = 10;
+		private const int INVENTORY_ITEMS_COUNT = 15;
+		private const int EQUIPED_ITEMS_COUNT = 5;
 
 
 		protected override void Init () {
@@ -100,7 +100,7 @@ namespace Eden.Life {
 		}
 		private void BuildEquipedItems () {
 
-			_equipedItems = new Inventory( INVENTORY_ITEMS_COUNT );
+			_equipedItems = new Inventory( EQUIPED_ITEMS_COUNT );
 			
 			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.GetInstance( 0 ) ); }
 			if( _equippedItemTop != null ) { _equipedItems.AddInventoryItem( _equippedItemTop.GetInstance( 1 ) ); }

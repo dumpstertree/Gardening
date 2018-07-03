@@ -45,7 +45,6 @@ namespace Dumpster.Core.BuiltInModules.Input {
 				// push input into new layer
 				_layers.Add( layer );
 				EnterFocus ();
-				PushInputPackage( PollPackage() );
 			}
 		}
 		public void RelinquishInput( string identifier ) {
@@ -65,8 +64,6 @@ namespace Dumpster.Core.BuiltInModules.Input {
 					EnterFocus();
 				}
 			}
-
-
 		}
 
 
