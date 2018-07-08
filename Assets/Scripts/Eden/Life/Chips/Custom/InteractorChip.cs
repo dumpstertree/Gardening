@@ -68,8 +68,7 @@ namespace Eden.Life.Chip {
 
 
 				if ( inventoryItem.CanInteract && interactableItem.Actionable ||
-					 inventoryItem.CanHit && interactableItem.Hitable ||
-					 inventoryItem.CanPlant && interactableItem.Plantable ) {
+					 inventoryItem.CanHit && interactableItem.Hitable ) {
 
 					return true;
 				}
@@ -89,8 +88,7 @@ namespace Eden.Life.Chip {
 				if ( _currentItem != null && currentInteractable != null ){
 					
 					if ( _currentItem.CanInteract && currentInteractable.Actionable ||
-						_currentItem.CanHit && currentInteractable.Hitable ||
-						_currentItem.CanPlant && currentInteractable.Plantable ) {
+						_currentItem.CanHit && currentInteractable.Hitable ) {
 
 						valid = true;
 					}

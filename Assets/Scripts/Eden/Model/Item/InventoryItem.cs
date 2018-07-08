@@ -4,7 +4,7 @@ using System;
 [System.Serializable]
 public class InventoryItem {
 
-	// ***************** PUBLIC *******************
+	// ***************** Constructor *******************
 
 	public InventoryItem () {}
 	public InventoryItem ( 
@@ -52,10 +52,6 @@ public class InventoryItem {
 	public int Count { 
 		get{ return _count; } 
 	}
-
-	
-	// ********************************************
-
 	public string DisplayName { 
 		get{ return _displayName; } 
 	}
@@ -88,28 +84,7 @@ public class InventoryItem {
 	}
 
 
-	// ********************************************
-
-	[SerializeField] private string _id;
-	[SerializeField] private int _count;
-
-	private string _displayName;
-	private int _maxCount;
-	private Sprite _sprite;
-	private GameObject _holdItem;
-	private bool _expendable;
-
-	public Controller.Item.ShootData _shootData;
-	public Controller.Item.InteractData _interactor;
-	public Controller.Item.HitData2 _hitData = new Controller.Item.HitData2();
-	public Eden.Model.Building.Stats.Gun _gunStats = new Eden.Model.Building.Stats.Gun();
-
-	private bool _canShoot;
-	private bool _canAction;
-	private bool _canHit;
-
-
-	// ********************************************
+	// ******************* Public **********************
 
 	public void Use ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable , Action onComplete ) {
 
@@ -160,6 +135,25 @@ public class InventoryItem {
 
 
 	// ******************* Private  *************************
+
+	[SerializeField] private string _id;
+	[SerializeField] private int _count;
+
+	private string _displayName;
+	private int _maxCount;
+	private Sprite _sprite;
+	private GameObject _holdItem;
+	private bool _expendable;
+
+	public Controller.Item.ShootData _shootData;
+	public Controller.Item.InteractData _interactor;
+	public Controller.Item.HitData2 _hitData = new Controller.Item.HitData2();
+	public Eden.Model.Building.Stats.Gun _gunStats = new Eden.Model.Building.Stats.Gun();
+
+	private bool _canShoot;
+	private bool _canAction;
+	private bool _canHit;
+
 	
 	private void Interact ( Eden.Life.BlackBox user, Action onComplete ) {
 
@@ -175,6 +169,8 @@ public class InventoryItem {
 		_hitData.Hit( user );
 		if ( onComplete != null ) { onComplete(); }
 	}
+	
+	
 	
 	// *********************************************
 

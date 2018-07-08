@@ -2,6 +2,7 @@
 
 namespace Eden.Model.Building.Parts {
 	
+	[System.Serializable]
 	public class Gun: Part<Eden.Model.Building.Stats.Gun> {
 
 		public Gun ( string name, char[,] blocks, Eden.Model.Building.Stats.Gun stats ) : base( name, blocks, stats ) {

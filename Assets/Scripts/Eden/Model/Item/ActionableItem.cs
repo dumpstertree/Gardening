@@ -1,0 +1,18 @@
+﻿using System;
+using UnityEngine;
+
+namespace Eden.Model {
+	
+	public class ActionableItem : Item {
+
+		public ActionableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite ) : base (prefabID, displayName, maxCount, expendable, sprite)  {}
+
+		public void OnUse ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete ) {
+			
+			user.Interactor.InteractableObject.ActionDelegate.Action( user );
+			EdensGarden.Instance.Async.WaitForSeconds( 0.5f, () => { 
+				onComplete();
+			});
+		}
+	}
+}

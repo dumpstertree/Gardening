@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Eden.Model.Building.Stats {
 
+	[System.Serializable]
 	public class Gun : Stats<Gun>, Eden.UI.Elements.Building.IStatBlockDelegate {
 
 		
@@ -9,59 +11,67 @@ namespace Eden.Model.Building.Stats {
 		
 		public Gun () {
 
-			RateOfFire = 1;
-			ReloadSpeed = 1;
-			Accuracy = 1;
-			NumOfBullets = 1;
-			ClipSize = 1;
-			BulletSpeed = 1;
-			BulletSize = 1;
+			_rateOfFire   = 1;
+			_reloadSpeed  = 1;
+			_accuracy 	  = 1;
+			_numOfBullets = 1;
+			_clipSize 	  = 1;
+			_bulletSpeed  = 1;
+			_bulletSize   = 1;
 		}
 		public Gun ( int rateOfFire, int reloadSpeed, int accuracy, int numOfBullets, int clipSize, int bulletSpeed, int bulletSize ) {
 
-			RateOfFire = rateOfFire;
-			ReloadSpeed = reloadSpeed;
-			Accuracy = accuracy;
-			NumOfBullets = numOfBullets;
-			ClipSize = clipSize;
-			BulletSpeed = bulletSpeed;
-			BulletSize = bulletSize;
+			 _rateOfFire = rateOfFire;
+			 _reloadSpeed = reloadSpeed;
+			 _accuracy  = accuracy;
+			 _numOfBullets = numOfBullets;
+			 _clipSize  = clipSize;
+			 _bulletSpeed = bulletSpeed;
+			 _bulletSize = bulletSize;
 		}
 		
 
 		// ************** Public ****************
 
 		public int RateOfFire { 
-			get; private set; 
+			get { return _rateOfFire; }
 		}
 		public int ReloadSpeed { 
-			get; private set; 
+			get { return _reloadSpeed; }
 		}
 		public int Accuracy { 
-			get; private set; 
+			get { return _accuracy; }
 		}
 		public int NumOfBullets { 
-			get; private set; 
+			get { return _numOfBullets; }
 		}
 		public int ClipSize { 
-			get; private set; 
+			get { return _clipSize; }
 		}
 		public int BulletSpeed { 
-			get; private set; 
+			get { return _bulletSpeed; }
 		}
 		public int BulletSize { 
-			get; private set; 
+			get { return _bulletSize; }
 		}
+
+		[SerializeField] private int _rateOfFire;
+		[SerializeField] private int _reloadSpeed;
+		[SerializeField] private int _accuracy;
+		[SerializeField] private int _numOfBullets;
+		[SerializeField] private int _clipSize;
+		[SerializeField] private int _bulletSpeed;
+		[SerializeField] private int _bulletSize;
 
 		public override void Add ( Gun statsToAdd ) {
 
-			RateOfFire   += statsToAdd.RateOfFire;
-			ReloadSpeed  += statsToAdd.ReloadSpeed;
-			Accuracy 	 += statsToAdd.Accuracy;
-			NumOfBullets += statsToAdd.NumOfBullets;
-			ClipSize 	 += statsToAdd.ClipSize;
-			BulletSpeed  += statsToAdd.BulletSpeed;
-			BulletSize   += statsToAdd.BulletSize;
+			_rateOfFire 	+= statsToAdd.RateOfFire;
+			_reloadSpeed 	+= statsToAdd.ReloadSpeed;
+			_accuracy 		+= statsToAdd.Accuracy;
+			_numOfBullets 	+= statsToAdd.NumOfBullets;
+			_clipSize 		+= statsToAdd.ClipSize;
+			_bulletSpeed 	+= statsToAdd.BulletSpeed;
+			_bulletSize 	+= statsToAdd.BulletSize;
 		}
 
 
