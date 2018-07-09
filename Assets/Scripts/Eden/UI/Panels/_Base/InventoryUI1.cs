@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Eden.Model;
 
 namespace Eden.UI {
 	
@@ -80,7 +81,7 @@ namespace Eden.UI {
 				};
 			}
 		}
-		private void SetItemBubble( int index, InventoryItem item ){
+		private void SetItemBubble( int index, Item item ){
 
 			if (index > _itemBubbles.Length || _itemBubbles[ index ] == null){
 				return;

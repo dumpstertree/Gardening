@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Eden.Model;
 
 namespace Eden.Life.Chip {
 
@@ -13,7 +14,7 @@ namespace Eden.Life.Chip {
 		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
 		private List<Eden.Interactable.InteractableObject> _interactableObjectStack;
-		private InventoryItem _currentItem;
+		private Item _currentItem;
 		private Eden.Interactable.InteractableObject _interactable;
 		private bool _inAction;
 
@@ -31,7 +32,7 @@ namespace Eden.Life.Chip {
 		
 			// use the item
 			var canUseItem = CanUseItem( _currentItem, _interactable );
-
+			print( _interactable + "  " + canUseItem );
 			if ( !_inAction && canUseItem ) {
 				_inAction = true;
 				_currentItem.Use( _blackBox, _interactable, () => _inAction = false );
@@ -44,7 +45,11 @@ namespace Eden.Life.Chip {
 		}
 		private void OnTriggerEnter ( Collider collider ) {
 			
-			_interactableObjectStack.Add( collider.GetComponentInChildren<Eden.Interactable.InteractableObject>() );
+			var interactable = collider.GetComponentInChildren<Eden.Interactable.InteractableObject>();
+			if ( interactable != null ) {
+				print( interactable.name );
+				_interactableObjectStack.Add( interactable );
+			}
 		}
 		private void OnTriggerExit ( Collider collider ) {
 
@@ -54,21 +59,19 @@ namespace Eden.Life.Chip {
 		
 		// ******************************************
 
-		protected bool CanUseItem ( InventoryItem inventoryItem, Eden.Interactable.InteractableObject interactableItem ){
+		protected bool CanUseItem ( Item inventoryItem, Eden.Interactable.InteractableObject interactableItem ){
 
 			if ( inventoryItem == null ){
 				return false;
 			}
 
-			if ( inventoryItem.CanShoot || inventoryItem.CanHit ){
+			if ( inventoryItem.IsShootable ){
 				return true;
 			}
 				
 			if ( inventoryItem != null && interactableItem != null ){
 
-
-				if ( inventoryItem.CanInteract && interactableItem.Actionable ||
-					 inventoryItem.CanHit && interactableItem.Hitable ) {
+				if ( inventoryItem.IsActionable && interactableItem.Actionable) {
 
 					return true;
 				}
@@ -86,9 +89,8 @@ namespace Eden.Life.Chip {
 				var valid = false;
 
 				if ( _currentItem != null && currentInteractable != null ){
-					
-					if ( _currentItem.CanInteract && currentInteractable.Actionable ||
-						_currentItem.CanHit && currentInteractable.Hitable ) {
+					print( _currentItem.DisplayName +"  " + _currentItem.IsActionable + " : " + currentInteractable.Actionable);
+					if ( _currentItem.IsActionable && currentInteractable.Actionable ) {
 
 						valid = true;
 					}

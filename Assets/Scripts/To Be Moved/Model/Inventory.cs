@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Eden.UI;
+using Eden.Model;
 
 public class Inventory {
 
@@ -8,22 +9,22 @@ public class Inventory {
 	public Inventory ( int inventoryCount ) {
 		
 		_inventoryCount = inventoryCount;
-		_inventoryItems = new InventoryItem[ _inventoryCount ];
+		_inventoryItems = new Item[ _inventoryCount ];
 	}
-	public Inventory ( Serialized serializedData ) {
+	// public Inventory ( Serialized serializedData ) {
 		
-		_inventoryCount = serializedData.InventoryCount;
-		_inventoryItems = new InventoryItem[ _inventoryCount ];
+	// 	_inventoryCount = serializedData.InventoryCount;
+	// 	_inventoryItems = new Item[ _inventoryCount ];
 
-		for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
+	// 	for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
 			
-			var item = serializedData.InventoryItems[ i ];
+	// 		var item = serializedData.InventoryItems[ i ];
 			
-			if ( item.ID != "" ) {
-				SetInventoryItem( i, InventoryItem.Deserialize( item ) );
-			}
-		}
-	}
+	// 		if ( item.ID != "" ) {
+	// 			SetInventoryItem( i, InventoryItem.Deserialize( item ) );
+	// 		}
+	// 	}
+	// }
 
 	// *******************************************
 
@@ -31,19 +32,19 @@ public class Inventory {
 		get { return _inventoryCount; }
 	}
 
-	public delegate void OnInventoryItemChangedEvent( int index, InventoryItem item );
+	public delegate void OnInventoryItemChangedEvent( int index, Item item );
 	public OnInventoryItemChangedEvent OnInventoryItemChanged;
 
-	public InventoryItem GetInventoryItem( int index ){
+	public Item GetInventoryItem( int index ){
 
 		if ( index < _inventoryItems.Length ) {
 			return _inventoryItems[ index ];
 		}
 
-		return new InventoryItem();
+		return new Item();
 
 	}
-	public void SetInventoryItem( int index, InventoryItem item ){
+	public void SetInventoryItem( int index, Item item ){
 		
 		if ( item != null ) {
 			item.OnCountChanged -= () => DestroyItem( index, item );
@@ -60,13 +61,13 @@ public class Inventory {
 			FireOnInventoryItemChangedEvent( index, item );
 		}
 	}
-	public bool AddInventoryItem ( InventoryItem item ) {
+	public bool AddInventoryItem ( Item item ) {
 
 		// add to existing slot
 		for( int i=0; i<_inventoryCount; i++ ){
 
 			var slot = _inventoryItems[ i ];
-			if ( slot != null && slot.ID == item.ID  ){
+			if ( slot != null && slot.PrefabID == item.PrefabID  ){
 
 				// take as many as possible
 				if ( slot.Count + item.Count > slot.MaxCount ){
@@ -120,11 +121,11 @@ public class Inventory {
 	// ***************** PRIVATE *******************
 
 	[SerializeField] private int _inventoryCount;
-	[SerializeField] protected InventoryItem[] _inventoryItems;
+	[SerializeField] protected Item[] _inventoryItems;
 
 	// *******************************************
 
-	private void DestroyItem ( int index, InventoryItem item ) {
+	private void DestroyItem ( int index, Item item ) {
 		
 		if ( item.Count <= 0 ){
 			item = null;
@@ -133,7 +134,7 @@ public class Inventory {
 		FireOnInventoryItemChangedEvent( index, item );
 	}
 
-	private void FireOnInventoryItemChangedEvent ( int index, InventoryItem item ){
+	private void FireOnInventoryItemChangedEvent ( int index, Item item ){
 
 		if ( OnInventoryItemChanged != null ) {
 			OnInventoryItemChanged( index, item );
@@ -149,12 +150,12 @@ public class Inventory {
 	public class Serialized {
 
 		[SerializeField] public int InventoryCount;
-		[SerializeField] public InventoryItem[] InventoryItems;
+		[SerializeField] public Item[] InventoryItems;
 
 		public Serialized ( Inventory inventory ) {
 
 			InventoryCount = inventory._inventoryCount;
-			InventoryItems = new InventoryItem[ InventoryCount ];
+			InventoryItems = new Item[ InventoryCount ];
 
 			for ( int i = 0; i < InventoryCount; i++ ) {
 				

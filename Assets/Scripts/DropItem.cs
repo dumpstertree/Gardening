@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Eden.Model;
 
 public class DropItem : MonoBehaviour {
 
@@ -6,14 +7,13 @@ public class DropItem : MonoBehaviour {
 	[SerializeField] private TextMesh _countText;
 	[SerializeField] private GameObject _count;
 
-	public InventoryItem Item {
-		get{ return _item; }
+	public Item Item {
+		get; private set;
 	}
-	private InventoryItem _item;
 
-	public void SetItem ( InventoryItem item ) {
+	public void SetItem ( Item item ) {
 		
-		_item = item;
+		Item = item;
 		_rend.material.mainTexture = item.Sprite.texture;
 
 		if ( item.Count > 1 ){

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Model.Template;
 
 namespace Eden.Events {
 
@@ -19,10 +18,10 @@ namespace Eden.Events {
 				CreateDropItem(  rolledItem );
 			}
 		}
-		private InventoryItem Roll () {
+		private Eden.Model.Item Roll () {
 
-			InventoryItem rolledItem = null;
-			var itemList = new List<InventoryItem>();
+			Eden.Model.Item rolledItem = null;
+			var itemList = new List<Eden.Model.Item>();
 			var roll = UnityEngine.Random.Range(0.0f,1f);
 			var maxSuccess = 0.0f;
 
@@ -50,7 +49,7 @@ namespace Eden.Events {
 				var q = (int)(droppedItem.MinDropQuantity + Mathf.Floor( quantityCurve*itemDelta ) );
 
 				// create item
-				var inventoryItem = droppedItem.Item.GetInstance( q );
+				var inventoryItem = droppedItem.Item.CreateInstance();
 				
 				// return item
 				inventoryItem.SetCount( q );
@@ -59,7 +58,7 @@ namespace Eden.Events {
 
 			return rolledItem;
 		}
-		private void CreateDropItem ( InventoryItem item  ) {
+		private void CreateDropItem ( Eden.Model.Item item  ) {
 			
 			var drop = Instantiate( _dropItemPrefab );
 			drop.transform.position = transform.position;
@@ -73,7 +72,7 @@ namespace Eden.Events {
 			public float SpawnRate;
 			public float MinDropQuantity;
 			public float MaxDropQuantity;
-			public Eden.Model.Template.InventoryItemTemplate Item;
+			public Eden.Templates.Item Item;
 		}
 	}
 }

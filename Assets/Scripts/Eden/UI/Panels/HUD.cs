@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Eden.Model;
 
 namespace Eden.UI.Panels {
 
@@ -35,27 +36,27 @@ namespace Eden.UI.Panels {
 
 		// ******************** Energy ****************
 
-		private InventoryItem _item;
+		private Item _item;
 
 		private void OnQuickslotIndexChanged( int index ) {
 
-			if ( _item != null ) {
-				_item._shootData.OnAvailableBulletsChange -= HandleAvailableBulletsChanged;
-				_item._shootData.OnReloadTimeChanged -= HandleReloadTimeChanged;
+			if ( _item != null && _item.IsShootable ) {
+				_item.AsShootableItem.OnAvailableBulletsChange -= HandleAvailableBulletsChanged;
+				_item.AsShootableItem.OnReloadTimeChanged -= HandleReloadTimeChanged;
 			}
 
 			_item = _blackBox.EquipedItems.GetInventoryItem( index );
 
-			if ( _item != null && _item.CanShoot ) {
-				_item._shootData.OnAvailableBulletsChange += HandleAvailableBulletsChanged;
-				_item._shootData.OnReloadTimeChanged += HandleReloadTimeChanged;
+			if ( _item != null && _item.IsShootable ) {
+				_item.AsShootableItem.OnAvailableBulletsChange += HandleAvailableBulletsChanged;
+				_item.AsShootableItem.OnReloadTimeChanged += HandleReloadTimeChanged;
 			} else {
 				_energyFill.transform.localScale = Vector3.zero;
 			}
 		}
 		private void HandleAvailableBulletsChanged ( int numOfBullets ) {
 
-			_energyFill.transform.localScale =  new Vector3( 1, (float)numOfBullets / (float)_item._gunStats.ClipSize, 1 );
+			_energyFill.transform.localScale =  new Vector3( 1, (float)numOfBullets / (float)_item.AsShootableItem.Stats.ClipSize, 1 );
 		}
 		private void HandleReloadTimeChanged ( float currentReloadTime, float maxReloadTime ) {
 
@@ -65,9 +66,9 @@ namespace Eden.UI.Panels {
 		[SerializeField] private LayerMask _layerMask;
 		private void Update () {
 
-			_reticle.gameObject.SetActive( _item != null && _item.CanShoot && _blackBox.QuickslotChip.ItemIsEquiped );
+			_reticle.gameObject.SetActive( _item != null && _item.IsShootable && _blackBox.QuickslotChip.ItemIsEquiped );
 
-			if ( _item != null && _item.CanShoot ) {
+			if ( _item != null && _item.IsShootable ) {
 				
 				RaycastHit hit;
 				if (Physics.Raycast( _blackBox.ProjectileSpawner.position, _blackBox.ProjectileSpawner.forward, out hit, Mathf.Infinity, _layerMask )) {

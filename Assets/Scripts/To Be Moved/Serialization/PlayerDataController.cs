@@ -26,7 +26,8 @@ public class PlayerDataController : DataController {
 	private Inventory CreateInventoryFromJson ( string json ) {
 		
 		var inventory = JsonUtility.FromJson<Inventory.Serialized>( json );
-		return new Inventory( inventory );
+		// return new Inventory( inventory );
+		return null;
 	}
 	private Inventory CreateBlankInventory () {
 

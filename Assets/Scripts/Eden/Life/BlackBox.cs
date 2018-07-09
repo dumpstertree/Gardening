@@ -57,11 +57,11 @@ namespace Eden.Life {
 		[Header( "Misc" )]
 		[SerializeField] private Dumpster.Physics.Controller _physics;
 
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemCenter;
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemTop;
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemBottom;
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemLeft;
-		[SerializeField] private Model.Template.InventoryItemTemplate _equippedItemRight;
+		[SerializeField] private Eden.Templates.Item _equippedItemCenter;
+		[SerializeField] private Eden.Templates.Item _equippedItemTop;
+		[SerializeField] private Eden.Templates.Item _equippedItemBottom;
+		[SerializeField] private Eden.Templates.Item _equippedItemLeft;
+		[SerializeField] private Eden.Templates.Item _equippedItemRight;
 
 		[Header( "Spawners" )]
 		[SerializeField] private Transform _projectileSpawner;
@@ -102,11 +102,11 @@ namespace Eden.Life {
 
 			_equipedItems = new Inventory( EQUIPED_ITEMS_COUNT );
 			
-			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.GetInstance( 0 ) ); }
-			if( _equippedItemTop != null ) { _equipedItems.AddInventoryItem( _equippedItemTop.GetInstance( 1 ) ); }
-			if( _equippedItemRight != null ) { _equipedItems.AddInventoryItem( _equippedItemRight.GetInstance( 2 ) ); }
-			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.GetInstance( 3 ) ); }
-			if( _equippedItemLeft != null ) { _equipedItems.AddInventoryItem( _equippedItemLeft.GetInstance( 4 ) ); }
+			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.CreateInstance() ); }
+			if( _equippedItemTop != null )    { _equipedItems.AddInventoryItem( _equippedItemTop.CreateInstance() ); }
+			if( _equippedItemRight != null )  { _equipedItems.AddInventoryItem( _equippedItemRight.CreateInstance() ); }
+			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.CreateInstance() ); }
+			if( _equippedItemLeft != null )   { _equipedItems.AddInventoryItem( _equippedItemLeft.CreateInstance()  ); }
 		}
 
 

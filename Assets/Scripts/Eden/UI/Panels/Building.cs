@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Eden.UI.Elements.Building;
+using Eden.Model;
 
 namespace Eden.UI.Panels {
 	
@@ -12,7 +13,7 @@ namespace Eden.UI.Panels {
 			MovingPartOnGrid
 		}
 
-		public void SetItemToEdit ( InventoryItem item ) {
+		public void SetItemToEdit ( Item item ) {
 
 			_item = item;
 		}
@@ -83,7 +84,7 @@ namespace Eden.UI.Panels {
 
 		private int _spawnRow = 5;
 		private int _spawnCollumn = 5;
-		private InventoryItem _item;
+		private Item _item;
 
 		private State _state;
 		private Part _grabbedPiece;
@@ -114,7 +115,7 @@ namespace Eden.UI.Panels {
 
 			_gunStatsBlock.SetBlock( _stats );
 
-			_item._gunStats = _stats;
+			_item.AsShootableItem.Stats = _stats;
 		}
 		private void CreatePart ( Eden.Model.Building.Parts.Gun part ) {
 

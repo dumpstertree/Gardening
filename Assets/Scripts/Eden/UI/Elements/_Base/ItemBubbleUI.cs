@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Eden.Model;
 
 public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ISelectHandler, IDeselectHandler {
 
 	// ********* PUBLIC ******************
 
-	public InventoryItem Item {
+	public Item Item {
 		get { return _item; }
 	}
 	public bool Indestuctable {
@@ -16,7 +17,7 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 		get { return _index; }
 		set { _index = value; }
 	}
- 	public void SetItem ( InventoryItem item ) {
+ 	public void SetItem ( Item item ) {
 
  		_item = item;
 		if (item == null){
@@ -95,14 +96,14 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	private Animator _animator;
 	private int _index = -1;
-	private InventoryItem _item;
+	private Item _item;
 
 	private void Awake () {
 	
 		_animator = GetComponent<Animator>();
 		_button.onClick.AddListener( () => FireClickEvent()  );
 	}
-	private void SetFilledSlot ( InventoryItem item) {
+	private void SetFilledSlot ( Item item) {
 
 		_filledObject.SetActive( true );
 

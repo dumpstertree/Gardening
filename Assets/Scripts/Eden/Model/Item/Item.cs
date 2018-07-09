@@ -8,6 +8,7 @@ namespace Eden.Model {
 		
 		// ***************** Constructor ***********************
 
+		public Item () {}
 		public Item( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite ) {
 
 			Count = 1;
@@ -55,19 +56,19 @@ namespace Eden.Model {
 		// ***************** Shoot *******************
 		
 		public bool IsShootable {
-			get{ return (this as ShootableItem) != null; }
+			get{ return (AsShootableItem != null); }
 		}
-		public ShootableItem ShootableItem {
-			get{ return (this as ShootableItem); }
+		public virtual ShootableItem AsShootableItem {
+			get{ return (this as FixedShootableItem); }
 		}
 
 		
 		// ***************** Action *******************
 		
 		public bool IsActionable {
-			get{ return (this as ActionableItem) != null; }
+			get{ return (AsActionableItem != null); }
 		}
-		public ActionableItem ActionableItem {
+		public ActionableItem AsActionableItem {
 			get{ return (this as ActionableItem); }
 		}
 		

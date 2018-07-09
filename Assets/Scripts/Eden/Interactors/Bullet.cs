@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour {
 		CreateCasing();
 
 		_startPos = user.ProjectileSpawner.position;
+		transform.position = _startPos;
 
 		EdensGarden.Instance.Effects.Shake( _startPos, ShakePower.Miniscule, DecayRate.Quick );
 		EdensGarden.Instance.Effects.FreezeFrame( 0.05f );

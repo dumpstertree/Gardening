@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Eden.Model;
 
 namespace Eden.UI.Panels {
 	
@@ -59,7 +60,7 @@ namespace Eden.UI.Panels {
 				CreateItem( _blackBox.EquipedItems.GetInventoryItem( i ) );
 			}
 		}
-		private void CreateItem ( InventoryItem item ) {
+		private void CreateItem ( Item item ) {
 
 			var inst = Instantiate( _itemPrefab );
 			inst.transform.SetParent( _content );

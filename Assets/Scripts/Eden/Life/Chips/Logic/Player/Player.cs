@@ -55,7 +55,7 @@ namespace Eden.Life.Chips.Logic {
 
 			var item = _player.EquipedItems.GetInventoryItem( index );			
 			
-			if ( item != null && item.CanShoot ) {
+			if ( item != null && item.IsShootable ) {
 				_agressive.WillBecomeActive();
 				_cameraType = CameraType.Agressive;
 				_passive.Think( 0, 0, 0, 0 );

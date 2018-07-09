@@ -22,12 +22,11 @@ namespace Eden.Model {
 			set{ HandleOnAvailableBulletsChanged( value ); }
 		}
 
-
 		public void Reload () {
 
 			if ( !_reloading ) {
 
-				var reloadTime = GetStats().ReloadSpeed;
+				var reloadTime = Stats.ReloadSpeed;
 
 				// start reloading.
 				Action onStart = () => {
@@ -61,7 +60,7 @@ namespace Eden.Model {
 			// if not already firing start
 			if ( !_firing ) {
 
-				var fireRate = 1f / GetStats().RateOfFire;
+				var fireRate = 1f / Stats.RateOfFire;
 				var numOfBullets = 1;
 				
 				// create all the bullets
@@ -80,8 +79,20 @@ namespace Eden.Model {
 				EdensGarden.Instance.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
 			}
 		}
+		public abstract Gun Stats {
+			get; set;
+		}
 
+		
+		// ************ Protected **************
+		
+		protected override void OnUse ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete  ) {
 
+			Fire( user );
+			onComplete();
+		}
+
+		
 		// ************ Private **************
 
 		private bool _firing;
@@ -93,9 +104,6 @@ namespace Eden.Model {
 				return Resources.Load<GameObject>( "Bullet" ); 
 			}
 		}
-
-		protected abstract Gun GetStats ();
-
 		private void CreateBullet ( Eden.Life.BlackBox user ) {
 
 			var go = GameObject.Instantiate( _bulletPrefab );
@@ -130,10 +138,10 @@ namespace Eden.Model {
 
 			_stats = stats;
 		}
-		// ************* Protected ****************
 
-		protected override Gun GetStats () {
-			return _stats;
+		public override Gun Stats {
+			get{ return _stats; }
+			set{ _stats = value; }
 		}
 
 		// ************* Private ****************

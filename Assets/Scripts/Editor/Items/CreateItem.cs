@@ -17,12 +17,26 @@ public static class CreateItem {
 
 public static class CreateShootableItem {
    
-    [MenuItem("Assets/Create/Items/ShootableItem")]
+    [MenuItem("Assets/Create/Items/Shootable")]
 	public static Eden.Templates.ShootableItem Create() {
 		
 		Eden.Templates.ShootableItem asset = ScriptableObject.CreateInstance<Eden.Templates.ShootableItem>();
 
-        AssetDatabase.CreateAsset(asset, "Assets/ShootableItem.asset");
+        AssetDatabase.CreateAsset(asset, "Assets/New Shootable Item.asset");
+        AssetDatabase.SaveAssets();
+        
+        return asset;
+    }
+}
+
+public static class CreateActionableItem {
+   
+    [MenuItem("Assets/Create/Items/Actionable")]
+    public static Eden.Templates.ActionableItem Create() {
+        
+        Eden.Templates.ActionableItem asset = ScriptableObject.CreateInstance<Eden.Templates.ActionableItem>();
+
+        AssetDatabase.CreateAsset(asset, "Assets/New Actionable Item.asset");
         AssetDatabase.SaveAssets();
         
         return asset;

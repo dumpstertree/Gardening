@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Eden.Templates {
+﻿namespace Eden.Templates {
 	
 	public class ActionableItem : Item {
 
-		[SerializeField] private string _action;
+		public override Eden.Model.Item CreateInstance() {
+			return new Eden.Model.ActionableItem( _id, _displayName, _maxCount, _expendable, _sprite );
+		}
 	}
 }

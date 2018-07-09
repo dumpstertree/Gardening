@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Eden.Life;
+using Eden.Model;
 
 namespace Eden.UI.Panels {
 
@@ -12,7 +13,7 @@ namespace Eden.UI.Panels {
 		private const int COLLUMNS = 3;
 		private const float PADDING = 25;
 
-		private InventoryItem _item;
+		private Item _item;
 		
 		private BlackBox _player {
 			get{ 
@@ -21,7 +22,7 @@ namespace Eden.UI.Panels {
 		}
 		private bool _canCustomize  {
 			get{ 
-				return ( _item != null && _item.HasGunBuilding ); 
+				return ( _item != null && _item.IsShootable ); 
 			}
 		}
 
@@ -82,7 +83,7 @@ namespace Eden.UI.Panels {
 				EdensGarden.Constants.UIContexts.Inventory 
 			);
 		}
-		private void HandleOnSelectableChanged ( InventoryItem item ) {
+		private void HandleOnSelectableChanged ( Item item ) {
 
 			_item = item;
 

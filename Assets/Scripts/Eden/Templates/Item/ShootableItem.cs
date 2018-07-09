@@ -4,8 +4,8 @@ namespace Eden.Templates {
 	
 	public class ShootableItem : Item {
 		
-		public Eden.Model.FixedShootableItem CreateInstance () {
-			
+		public override Eden.Model.Item CreateInstance () {
+
 			return new Eden.Model.FixedShootableItem( _id, _displayName, _maxCount, _expendable, _sprite, _startingStats );
 		}
 
