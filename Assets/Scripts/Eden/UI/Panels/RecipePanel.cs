@@ -22,9 +22,9 @@ namespace Eden.UI.Panels {
 		private const int COLLUMNS = 3;
 		private const float PADDING = 25;
 
-		private PlayerRecipes _playerRecipes {
-			get{ return null; }
-		}
+		// private PlayerRecipes _playerRecipes {
+		// 	get{ return null; }
+		// }
 		private Eden.Life.BlackBox _player {
 			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
@@ -55,31 +55,31 @@ namespace Eden.UI.Panels {
 		}
 		private void Load () {
 
-			var recipes = _playerRecipes.KnowRecipes;
-			RecipeBubbleUI first = null;
+			// var recipes = _playerRecipes.KnowRecipes;
+			// RecipeBubbleUI first = null;
 
-			// create icons
-			foreach( Crafting.Recipe recipe in recipes ){
+			// // create icons
+			// foreach( Crafting.Recipe recipe in recipes ){
 
-				var bubble = Instantiate( _recipeBubblePrefab );
-				bubble.transform.SetParent( _layoutGroup.transform );
-				bubble.SetRecipe ( recipe );
+			// 	var bubble = Instantiate( _recipeBubblePrefab );
+			// 	bubble.transform.SetParent( _layoutGroup.transform );
+			// 	bubble.SetRecipe ( recipe );
 
-				bubble.Toggle.group = _toggleGroup;
+			// 	bubble.Toggle.group = _toggleGroup;
 
-				bubble.Toggle.onValueChanged.AddListener( value => { 
-					if (value) { HandleChangeRecipe( bubble ); };
-				});
+			// 	bubble.Toggle.onValueChanged.AddListener( value => { 
+			// 		if (value) { HandleChangeRecipe( bubble ); };
+			// 	});
 
-				if ( first == null ) {
-					first = bubble;
-				}
-			}
+			// 	if ( first == null ) {
+			// 		first = bubble;
+			// 	}
+			// }
 
-			// select first icon
-			if ( first != null ) {
-				first.Toggle.isOn = true;
-			}
+			// // select first icon
+			// if ( first != null ) {
+			// 	first.Toggle.isOn = true;
+			// }
 		}
 		private void HandleChangeRecipe( RecipeBubbleUI recipeBubbleUi){
 

@@ -9,7 +9,6 @@ namespace Eden.Model {
 
 		protected override void OnUse ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete ) {
 
-			Debug.Log ( "use" );
 			user.Interactor.InteractableObject.ActionDelegate.Action( user );
 			EdensGarden.Instance.Async.WaitForSeconds( 0.5f, () => { 
 				onComplete();

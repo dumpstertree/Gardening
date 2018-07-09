@@ -147,7 +147,11 @@ namespace Eden.Model {
 		// ************* Private ****************
 
 		private Gun _stats;
-
-	
 	}
 }
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Eden.Controller;
 using Eden.Life;
 using Eden.Model;
 

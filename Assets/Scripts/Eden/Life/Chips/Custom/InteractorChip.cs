@@ -32,7 +32,6 @@ namespace Eden.Life.Chip {
 		
 			// use the item
 			var canUseItem = CanUseItem( _currentItem, _interactable );
-			print( _interactable + "  " + canUseItem );
 			if ( !_inAction && canUseItem ) {
 				_inAction = true;
 				_currentItem.Use( _blackBox, _interactable, () => _inAction = false );
@@ -47,7 +46,6 @@ namespace Eden.Life.Chip {
 			
 			var interactable = collider.GetComponentInChildren<Eden.Interactable.InteractableObject>();
 			if ( interactable != null ) {
-				print( interactable.name );
 				_interactableObjectStack.Add( interactable );
 			}
 		}

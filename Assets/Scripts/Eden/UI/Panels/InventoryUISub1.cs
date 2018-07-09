@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Eden.Life;
+using Eden.Controller;
 using Eden.Model;
 
 namespace Eden.UI.Panels {

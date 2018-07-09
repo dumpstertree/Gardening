@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UI.Elements;
 using Crafting;
 using Dumpster.Core.BuiltInModules.UI;
+using Eden.Controller;
 
 namespace Eden.UI.Panels {
 	

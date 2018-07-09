@@ -59,7 +59,7 @@ namespace Eden.Model {
 			get{ return (AsShootableItem != null); }
 		}
 		public virtual ShootableItem AsShootableItem {
-			get{ return (this as FixedShootableItem); }
+			get{ return (this as ShootableItem); }
 		}
 
 		
