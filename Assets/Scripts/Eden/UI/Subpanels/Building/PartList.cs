@@ -50,6 +50,7 @@ namespace Eden.UI.Subpanels.Building {
 				
 				var part = _parts[ atIndex ];
 				_parts.RemoveAt( atIndex );
+				_player.Inventory.SetInventoryItem( atIndex, null );
 				RemovePartVisual( atIndex );
 				__index = 0;
 				
@@ -88,7 +89,12 @@ namespace Eden.UI.Subpanels.Building {
 		private List<Eden.Model.Building.Parts.Gun> _parts;
 		private int __index;
 		
-		
+		private Eden.Life.BlackBox _player {
+ 			get{ 
+ 				return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
+ 			}
+ 		}
+
 		private int _index {
 			get{ return __index; }
 			set { 
@@ -123,11 +129,15 @@ namespace Eden.UI.Subpanels.Building {
 			_parts = new List<Eden.Model.Building.Parts.Gun>();
 			_partVisuals = new List<PartCell>();
 			
-			_parts.Add( new Eden.Model.Building.Parts.Gun( "1", null, null ) );
-			_parts.Add( new Eden.Model.Building.Parts.Gun( "2", null, null ) );
-			_parts.Add( new Eden.Model.Building.Parts.Gun( "3", null, null ) );
-			_parts.Add( new Eden.Model.Building.Parts.Gun( "4", null, null ) );
-			_parts.Add( new Eden.Model.Building.Parts.Gun( "5", null, null ) );
+			for( int i =0; i<_player.Inventory.InventoryCount-1; i++ ) {
+				
+				var item = _player.Inventory.GetInventoryItem( i );
+				if ( item != null ) {
+					if ( item.IsGunBuildable ){
+						_parts.Add( item.AsGunBuildable.Part );
+					}
+				}
+			}
 
 			BuildPartVisuals ();
 		}

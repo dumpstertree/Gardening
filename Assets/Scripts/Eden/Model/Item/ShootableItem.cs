@@ -26,7 +26,7 @@ namespace Eden.Model {
 
 			if ( !_reloading ) {
 
-				var reloadTime = Stats.ReloadSpeed;
+				var reloadTime = Gun.Stats.ReloadSpeed;
 
 				// start reloading.
 				Action onStart = () => {
@@ -60,7 +60,7 @@ namespace Eden.Model {
 			// if not already firing start
 			if ( !_firing ) {
 
-				var fireRate = 1f / Stats.RateOfFire;
+				var fireRate = 1f / Gun.Stats.RateOfFire;
 				var numOfBullets = 1;
 				
 				// create all the bullets
@@ -79,7 +79,7 @@ namespace Eden.Model {
 				EdensGarden.Instance.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
 			}
 		}
-		public abstract Gun Stats {
+		public Gun2 Gun {
 			get; set;
 		}
 
@@ -134,19 +134,10 @@ namespace Eden.Model {
 
 		// ************* Constructor ****************
 		
-		public FixedShootableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite, Gun stats ) : base (prefabID, displayName, maxCount, expendable, sprite)  {
+		public FixedShootableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite, Gun2 gun ) : base (prefabID, displayName, maxCount, expendable, sprite)  {
 
-			_stats = stats;
+			Gun = gun;
 		}
-
-		public override Gun Stats {
-			get{ return _stats; }
-			set{ _stats = value; }
-		}
-
-		// ************* Private ****************
-
-		private Gun _stats;
 	}
 }
 

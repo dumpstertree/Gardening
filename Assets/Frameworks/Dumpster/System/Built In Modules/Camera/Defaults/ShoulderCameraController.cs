@@ -56,10 +56,10 @@ namespace Dumpster.Core.BuiltInModules {
 			cameraTarget.rotation = Quaternion.AngleAxis( -offsetFromCenter.x * _reticlePullForce, Vector3.up ) * Quaternion.AngleAxis( offsetFromCenter.y * _reticlePullForce, cameraTarget.right ) * cameraTarget.rotation ; 
 		}
 		public override void WillGainControl () {
-			UnityEngine.Camera.main.fieldOfView = 45;
+			// UnityEngine.Camera.main.fieldOfView = 45;
 		}
 		public override void WillLoseControl () {
-			UnityEngine.Camera.main.fieldOfView = 60;
+			// UnityEngine.Camera.main.fieldOfView = 60;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Eden.Templates {
 	
@@ -6,7 +7,8 @@ namespace Eden.Templates {
 		
 		public override Eden.Model.Item CreateInstance () {
 
-			return new Eden.Model.FixedShootableItem( _id, _displayName, _maxCount, _expendable, _sprite, _startingStats );
+			var gun = new Gun2( new List<Part2>(), _startingStats );
+			return new Eden.Model.FixedShootableItem( _id, _displayName, _maxCount, _expendable, _sprite, gun );
 		}
 
 		[Header( "Stats" )]

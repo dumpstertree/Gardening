@@ -71,6 +71,16 @@ namespace Eden.Model {
 		public ActionableItem AsActionableItem {
 			get{ return (this as ActionableItem); }
 		}
+
+		// ***************** Gun Buildable *******************
+		
+		public bool IsGunBuildable {
+			get{ return (AsGunBuildable != null); }
+		}
+		public GunBuildableItem AsGunBuildable {
+			get{ return (this as GunBuildableItem); }
+		}
+		
 		
 		
 		// ***************** Public *******************

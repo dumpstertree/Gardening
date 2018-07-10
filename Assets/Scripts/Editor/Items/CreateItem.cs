@@ -42,3 +42,17 @@ public static class CreateActionableItem {
         return asset;
     }
 }
+
+public static class CreateBuildableGunItem {
+   
+    [MenuItem("Assets/Create/Items/Buildable/Gun")]
+    public static Eden.Templates.GunBuildableItem Create() {
+        
+        Eden.Templates.GunBuildableItem asset = ScriptableObject.CreateInstance<Eden.Templates.GunBuildableItem>();
+
+        AssetDatabase.CreateAsset(asset, "Assets/New Buildable Gun Item.asset");
+        AssetDatabase.SaveAssets();
+        
+        return asset;
+    }
+}

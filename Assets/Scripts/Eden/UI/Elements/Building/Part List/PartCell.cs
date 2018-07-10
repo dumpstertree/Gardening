@@ -26,7 +26,7 @@ namespace Eden.UI.Elements.Building {
 		[SerializeField] private Image _image;
 
 		public void SetPart ( Eden.Model.Building.Parts.Gun part ) {
-			_name.text = part.Name;
+			_name.text = "";
 		}
 		public void Remove () {
 			Destroy( gameObject );

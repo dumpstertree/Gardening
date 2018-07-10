@@ -10,8 +10,8 @@ namespace Eden.UI.Subpanels.Building {
 
 		public void SetPart ( Eden.Model.Building.Parts.Gun part ) {
 
-			_nameText.text = part.Name;
-			_statBlock.SetBlock( part.BuilderStats );
+			_nameText.text = "";
+			_statBlock.SetBlock( part.Stats );
 		}
 
 		protected override void Enable () {

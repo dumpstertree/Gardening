@@ -73,7 +73,7 @@ namespace Eden.UI.Panels {
 				EdensGarden.Constants.NewUILayers.Midground,
 				EdensGarden.Constants.UIContexts.Building, context => {
 					var building = context.GetContext( "Building(Clone)" ).GetComponent<Building>();
-					building.SetItemToEdit( _item );
+					building.SetItemToEdit( _item.AsShootableItem.Gun );
 				}
 			);
 		}

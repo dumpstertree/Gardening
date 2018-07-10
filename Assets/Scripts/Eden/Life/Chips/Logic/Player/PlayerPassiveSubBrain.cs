@@ -10,6 +10,7 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 		_cameraVertical = cameraVertical;
 
 		_followCamera.CameraHorizontal = _cameraHorizontal;
+		_followCamera.CameraVertical = _cameraVertical;
 
 		if ( _player.Animator.GetCurrentAnimatorStateInfo(0).IsTag( RESTRICTED_INPUT_TAG ) ) {
 			return;

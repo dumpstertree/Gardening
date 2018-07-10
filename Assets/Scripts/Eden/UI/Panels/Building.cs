@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Eden.UI.Elements.Building;
-using Eden.Model;
+﻿using Eden.UI.Elements.Building;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Eden.UI.Panels {
 	
@@ -13,9 +13,10 @@ namespace Eden.UI.Panels {
 			MovingPartOnGrid
 		}
 
-		public void SetItemToEdit ( Item item ) {
+		public void SetItemToEdit ( Gun2 item ) {
 
 			_item = item;
+			Load();
 		}
 		public override void ReciveInput( Input.Package package ){
 			
@@ -32,24 +33,57 @@ namespace Eden.UI.Panels {
 			_partOverlay.ReciveInput( package );
 		}
 
-		public Vector2 PositionInCameraSpaceForRowAndCollumn ( int row, int collumn ) {
-
-			var xSpacing = (_camera.orthographicSize*2)/_grid.Rows;
-			var ySpacing = (_camera.orthographicSize*2)/_grid.Collumns;
-			var startPos = new Vector2( -_camera.orthographicSize, -_camera.orthographicSize );
-			var edgePadding = new Vector2( xSpacing/2, ySpacing/2 );
-
-			return startPos + edgePadding + new Vector2( xSpacing * collumn, ySpacing * row );
-		}
 		public Vector3 PositionInWorldSpace ( int row, int collumn ) {
 
-			var xSpacing = (_camera.orthographicSize*2)/_grid.Rows;
-			var ySpacing = (_camera.orthographicSize*2)/_grid.Collumns;
+			var xSpacing = (_camera.orthographicSize*2)/_grid.Collumns;
+			var ySpacing = (_camera.orthographicSize*2)/_grid.Rows;
 			var startPos = new Vector3( -_camera.orthographicSize, -_camera.orthographicSize );
 			var edgePadding = new Vector3( xSpacing/2, ySpacing/2 );
 
 			return _camera.transform.TransformPoint( startPos + edgePadding + new Vector3( xSpacing * collumn, ((_grid.Rows-1) - row ) * ySpacing, _camera.transform.position.z ) );
 		}
+		public int RowForPosition ( Vector3 position ) {
+
+			var ySpacing = (_camera.orthographicSize*2)/_grid.Rows;
+			var startPos =  -_camera.orthographicSize;
+			var edgePadding = ySpacing/2f;
+
+			return (_grid.Rows-1) - Mathf.RoundToInt( position.y - (startPos + edgePadding) );
+		}
+		public int CollumnForPosition ( Vector3 position ) {
+
+			var xSpacing = (_camera.orthographicSize*2)/_grid.Collumns;
+			var startPos = -_camera.orthographicSize;
+			var edgePadding = xSpacing/2f;
+
+			return Mathf.RoundToInt( position.x - (startPos + edgePadding) );
+		}
+
+		public void Save () {
+
+			var parts = GetComponentsInChildren<Part>();
+			var serializedParts = new List<Part2>();
+
+			foreach ( Part p in parts ) {
+				serializedParts.Add( new Part2( p.PartData, RowForPosition( p.transform.localPosition ), CollumnForPosition( p.transform.localPosition ), p.transform.localRotation.eulerAngles ) );
+			}
+
+			_item.Parts = serializedParts;
+		}
+		public void Load () {
+			
+			foreach ( Part2 p in _item.Parts ) {
+				
+				var piece = new GameObject( "" ).AddComponent<Part>();
+			
+				piece.transform.SetParent( _workspaceContent, false );
+				
+				piece.SetPart( p.Part, p.Row, p.Collumn, p.Rotation, this );
+				piece.OnGrab += () => { HandleGrabEvent( piece ); };
+				piece.OnRelease += () => { HandleReleaseEvent( piece ); };
+			}
+		}
+
 		private Block GetBlockAtCameraPos ( int row, int collumn ) {
 			
 			RaycastHit hit;
@@ -84,12 +118,16 @@ namespace Eden.UI.Panels {
 
 		private int _spawnRow = 5;
 		private int _spawnCollumn = 5;
-		private Item _item;
+		private Gun2 _item;
 
 		private State _state;
 		private Part _grabbedPiece;
 		private Eden.Model.Building.Stats.Gun _stats;
 
+
+		protected override void OnDismiss () {
+			Save();
+		}
 
 		private void Awake () {
 
@@ -115,15 +153,15 @@ namespace Eden.UI.Panels {
 
 			_gunStatsBlock.SetBlock( _stats );
 
-			_item.AsShootableItem.Stats = _stats;
+			_item.Stats = _stats;
 		}
 		private void CreatePart ( Eden.Model.Building.Parts.Gun part ) {
 
-			var piece = new GameObject( part.Name ).AddComponent<Part>();
+			var piece = new GameObject( "" ).AddComponent<Part>();
 			
 			piece.transform.SetParent( _workspaceContent, false );
 			
-			piece.SetPart( part, _spawnRow, _spawnCollumn, this );
+			piece.SetPart( part, _spawnRow, _spawnCollumn, Vector3.zero, this );
 			piece.OnGrab += () => { HandleGrabEvent( piece ); };
 			piece.OnRelease += () => { HandleReleaseEvent( piece ); };
 

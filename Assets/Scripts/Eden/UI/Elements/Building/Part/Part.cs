@@ -13,7 +13,11 @@ namespace Eden.UI.Elements.Building {
 		public delegate void ReleaseEvent ();
 		public ReleaseEvent OnRelease;
 
-		public void SetPart ( Eden.Model.Building.Parts.Gun part, int startRow, int startCollumn, Eden.UI.Panels.Building building ) {
+		public Eden.Model.Building.Parts.Gun PartData {
+			get; private set;
+		}
+
+		public void SetPart ( Eden.Model.Building.Parts.Gun part, int startRow, int startCollumn, Vector3 startRotation, Eden.UI.Panels.Building building ) {
 				
 			_targetPos = building.PositionInWorldSpace( startRow, startCollumn );
 			_targetPos.z = GRABBED_HEIGHT;
@@ -37,7 +41,9 @@ namespace Eden.UI.Elements.Building {
 				}
 			}
 
-			_stats = part.BuilderStats;
+			PartData = part;
+
+			_stats = part.Stats;
 			_blocks = GetComponentsInChildren<Block>();
 			_projectors = GetComponentsInChildren<Projector>();
 			_lights = GetComponentsInChildren<ActivationLight>( true );
@@ -50,6 +56,10 @@ namespace Eden.UI.Elements.Building {
 			foreach ( Block b in _blocks ) {
 				b.OnAction += HandlePerformActionEvent;
 			}
+
+			_targetRotation = Quaternion.Euler( startRotation );
+
+			transform.localRotation = _targetRotation;
 		}
 		public void RequestRelease () {
 

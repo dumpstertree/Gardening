@@ -2,18 +2,16 @@
 	
 	abstract public class Part<T> {
 
-		public string Name { get; protected set; }
 		public char[,] Blocks { get; protected set; }
-		public Stats.Gun BuilderStats { get; protected set; }
+		public T Stats { get; protected set; }
 
-		protected Part( string name, char[,] blocks, Stats.Gun stats  ) {
+		protected Part( char[,] blocks, T stats  ) {
 
 			// Projectors 	⇡ ⇢ ⇣ ⇠
 			// Recievers  	∪ ⊂ ∩ ⊃
 
-			Name = name;
 			Blocks = blocks;
-			BuilderStats = stats; 
+			Stats = stats; 
 		}
 	}
 }
