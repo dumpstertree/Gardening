@@ -8,40 +8,51 @@ namespace Eden.Interactors {
 
 		[SerializeField] protected LayerMask _layermask;
 		[SerializeField] protected GameObject _casingPrefab;
-		
+				
 		private const float CASING_KILL_TIME = 15.0f;
-		
-		protected RaycastHit _hit;
-		protected Eden.Life.BlackBox _user;
-		protected HitData _hitData;
-		protected float _bulletSize;
-		protected float _bulletSpeed;
-		protected float _spread;
+
+		protected Eden.Life.BlackBox _user {
+			get; private set;
+		}
+		protected HitData _hitData {
+			get; private set;
+		}
+		protected float _bulletSize {
+			get; private set;
+		}
+		protected float _bulletSpeed {
+			get; private set;
+		}
+		protected float _spread {
+			get; private set;
+		}
 
 		
 		// ******************* Public **************************
 
 		public void SetBullet ( Eden.Life.BlackBox user, HitData hitData, float bulletSize, float bulletSpeed, float spread ) {
 			
+			// set all protected variables
 			_user = user;
 			_hitData = hitData;
 			_bulletSize = bulletSize;
 			_bulletSpeed = bulletSpeed;
 			_spread = spread;
 
+			// set start position
 			transform.position = user.ProjectileSpawner.position;
-			transform.localScale = new Vector3( transform.localScale.x * bulletSize, transform.localScale.y * bulletSize, transform.localScale.z * bulletSize );
 
-			if ( Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _hit, Mathf.Infinity, _layermask )) {
-				transform.LookAt( _hit.point );
-			} else {
-				transform.LookAt( Camera.main.transform.forward * 100 );
-			}
+			// set bullet direction
+			SetForward( user, spread );
 
-			transform.forward = Quaternion.Euler( new Vector3( Random.Range( -spread, spread ), Random.Range( -spread, spread ), Random.Range( -spread, spread ) ) ) * transform.forward;
+			// set bullet size
+			SetSize( bulletSize );
 
+			// create a bullet casing
 			CreateCasing ();
-			EdensGarden.Instance.Effects.Shake( transform.position, Dumpster.Core.BuiltInModules.Effects.ShakePower.Miniscule, Dumpster.Core.BuiltInModules.Effects.DecayRate.Quick );
+
+			// play effects through effects system
+			PlayEffects();
 		}
 
 
@@ -90,14 +101,11 @@ namespace Eden.Interactors {
 
 	            var invalid = false;
 
-	           	Transform asda = null;
-
 	            if ( hit.transform == _user.transform ) {
-	            	asda = _user.transform;
 	            	invalid = true;
 	            } else {
 		            foreach ( Transform t in _user.transform ) {
-		            	if ( hit.transform == t ) { asda = t; invalid = true; break; }
+		            	if ( hit.transform == t ) { invalid = true; break; }
 		            }
 		        }
 
@@ -114,24 +122,39 @@ namespace Eden.Interactors {
 			return EdensGarden.Instance.Targeting.GetClosestTargetableToPoint( transform.position,  new Vector2( Screen.width/2f, Screen.height/2f ) );
 		}
 
-	 	
-	 	// private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
-		        
-		//         float u = 1 - t;
-		//         float tt = t * t;
-		//         float uu = u * u;
-		//         float uuu = uu * u;
-		//         float ttt = tt * t;
-		        
-		//         Vector3 p = uuu * p0; 
-		//         p += 3 * uu * t * p1; 
-		//         p += 3 * u * tt * p2; 
-		//         p += ttt * p3; 
-		        
-		//         return p;
-		// 	}
-		//}
 
+		// ******************* Private ****************************
+
+		private void SetSize ( float bulletSize ) {
+
+			transform.localScale = new Vector3( 
+				transform.localScale.x * bulletSize, 
+				transform.localScale.y * bulletSize, 
+				transform.localScale.z * bulletSize 
+			);
+		}
+		private void SetForward ( Eden.Life.BlackBox user, float spread ) {
+
+
+			if ( user is Eden.Life.BlackBoxes.Player ) {
+
+				RaycastHit hit;
+				if ( Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, _layermask )) {
+					transform.LookAt( hit.point );
+				} else {
+					transform.LookAt( Camera.main.transform.forward * 100 );
+				}
+			} else {
+
+				transform.forward = user.ProjectileSpawner.forward;
+			}
+
+			transform.forward = Quaternion.Euler( new Vector3( Random.Range( -spread, spread ), Random.Range( -spread, spread ), Random.Range( -spread, spread ) ) ) * transform.forward;
+		}
+		private void PlayEffects () {
+
+			EdensGarden.Instance.Effects.Shake( transform.position, Dumpster.Core.BuiltInModules.Effects.ShakePower.Miniscule, Dumpster.Core.BuiltInModules.Effects.DecayRate.Quick );
+		}
 	}
 }
 
