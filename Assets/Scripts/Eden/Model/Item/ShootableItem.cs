@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using Eden.Model.Building.Stats;
 
 namespace Eden.Model {
 	
@@ -9,24 +8,32 @@ namespace Eden.Model {
 		protected ShootableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite ) : base (prefabID, displayName, maxCount, expendable, sprite) {}
 
 		
-		// ************ Public *****************
+		// ************ Events *****************
 
 		public delegate void AvailableBulletsChangeEvent( int availableBullets );
 		public AvailableBulletsChangeEvent OnAvailableBulletsChange;
 
 		public delegate void ReloadTimeChangedEvent( float currentReloadTime, float maxReloadTime );
 		public ReloadTimeChangedEvent OnReloadTimeChanged;
+			
 		
+		// ************ Properties *****************
+
+		public abstract Eden.Model.Building.RangedWeapon Gun { 
+			get; 
+		}
+
 		public int AvailableBullets {
 			get{ return _availableBullets; }
 			set{ HandleOnAvailableBulletsChanged( value ); }
 		}
 
+
+		// ************ Methods *****************
+
 		public void Reload () {
 
 			if ( !_reloading ) {
-
-				var reloadTime = Gun.Stats.ReloadSpeed;
 
 				// start reloading.
 				Action onStart = () => {
@@ -35,17 +42,18 @@ namespace Eden.Model {
 				
 				// alert others that you are reloading.
 				Action<float> onWait = t => {
-					HandleOnReloadTimeChanged( t, reloadTime );
+
+					HandleOnReloadTimeChanged( t, _reloadSpeed );
 				};
 				
 				// tell others you are no longer loading. finish reloading.
 				Action onComplete = () => {
-					HandleOnReloadTimeChanged( reloadTime, reloadTime );
-					AvailableBullets = 5;
+					HandleOnReloadTimeChanged( _reloadSpeed, _reloadSpeed );
+					AvailableBullets = _clipSize;
 					_reloading = false;
 				};
 					
-				EdensGarden.Instance.Async.WaitForSeconds( reloadTime, onStart, onWait, onComplete );
+				EdensGarden.Instance.Async.WaitForSeconds( _reloadSpeed, onStart, onWait, onComplete );
 			}
 		}
 		public void Fire ( Eden.Life.BlackBox user ) {
@@ -60,15 +68,12 @@ namespace Eden.Model {
 			// if not already firing start
 			if ( !_firing ) {
 
-				var fireRate = 1f / Gun.Stats.RateOfFire;
-				var numOfBullets = 1;
+				var fireRate = _rateOfFire;
 				
 				// create all the bullets
 				Action onStart = () => {
 					_firing = true;
-					for ( int i=0; i<numOfBullets; i++ ) { 
-						CreateBullet( user ); 
-					}
+					for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( user );  }
 				};
 				
 				// end firing				
@@ -79,10 +84,7 @@ namespace Eden.Model {
 				EdensGarden.Instance.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
 			}
 		}
-		public Gun2 Gun {
-			get; set;
-		}
-
+	
 		
 		// ************ Protected **************
 		
@@ -99,18 +101,36 @@ namespace Eden.Model {
 		private bool _reloading;
 		private int _availableBullets;
 
-		private GameObject _bulletPrefab {
-			get { 
-				return Resources.Load<GameObject>( "Bullet" ); 
-			}
+		private float _rateOfFire {
+			get { return EdensGarden.Instance.StatsForLevel.RateOfFire( Gun.Stats.RateOfFire ); }
 		}
+		private float _reloadSpeed {
+			get { return EdensGarden.Instance.StatsForLevel.ReloadSpeed( Gun.Stats.ReloadSpeed ); }
+		}
+		private float _accuracy {
+			get { return EdensGarden.Instance.StatsForLevel.Accuracy( Gun.Stats.Accuracy ); }
+		}
+		private int _numOfBullets {
+			get { return EdensGarden.Instance.StatsForLevel.NumOfBullets( Gun.Stats.NumOfBullets ); }
+		}
+		private int _clipSize {
+			get { return EdensGarden.Instance.StatsForLevel.ClipSize( Gun.Stats.ClipSize ); }
+		}
+		private float _bulletSpeed {
+			get { return EdensGarden.Instance.StatsForLevel.BulletSpeed( Gun.Stats.BulletSpeed ); }
+		}
+		private float _bulletSize  {
+			get { return EdensGarden.Instance.StatsForLevel.BulletSize( Gun.Stats.BulletSize ); }
+		}
+
+
 		private void CreateBullet ( Eden.Life.BlackBox user ) {
 
-			var go = GameObject.Instantiate( _bulletPrefab );
-		
+			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
 			var hitData = new HitData();
 			hitData.Power = 1;
-			go.GetComponent<Bullet>().SetBullet( user, hitData );
+
+			bullet.SetBullet( user, hitData, _bulletSize, _bulletSpeed, _accuracy );
 
 			AvailableBullets--;
 		}		
@@ -129,20 +149,4 @@ namespace Eden.Model {
 			}
 		}
 	}
-
-	public class FixedShootableItem : ShootableItem {
-
-		// ************* Constructor ****************
-		
-		public FixedShootableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite, Gun2 gun ) : base (prefabID, displayName, maxCount, expendable, sprite)  {
-
-			Gun = gun;
-		}
-	}
 }
-
-
-
-
-
-

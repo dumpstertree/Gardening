@@ -78,6 +78,7 @@ namespace Dumpster.Core.Life {
 		protected virtual void Init (){
 
 			FireOnInit ();
+			FireStartupEvent ();
 		}
 		protected virtual void Run () {
 

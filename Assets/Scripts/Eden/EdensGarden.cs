@@ -68,10 +68,19 @@ public class EdensGarden : Dumpster.Core.Game {
 	public Eden.Targeting Targeting {
 		get; private set;
 	}
+	public Eden.Data Data {
+		get; private set;
+	}
+	public Eden.Model.StatsForLevel StatsForLevel {
+		get { return _statsForLevel; }
+	}
 
+	
 	[SerializeField] private TransitionCreator _transitionCreator;
 	[SerializeField] private Eden.UI.ContextDelegate _contextDelegate;
-	
+	[SerializeField] private Eden.Model.StatsForLevel _statsForLevel;
+
+
 	protected override void BuildGame () {
 
 		// Default Modules
@@ -84,6 +93,8 @@ public class EdensGarden : Dumpster.Core.Game {
 		// Subclass Modules
 		Input     = Dumpster.Core.Module.Install( this, typeof( Eden.Input )) as Eden.Input;
 		Targeting = Dumpster.Core.Module.Install( this, typeof( Eden.Targeting )) as Eden.Targeting;
+
+		Data = new Eden.Data();
 
 		// Custom Modules
 		var t = Instantiate( Instance._transitionCreator );
@@ -115,8 +126,6 @@ public class EdensGarden : Dumpster.Core.Game {
 		UI.Run ();
 		Targeting.Run ();
 
-
 		UI.Present( Constants.NewUILayers.Midground, Constants.UIContexts.Player );
 	}
 }
-

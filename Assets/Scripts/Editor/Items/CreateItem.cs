@@ -15,12 +15,12 @@ public static class CreateItem {
     }
 }
 
-public static class CreateShootableItem {
+public static class CreateFixedRangedWeapon {
    
-    [MenuItem("Assets/Create/Items/Shootable")]
-	public static Eden.Templates.ShootableItem Create() {
+    [MenuItem("Assets/Create/Items/Ranged/Fixed")]
+	public static Eden.Templates.FixedRangedWeapon Create() {
 		
-		Eden.Templates.ShootableItem asset = ScriptableObject.CreateInstance<Eden.Templates.ShootableItem>();
+		Eden.Templates.FixedRangedWeapon asset = ScriptableObject.CreateInstance<Eden.Templates.FixedRangedWeapon>();
 
         AssetDatabase.CreateAsset(asset, "Assets/New Shootable Item.asset");
         AssetDatabase.SaveAssets();
@@ -28,6 +28,21 @@ public static class CreateShootableItem {
         return asset;
     }
 }
+
+public static class CreateDynamicRangedWeapon{
+   
+    [MenuItem("Assets/Create/Items/Ranged/Dynamic")]
+    public static Eden.Templates.DynamicRangedWeapon Create() {
+        
+        Eden.Templates.DynamicRangedWeapon asset = ScriptableObject.CreateInstance<Eden.Templates.DynamicRangedWeapon>();
+
+        AssetDatabase.CreateAsset(asset, "Assets/New Shootable Item.asset");
+        AssetDatabase.SaveAssets();
+        
+        return asset;
+    }
+}
+
 
 public static class CreateActionableItem {
    

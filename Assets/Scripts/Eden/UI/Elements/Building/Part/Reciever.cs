@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Eden.UI.Elements.Building {
 
@@ -7,12 +8,12 @@ namespace Eden.UI.Elements.Building {
 
 		// ***************** Public ********************
 		
-		public delegate void RecieveEvent( Eden.Model.Building.Stats.Gun stats );
+		public delegate void RecieveEvent( List<Eden.Model.Building.Parts.Gun> parts );
 		public RecieveEvent OnRecieve;
 
-		public void Recieve ( Eden.Model.Building.Stats.Gun stats ) {
+		public void Recieve ( List<Eden.Model.Building.Parts.Gun> parts ) {
 
-			TryToRecieve ( stats );
+			TryToRecieve( parts );
 		}
 
 
@@ -20,20 +21,20 @@ namespace Eden.UI.Elements.Building {
 
 		private const float PROJECTION_LENGTH = 1;
 
-		private void TryToRecieve ( Eden.Model.Building.Stats.Gun stats ) {
+		private void TryToRecieve ( List<Eden.Model.Building.Parts.Gun> parts ) {
 
 			RaycastHit hit;
 			if( Physics.Raycast( transform.position, transform.up, out hit, PROJECTION_LENGTH ) ){
 				
 				if( hit.transform.GetComponent<Projector>() != null ) {
-					FireRecieveEvent ( stats );
+					FireRecieveEvent ( parts );
 				}
 			}
 		}
-		private void FireRecieveEvent ( Eden.Model.Building.Stats.Gun stats ) {
+		private void FireRecieveEvent ( List<Eden.Model.Building.Parts.Gun> parts ) {
 
 			if ( OnRecieve != null ) {
-				OnRecieve( stats );
+				OnRecieve( parts );
 			}
 		}
 		private void OnDrawGizmos () {

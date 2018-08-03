@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Eden.Properties {
 	
-	public class Magnetic : MonoBehaviour {
+	public class Magnetic : MonoBehaviour, IProperty {
 
 	
 		// ************** Public ******************
@@ -16,22 +16,13 @@ namespace Eden.Properties {
 			FireReachedTargetEvent( magnet );
 		}
 
-
-		// ************** Private ******************
 		
-		[SerializeField] private float _speed = 1f;
+		// ************** IProperty ******************
 		
-		private List<Magnet> _activeMagnets;
-		
-
-		private void Awake () {
-
-			_activeMagnets = new List<Magnet>();
-		}
-		private void Update () {
+		void IProperty.Update () {
 
 			if ( _activeMagnets.Count > 0 ) {
-			
+					
 				var magnet = GetClosest();
 				var distance = Vector3.Distance( magnet.transform.position, transform.position );
 
@@ -43,20 +34,33 @@ namespace Eden.Properties {
 				}
 			}
 		}
+
+		
+		// ************** Private ******************
+		
+		[SerializeField] private float _speed = 1f;
+		
+		private List<PropertiesObject> _activeMagnets;
+		
+
+		private void Awake () {
+
+			_activeMagnets = new List<PropertiesObject>();
+		}
 		private void OnTriggerEnter ( Collider collision ){
 
 			var propertiesObject = collision.GetComponent<PropertiesObject>();
 
 			if ( propertiesObject != null && propertiesObject.IsMagnet ) {
-				_activeMagnets.Add( propertiesObject.MagnetDelegate );
+				_activeMagnets.Add( propertiesObject );
 			}
 		}
 		private void OnTriggerExit ( Collider collision ){
 
 			var propertiesObject = collision.GetComponent<PropertiesObject>();
 				
-			if ( propertiesObject != null && propertiesObject.IsMagnet && _activeMagnets.Contains( propertiesObject.MagnetDelegate )) {
-				_activeMagnets.Remove( propertiesObject.MagnetDelegate );
+			if ( propertiesObject != null && propertiesObject.IsMagnet && _activeMagnets.Contains( propertiesObject )) {
+				_activeMagnets.Remove( propertiesObject );
 			}
 		}
 		
@@ -65,12 +69,19 @@ namespace Eden.Properties {
 			Magnet best = null;
 			float bestDist = Mathf.Infinity;
 			
-			foreach ( Magnet m in _activeMagnets ) {
+			foreach ( PropertiesObject p in _activeMagnets ) {
 				
-				var dist = Vector3.Distance( m.transform.position, transform.position );
-				if ( dist < bestDist ) {
-					best = m;
-					bestDist = dist;
+				if ( !p.Active ) {
+					continue;
+				}
+					
+				if ( p.MagnetDelegate != null ) {
+					
+					var dist = Vector3.Distance( p.MagnetDelegate.transform.position, transform.position );
+					if ( dist < bestDist ) {
+						best = p.MagnetDelegate;
+						bestDist = dist;
+					}
 				}
 			}
 

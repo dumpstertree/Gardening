@@ -87,7 +87,7 @@ namespace Eden.Life.Chip {
 				var valid = false;
 
 				if ( _currentItem != null && currentInteractable != null ){
-					print( _currentItem.DisplayName +"  " + _currentItem.IsActionable + " : " + currentInteractable.Actionable);
+
 					if ( _currentItem.IsActionable && currentInteractable.Actionable ) {
 
 						valid = true;

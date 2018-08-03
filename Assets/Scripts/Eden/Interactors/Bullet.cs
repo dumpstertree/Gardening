@@ -1,123 +1,137 @@
-﻿using UnityEngine;
-using Dumpster.Core.BuiltInModules.Effects;
+using UnityEngine;
+using Eden.Properties;
+using System.Linq;
 
-public class Bullet : MonoBehaviour {
+namespace Eden.Interactors {
 
-	// ********** PUBLIC **************
+	public class Bullet : MonoBehaviour {
 
-	public void SetBullet ( Eden.Life.BlackBox user , HitData hitData ) {
+		[SerializeField] protected LayerMask _layermask;
+		[SerializeField] protected GameObject _casingPrefab;
 		
-		_shooter = user;
-		_hitData = hitData;
+		private const float CASING_KILL_TIME = 15.0f;
+		
+		protected RaycastHit _hit;
+		protected Eden.Life.BlackBox _user;
+		protected HitData _hitData;
+		protected float _bulletSize;
+		protected float _bulletSpeed;
+		protected float _spread;
 
-		CreateCasing();
+		
+		// ******************* Public **************************
 
-		_startPos = user.ProjectileSpawner.position;
-		transform.position = _startPos;
+		public void SetBullet ( Eden.Life.BlackBox user, HitData hitData, float bulletSize, float bulletSpeed, float spread ) {
+			
+			_user = user;
+			_hitData = hitData;
+			_bulletSize = bulletSize;
+			_bulletSpeed = bulletSpeed;
+			_spread = spread;
 
-		EdensGarden.Instance.Effects.Shake( _startPos, ShakePower.Miniscule, DecayRate.Quick );
-		EdensGarden.Instance.Effects.FreezeFrame( 0.05f );
+			transform.position = user.ProjectileSpawner.position;
+			transform.localScale = new Vector3( transform.localScale.x * bulletSize, transform.localScale.y * bulletSize, transform.localScale.z * bulletSize );
 
-		if (Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _targetHit, Mathf.Infinity, _layermask )) {
-
-			var interactable = _targetHit.collider.GetComponentInChildren<Eden.Interactable.InteractableObject>();
-			if( interactable != null ) {
-				_targetObject = interactable;
+			if ( Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _hit, Mathf.Infinity, _layermask )) {
+				transform.LookAt( _hit.point );
+			} else {
+				transform.LookAt( Camera.main.transform.forward * 100 );
 			}
 
-			_randomPoint1 = Vector3.Lerp( _startPos , _targetPos,  .2f ) + new Vector3( Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ) );
-			_randomPoint2 = Vector3.Lerp( _startPos , _targetPos,  .8f ) + new Vector3( Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ) );
-		} 
-	}
+			transform.forward = Quaternion.Euler( new Vector3( Random.Range( -spread, spread ), Random.Range( -spread, spread ), Random.Range( -spread, spread ) ) ) * transform.forward;
 
-	// *********** PRIVATE ************
+			CreateCasing ();
+			EdensGarden.Instance.Effects.Shake( transform.position, Dumpster.Core.BuiltInModules.Effects.ShakePower.Miniscule, Dumpster.Core.BuiltInModules.Effects.DecayRate.Quick );
+		}
 
-	[SerializeField] private AnimationCurve _speedCurve;
-	[SerializeField] private float _speed = 1.0f;
-	[SerializeField] private float _randomPoint1MaxOffset = 1.0f;
-	[SerializeField] private float _randomPoint2MaxOffset = 0.5f;
 
-	[SerializeField] private GameObject _casingPrefab;
-	[SerializeField] private LayerMask _layermask;
-	[SerializeField] private GameObject _dustEffectPrefab;
-	[SerializeField] private GameObject _collideEffectPrefab;
+		// ******************* Protected **************************
 
-	private const float CASING_KILL_TIME = 60.0f;
+		protected void CreateCasing () {
+			
+			var inst = Instantiate( _casingPrefab );
+			inst.transform.position = transform.position;
+			inst.transform.rotation = transform.rotation * Quaternion.AngleAxis( 90, Vector3.right );
 
-	private Vector3 _startPos;
-	private Eden.Life.BlackBox _shooter;
-	private HitData _hitData;
-	private Eden.Interactable.InteractableObject _targetObject;
-	private RaycastHit _targetHit;
+			var velocity = new Vector3();
+			velocity.x = Random.Range( -3, 1);
+			velocity.y = Random.Range(  1, 3);
+			velocity.z = Random.Range( -3, 3);
 
-	private float _time;
-	private Vector3 _randomPoint1;
-	private Vector3 _randomPoint2;
+			inst.GetComponent<Rigidbody>().velocity = velocity;
 
-	private Vector3 _targetPos {
-		get{ return _targetObject != null ? _targetObject.transform.position + (_targetHit.point - _targetObject.transform.position) : _targetHit.point; }
-	}
+			EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
+		}
+		protected void MoveForward () {
 
-	// ***********************
+			transform.position += transform.forward * ( _bulletSpeed * Time.deltaTime );
+		}
+		protected void Collide ( Collider collision, bool destroyThis = true ) {
 
-	private void Update () {
-
-		var distance = Vector3.Distance( transform.position, _targetPos );
-		if ( distance > 0.1f ) {
-			var frac = _speedCurve.Evaluate( _time += (Time.deltaTime * _speed) );
-			transform.position = CalculateCubicBezierPoint( frac, _startPos, _randomPoint1, _randomPoint2, _targetPos ); 
-
-			RaycastHit hit;
-			if (Physics.Raycast( transform.position, Vector3.down, out hit, Mathf.Infinity, _layermask )) {
-				var inst = Instantiate( _dustEffectPrefab );
-				inst.transform.position = hit.point; 
+			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
+			
+			if ( interactable != null && interactable.Hitable ) {
+				
+				interactable.HitDelegate.Hit( _user, _hitData );
 			}
 
-		} else {
-			Collide();
+			if ( destroyThis ) {
+				Destroy( gameObject );
+			}
 		}
-	}
-	
+		protected Collider LookForCollision () {
 
-	private void Collide () {
+			var distance = _bulletSpeed * Time.deltaTime;
 
-		if ( _targetObject != null ) {
-			_targetObject.HitDelegate.Hit( _shooter, _hitData );
+			RaycastHit[] hits;
+	        hits = Physics.RaycastAll( transform.position, transform.forward, distance ).OrderBy( h => h.distance ).ToArray();
+
+	        foreach( RaycastHit hit in hits ) {
+
+	            var invalid = false;
+
+	           	Transform asda = null;
+
+	            if ( hit.transform == _user.transform ) {
+	            	asda = _user.transform;
+	            	invalid = true;
+	            } else {
+		            foreach ( Transform t in _user.transform ) {
+		            	if ( hit.transform == t ) { asda = t; invalid = true; break; }
+		            }
+		        }
+
+	            if ( !invalid ) {
+
+	            	return hit.collider;
+	            }
+	        }
+
+	        return null;
+		}
+		protected Targetable FindClosestTarget () {
+
+			return EdensGarden.Instance.Targeting.GetClosestTargetableToPoint( transform.position,  new Vector2( Screen.width/2f, Screen.height/2f ) );
 		}
 
-		var inst = Instantiate( _collideEffectPrefab );
-		inst.transform.position = transform.position;
-		
-		Destroy( gameObject );
-	}
-	private void CreateCasing () {
-		
-		var inst = Instantiate( _casingPrefab );
-		inst.transform.position = transform.position;
-		inst.transform.rotation = transform.rotation * Quaternion.AngleAxis( 90, Vector3.right );
+	 	
+	 	// private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
+		        
+		//         float u = 1 - t;
+		//         float tt = t * t;
+		//         float uu = u * u;
+		//         float uuu = uu * u;
+		//         float ttt = tt * t;
+		        
+		//         Vector3 p = uuu * p0; 
+		//         p += 3 * uu * t * p1; 
+		//         p += 3 * u * tt * p2; 
+		//         p += ttt * p3; 
+		        
+		//         return p;
+		// 	}
+		//}
 
-		var velocity = new Vector3();
-		velocity.x = Random.Range( -3, 1);
-		velocity.y = Random.Range(  1, 3);
-		velocity.z = Random.Range( -3, 3);
-
-		inst.GetComponent<Rigidbody>().velocity = velocity;
-
-		EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
-	}
-	private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
-	        
-        float u = 1 - t;
-        float tt = t * t;
-        float uu = u * u;
-        float uuu = uu * u;
-        float ttt = tt * t;
-        
-        Vector3 p = uuu * p0; 
-        p += 3 * uu * t * p1; 
-        p += 3 * u * tt * p2; 
-        p += ttt * p3; 
-        
-        return p;
 	}
 }
+

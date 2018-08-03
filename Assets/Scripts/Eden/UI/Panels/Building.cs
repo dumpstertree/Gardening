@@ -13,7 +13,7 @@ namespace Eden.UI.Panels {
 			MovingPartOnGrid
 		}
 
-		public void SetItemToEdit ( Gun2 item ) {
+		public void SetItemToEdit ( Eden.Model.Item item ) {
 
 			_item = item;
 			Load();
@@ -61,26 +61,65 @@ namespace Eden.UI.Panels {
 
 		public void Save () {
 
-			var parts = GetComponentsInChildren<Part>();
-			var serializedParts = new List<Part2>();
+			
+			// project through to get all the active projectors
+			var activeParts = new List<Eden.Model.Building.Parts.Gun>();
+			_rootProjector.Project( activeParts );
 
-			foreach ( Part p in parts ) {
-				serializedParts.Add( new Part2( p.PartData, RowForPosition( p.transform.localPosition ), CollumnForPosition( p.transform.localPosition ), p.transform.localRotation.eulerAngles ) );
+			
+			// update ranged weapon data
+			var rangedWeapondata = new Eden.Model.Building.RangedWeapon();
+			rangedWeapondata.ModularParts = activeParts;
+
+			
+			// update building data for this ranged weapon
+			var partsOnGrid = GetComponentsInChildren<Elements.Building.Part>();
+			var buildableData = new List<Eden.Model.Building.Grid.Part>();
+			foreach ( Elements.Building.Part p in partsOnGrid ) {
+				var d = new Eden.Model.Building.Grid.Part(  
+					RowForPosition( p.transform.localPosition ),
+					CollumnForPosition( p.transform.localPosition ),
+					p.transform.localRotation.eulerAngles,
+					p.PartData.PrefabID
+				);
+				buildableData.Add( d );
 			}
+			var saveData = new Eden.Model.Building.Grid.SaveData( buildableData.ToArray() );
 
-			_item.Parts = serializedParts;
+
+			// save all data
+			EdensGarden.Instance.Data.Save( Data.Path.RangedWeapon, _item.UniqueID, rangedWeapondata );
+			EdensGarden.Instance.Data.Save( Data.Path.Buildable, _item.UniqueID, saveData );
 		}
 		public void Load () {
+
+			// look for save data
+			var saveData = EdensGarden.Instance.Data.Load<Eden.Model.Building.Grid.SaveData>( Data.Path.Buildable, _item.UniqueID );
+			if( saveData == null ) { saveData = new Eden.Model.Building.Grid.SaveData( new Eden.Model.Building.Grid.Part[]{} ); }
 			
-			foreach ( Part2 p in _item.Parts ) {
-				
-				var piece = new GameObject( "" ).AddComponent<Part>();
-			
-				piece.transform.SetParent( _workspaceContent, false );
-				
-				piece.SetPart( p.Part, p.Row, p.Collumn, p.Rotation, this );
-				piece.OnGrab += () => { HandleGrabEvent( piece ); };
-				piece.OnRelease += () => { HandleReleaseEvent( piece ); };
+			// if save data is found create parts
+			foreach( Eden.Model.Building.Grid.Part p in saveData.Parts ) {
+
+				// get template for saved item
+				var gridPart = new GameObject( "" ).AddComponent<Part>();
+				var partDataTemplate = Eden.Templates.Item.GetTemplate( p.PartPrefabID ) as Eden.Templates.GunBuildableItem;
+				if ( partDataTemplate != null ) {
+
+					// create and instance of the template and make sure it is a buildable item
+					var partData = partDataTemplate.CreateInstance();
+					if ( partData.IsGunBuildable ) {
+
+						// set transform
+						gridPart.transform.SetParent( _workspaceContent, false );
+						
+						// set data 
+						gridPart.SetPart( partData.AsGunBuildable.Part, p.Row, p.Collumn, p.Rotation, this );
+
+						// listen for events
+						gridPart.OnGrab += () => { HandleGrabEvent( gridPart ); };
+						gridPart.OnRelease += () => { HandleReleaseEvent( gridPart ); };
+					}
+				}
 			}
 		}
 
@@ -118,7 +157,7 @@ namespace Eden.UI.Panels {
 
 		private int _spawnRow = 5;
 		private int _spawnCollumn = 5;
-		private Gun2 _item;
+		private Eden.Model.Item _item;
 
 		private State _state;
 		private Part _grabbedPiece;
@@ -148,20 +187,16 @@ namespace Eden.UI.Panels {
 		}
 		private void LateUpdate () {
 			
-			_stats = new Eden.Model.Building.Stats.Gun ();
-			_rootProjector.Project( _stats );
-
-			_gunStatsBlock.SetBlock( _stats );
-
-			_item.Stats = _stats;
+			var activeParts = new List<Eden.Model.Building.Parts.Gun>();
+			_rootProjector.Project( activeParts );
 		}
-		private void CreatePart ( Eden.Model.Building.Parts.Gun part ) {
+		private void CreatePart ( Eden.Model.GunBuildableItem part ) {
 
 			var piece = new GameObject( "" ).AddComponent<Part>();
 			
 			piece.transform.SetParent( _workspaceContent, false );
 			
-			piece.SetPart( part, _spawnRow, _spawnCollumn, Vector3.zero, this );
+			piece.SetPart( part.Part, _spawnRow, _spawnCollumn, Vector3.zero, this );
 			piece.OnGrab += () => { HandleGrabEvent( piece ); };
 			piece.OnRelease += () => { HandleReleaseEvent( piece ); };
 
@@ -203,6 +238,7 @@ namespace Eden.UI.Panels {
 		}
 		private void EnterPickingFromGrid () {
 
+			_grid.Enabled = true;
 			_partList.Enabled = false;
 			_partOverlay.Enabled = false;
 		}

@@ -4,8 +4,10 @@ using Eden.Model;
 
 namespace Eden.Controller {
 	
-	public class Inventory {
+	[System.Serializable]
+	public class Inventory: ISerializationCallbackReceiver {
 
+	 
 		// ***************** PUBLIC  *******************
 
 		public Inventory ( int inventoryCount ) {
@@ -14,29 +16,30 @@ namespace Eden.Controller {
 			_inventoryItems = new Item[ _inventoryCount ];
 		}
 		
-		// public Inventory ( Serialized serializedData ) {
-			
-		// 	_inventoryCount = serializedData.InventoryCount;
-		// 	_inventoryItems = new Item[ _inventoryCount ];
 
-		// 	for ( int i = 0; i < serializedData.InventoryCount; i++ ) {
-				
-		// 		var item = serializedData.InventoryItems[ i ];
-				
-		// 		if ( item.ID != "" ) {
-		// 			SetInventoryItem( i, InventoryItem.Deserialize( item ) );
-		// 		}
-		// 	}
-		// }
+		// ***************** Cloning  *******************
+		
+		public Inventory Clone () {
 
+	        return new Inventory( this );
+	    }
+		protected Inventory( Inventory objectToClone ) {
+	    	
+	    	_inventoryCount = objectToClone._inventoryCount;
+	    	_inventoryItems = objectToClone._inventoryItems.Clone() as Item[];
+	    }
+
+		
 		// *******************************************
 
+		public delegate void OnInventoryItemChangedEvent( int index, Item item );
+		public OnInventoryItemChangedEvent OnInventoryItemChanged;
+
+		
 		public int InventoryCount {
 			get { return _inventoryCount; }
 		}
 
-		public delegate void OnInventoryItemChangedEvent( int index, Item item );
-		public OnInventoryItemChangedEvent OnInventoryItemChanged;
 
 		public Item GetInventoryItem( int index ){
 
@@ -44,8 +47,7 @@ namespace Eden.Controller {
 				return _inventoryItems[ index ];
 			}
 
-			return new Item();
-
+			return null;
 		}
 		public void SetInventoryItem( int index, Item item ){
 			
@@ -103,8 +105,7 @@ namespace Eden.Controller {
 			return false;
 		}
 
-		// *******************************************
-
+		
 		public static void MoveItem( InventoryUI1.DragObject fromObject, InventoryUI1.DragObject toObject ){
 
 			var fromItem = fromObject.Inventory.GetInventoryItem( fromObject.Index );
@@ -121,13 +122,13 @@ namespace Eden.Controller {
 			toObject.Inventory.SetInventoryItem( toObject.Index, fromItem );
 		}
 
+		
 		// ***************** PRIVATE *******************
 
 		[SerializeField] private int _inventoryCount;
 		[SerializeField] protected Item[] _inventoryItems;
 
-		// *******************************************
-
+	
 		private void DestroyItem ( int index, Item item ) {
 			
 			if ( item.Count <= 0 ){
@@ -136,7 +137,6 @@ namespace Eden.Controller {
 			
 			FireOnInventoryItemChangedEvent( index, item );
 		}
-
 		private void FireOnInventoryItemChangedEvent ( int index, Item item ){
 
 			if ( OnInventoryItemChanged != null ) {
@@ -144,30 +144,8 @@ namespace Eden.Controller {
 			}
 		}
 
-		// *******************************************
+		public void OnAfterDeserialize () {}
+		public void OnBeforeSerialize () {}
 
-		public Serialized Serialize () {
-			
-			return new Serialized( this );
-		}
-		public class Serialized {
-
-			[SerializeField] public int InventoryCount;
-			[SerializeField] public Item[] InventoryItems;
-
-			public Serialized ( Inventory inventory ) {
-
-				InventoryCount = inventory._inventoryCount;
-				InventoryItems = new Item[ InventoryCount ];
-
-				for ( int i = 0; i < InventoryCount; i++ ) {
-					
-					var item = inventory._inventoryItems[ i ];
-					if ( item != null ) {
-						InventoryItems[ i ] = item;
-					}
-				}
-			}
-		}
 	}
 }

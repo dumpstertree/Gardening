@@ -14,7 +14,7 @@ namespace Eden.Life.Chips {
 		private void Update () {
     			
 			var point = new Vector3( Screen.width/2f, Screen.height/2f, 0 );
-			var offset = EdensGarden.Instance.Targeting.GetOffsetFromPointToCloset( transform.position, point );
+			var offset = EdensGarden.Instance.Targeting.GetScreenOffsetFromClosestTargetable( transform.position, point );
 			var distance = Vector2.Distance( point, point + new Vector3( offset.x, offset.y, 0 ) );
 
 			if ( distance < _pullDistance ) {

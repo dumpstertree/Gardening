@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Eden.UI.Elements.Building;
+using System.Collections.Generic;
 
 namespace Eden.UI.Elements.Building {
 
@@ -167,12 +168,12 @@ namespace Eden.UI.Elements.Building {
 
 		// ****************** Reciever Events *************************
 		
-		private void HandleRecieveEvent ( Eden.Model.Building.Stats.Gun stats ) {
+		private void HandleRecieveEvent ( List<Eden.Model.Building.Parts.Gun> parts ) {
 
-			stats.Add( _stats );
+			parts.Add( PartData );
 
 			foreach ( Projector p in _projectors ) {
-				p.Project( stats );
+				p.Project( parts );
 			}
 
 			ActivateLights( true );

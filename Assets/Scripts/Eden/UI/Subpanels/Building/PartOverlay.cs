@@ -8,10 +8,10 @@ namespace Eden.UI.Subpanels.Building {
 		[SerializeField] private Eden.UI.Elements.Building.StatsList _statBlock;
 		[SerializeField] private Text _nameText;
 
-		public void SetPart ( Eden.Model.Building.Parts.Gun part ) {
+		public void SetPart ( Eden.Model.GunBuildableItem part ) {
 
 			_nameText.text = "";
-			_statBlock.SetBlock( part.Stats );
+			_statBlock.SetBlock( part.Part.Stats );
 		}
 
 		protected override void Enable () {

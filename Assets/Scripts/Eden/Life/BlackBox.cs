@@ -45,12 +45,15 @@ namespace Eden.Life {
 		}
 
 
-
 		[Header( "Chips" )]
 		[SerializeField] private InteractorChip _interactorChip;
 		[SerializeField] private QuickSlotChip  _quickslotChip;
 		[SerializeField] private SightChip _sightChip;
+
+		[Header( "Controllers" )]
 		[SerializeField] private Interactable.InteractableObject _interactableObject;
+		[SerializeField] private PropertiesObject _propertiesObject;
+
 
 		[Header( "Interactables" )]
 		[SerializeField] private Interactable.Stats _stats;
@@ -88,8 +91,15 @@ namespace Eden.Life {
 
 			_stats.OnDeath += Shutdown;
 
-			OnStartup += () => { _interactableObject.Active = true; };
-			OnShutDown += () => { _interactableObject.Active = false; };
+			OnStartup += () => { 
+				_interactableObject.Active = true;
+				_propertiesObject.Active = true;
+			};
+
+			OnShutDown += () => {
+				_interactableObject.Active = false;
+				_propertiesObject.Active = false;
+			};
 		}
 
 		

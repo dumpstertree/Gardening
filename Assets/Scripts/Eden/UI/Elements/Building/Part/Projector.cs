@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Eden.UI.Elements.Building {
 
@@ -7,13 +8,13 @@ namespace Eden.UI.Elements.Building {
 		
 		// ***************** Public ********************
 		
-		public void Project ( Eden.Model.Building.Stats.Gun stats ) {
+		public void Project ( List<Eden.Model.Building.Parts.Gun> parts ) {
 
 			RaycastHit hit;
 			if( Physics.Raycast( transform.position, transform.up, out hit, PROJECTION_LENGTH ) ){
 
 				var reciever = hit.transform.GetComponent<Reciever>();
-				reciever.Recieve( stats );
+				reciever.Recieve( parts );
 			}
 		}
 

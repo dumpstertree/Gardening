@@ -49,7 +49,6 @@ namespace Eden.UI {
 				}, 
 				new List<Panel>{ 
 					ConditionForCanvas( _hudUIPanel ),
-					ConditionForCanvas( _menuButtonsPanel ),
 					ConditionForCanvas( _quickslotPanel ) 
 				}
 			);

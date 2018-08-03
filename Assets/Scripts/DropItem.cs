@@ -14,13 +14,17 @@ public class DropItem : MonoBehaviour {
 	public void SetItem ( Item item ) {
 		
 		Item = item;
-		_rend.material.mainTexture = item.Sprite.texture;
+		
+		if ( Item != null ) {
+			
+			_rend.material.mainTexture = item.Sprite.texture;
 
-		if ( item.Count > 1 ){
-			_count.SetActive( true );
-			_countText.text = item.Count.ToString() + "x";
-		} else{
-			_count.SetActive( false );
+			if ( item.Count > 1 ){
+				_count.SetActive( true );
+				_countText.text = item.Count.ToString() + "x";
+			} else{
+				_count.SetActive( false );
+			}
 		}
 	}
 

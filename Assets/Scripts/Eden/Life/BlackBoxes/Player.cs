@@ -45,6 +45,14 @@ namespace Eden.Life.BlackBoxes {
 			
 			base.Init ();
 
+			Inventory.OnInventoryItemChanged += ( index, item ) => {
+				EdensGarden.Instance.Data.Save( Data.Path.Player, "Inv", Inventory.Clone() );
+			};
+
+			EquipedItems.OnInventoryItemChanged += ( index, item ) => {
+				EdensGarden.Instance.Data.Save( Data.Path.Player, "EquipedInv", EquipedItems.Clone() );
+			};
+
 			// Add player to input stack
 			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
 				

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 namespace Eden.Templates {
 
@@ -9,16 +10,13 @@ namespace Eden.Templates {
 
 		public static Item GetTemplate( string forID ) {
 			
-			var templates = Resources.LoadAll<Item>( "" );
-			Item nullReturn = null; 
+			var templates = Resources.LoadAll( "", typeof(Item) ).Cast<Item>().ToArray();
 			
 			foreach ( Item t in templates ) {
-				
 				if ( t._id == forID ) { return t; }
-				if ( t._id == NULL_TEMPLATE_ID ){ nullReturn = t; }
 			}
 
-			return nullReturn;
+			return new Item();
 		}
 
 		

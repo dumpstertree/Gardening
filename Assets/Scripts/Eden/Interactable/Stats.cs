@@ -88,7 +88,7 @@ namespace Eden.Interactable {
 		private void FireHurtEvent() {
 
 			if ( OnHurt != null ) {
-				OnHurt();
+				OnHurt ();
 			}
 
 			foreach ( SmartEvent e in _onHurt ) {
@@ -98,7 +98,7 @@ namespace Eden.Interactable {
 		private void FireDeathEvent() {
 
 			if ( OnDeath != null ) {
-				OnDeath();
+				OnDeath ();
 			}	
 
 			foreach ( SmartEvent e in _onDeath ) {

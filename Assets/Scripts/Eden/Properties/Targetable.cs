@@ -2,9 +2,9 @@
 
 namespace Eden.Properties {
 	
-	public class Targetable : MonoBehaviour {
+	public class Targetable : MonoBehaviour, IProperty {
 
-		public void Update () {
+		void IProperty.Update () {
 
 			EdensGarden.Instance.Targeting.RegisterTargetableForFrame( this );
 		}

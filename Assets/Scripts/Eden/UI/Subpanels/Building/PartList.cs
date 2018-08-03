@@ -44,7 +44,7 @@ namespace Eden.UI.Subpanels.Building {
 			}
 		}
 
-		public Eden.Model.Building.Parts.Gun TakePart ( int atIndex ) {
+		public Eden.Model.GunBuildableItem TakePart ( int atIndex ) {
 
 			if ( _parts.Count > atIndex - 1 ) {
 				
@@ -59,7 +59,7 @@ namespace Eden.UI.Subpanels.Building {
 
 			return null;
 		}
-		public Eden.Model.Building.Parts.Gun PeakAtPart ( int atIndex  ) {
+		public Eden.Model.GunBuildableItem PeakAtPart ( int atIndex  ) {
 			
 			return  ( _parts.Count > atIndex - 1 ) ? _parts[ atIndex ] : null;
 		}
@@ -86,7 +86,7 @@ namespace Eden.UI.Subpanels.Building {
 		[SerializeField] private Transform _content;
 
 		private List<PartCell> _partVisuals;
-		private List<Eden.Model.Building.Parts.Gun> _parts;
+		private List<Eden.Model.GunBuildableItem> _parts;
 		private int __index;
 		
 		private Eden.Life.BlackBox _player {
@@ -126,7 +126,7 @@ namespace Eden.UI.Subpanels.Building {
 
 		private void Awake () {
 
-			_parts = new List<Eden.Model.Building.Parts.Gun>();
+			_parts = new List<Eden.Model.GunBuildableItem>();
 			_partVisuals = new List<PartCell>();
 			
 			for( int i =0; i<_player.Inventory.InventoryCount-1; i++ ) {
@@ -134,7 +134,7 @@ namespace Eden.UI.Subpanels.Building {
 				var item = _player.Inventory.GetInventoryItem( i );
 				if ( item != null ) {
 					if ( item.IsGunBuildable ){
-						_parts.Add( item.AsGunBuildable.Part );
+						_parts.Add( item.AsGunBuildable );
 					}
 				}
 			}
@@ -178,7 +178,7 @@ namespace Eden.UI.Subpanels.Building {
 
 		private void BuildPartVisuals () {
 
-			foreach ( Eden.Model.Building.Parts.Gun p in _parts ) {
+			foreach ( Eden.Model.GunBuildableItem p in _parts ) {
 				
 				var inst = Instantiate( _partVisualPrefab );
 				

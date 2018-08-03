@@ -91,7 +91,7 @@ namespace Eden.UI {
 			var itemBubble = _itemBubbles[ index ];
 			itemBubble.SetItem( item );
 		}
-
+		
 		// *******************************
 
 		protected abstract Inventory GetInventory ();

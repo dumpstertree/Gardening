@@ -3,6 +3,7 @@ using System;
 
 namespace Eden.Model {
 
+	[System.Serializable]
 	public class Item {
 
 		
@@ -28,18 +29,29 @@ namespace Eden.Model {
 		public CountChangedEvent OnCountChanged;
 
 		
-		// ***************** Properties *******************
+		// ***************** Serialize Properties *******************
 
+		[SerializeField] private string _uniqueID;
+		[SerializeField] private string _prefabID;
+		[SerializeField] private int _count;
+		
 		public string UniqueID {
-			get; protected set;
-		}		
-		public string PrefabID { 
-			get; protected set;
-		}
-		public string DisplayName { 
-			get; protected set;
+			get{return _uniqueID; }
+			protected set{ _uniqueID = value; }
+		}	
+		public string PrefabID {
+			get { return _prefabID; }
+			protected set { _prefabID = value; }
 		}
 		public int Count { 
+			get { return _count; }
+			protected set { _count = value; }
+		}
+		
+
+		// ***************** Properties *******************
+		
+		public string DisplayName { 
 			get; protected set;
 		}
 		public int MaxCount { 
