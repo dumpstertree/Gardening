@@ -6,26 +6,25 @@ namespace Eden.Interactors {
 
 	public class Bullet : MonoBehaviour {
 
+		// ***************************************************
+		/* 
+			- The SetForward function checks the type of the user
+		 	  there is probably a more generic way this can 
+		 	  be handeled
+		*/
+		// ***************************************************
+
+
 		[SerializeField] protected LayerMask _layermask;
 		[SerializeField] protected GameObject _casingPrefab;
 				
 		private const float CASING_KILL_TIME = 15.0f;
 
-		protected Eden.Life.BlackBox _user {
-			get; private set;
-		}
-		protected HitData _hitData {
-			get; private set;
-		}
-		protected float _bulletSize {
-			get; private set;
-		}
-		protected float _bulletSpeed {
-			get; private set;
-		}
-		protected float _spread {
-			get; private set;
-		}
+		protected Eden.Life.BlackBox _user;
+		protected HitData _hitData;
+		protected float _bulletSize;
+		protected float _bulletSpeed;
+		protected float _spread;
 
 		
 		// ******************* Public **************************
@@ -135,7 +134,6 @@ namespace Eden.Interactors {
 		}
 		private void SetForward ( Eden.Life.BlackBox user, float spread ) {
 
-
 			if ( user is Eden.Life.BlackBoxes.Player ) {
 
 				RaycastHit hit;
@@ -157,4 +155,3 @@ namespace Eden.Interactors {
 		}
 	}
 }
-

@@ -25,9 +25,9 @@ namespace Eden.Life.Chips.Logic {
 
 		private void Update () {
 
-			if ( _player.Physics.State.DownIsColliding && _jump ) {
-				_player.Physics.AddVelocity( new Vector3( 0, _jumpVelocity, 0) );
-			}
+			// if ( _player.Physics.State.DownIsColliding && _jump ) {
+			// 	_player.Physics.AddVelocity( new Vector3( 0, _jumpVelocity, 0) );
+			// }
 		}
 
 		private void Awake () {

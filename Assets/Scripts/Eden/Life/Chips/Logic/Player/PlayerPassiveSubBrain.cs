@@ -12,16 +12,16 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 		_followCamera.CameraHorizontal = _cameraHorizontal;
 		_followCamera.CameraVertical = _cameraVertical;
 
-		if ( _player.Animator.GetCurrentAnimatorStateInfo(0).IsTag( RESTRICTED_INPUT_TAG ) ) {
-			return;
-		}
+		// if ( _player.Animator.GetCurrentAnimatorStateInfo(0).IsTag( RESTRICTED_INPUT_TAG ) ) {
+		// 	return;
+		// }
 
-		Animate();
+		// Animate();
 
-		if (_horizontal != 0 || _vertical != 0){
-			Rotate();
-			Move();
-		}
+		// if (_horizontal != 0 || _vertical != 0){
+		// 	Rotate();
+		// 	Move();
+		// }
 	}
 
 
@@ -40,6 +40,15 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 	private float _vertical;
 	private float _cameraHorizontal;
 	private float _cameraVertical;
+
+	private float _walkTreshold = 0.05f;
+	private float _runThreshold = 0.6f;
+
+	private float _walkValue = 0.5f;
+	private float _runValue  = 1.0f;
+
+	private float _forwardAnimationValue = 0f;
+	private float _lerpSpeed = 0.5f;
 
 	//***************************
 
@@ -62,9 +71,19 @@ public class PlayerPassiveSubBrain : MonoBehaviour {
 	}
 	private void Animate () {
 		
-		var absH = Mathf.Abs(_horizontal);
-		var absV = Mathf.Abs(_vertical);
-		
-		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, absH > absV ? _horizontal : _vertical );
+		var absH = Mathf.Abs( _horizontal );
+		var absV = Mathf.Abs( _vertical );
+		var greaterValue = absH > absV ? _horizontal : _vertical;
+
+		if ( Mathf.Abs( greaterValue ) > _runThreshold ) {
+			_forwardAnimationValue = Mathf.Lerp( _forwardAnimationValue, _runValue, _lerpSpeed);
+		} else if ( Mathf.Abs( greaterValue ) > _walkTreshold ) {
+			_forwardAnimationValue = Mathf.Lerp( _forwardAnimationValue, _walkValue, _lerpSpeed );
+		} else {
+			_forwardAnimationValue = Mathf.Lerp( _forwardAnimationValue, 0, _lerpSpeed );
+		}
+
+
+		_player.Animator.SetFloat( VERTICAL_ANIMATION_NAME, _forwardAnimationValue );
 	}
 }

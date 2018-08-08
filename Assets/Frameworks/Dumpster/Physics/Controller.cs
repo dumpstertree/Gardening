@@ -86,37 +86,37 @@ namespace Dumpster.Physics {
 
 			_position = transform.position;
 		}
-		private void LateUpdate () {
+		// private void LateUpdate () {
 		
-			// update package
-			_package = new Package(
-			 	velocity : _velocity,
-				changeInVelocity :_velocityChange,
-				position : _position,
-				changeInPosition : _posOffset,
-				downIsColliding : IsColliding ( _downPlanes ),
-				upIsColling : IsColliding ( _upPlanes ) ,
-				forwardIsColliding : IsColliding ( _forwardPlanes ) ,
-				backisColliding : IsColliding ( _backPlanes ) ,
-				rightIsColliding : IsColliding ( _rightPlanes ) ,
-				leftIsColliding : IsColliding ( _leftPlanes )
-			);
+		// 	// update package
+		// 	_package = new Package(
+		// 	 	velocity : _velocity,
+		// 		changeInVelocity :_velocityChange,
+		// 		position : _position,
+		// 		changeInPosition : _posOffset,
+		// 		downIsColliding : IsColliding ( _downPlanes ),
+		// 		upIsColling : IsColliding ( _upPlanes ) ,
+		// 		forwardIsColliding : IsColliding ( _forwardPlanes ) ,
+		// 		backisColliding : IsColliding ( _backPlanes ) ,
+		// 		rightIsColliding : IsColliding ( _rightPlanes ) ,
+		// 		leftIsColliding : IsColliding ( _leftPlanes )
+		// 	);
 
 
-			// gravity
-			ApplyGravity ();
+		// 	// gravity
+		// 	ApplyGravity ();
 
-			// velocity
-			ApplyVelocity ();
+		// 	// velocity
+		// 	ApplyVelocity ();
 
-			// offsets
-			ApplyOffset ( _forwardPlanes );
-			ApplyOffset ( _backPlanes );
-			ApplyOffset ( _leftPlanes );
-			ApplyOffset ( _rightPlanes );
-			ApplyOffset ( _downPlanes );
-			ApplyOffset ( _upPlanes );
-		}
+		// 	// offsets
+		// 	ApplyOffset ( _forwardPlanes );
+		// 	ApplyOffset ( _backPlanes );
+		// 	ApplyOffset ( _leftPlanes );
+		// 	ApplyOffset ( _rightPlanes );
+		// 	ApplyOffset ( _downPlanes );
+		// 	ApplyOffset ( _upPlanes );
+		// }
 
 
 		// apply physics
