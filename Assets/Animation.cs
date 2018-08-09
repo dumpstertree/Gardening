@@ -52,7 +52,7 @@ namespace Dumpster.Animation.Templates {
 				x++;
 			}
 
-			var layer =  new Layer( layerMixer, animations.ToArray() );
+			var layer = new Layer( layerMixer, animations.ToArray() );
 			return layer;
 		}
 
@@ -105,11 +105,6 @@ namespace Dumpster.Animation {
 			// set weights
 			_mixer.SetInputWeight( leavingFrame, leavingWeight );
 			_mixer.SetInputWeight( targetFrame, weight );
-
-			// Debug.Log( trueCurvedFrame +  " % " + leavingFrame);
-			// Debug.Log( "Target : " + targetFrame + " : " + weight );
-			// Debug.Log( "Leaving : " + leavingFrame + " : " + leavingWeight );
-
 		}
 
 		

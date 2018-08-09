@@ -10,45 +10,27 @@ namespace Dumpster.Animation {
 
 		private void Update () {
 
-			_animations[ _baseAnimationData.Identifier ].Layer.SetAnimationProgress( _worldAnimationProgress );
-			_animations[ "Crouch" ].Layer.SetAnimationProgress( _worldAnimationProgress );
+			// _animations.SetProgress( _baseAnimationData.Identifier, _worldAnimationProgress );
+			_animations.SetProgress( "Crouch", _worldAnimationProgress );
 		}
+
+
 
 		// ****************** Public *******************
 
-		public void SetAsActiveAnimation ( string identifier ) {
-
-			if ( identifier == _currentAnimationIdentifier ) {
-				return;
-			}
-
-			if ( _animations.ContainsKey( identifier ) ) {
-				 
-				 print( identifier );
-				 _currentAnimationIdentifier = identifier;
-
-				 foreach ( WeightedAnimation w in _animations.Values ) {
-				 	w.TargetWeight = 0f;
-				 }
-
-				 _animations[ identifier ].TargetWeight = 1;
-
-				 if ( _blend != null ) { StopCoroutine( _blend ); }
-				_blend = StartCoroutine( BlendWeights( 0.5f ) );
-			}
-		}
 		public void ChangeProgress ( string identifier, float progress ) {
 
-			if ( _animations.ContainsKey( identifier ) ) {
-				_animations[ identifier ].Layer.SetAnimationProgress( progress );
-			}
+			_animations.SetProgress( identifier, progress );
 		}
 		public void SetLayerProgress ( string identifier, float progress ) {
 
-			if ( _animations.ContainsKey( identifier ) ) {
-				_animations[ identifier ].Layer.SetLayerProgress( progress );
-			}
+			_animations.SetLayerProgress( identifier, progress );
 		}
+		public void SetWeight ( string identifier, float progress ) {
+
+			_animations.SetWeight( identifier, progress );
+		}
+
 
 
 		// ****************** Private *******************
@@ -57,7 +39,7 @@ namespace Dumpster.Animation {
 		[SerializeField] private AnimationData[] _animationData;
 		[SerializeField] private UnityEngine.Animator _animator;
 
-		private Dictionary<string,WeightedAnimation> _animations;
+		private WeightedAnimationStack _animations;
 		private Coroutine _blend;
 		private string _currentAnimationIdentifier;
 
@@ -70,7 +52,6 @@ namespace Dumpster.Animation {
 		private float _worldAnimationProgress {
 			get { return Time.time - Mathf.Floor( Time.time ); }
 		}
-
 
 		private void Awake () {
 
@@ -85,7 +66,7 @@ namespace Dumpster.Animation {
 
 		   
 			// create job
-			_playable = AnimationMixerPlayable.Create( _graph );
+			_playable = AnimationMixerPlayable.Create( _graph, 0, true );
 			_playable.SetOutputCount( 1 );
 			_playable.SetInputCount( _numOfAnimations );
 			
@@ -104,41 +85,25 @@ namespace Dumpster.Animation {
 		}
 		private void BuildAnimations () {
 
-			_animations = new Dictionary<string,WeightedAnimation>();
+			var animations = new Dictionary<string,WeightedAnimation>();
 
 			// build dynamic animations
 			for ( int i = 0; i <_animationData.Length; i++ ) {
 				
 				var data = _animationData[ i ];
 				var weightedAnimation = new WeightedAnimation( _playable, i, data.Animation.GetInstance( _playable, i ) );
-				_animations.Add( data.Identifier, weightedAnimation );
+				animations.Add( data.Identifier, weightedAnimation );
 			}
 
 			// build base animation
 			var baseWeightedAnimation = new WeightedAnimation( _playable, _numOfAnimations - 1, _baseAnimationData.Animation.GetInstance( _playable, _numOfAnimations - 1 ) );
-			_animations.Add( _baseAnimationData.Identifier, baseWeightedAnimation );
+			// animations.Add( _baseAnimationData.Identifier, baseWeightedAnimation );
+			baseWeightedAnimation.Layer.SetAnimationProgress( 1.0f );
+			_animations = new WeightedAnimationStack( this, animations, baseWeightedAnimation );
 		}
 
-		private IEnumerator BlendWeights ( float time ) {
 
-			for( float t=0f; t<time; t+=Time.deltaTime ) {
-
-				foreach ( WeightedAnimation w in _animations.Values ) {
-
-					w.Weight = Mathf.Lerp( w.Weight, w.TargetWeight, t / time );
-				}
-
-
-				yield return null;
-			}
-			foreach ( WeightedAnimation w in _animations.Values ) {
-
-				w.Weight = w.TargetWeight;
-			}
-
-		}
-
-		
+	
 		// ****************** Data *******************
 
 		[System.Serializable]
@@ -155,12 +120,92 @@ namespace Dumpster.Animation {
 			[SerializeField] private Templates.Animation _animation;
 		}
 
+		private class WeightedAnimationStack {
+
+			public WeightedAnimationStack ( MonoBehaviour go, Dictionary<string,WeightedAnimation> animations, WeightedAnimation baseAnimation ) {
+				
+				_go = go;
+				_animations = animations;
+				_baseAnimation = baseAnimation;
+			}
+
+			private Coroutine _blend;
+			private MonoBehaviour _go;
+			private Dictionary<string,WeightedAnimation> _animations;
+			private WeightedAnimation _baseAnimation;
+
+			private float _weightTotal {
+				get { 
+					var t = 0f;
+					foreach ( WeightedAnimation a in _animations.Values ){
+						t += a.TargetWeight;
+					}
+					return t;
+				}
+			}
+
+			public void SetWeight ( string identifier, float weight ) {
+
+				if ( _animations.ContainsKey( identifier ) ) {
+					
+					if ( _animations[ identifier ].TargetWeight != weight ) {
+						_animations[ identifier ].TargetWeight = weight;
+					
+						foreach ( WeightedAnimation a in _animations.Values) {
+
+							a.AveragedTargetWeight = ( _weightTotal > 0f ) ? a.TargetWeight/_weightTotal : 0f;
+						}
+
+						_baseAnimation.AveragedTargetWeight = Mathf.Clamp01(1 - _weightTotal);
+
+						print( _baseAnimation.AveragedTargetWeight );
+						 if ( _blend != null ) { _go.StopCoroutine( _blend ); }
+						_blend = _go.StartCoroutine( BlendWeights( 0.5f ) );
+					}
+				}
+			}
+			public void SetProgress ( string identifier, float weight ) {
+
+				if ( _animations.ContainsKey( identifier ) ) {
+					_animations[ identifier ].Layer.SetAnimationProgress( weight );
+				}
+			}
+			public void SetLayerProgress ( string identifier, float weight ) {
+
+				if ( _animations.ContainsKey( identifier ) ) {
+					_animations[ identifier ].Layer.SetLayerProgress( weight );
+				}
+			}
+
+			private IEnumerator BlendWeights ( float time ) {
+
+				for( float t=0f; t<time; t+=Time.deltaTime ) {
+
+					foreach ( WeightedAnimation w in _animations.Values ) {
+						w.Weight = Mathf.Lerp( w.Weight, w.AveragedTargetWeight, t / time );
+					}
+
+					_baseAnimation.Weight = Mathf.Lerp( _baseAnimation.Weight, _baseAnimation.AveragedTargetWeight, t / time );
+
+					yield return null;
+				}
+
+				foreach ( WeightedAnimation w in _animations.Values ) {
+					w.Weight = w.AveragedTargetWeight;
+				}
+				
+				_baseAnimation.Weight = _baseAnimation.AveragedTargetWeight;
+			}
+		}
 		private class WeightedAnimation {
 
 			public Layer Layer {
 				get;
 			}
 			public float TargetWeight{
+				get; set;
+			}
+			public float AveragedTargetWeight {
 				get; set;
 			}
 			public float Weight {
