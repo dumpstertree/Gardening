@@ -10,6 +10,7 @@ namespace Dumpster.Animation.Templates {
 		[Header( "Animation" )]
 		[SerializeField] private AnimationTemplate[] _animationTemplates;
 		[SerializeField] private AnimationCurve _speedCurve;
+		[SerializeField] private AnimationCurve _blendCurve;
 
 		public Dumpster.Animation.Layer GetInstance ( Playable playableParent, int port ) {
 
@@ -52,7 +53,7 @@ namespace Dumpster.Animation.Templates {
 				x++;
 			}
 
-			var layer = new Layer( layerMixer, animations.ToArray() );
+			var layer = new Layer( layerMixer, animations.ToArray(), _blendCurve );
 			return layer;
 		}
 
@@ -75,6 +76,8 @@ namespace Dumpster.Animation {
 
 			_mixer = mixer;
 			_curve = curve;
+
+			SetDefaultValues ();
 		}
 
 		
@@ -90,9 +93,13 @@ namespace Dumpster.Animation {
 			var curvedProgress = EvaluateFromCurve( progress ) * progress;
 			var trueCurvedFrame = ((float)_numOfFrames) * curvedProgress;
 
+			
 			// calculate frames
 			var trueTargetFrame = Mathf.CeilToInt( trueCurvedFrame );
 			var trueLeavingFrame = trueTargetFrame - 1f;
+
+
+			// wrap frames
 			var targetFrame = (int) Wrap( trueTargetFrame, _numOfFrames );
 			var leavingFrame = (int) Wrap( trueLeavingFrame, _numOfFrames );
 
@@ -117,7 +124,10 @@ namespace Dumpster.Animation {
 			get{ return _mixer.GetInputCount(); }
 		}
 
+		private void SetDefaultValues () {
 
+			SetProgress ( 0 );
+		}
 		private float EvaluateFromCurve ( float trueValue ) {
 
 			return _curve.Evaluate( trueValue );
@@ -125,58 +135,6 @@ namespace Dumpster.Animation {
 		private float Wrap ( float index, float max ) {
 
 			return Mathf.Repeat( index, max );
-		}
-	}
-}
-
-namespace Dumpster.Animation {
-
-	public class Layer {
-
-		private RangeAnimation[] _animations;
-		private AnimationMixerPlayable _mixer;
-
-		private int _numOfAnimations {
-			get{ return _animations.Length; }
-		}
-
-		public Layer ( AnimationMixerPlayable mixer, RangeAnimation[] animations ) {
-
-			_animations = animations;
-			_mixer = mixer;
-
-			if ( _mixer.GetInputCount() > 0 ) {
-				_mixer.SetInputWeight( 0, 1.0f );
-			}
-		}
-
-
-		public void SetAnimationProgress ( float progress ) {
-
-			foreach ( RangeAnimation animation in _animations ) {
-				animation.SetProgress( progress );
-			}
-		}
-		public void SetLayerProgress ( float progress ) {
-
-			progress = Mathf.Clamp01( progress );
-
-
-			// calculate frames
-			var trueTargetFrame = Mathf.CeilToInt( (float) _numOfAnimations * progress);
-			var trueLastFrame = trueTargetFrame - 1;
-			var targetFrame = (int) Mathf.Repeat( trueTargetFrame, _numOfAnimations );
-			var lastFrame   = (int) Mathf.Repeat( trueLastFrame,   _numOfAnimations );
-
-
-			// calculate weight
-			var weight = (_numOfAnimations * progress) - Mathf.Floor(_numOfAnimations * progress);
-			var leavingWeight = 1f - weight;
-
-			
-			// set weights
-			_mixer.SetInputWeight( 0, 1- progress );
-			_mixer.SetInputWeight( 1, progress );
 		}
 	}
 }

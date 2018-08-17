@@ -9,19 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2388ea635ef64406582425ec18d22a2b, type: 3}
-  m_Name: Humanoid_Forward
+  m_Name: Humanoid_Aim
   m_EditorClassIdentifier: 
   _animationTemplates:
   - Clips:
-    - {fileID: 7400002, guid: d5821be4edece45d2b461c850565ddba, type: 3}
-    - {fileID: 7400004, guid: d5821be4edece45d2b461c850565ddba, type: 3}
-    - {fileID: 7400006, guid: d5821be4edece45d2b461c850565ddba, type: 3}
-    - {fileID: 7400008, guid: d5821be4edece45d2b461c850565ddba, type: 3}
-  - Clips:
-    - {fileID: 7400002, guid: 240ca68828abd4e15ba851f57da3bec5, type: 3}
-    - {fileID: 7400004, guid: 240ca68828abd4e15ba851f57da3bec5, type: 3}
-    - {fileID: 7400006, guid: 240ca68828abd4e15ba851f57da3bec5, type: 3}
-    - {fileID: 7400008, guid: 240ca68828abd4e15ba851f57da3bec5, type: 3}
+    - {fileID: 7400002, guid: 3655f78dd36794a32a8c7e5c3d269e94, type: 3}
   _speedCurve:
     serializedVersion: 2
     m_Curve:

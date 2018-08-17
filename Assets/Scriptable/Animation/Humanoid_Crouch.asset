@@ -14,7 +14,6 @@ MonoBehaviour:
   _animationTemplates:
   - Clips:
     - {fileID: 7400000, guid: 79b3fab7dde284cc28c18085d8dedfc3, type: 3}
-    - {fileID: 7400000, guid: 79b3fab7dde284cc28c18085d8dedfc3, type: 3}
   _speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -35,6 +34,48 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _blendCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5990804
+      value: 0.93493575
+      inSlope: 0.06665343
+      outSlope: 0.06665343
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0.42961797
+    - serializedVersion: 3
+      time: 0.8507098
+      value: 0.9252974
+      inSlope: 0.98475194
+      outSlope: 0.98475194
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.5964426
+      outWeight: 0.48275185
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.11150873
+      outSlope: -0.11150873
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.44828188
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

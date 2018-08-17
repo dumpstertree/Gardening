@@ -66,24 +66,19 @@ public class CharacterController : MonoBehaviour {
 		_animator.ChangeProgress( "Run", Mathf.Repeat( _stride, 1.0f ));
 		_animator.SetLayerProgress( "Run", _strideWeight );
 
-		// if( Mathf.Abs(_localVelocity.z) > 0.0f ) {
-		// 	_animator.SetAsActiveAnimation( "Run" );
-		// } else if ( Input.GetKey( KeyCode.Space ) ) {
-		// 	_animator.SetAsActiveAnimation( "Crouch" );
-		// } else {
-		// 	_animator.SetAsActiveAnimation( "Idle" );
-		// }
+		_animator.SetLayerProgress( "Idle", _strideWeight );
+		
 
 		if ( Mathf.Abs(_localVelocity.z) > 0.0f ) {
-			_animator.SetWeight( "Run", 1f );
+			_animator.SetAnimationPlaying( "Run", true );
 		} else {
-			_animator.SetWeight( "Run", 0f );
+			_animator.SetAnimationPlaying( "Run", false );
 		}
 		
 		if ( Input.GetKey( KeyCode.Space ) ) {
-			_animator.SetWeight( "Crouch", 1f );
+			_animator.SetAnimationPlaying( "Crouch", true );
 		} else {
-			_animator.SetWeight( "Crouch", 0f );
+			_animator.SetAnimationPlaying( "Crouch", false );
 		}
 	}
 
