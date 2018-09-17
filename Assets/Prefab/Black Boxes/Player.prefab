@@ -1702,6 +1702,7 @@ GameObject:
   - component: {fileID: 114135429522777560}
   - component: {fileID: 114187408048316732}
   - component: {fileID: 114161463011172416}
+  - component: {fileID: 136428736992455976}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6762,7 +6763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1817290076647316
 GameObject:
   m_ObjectHideFlags: 1
@@ -15117,7 +15118,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1215791882758422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.117, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4504648239477324}
@@ -16234,10 +16235,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &65494653524567816
 BoxCollider:
@@ -16259,7 +16260,7 @@ BoxCollider:
   m_GameObject: {fileID: 1215791882758422}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
@@ -16470,8 +16471,14 @@ MonoBehaviour:
     _identifier: Idle
     _animation: {fileID: 11400000, guid: 2cf42974a5fcf470c9fa34f18af9b4cb, type: 2}
   _animationData:
+  - _identifier: Run
+    _animation: {fileID: 11400000, guid: a3c89b4a9b4834d0996deece23ef4f7f, type: 2}
   - _identifier: Crouch
     _animation: {fileID: 11400000, guid: 8756fd4c4309e4b68b0e61dd622ad6c0, type: 2}
+  - _identifier: Jump Up
+    _animation: {fileID: 11400000, guid: bbb615387c86143c3aa8e2473d76f403, type: 2}
+  - _identifier: Jump Down
+    _animation: {fileID: 11400000, guid: b3535e87a31d44e53806c65caacea0f2, type: 2}
   _animator: {fileID: 95172357435466800}
 --- !u!114 &114187408048316732
 MonoBehaviour:
@@ -16492,6 +16499,72 @@ MonoBehaviour:
   _balance: 10
   _stridesPerMeterWalk: 0.4
   _stridesPerMeterRun: 0.18
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 6.729634
+      outSlope: 6.729634
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.06586559
+    - serializedVersion: 3
+      time: 0.20928167
+      value: 0.76807356
+      inSlope: 0.9989332
+      outSlope: 0.9989332
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.06813581
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _fallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.10064793
+      value: 0.6189451
+      inSlope: 1.365513
+      outSlope: 1.365513
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5396622
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114269220570633990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16650,7 +16723,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1215791882758422}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f0c0a123fe8348baba591daaf21df83, type: 3}
   m_Name: 
@@ -16944,6 +17017,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!136 &136428736992455976
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215791882758422}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!137 &137003110493509276
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

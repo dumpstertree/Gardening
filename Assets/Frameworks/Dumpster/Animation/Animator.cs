@@ -40,14 +40,14 @@ namespace Dumpster.Animation {
 				weightedAnimation.LayerProgress = progress;
 			}
 		}
-		// public void SetWeight ( string identifier, float progress ) {
+		public void SetWeight ( string identifier, float progress ) {
 
-		// 	if ( _animations.ContainsKey( identifier ) ) {
+			if ( _animations.ContainsKey( identifier ) ) {
 
-		// 		var blendable = _animations[ identifier ] as IBlendable;				
-		// 		_weightBlender.SetWeight( blendable, progress );
-		// 	}
-		// }
+				var blendable = _animations[ identifier ] as IBlendable;				
+				_weightBlender.SetWeight( blendable, progress );
+			}
+		}
 		public void SetAnimationPlaying ( string identifier, bool playing ) {
 
 			if ( _animations.ContainsKey( identifier ) ) {
@@ -101,13 +101,15 @@ namespace Dumpster.Animation {
 			// create job
 			_playable = AnimationMixerPlayable.Create( _graph, 0, true );
 			_playable.SetOutputCount( 1 );
-			_playable.SetInputCount( _numOfAnimations );
+			_playable.SetInputCount( _numOfAnimations + 1 );
 			
 
 			// create output
 			var output = AnimationPlayableOutput.Create( _graph, "output", _animator );
 			output.SetSourcePlayable( _playable );
 
+			var layer = ScriptPlayable<AnimationLayer>.Create( _graph );
+			_playable.ConnectInput(  _numOfAnimations, layer, 0);
 			
 			// play the graph
 			_graph.Play();

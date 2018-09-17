@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2388ea635ef64406582425ec18d22a2b, type: 3}
-  m_Name: Humanoid_Idle
+  m_Name: Jump Up
   m_EditorClassIdentifier: 
   _animationTemplates:
   - Clips:
-    - {fileID: 7400002, guid: e64af193fcb9f4a1a94439ee5910cd7c, type: 3}
-    - {fileID: 7400004, guid: e64af193fcb9f4a1a94439ee5910cd7c, type: 3}
+    - {fileID: 7400002, guid: 63bf11a4a29bd415aa0187902612c738, type: 3}
+    - {fileID: 7400006, guid: 63bf11a4a29bd415aa0187902612c738, type: 3}
   _speedCurve:
     serializedVersion: 2
     m_Curve:

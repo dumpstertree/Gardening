@@ -97,8 +97,12 @@ namespace Dumpster.Animation {
 				_trueWeight = newTrueWeight;
 				if ( _trueWeight == 1.0f ) {
 					BlendIntoAnimation ();
-				} else {
+				} else if (  _trueWeight == 0.0f ) {
 					BlendOutOfAnimation ();
+				}
+				else {
+					if ( _blend != null ) { _animator.StopCoroutine( _blend ); }
+					_blend = _animator.StartCoroutine( Blend ( 0.1f, false ) );
 				}
 			}
 		}

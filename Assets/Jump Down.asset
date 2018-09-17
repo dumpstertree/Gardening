@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2388ea635ef64406582425ec18d22a2b, type: 3}
-  m_Name: Humanoid_Idle
+  m_Name: Jump Down
   m_EditorClassIdentifier: 
   _animationTemplates:
   - Clips:
-    - {fileID: 7400002, guid: e64af193fcb9f4a1a94439ee5910cd7c, type: 3}
-    - {fileID: 7400004, guid: e64af193fcb9f4a1a94439ee5910cd7c, type: 3}
+    - {fileID: 7400004, guid: 63bf11a4a29bd415aa0187902612c738, type: 3}
+    - {fileID: 7400008, guid: 63bf11a4a29bd415aa0187902612c738, type: 3}
   _speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -45,18 +45,27 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.02125969
+      value: 0.0004519744
+      inSlope: 0.042519383
+      outSlope: 0.042519383
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334

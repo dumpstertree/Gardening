@@ -9,7 +9,7 @@ namespace Dumpster.Animation {
 
 		// ************ Constructor *******************
 		
-		public Layer ( AnimationMixerPlayable mixer, RangeAnimation[] animations, AnimationCurve blendCurve ) {
+		public Layer ( AnimationLayerMixerPlayable mixer, RangeAnimation[] animations, AnimationCurve blendCurve ) {
 
 			_animations = animations;
 			_mixer = mixer;
@@ -40,7 +40,7 @@ namespace Dumpster.Animation {
 
 
 		private RangeAnimation[] _animations;
-		private AnimationMixerPlayable _mixer;
+		private AnimationLayerMixerPlayable _mixer;
 
 		private int _numOfAnimations {
 			get{ return _mixer.GetInputCount(); }
@@ -102,8 +102,11 @@ namespace Dumpster.Animation {
 
 			
 			// // set weights
-			_mixer.SetInputWeight( 0, 1 - progress );
-			_mixer.SetInputWeight( 1, progress );
+			_mixer.SetInputWeight( 0, progress );
+
+			if ( _mixer.GetInputCount() > 1 ) {
+				_mixer.SetInputWeight( 1, 1 - progress );
+			}
 		}
 	}
 }

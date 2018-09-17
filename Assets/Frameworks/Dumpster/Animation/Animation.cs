@@ -14,7 +14,7 @@ namespace Dumpster.Animation.Templates {
 
 		public Dumpster.Animation.Layer GetInstance ( Playable playableParent, int port ) {
 
-			var layerMixer = AnimationMixerPlayable.Create( playableParent.GetGraph(), 0, true );
+			var layerMixer = AnimationLayerMixerPlayable.Create( playableParent.GetGraph(), 0 );
 			layerMixer.SetInputCount( _animationTemplates.Length );
 			layerMixer.SetOutputCount( 1 );
 
@@ -110,8 +110,11 @@ namespace Dumpster.Animation {
 
 
 			// set weights
-			_mixer.SetInputWeight( leavingFrame, leavingWeight );
 			_mixer.SetInputWeight( targetFrame, weight );
+			_mixer.SetInputWeight( leavingFrame, leavingWeight );
+
+			// _mixer.SetInputWeight( 0, progress );
+			// _mixer.SetInputWeight( 1, 1f - progress );
 		}
 
 		

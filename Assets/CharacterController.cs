@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 public class CharacterController : MonoBehaviour {
 
@@ -32,6 +33,16 @@ public class CharacterController : MonoBehaviour {
 	private float _stridesPerMeter {
 		get { return Mathf.Lerp( _stridesPerMeterWalk, _stridesPerMeterRun, _strideWeight ); }
 	}
+	private float _distanceFromGround {
+		get{ 
+			var hit = new RaycastHit();
+			if ( Physics.Raycast( _root.transform.position, -_root.transform.up, out hit, Mathf.Infinity) ){
+				return hit.distance;
+			}
+
+			return Mathf.Infinity;
+		}
+	}
 
 	private void Awake () {
 		
@@ -46,6 +57,9 @@ public class CharacterController : MonoBehaviour {
 	private float _horizontal;
 	private float _vertical;
 
+	[SerializeField] private AnimationCurve _curve;
+	[SerializeField] private AnimationCurve _fallCurve;
+	
 	private void Update () {
 		
 		ApplyVelocity( _horizontal, _vertical );
@@ -61,13 +75,13 @@ public class CharacterController : MonoBehaviour {
 		_distanceCovered += _localVelocity.z * Time.deltaTime;
 		_stride += (_localVelocity.z * Time.deltaTime) * _stridesPerMeter;
 	}
+	private float _worldAnimationProgress {
+		get { return Time.time - Mathf.Floor( Time.time ); }
+	}
 	private void LateUpdate () {
 
 		_animator.ChangeProgress( "Run", Mathf.Repeat( _stride, 1.0f ));
 		_animator.SetLayerProgress( "Run", _strideWeight );
-
-		_animator.SetLayerProgress( "Idle", _strideWeight );
-		
 
 		if ( Mathf.Abs(_localVelocity.z) > 0.0f ) {
 			_animator.SetAnimationPlaying( "Run", true );
@@ -75,13 +89,50 @@ public class CharacterController : MonoBehaviour {
 			_animator.SetAnimationPlaying( "Run", false );
 		}
 		
-		if ( Input.GetKey( KeyCode.Space ) ) {
-			_animator.SetAnimationPlaying( "Crouch", true );
+
+		if ( _isJumping ) {
+			_animator.SetWeight( "Jump Up", _curve.Evaluate( 1 - Mathf.Clamp01( GetComponent<Rigidbody>().velocity.y / 10f ) ) );
 		} else {
-			_animator.SetAnimationPlaying( "Crouch", false );
+			_animator.SetWeight( "Jump Up", 0f );
 		}
+
+		if ( _isFalling ) {
+			_animator.SetWeight( "Jump Down", 1f );
+		} else {
+			_animator.SetWeight( "Jump Down", .01f );
+		}
+
+		if ( !_isFalling && _wasFallingLastFrame ) {
+			_animator.SetWeight( "Crouch", 0.99f );
+		}
+
+
+		if ( Input.GetKeyDown( KeyCode.J ) ) {
+
+			_animator.SetAnimationPlaying( "Crouch", true );
+			EdensGarden.Instance.Async.WaitForSeconds( 0.1f, () => {
+
+				_animator.SetAnimationPlaying( "Crouch", false );
+				GetComponent<Rigidbody>().velocity += (Vector3.up * 10);
+
+			});
+		}
+
+		_animator.ChangeProgress( "Jump Up", _worldAnimationProgress );
+		_animator.ChangeProgress( "Jump Down", _worldAnimationProgress );
+
+		_wasJumpinglastFrame = _isJumping;
+		_wasFallingLastFrame = _isFalling;
 	}
 
+	private bool _isJumping {
+		get { return System.Math.Round( GetComponent<Rigidbody>().velocity.y, 2 ) > 0; }
+	}
+	private bool _isFalling {
+		get { return System.Math.Round( GetComponent<Rigidbody>().velocity.y, 2 ) < -0.1f; }
+	}
+	private bool _wasJumpinglastFrame;
+	private bool _wasFallingLastFrame;
 	
 	// physics
 	private void ApplyVelocity ( float horizontalInput, float verticalInput ) {
@@ -129,7 +180,8 @@ public class CharacterController : MonoBehaviour {
 	}
 	private void Move () {
 
-		_root.position += _velocity * Time.deltaTime;
+		var v = new Vector3( _velocity.x, GetComponent<Rigidbody>().velocity.y, _velocity.z );
+		GetComponent<Rigidbody>().velocity = v;
 	}
 	private void Balance () {
 

@@ -4,572 +4,526 @@
 		"selected_items":
 		[
 			[
+				"anima",
+				"Animation	Animation"
+			],
+			[
+				"layer",
+				"SetLayerMaskFromAvatarMask(uint layerIndex, AvatarMask mask)	void"
+			],
+			[
+				"la",
+				"SetLayerMaskFromAvatarMask(uint layerIndex, AvatarMask mask)	void"
+			],
+			[
+				"add",
+				"SetLayerAdditive(uint layerIndex, bool value)	void"
+			],
+			[
+				"_was",
+				"_wasFallingLastFrame	bool"
+			],
+			[
+				"dis",
+				"_distanceFromGround	float { get; }"
+			],
+			[
+				"_d",
+				"_distanceFromGround	float { get; }"
+			],
+			[
+				"rayc",
+				"RaycastHit()	RaycastHit()"
+			],
+			[
+				"_is",
+				"_isJumping	bool { get; }"
+			],
+			[
 				"vec",
 				"Vector3	Vector3"
 			],
 			[
-				"_bul",
-				"_bulletSpeed	float { get; }"
+				"ri",
+				"Rigidbody	Rigidbody"
 			],
 			[
-				"bull",
-				"bulletSpeed	float"
+				"getcom",
+				"GetComponent<T>()	T"
 			],
 			[
-				"rayc",
-				"RaycastHit	RaycastHit"
+				"getco",
+				"GetComponent<T>()	T"
 			],
 			[
-				"camer",
-				"Camera	Camera"
+				"blen",
+				"BLEND_TIME	float"
 			],
 			[
-				"_rel",
-				"_reloadSpeed	float { get; }"
+				"_w",
+				"_weight	float"
 			],
 			[
-				"round",
-				"RoundToInt(float f)	int"
+				"wieg",
+				"_weightTotal	float { get; }"
 			],
 			[
-				"_fir",
-				"_rateOfFire	float { get; }"
+				"new",
+				"newTrueWeight	float"
 			],
 			[
-				"bullet",
-				"BulletSize(int level)	float"
+				"true",
+				"newTrueWeight	float"
 			],
 			[
-				"Eden",
-				"EdensGarden	EdensGarden"
+				"_bl",
+				"_weightBlender	WeightBlender"
 			],
 			[
-				"animatio",
-				"AnimationCurve	AnimationCurve"
+				"_an",
+				"_animator	Animator"
 			],
 			[
-				"anima",
-				"AnimationCurve	AnimationCurve"
+				"blend",
+				"BlendOutOfAnimation()	void"
 			],
 			[
 				"de",
 				"Debug	Debug"
 			],
 			[
-				"co",
-				"Clone()	object"
+				"getin",
+				"GetInputCount<U>()	int"
 			],
 			[
-				"inv",
-				"_inventoryItems	Item[]"
+				"_l",
+				"_layer	Layer { get; }"
+			],
+			[
+				"_le",
+				"_blendedWeight	float"
+			],
+			[
+				"stop",
+				"StopCoroutine(IEnumerator routine)	void"
 			],
 			[
 				"_",
-				"_inventoryItems	Item[]"
+				"_weight	float"
 			],
 			[
-				"obj",
-				"objectToClone	Inventory"
+				"iene",
+				"IEnumerator	IEnumerator"
 			],
 			[
-				"_in",
-				"_inventoryItems	Item[]"
+				"Anima",
+				"Animator	Animator"
 			],
 			[
-				"is",
-				"IsGunBuildable	bool { get; }"
+				"mono",
+				"MonoBehaviour	MonoBehaviour"
 			],
 			[
-				"as",
-				"AsGunBuildable	GunBuildableItem { get; }"
+				"Ibe",
+				"IBlendable	IBlendable"
 			],
 			[
-				"in",
-				"CreateInstance()	Item"
+				"ble",
+				"blendables	List<IBlendable>"
 			],
 			[
-				"it",
-				"Item	Item"
+				"base",
+				"baseWeightedAnimation	WeightedAnimation"
 			],
 			[
-				"item",
-				"_item	Item"
+				"Weight",
+				"WeightBlender(List<IBlendable> blendables, IBlendable defualtBlendable = null)	WeightBlender(List<IBlendable> blendables, IBlendable defualtBlendable = null)"
 			],
 			[
-				"bui",
-				"GunBuildableItem	GunBuildableItem"
+				"def",
+				"defualtBlendable	IBlendable"
 			],
 			[
-				"findob",
-				"FindObjectsOfType<T>()	T[]"
-			],
-			[
-				"ede",
-				"Eden	Eden"
-			],
-			[
-				"edn",
-				"EdensGarden	EdensGarden"
-			],
-			[
-				"eden",
-				"EdensGarden	EdensGarden"
-			],
-			[
-				"range",
-				"RANGED_WEAPON_PATH	string"
-			],
-			[
-				"fsj",
-				"fsJsonPrinter	fsJsonPrinter"
-			],
-			[
-				"fs",
-				"fsData	fsData"
-			],
-			[
-				"to",
-				"TrySerialize<T>(T instance, out fsData data)	fsResult"
-			],
-			[
-				"ser",
-				"SerializeField	SerializeField"
-			],
-			[
-				"Ser",
-				"SerializeField	SerializeField"
-			],
-			[
-				"jso",
-				"JsonUtility	JsonUtility"
-			],
-			[
-				"rou",
-				"RoundToInt(float f)	int"
-			],
-			[
-				"cel",
-				"CeilToInt(float f)	int"
-			],
-			[
-				"col",
-				"Collumns	int { get; }"
-			],
-			[
-				"Grid",
-				"_grid	Grid"
-			],
-			[
-				"start",
-				"startRotation	Vector3"
-			],
-			[
-				"_targ",
-				"_targetRotation	Quaternion"
-			],
-			[
-				"flo",
-				"FloorToInt(float f)	int"
-			],
-			[
-				"part",
-				"Parts	List<Part2>"
-			],
-			[
-				"par",
-				"PartData	Gun { get; set; }"
-			],
-			[
-				"Coll",
-				"Collumn	int"
-			],
-			[
-				"Par",
-				"Part	Gun"
-			],
-			[
-				"Part",
-				"Part2()	Part2()"
-			],
-			[
-				"pa",
-				"Parts	List<Part2>"
-			],
-			[
-				"gun",
-				"Gun2	Gun2"
-			],
-			[
-				"se",
-				"SetInventoryItem(int index, Item item)	void"
-			],
-			[
-				"get",
-				"GetInventoryItem(int index)	Item"
-			],
-			[
-				"_p",
-				"_player	BlackBox { get; }"
-			],
-			[
-				"b",
-				"Building	Building"
-			],
-			[
-				"_maxfire",
-				"_maxRateOfFireExperience	int"
-			],
-			[
-				"bu",
-				"GunBuildableItem	GunBuildableItem"
-			],
-			[
-				"pr",
-				"private	private"
-			],
-			[
-				"_camer",
-				"_cameraVertical	float"
-			],
-			[
-				"cae",
-				"CameraVertical	float { get; set; }"
-			],
-			[
-				"_ver",
-				"_verticalRot	float"
-			],
-			[
-				"rot",
-				"localRotation	Quaternion { get; set; }"
-			],
-			[
-				"tra",
-				"transform	Transform { get; }"
-			],
-			[
-				"ed",
-				"Eden	Eden"
-			],
-			[
-				"fixed",
-				"FixedShootableItem	FixedShootableItem"
-			],
-			[
-				"re",
-				"return	return"
-			],
-			[
-				"ty",
-				"Typppppe	Type { get; }"
-			],
-			[
-				"typ",
-				"GetType()	Type"
-			],
-			[
-				"sho",
-				"IsShootable	bool { get; }"
-			],
-			[
-				"sh",
-				"ShootableItem	ShootableItem { get; }"
-			],
-			[
-				"S",
-				"Stats	Gun { get; }"
-			],
-			[
-				"i",
-				"IsActionable	bool { get; }"
-			],
-			[
-				"_s",
-				"_startingStats	Gun"
-			],
-			[
-				"sta",
-				"stats	Gun"
-			],
-			[
-				"eq",
-				"EquipedItems	Inventory { get; }"
-			],
-			[
-				"getcomponent",
-				"GetComponent(Type type)	Component"
-			],
-			[
-				"g",
-				"GetContext(string panelIdentifier)	Panel"
-			],
-			[
-				"right",
-				"Right_Down	bool { get; }"
-			],
-			[
-				"_sta",
-				"_gunStats	Gun"
-			],
-			[
-				"_stat",
-				"_stats	Gun"
-			],
-			[
-				"Back",
-				"BackRight	Back { get; }"
-			],
-			[
-				"dow",
-				"Down_Down	bool { get; }"
-			],
-			[
-				"up",
-				"Up_Down	bool { get; }"
-			],
-			[
-				"Ede",
-				"Eden	Eden"
-			],
-			[
-				"button",
-				"_buttonActions	ButtonActions"
-			],
-			[
-				"new",
-				"newText	string"
-			],
-			[
-				"text",
-				"text	Text"
-			],
-			[
-				"game",
-				"GameObject	GameObject"
-			],
-			[
-				"iven",
-				"InventoryItem	InventoryItem"
-			],
-			[
-				"inventor",
-				"InventoryItem	InventoryItem"
-			],
-			[
-				"hand",
-				"HandleSelectEvent	HandleSelectEvent"
-			],
-			[
-				"on",
-				"OnClick	ClickEvent"
-			],
-			[
-				"Rg",
-				"Right_Down	bool { get; }"
-			],
-			[
-				"Iven",
-				"InventoryItem	InventoryItem"
-			],
-			[
-				"sele",
-				"SelectEvent	SelectEvent"
-			],
-			[
-				"selec",
-				"SetSelectedGameObject(GameObject selected)	void"
-			],
-			[
-				"ui",
-				"UnityEngine	UnityEngine"
-			],
-			[
-				"u",
-				"Up_Down	bool { get; }"
-			],
-			[
-				"bl",
-				"BlackBoxes	BlackBoxes"
-			],
-			[
-				"Ena",
-				"Enabled	bool { get; set; }"
-			],
-			[
-				"ovr",
-				"override	override"
+				"set",
+				"SetAnimationProgress(float progress)	void"
 			],
 			[
 				"Mono",
 				"MonoBehaviour	MonoBehaviour"
 			],
 			[
-				"gri",
-				"PickingPartFromGrid	State"
+				"weigh",
+				"WeightedAnimationStack	WeightedAnimationStack"
 			],
 			[
-				"Sta",
-				"State	State"
+				"w",
+				"AveragedTargetWeight	float { get; set; }"
 			],
 			[
-				"st",
-				"BuilderStats	BuiltStats { get; }"
+				"ser",
+				"SetWeight(string identifier, float progress)	void"
 			],
 			[
-				"Bui",
-				"builderStats	BuiltStats"
+				"in",
+				"Input	Input"
 			],
 			[
-				"loca",
-				"localScale	Vector3 { get; set; }"
+				"b",
+				"BlackBoxes	BlackBoxes"
 			],
 			[
-				"_gr",
-				"_grabbedPiece	Piece"
+				"distance",
+				"_distanceCovered	float"
 			],
 			[
-				"bul",
-				"BulletSize	int { get; set; }"
+				"setin",
+				"SetInputWeight<U>(int inputIndex, float weight)	void"
 			],
 			[
-				"Bu",
-				"BuiltStats()	BuiltStats()"
+				"anim",
+				"animationTemplate	AnimationTemplate"
 			],
 			[
-				"rat",
-				"RateOfFireLevel	int { get; }"
+				"Layer",
+				"Layer(AnimationMixerPlayable mixer)	Layer(AnimationMixerPlayable mixer)"
 			],
 			[
-				"ontrie",
-				"OnTriedToBreakFreeLeft	TriedToBreakFreeEvent"
+				"getk",
+				"GetKey(string name)	bool"
 			],
 			[
-				"_c",
-				"_currentCollumn	int"
+				"getc",
+				"GetKeyDown(KeyCode key)	bool"
 			],
 			[
-				"_cur",
-				"_currentRow	int"
+				"e",
+				"Weight	float { get; set; }"
 			],
 			[
-				"row",
-				"Rows	int { get; }"
+				"ien",
+				"IEnumerator<	IEnumerator<"
 			],
 			[
-				"tar",
-				"_targetRotation	Quaternion"
+				"Wei",
+				"WeightedAnimation(Playable playableParent, int inputPort, RangeAnimation animation)	WeightedAnimation(Playable playableParent, int inputPort, RangeAnimation animation)"
 			],
 			[
-				"_g",
-				"_grabbedPiece	Piece"
+				"getinpu",
+				"GetInput<U>(int inputPort)	Playable"
 			],
 			[
-				"req",
-				"RequestRotate(float rotation)	void"
+				"pro",
+				"progress	float"
 			],
 			[
-				"_tar",
-				"_targetRotation	Quaternion"
+				"pr",
+				"private	private"
 			],
 			[
-				"set",
-				"IsSelected	bool { get; set; }"
+				"co",
+				"ContainsKey(TKey key)	bool"
 			],
 			[
-				"fire",
-				"FireReleaseEvent()	void"
+				"ins",
+				"GetInstance(Playable playableParent, int port)	RangeAnimation"
 			],
 			[
-				"_spa",
-				"_spawnRow	int"
+				"cl",
+				"Clamp01(float value)	float"
 			],
 			[
-				"coll",
-				"collumn	int"
+				"input",
+				"SetInputWeight<U, V>(V input, float weight)	void"
 			],
 			[
-				"_i",
-				"__index	int"
+				"gra",
+				"_graph	PlayableGraph"
 			],
 			[
-				"Uniy",
+				"setw",
+				"SetInputWeight<U>(int inputIndex, float weight)	void"
+			],
+			[
+				"clip",
+				"clipPlayable	AnimationClipPlayable"
+			],
+			[
+				"animationpla",
+				"AnimationPlayableOutput	AnimationPlayableOutput"
+			],
+			[
+				"playabl",
+				"playable	AnimationScriptPlayable"
+			],
+			[
+				"outp",
+				"output2	AnimationPlayableOutput"
+			],
+			[
+				"wie",
+				"_weight	float"
+			],
+			[
+				"floor",
+				"Floor(float f)	float"
+			],
+			[
+				"we",
+				"GetInputWeight<U>(int inputIndex)	float"
+			],
+			[
+				"floo",
+				"FloorToInt(float f)	int"
+			],
+			[
+				"ce",
+				"Ceil(float f)	float"
+			],
+			[
+				"prg",
+				"progress	float"
+			],
+			[
+				"setinp",
+				"SetInputWeight<U>(int inputIndex, float weight)	void"
+			],
+			[
+				"mixer",
+				"mixer2	AnimationMixerPlayable"
+			],
+			[
+				"mix",
+				"mixer2	AnimationMixerPlayable"
+			],
+			[
+				"out",
+				"output	AnimationPlayableOutput"
+			],
+			[
+				"pla",
+				"Playables	Playables"
+			],
+			[
+				"unitye",
 				"UnityEngine	UnityEngine"
 			],
 			[
-				"shift",
-				"ShiftUp()	void"
+				"animatioc",
+				"AnimationClipPlayable	AnimationClipPlayable"
+			],
+			[
+				"TRANS",
+				"Transforms	Transforms"
+			],
+			[
+				"trans",
+				"Transforms	Transforms"
+			],
+			[
+				"animath",
+				"AnimationThings	NativeArray<AnimationThing>"
+			],
+			[
+				"animationthin",
+				"AnimationThings	NativeArray<AnimationThing>"
+			],
+			[
+				"draw",
+				"DrawRay(Vector3 start, Vector3 dir)	void"
 			],
 			[
 				"Unity",
 				"UnityEngine	UnityEngine"
 			],
 			[
-				"unity",
+				"camera",
+				"Camera	Camera"
+			],
+			[
+				"foll",
+				"_followObject	Transform"
+			],
+			[
+				"camer",
+				"cameraTarget	Transform"
+			],
+			[
+				"_ho",
+				"_horizontalRot	float"
+			],
+			[
+				"horizont",
+				"CameraHorizontal	float { get; set; }"
+			],
+			[
+				"hor",
+				"_horizontalRot	float"
+			],
+			[
+				"_ve",
+				"_velocity	Vector3"
+			],
+			[
+				"mat",
+				"Mathf	Mathf"
+			],
+			[
+				"inve",
+				"InverseTransformVector(Vector3 vector)	Vector3"
+			],
+			[
+				"local",
+				"localRotation	Quaternion { get; set; }"
+			],
+			[
+				"forwa",
+				"forwardVector	Vector3"
+			],
+			[
+				"ve",
+				"Vector3()	Vector3()"
+			],
+			[
+				"bal",
+				"_balance	float"
+			],
+			[
+				"geta",
+				"GetAxis(string axisName)	float"
+			],
+			[
+				"angl",
+				"AngleAxis(float angle, Vector3 axis)	Quaternion"
+			],
+			[
+				"getkey",
+				"GetKeyDown(string name)	bool"
+			],
+			[
+				"key",
+				"KeyCode	KeyCode"
+			],
+			[
+				"getbuut",
+				"GetButtonDown(string buttonName)	bool"
+			],
+			[
+				"im",
+				"time	float { get; }"
+			],
+			[
+				"t",
+				"Time	float"
+			],
+			[
+				"is",
+				"IsValid(AnimationStream stream)	bool"
+			],
+			[
+				"tr",
+				"TargetFrameNumber	int"
+			],
+			[
+				"setloa",
+				"SetLocalRotation(AnimationStream stream, Quaternion rotation)	void"
+			],
+			[
+				"stream",
+				"streamA	AnimationStream"
+			],
+			[
+				"getlocal",
+				"GetLocalRotation(AnimationStream stream)	Quaternion"
+			],
+			[
+				"un",
 				"UnityEngine	UnityEngine"
 			],
 			[
-				"eve",
-				"EventSystems	EventSystems"
+				"low",
+				"lowTarget	Quaternion"
 			],
 			[
-				"Uni",
-				"UnityEngine	UnityEngine"
+				"strea",
+				"streamB	AnimationStream"
+			],
+			[
+				"get",
+				"GetRotation(AnimationStream stream)	Quaternion"
+			],
+			[
+				"getloc",
+				"GetLocalRotation(AnimationStream stream)	Quaternion"
+			],
+			[
+				"st",
+				"GetInputStream(int index)	AnimationStream"
+			],
+			[
+				"Trans",
+				"TransformStreamHandle	TransformStreamHandle"
+			],
+			[
+				"_wal",
+				"_walkValue	float"
+			],
+			[
+				"ede",
+				"Eden	Eden"
+			],
+			[
+				"obj",
+				"objectToCollideWith	Collider"
+			],
+			[
+				"edn",
+				"Eden	Eden"
+			],
+			[
+				"ref",
+				"Reflect(Vector3 inDirection, Vector3 inNormal)	Vector3"
+			],
+			[
+				"_h",
+				"_hitData	HitData"
+			],
+			[
+				"p",
+				"position	Vector3 { get; set; }"
+			],
+			[
+				"prop",
+				"PropertiesObject	PropertiesObject"
+			],
+			[
+				"ac",
+				"Active	bool { get; set; }"
+			],
+			[
+				"_m",
+				"_magnetic	Magnetic"
+			],
+			[
+				"hi",
+				"Hitable	bool { get; }"
+			],
+			[
+				"hit",
+				"HitDelegate	Hitable { get; }"
+			],
+			[
+				"h",
+				"Hitable	bool { get; }"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Assets/Scripts/Eden/Model/Item/ShootableItem.cs",
+			"file": "Gardening.sublime-project",
 			"settings":
 			{
-				"buffer_size": 4214,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "using UnityEngine;\nusing Dumpster.Core.BuiltInModules.Effects;\n\n// public class Bullet : MonoBehaviour {\n\n// 	// ********** PUBLIC **************\n\n// 	public void SetBullet ( Eden.Life.BlackBox user , HitData hitData, float bulletSize, float bulletSpeed, float spread ) {\n		\n// 		_shooter = user;\n// 		_hitData = hitData;\n\n// 		CreateCasing();\n\n// 		_startPos = user.ProjectileSpawner.position;\n// 		transform.position = _startPos;\n\n\n// 		EdensGarden.Instance.Effects.Shake( _startPos, ShakePower.Miniscule, DecayRate.Quick );\n// 		EdensGarden.Instance.Effects.FreezeFrame( 0.05f );\n\n// 		if (Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _targetHit, Mathf.Infinity, _layermask )) {\n\n// 			var interactable = _targetHit.collider.GetComponentInChildren<Eden.Interactable.InteractableObject>();\n// 			if( interactable != null ) {\n// 				_targetObject = interactable;\n// 			}\n\n// 			_randomPoint1 = Vector3.Lerp( _startPos , _targetPos,  .2f ) + new Vector3( Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ), Random.Range( -_randomPoint1MaxOffset, _randomPoint1MaxOffset ) );\n// 			_randomPoint2 = Vector3.Lerp( _startPos , _targetPos,  .8f ) + new Vector3( Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ), Random.Range( -_randomPoint2MaxOffset, _randomPoint2MaxOffset ) );\n// 		} \n// 	}\n\n// 	// *********** PRIVATE ************\n\n// 	[SerializeField] private AnimationCurve _speedCurve;\n// 	[SerializeField] private float _speed = 1.0f;\n// 	[SerializeField] private float _randomPoint1MaxOffset = 1.0f;\n// 	[SerializeField] private float _randomPoint2MaxOffset = 0.5f;\n\n// 	[SerializeField] private GameObject _casingPrefab;\n// 	[SerializeField] private LayerMask _layermask;\n// 	[SerializeField] private GameObject _dustEffectPrefab;\n// 	[SerializeField] private GameObject _collideEffectPrefab;\n\n// 	private const float CASING_KILL_TIME = 60.0f;\n\n// 	private Vector3 _startPos;\n// 	private Eden.Life.BlackBox _shooter;\n// 	private HitData _hitData;\n// 	private Eden.Interactable.InteractableObject _targetObject;\n// 	private RaycastHit _targetHit;\n\n// 	private float _time;\n// 	private Vector3 _randomPoint1;\n// 	private Vector3 _randomPoint2;\n\n// 	private Vector3 _targetPos {\n// 		get{ return _targetObject != null ? _targetObject.transform.position + (_targetHit.point - _targetObject.transform.position) : _targetHit.point; }\n// 	}\n\n// 	// ***********************\n\n// 	private void Update () {\n\n// 		var distance = Vector3.Distance( transform.position, _targetPos );\n// 		if ( distance > 0.1f ) {\n// 			var frac = _speedCurve.Evaluate( _time += (Time.deltaTime * _speed) );\n// 			transform.position = CalculateCubicBezierPoint( frac, _startPos, _randomPoint1, _randomPoint2, _targetPos ); \n\n// 			RaycastHit hit;\n// 			if (Physics.Raycast( transform.position, Vector3.down, out hit, Mathf.Infinity, _layermask )) {\n// 				var inst = Instantiate( _dustEffectPrefab );\n// 				inst.transform.position = hit.point; \n// 			}\n\n// 		} else {\n// 			Collide();\n// 		}\n// 	}\n	\n\n// 	private void Collide () {\n\n// 		if ( _targetObject != null ) {\n// 			_targetObject.HitDelegate.Hit( _shooter, _hitData );\n// 		}\n\n// 		var inst = Instantiate( _collideEffectPrefab );\n// 		inst.transform.position = transform.position;\n		\n// 		Destroy( gameObject );\n// 	}\n// 	private void CreateCasing () {\n		\n// 		var inst = Instantiate( _casingPrefab );\n// 		inst.transform.position = transform.position;\n// 		inst.transform.rotation = transform.rotation * Quaternion.AngleAxis( 90, Vector3.right );\n\n// 		var velocity = new Vector3();\n// 		velocity.x = Random.Range( -3, 1);\n// 		velocity.y = Random.Range(  1, 3);\n// 		velocity.z = Random.Range( -3, 3);\n\n// 		inst.GetComponent<Rigidbody>().velocity = velocity;\n\n// 		EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );\n// 	}\n// 	private Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {\n	        \n//         float u = 1 - t;\n//         float tt = t * t;\n//         float uu = u * u;\n//         float uuu = uu * u;\n//         float ttt = tt * t;\n        \n//         Vector3 p = uuu * p0; \n//         p += 3 * uu * t * p1; \n//         p += 3 * u * tt * p2; \n//         p += ttt * p3; \n        \n//         return p;\n// 	}\n// }\n\npublic class Bullet : MonoBehaviour {\n\n\n	[SerializeField] private LayerMask _layermask;\n\n	private RaycastHit _hit;\n\n	private float _bulletSize;\n	private float _bulletSpeed;\n	private float _spread;\n\n	public void SetBullet ( Eden.Life.BlackBox user, HitData hitData, float bulletSize, float bulletSpeed, float spread ) {\n	\n		_bulletSize = bulletSize;\n		_bulletSpeed = bulletSpeed;\n		_spread = spread;\n\n		transform.position = user.ProjectileSpawner.position;\n		transform.localScale = new Vector3( transform.localScale.x * bulletSize, transform.localScale.y * bulletSize, transform.localScale.z * bulletSize );\n\n		if (Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out _hit, Mathf.Infinity, _layermask )) {\n			transform.LookAt( _hit.point );\n		}\n		else{\n			transform.LookAt( Camera.main.transform.forward * 100 );\n		}\n\n		transform.forward = Quaternion.Euler( new Vector3(  Random.Range( -spread, spread ), Random.Range( -spread, spread ), Random.Range( -spread, spread ) ) ) * transform.forward;\n	}\n\n\n	private void Update () {\n\n		var distance = Vector3.Distance( transform.position, _hit.point );\n\n		if ( distance > 0.1f ) {\n\n			transform.position += transform.forward * (_bulletSpeed * Time.deltaTime);\n\n		} else {\n			\n			Collide();\n		}\n	}\n\n	private void Collide () {\n		\n		Destroy( gameObject );\n	}\n}\n\n\npublic class Homing {\n\n	\n}\n\n\n\n\n",
-			"file": "Assets/Scripts/Eden/Interactors/Bullet.cs",
-			"file_size": 5775,
-			"file_write_time": 131775246620000000,
-			"settings":
-			{
-				"buffer_size": 5799,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Scripts/Eden/Templates/Item/FixedRangedWeapon.cs",
-			"settings":
-			{
-				"buffer_size": 486,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Scripts/Eden/EdensGarden.cs",
-			"settings":
-			{
-				"buffer_size": 3719,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "using UnityEngine;\nusing System.Collections.Generic;\n\nnamespace Eden.Model.Building.Stats {\n\n	[System.Serializable]\n	public class Gun : Stats<Gun>, Eden.UI.Elements.Building.IStatBlockDelegate {\n\n		\n		// ************** Constructors ****************\n		\n		public Gun () {\n\n			_rateOfFire   = 1;\n			_reloadSpeed  = 1;\n			_accuracy 	  = 1;\n			_numOfBullets = 1;\n			_clipSize 	  = 1;\n			_bulletSpeed  = 1;\n			_bulletSize   = 1;\n		}\n		public Gun ( int rateOfFire, int reloadSpeed, int accuracy, int numOfBullets, int clipSize, int bulletSpeed, int bulletSize ) {\n\n			 _rateOfFire = rateOfFire;\n			 _reloadSpeed = reloadSpeed;\n			 _accuracy  = accuracy;\n			 _numOfBullets = numOfBullets;\n			 _clipSize  = clipSize;\n			 _bulletSpeed = bulletSpeed;\n			 _bulletSize = bulletSize;\n		}\n		\n\n		// ************** Public ****************\n\n		public int RateOfFire { \n			get { return _rateOfFire; }\n		}\n		public int ReloadSpeed { \n			get { return _reloadSpeed; }\n		}\n		public int Accuracy { \n			get { return _accuracy; }\n		}\n		public int NumOfBullets { \n			get { return _numOfBullets; }\n		}\n		public int ClipSize { \n			get { return _clipSize; }\n		}\n		public int BulletSpeed { \n			get { return _bulletSpeed; }\n		}\n		public int BulletSize { \n			get { return _bulletSize; }\n		}\n\n		[SerializeField] private int _rateOfFire;\n		[SerializeField] private int _reloadSpeed;\n		[SerializeField] private int _accuracy;\n		[SerializeField] private int _numOfBullets;\n		[SerializeField] private int _clipSize;\n		[SerializeField] private int _bulletSpeed;\n		[SerializeField] private int _bulletSize;\n\n		public override void Add ( Gun statsToAdd ) {\n\n			_rateOfFire 	+= statsToAdd.RateOfFire;\n			_reloadSpeed 	+= statsToAdd.ReloadSpeed;\n			_accuracy 		+= statsToAdd.Accuracy;\n			_numOfBullets 	+= statsToAdd.NumOfBullets;\n			_clipSize 		+= statsToAdd.ClipSize;\n			_bulletSpeed 	+= statsToAdd.BulletSpeed;\n			_bulletSize 	+= statsToAdd.BulletSize;\n		}\n\n\n		// ************** IStatBlockDelegate ****************\n\n		List<Eden.UI.Elements.Building.Stat> Eden.UI.Elements.Building.IStatBlockDelegate.GetStats () {\n\n			return new List<Eden.UI.Elements.Building.Stat>{ \n\n				new Eden.UI.Elements.Building.Stat( \"Rate of Fire\", null, RateOfFire ),\n				new Eden.UI.Elements.Building.Stat( \"Reload Speed\", null, ReloadSpeed ),\n				new Eden.UI.Elements.Building.Stat( \"Accuracy\", null, Accuracy ),\n				new Eden.UI.Elements.Building.Stat( \"Number Of Bullets\", null, NumOfBullets ),\n				new Eden.UI.Elements.Building.Stat( \"Clip Size\", null, ClipSize ),\n				new Eden.UI.Elements.Building.Stat( \"Bullet Speed\", null, BulletSpeed ),\n				new Eden.UI.Elements.Building.Stat( \"Bullet Size\", null, BulletSize ) \n\n			};\n		}\n	}\n}",
-			"file": "Assets/Scripts/Eden/Model/Building/Stats/Gun.cs",
-			"file_size": 2675,
-			"file_write_time": 131755327710000000,
-			"settings":
-			{
-				"buffer_size": 2672,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/StatsForLevel.cs",
-			"settings":
-			{
-				"buffer_size": 1472,
+				"buffer_size": 688,
 				"line_ending": "Unix"
 			}
 		}
@@ -638,22 +592,67 @@
 	],
 	"file_history":
 	[
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/DynamicRangedWeapon.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/FixedRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Animation/WeightedAnimation.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Core/WeightBlender.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Animation/Layer.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/53HurtsMovementPrototype/Assets/SplineController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/AnimationLayer.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Animation/Animation.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CharacterController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Animation/Animator.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/Animator.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/FrameAnimation.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Animator.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Animation.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/CreateAnimation.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBoxes/Player.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/CameraController.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Editor/Items/CreateItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Result/RangedWeapon.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/DynamicRangedWeapon.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Stats.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DynamicRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/AnimationLerp.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/AnimationJob.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Physics/Controller.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Custom/TargetingChip.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/DropHealthDrop.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/PropertiesObject.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Parts/Gun.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/ShootableItem.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/FixedRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/FixedRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactors/Bullet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Homing.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Result/RangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Piercing.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Bouncy.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Explosive.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactors/Explosion.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/HealthDrop.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Black Box/BlackBox.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBox.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Targetable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Stats.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/InteractableObject.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Magnet.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Magnetic.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactable/Hitable.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/DynamicRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/StatsForLevel.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Stats/Gun.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/EdensGarden.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Targeting.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/DynamicRangedWeapon.cs",
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DynamicRangedWeapon.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/FixedRangedWeapon.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/ShootableItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBox.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Part List/PartCell.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Subpanels/Building/PartOverlay.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/Item.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/BlackBoxes/Player.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Controller/Inventory/Inventory.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Subpanels/Building/PartList.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/Building.cs",
@@ -661,7 +660,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/QuickSlot.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/DropItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Data.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Parts/Gun.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/Item.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/GunBuildableItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Parts/Part.cs",
@@ -671,8 +669,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/BuildableItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/InventoryUISub1.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Part.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/ShootableItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/EdensGarden.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/RangedWeapon.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/PlayerQuickslotInventory.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Controller/Data/GunDataController.cs",
@@ -681,15 +677,10 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Part/Part.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Part/Reciever.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Part/Projector.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Stats/Gun.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Gun.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunBuildableItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/HUD.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/ShoulderCameraController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Black Box/Chips/SightChip.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Panels/ItemCrafting.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Serialization/GunDataController.cs",
@@ -699,7 +690,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Item/ActionableItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/PresentDialog.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/ActionableItem.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Interactors/Bullet.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Interactions/HoldItem.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Templates/Item/InventoryItemTemplate.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Cameras/ShoulderCamQuickslotLink.cs",
@@ -721,7 +711,6 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/GunCrafting.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Textures/ButtonActions.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/UI/InteractivePanel.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/UI/Panel.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PlayerUIController.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Stats Block/StatBlock.cs",
@@ -730,42 +719,7 @@
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Piece/Piece.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Part List/PartVisual.cs",
 		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartOverlay.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Stats.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Piece/Reciever.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/Building/Piece/Projector.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/GunCrafting/Reciever.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/Model/Gun.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/UI/Elements/GunCrafting/Part.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Gardening.sublime-project",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartVisual.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/StatVisual.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Piece.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/StatBlock.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/PartList.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Grid.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Block.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Reciever.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/TrashFire.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Projector.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/ActivationLight.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Targetable.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Targeting.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/TargetingChip.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/SmartEvents/Events/Rotate.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Module.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Camera/CameraController.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Model/Life/Visual.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/To Be Moved/GunControl.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/System/Built In Modules/Effects/Effects.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Smart Events/Shake.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Life/Chips/Logic/Enemy/Enemy.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Editor/CreateDialog.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Shader/InteractableObject.shader",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Properties/Magnetic.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/DropHealthDrop.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Frameworks/Dumpster/Black Box/BlackBox.cs",
-		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Billboard.cs"
+		"/Users/zacharycollins/Documents/Unity Projects/Games/Gardening/Assets/Scripts/Eden/Model/Building/Stats.cs"
 	],
 	"find":
 	{
@@ -784,6 +738,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rotate",
+			"debu",
+			";\n",
+			"debug",
+			"debu",
+			"deb",
+			"print",
+			"float",
+			"blendables",
+			"rotation",
+			"regis",
+			"camera",
+			"prin",
 			"clip",
 			"static",
 			"parts",
@@ -898,20 +865,7 @@
 			"onComplete",
 			"oncomplet",
 			"Input.",
-			"light",
-			"_vertical",
-			"port",
-			"ColorPalette",
-			"Dialog",
-			"Dalog",
-			"base",
-			"partial",
-			"Load",
-			"HandItem",
-			"Action",
-			"wait",
-			"  ",
-			"_expendable"
+			"light"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -992,205 +946,37 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Assets/Scripts/Eden/Model/Item/ShootableItem.cs",
+					"file": "Gardening.sublime-project",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4214,
+						"buffer_size": 688,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1884,
-								1884
+								672,
+								672
 							]
 						],
 						"settings":
 						{
-							"oops":
-							{
-								"3554,3564": "Static method invoked via derived type"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 245.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Assets/Scripts/Eden/Interactors/Bullet.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5799,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5792,
-								5792
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"19,24": "Using directive is not used by code and can be removed safely.",
-								"4691,4698": "Parameter 'hitData' is never used"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Assets/Scripts/Eden/Templates/Item/FixedRangedWeapon.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 486,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								209,
-								209
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Assets/Scripts/Eden/EdensGarden.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3719,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1717,
-								1717
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"1850,1868": "The private field '_transitionCreator' is never assigned",
-								"1920,1936": "The private field '_contextDelegate' is never assigned",
-								"1989,2003": "The private field '_statsForLevel' is never assigned"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Assets/Scripts/Eden/Model/Building/Stats/Gun.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2672,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2667,
-								2667
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 310.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Assets/StatsForLevel.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1472,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1430,
-								1438
-							]
-						],
-						"settings":
-						{
-							"oops":
-							{
-								"134,150": "The private field '_rateOfFireCurve' is never assigned",
-								"194,211": "The private field '_reloadSpeedCurve' is never assigned",
-								"255,269": "The private field '_accuracyCurve' is never assigned",
-								"313,331": "The private field '_numOfBulletsCurve' is never assigned",
-								"375,389": "The private field '_clipSizeCurve' is never assigned",
-								"433,450": "The private field '_bulletSpeedCurve' is never assigned",
-								"494,510": "The private field '_bulletSizeCurve' is never assigned"
-							},
-							"syntax": "Packages/C#/C#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1257,28 +1043,276 @@
 		"selected_items":
 		[
 			[
-				"bullet",
-				"Assets/Scripts/Eden/Interactors/Bullet.cs"
+				"anima",
+				"Assets/AnimationLayer.cs"
 			],
 			[
-				"ede",
-				"Assets/Scripts/Eden/EdensGarden.cs"
+				"animatio",
+				"Assets/Frameworks/Dumpster/Animation/Animation.cs"
+			],
+			[
+				"la",
+				"Assets/Frameworks/Dumpster/Animation/Layer.cs"
+			],
+			[
+				"cha",
+				"Assets/CharacterController.cs"
+			],
+			[
+				"weigh",
+				"Assets/Frameworks/Dumpster/Animation/WeightedAnimation.cs"
+			],
+			[
+				"chara",
+				"Assets/CharacterController.cs"
+			],
+			[
+				"layer",
+				"Assets/Frameworks/Dumpster/Animation/Layer.cs"
+			],
+			[
+				"animat",
+				"Assets/Frameworks/Dumpster/Animation/Animation.cs"
+			],
+			[
+				"blend",
+				"Assets/Frameworks/Dumpster/Core/WeightBlender.cs"
+			],
+			[
+				"weight",
+				"Assets/Frameworks/Dumpster/Core/WeightBlender.cs"
+			],
+			[
+				"wei",
+				"Assets/Frameworks/Dumpster/Animation/WeightedAnimation.cs"
+			],
+			[
+				"anim",
+				"Assets/Frameworks/Dumpster/Physics/Animator.cs"
+			],
+			[
+				"framea",
+				"Assets/FrameAnimation.cs"
+			],
+			[
+				"input",
+				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs"
+			],
+			[
+				"player",
+				"Assets/Scripts/Eden/Life/BlackBoxes/Player.cs"
+			],
+			[
+				"createan",
+				"Assets/CreateAnimation.cs"
+			],
+			[
+				"camrea",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Camera.cs"
+			],
+			[
+				"contoller",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/CameraController.cs"
+			],
+			[
+				"follow",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
+			],
+			[
+				"an",
+				"Assets/Animator.cs"
 			],
 			[
 				"create",
-				"Assets/Scripts/Editor/Items/CreateItem.cs"
+				"Assets/CreateAnimation.cs"
 			],
 			[
-				"stats",
-				"Assets/Scripts/Eden/Interactable/Stats.cs"
+				"animator",
+				"Assets/Frameworks/Dumpster/Physics/Animator.cs"
+			],
+			[
+				"fllow",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
+			],
+			[
+				"fra",
+				"Assets/FrameAnimation.cs"
+			],
+			[
+				"passi",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
+			],
+			[
+				"orbitcam",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
+			],
+			[
+				"orbitca",
+				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
+			],
+			[
+				"passiec",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
+			],
+			[
+				"logic",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/Player.cs"
+			],
+			[
+				"targetin",
+				"Assets/Scripts/Eden/Life/Chips/Custom/TargetingChip.cs"
+			],
+			[
+				"controller",
+				"Assets/Frameworks/Dumpster/Physics/Controller.cs"
+			],
+			[
+				"lerp",
+				"Assets/AnimationLerp.cs"
+			],
+			[
+				"pass",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
+			],
+			[
+				"pl",
+				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerAgressiveSubBrain.cs"
+			],
+			[
+				"gun",
+				"Assets/Scripts/Eden/Model/Building/Parts/Gun.cs"
+			],
+			[
+				"heal",
+				"Assets/Scripts/Eden/Smart Events/DropHealthDrop.cs"
+			],
+			[
+				"prop",
+				"Assets/Scripts/Eden/Properties/PropertiesObject.cs"
+			],
+			[
+				"shoot",
+				"Assets/Scripts/Eden/Model/Item/ShootableItem.cs"
+			],
+			[
+				"interac",
+				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
+			],
+			[
+				"fixed",
+				"Assets/Scripts/Eden/Templates/Item/FixedRangedWeapon.cs"
+			],
+			[
+				"fixe",
+				"Assets/Scripts/Eden/Model/Item/FixedRangedWeapon.cs"
+			],
+			[
+				"hom",
+				"Assets/Homing.cs"
 			],
 			[
 				"ranged",
 				"Assets/Scripts/Eden/Model/Building/Result/RangedWeapon.cs"
 			],
 			[
-				"fixe",
+				"bull",
+				"Assets/Scripts/Eden/Interactors/Bullet.cs"
+			],
+			[
+				"bounc",
+				"Assets/Bouncy.cs"
+			],
+			[
+				"explo",
+				"Assets/Scripts/Eden/Interactors/Explosion.cs"
+			],
+			[
+				"ex",
+				"Assets/Explosive.cs"
+			],
+			[
+				"pierc",
+				"Assets/Piercing.cs"
+			],
+			[
+				"bullet",
+				"Assets/Scripts/Eden/Interactors/Bullet.cs"
+			],
+			[
+				"dropd",
+				"Assets/Scripts/Eden/Smart Events/DropHealthDrop.cs"
+			],
+			[
+				"stats",
+				"Assets/Scripts/Eden/Interactable/Stats.cs"
+			],
+			[
+				"black",
+				"Assets/Scripts/Eden/Life/BlackBox.cs"
+			],
+			[
+				"blackc",
+				"Assets/Scripts/Eden/Life/BlackBox.cs"
+			],
+			[
+				"blac",
+				"Assets/Frameworks/Dumpster/Black Box/BlackBox.cs"
+			],
+			[
+				"mage",
+				"Assets/Scripts/Eden/Properties/Magnet.cs"
+			],
+			[
+				"ma",
+				"Assets/Scripts/Eden/Properties/Magnetic.cs"
+			],
+			[
+				"targat",
+				"Assets/Scripts/Eden/Properties/Targetable.cs"
+			],
+			[
+				"target",
+				"Assets/Scripts/Eden/Properties/Targetable.cs"
+			],
+			[
+				"inerac",
+				"Assets/Scripts/Eden/Interactable/InteractableObject.cs"
+			],
+			[
+				"hit",
+				"Assets/Scripts/Eden/Interactable/Hitable.cs"
+			],
+			[
+				"",
+				"Assets/Homing.cs"
+			],
+			[
+				"dynan",
+				"Assets/Scripts/Eden/Model/Item/DynamicRangedWeapon.cs"
+			],
+			[
+				"rangeed",
 				"Assets/Scripts/Eden/Templates/Item/FixedRangedWeapon.cs"
+			],
+			[
+				"physicscon",
+				"Assets/Frameworks/Dumpster/Physics/Controller.cs"
+			],
+			[
+				"pier",
+				"Assets/Piercing.cs"
+			],
+			[
+				"targetingch",
+				"Assets/Scripts/Eden/Life/Chips/Custom/TargetingChip.cs"
+			],
+			[
+				"targein",
+				"Assets/Scripts/Eden/Modules/Targeting.cs"
+			],
+			[
+				"ede",
+				"Assets/Scripts/Eden/EdensGarden.cs"
 			],
 			[
 				"dy",
@@ -1317,14 +1351,6 @@
 				"Assets/Scripts/Eden/UI/Panels/QuickSlot.cs"
 			],
 			[
-				"black",
-				"Assets/Scripts/Eden/Life/BlackBox.cs"
-			],
-			[
-				"interac",
-				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
-			],
-			[
 				"invent",
 				"Assets/Scripts/Eden/UI/Panels/_Base/InventoryUI1.cs"
 			],
@@ -1351,10 +1377,6 @@
 			[
 				"itme",
 				"Assets/Scripts/Eden/Model/Item/Item.cs"
-			],
-			[
-				"gun",
-				"Assets/Scripts/Eden/Model/Building/Parts/Gun.cs"
 			],
 			[
 				"build",
@@ -1389,10 +1411,6 @@
 				"Assets/Scripts/Eden/UI/Panels/Building.cs"
 			],
 			[
-				"player",
-				"Assets/Scripts/Eden/Life/BlackBoxes/Player.cs"
-			],
-			[
 				"edenge",
 				"Assets/Scripts/Eden/EdensGarden.cs"
 			],
@@ -1419,10 +1437,6 @@
 			[
 				"project",
 				"Assets/Scripts/Eden/UI/Elements/Building/Part/Projector.cs"
-			],
-			[
-				"shoot",
-				"Assets/Scripts/Eden/Templates/Item/ShootableItem.cs"
 			],
 			[
 				"context",
@@ -1493,10 +1507,6 @@
 				"Assets/Scripts/Eden/Life/Chips/Logic/Player/PlayerPassiveSubBrain.cs"
 			],
 			[
-				"follow",
-				"Assets/Frameworks/Dumpster/System/Built In Modules/Camera/Defaults/FollowCameraController.cs"
-			],
-			[
 				"quicksl",
 				"Assets/Scripts/PlayerQuickslotInventory.cs"
 			],
@@ -1529,10 +1539,6 @@
 				"Assets/Scripts/Eden/Smart Events/PresentDialog.cs"
 			],
 			[
-				"bull",
-				"Assets/Scripts/Eden/Interactors/Bullet.cs"
-			],
-			[
 				"interact",
 				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
 			],
@@ -1547,226 +1553,6 @@
 			[
 				"playerd",
 				"Assets/Scripts/To Be Moved/Serialization/PlayerDataController.cs"
-			],
-			[
-				"pla",
-				"Assets/Scripts/Eden/Life/BlackBoxes/Player.cs"
-			],
-			[
-				"blac",
-				"Assets/Scripts/Eden/Life/BlackBox.cs"
-			],
-			[
-				"inventoryitm",
-				"Assets/Scripts/Eden/Templates/Item/InventoryItemTemplate.cs"
-			],
-			[
-				"interactor",
-				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
-			],
-			[
-				"drop",
-				"Assets/Scripts/DropItem.cs"
-			],
-			[
-				"itembubb",
-				"Assets/Scripts/Eden/UI/Elements/_Base/ItemBubbleUI.cs"
-			],
-			[
-				"playerquicksl",
-				"Assets/PlayerQuickslotInventory.cs"
-			],
-			[
-				"reci",
-				"Assets/Scriptable/_Base/Recipes/Recipe.cs"
-			],
-			[
-				"action",
-				"Assets/Scripts/Eden/Model/Item/ActionableItem.cs"
-			],
-			[
-				"interactdat",
-				"Assets/Scripts/To Be Moved/Model/InteractData.cs"
-			],
-			[
-				"interactorsh",
-				"Assets/Scripts/Eden/Life/Chips/Custom/InteractorChip.cs"
-			],
-			[
-				"created",
-				"Assets/Scripts/Editor/Items/CreateDialog1.cs"
-			],
-			[
-				"inventoryitemte",
-				"Assets/Scripts/To Be Moved/Model/Template/InventoryItemTemplate.cs"
-			],
-			[
-				"template",
-				"Assets/Scriptable/_Base/Parts/GunPartTemplate.cs"
-			],
-			[
-				"shootda",
-				"Assets/Scripts/To Be Moved/Model/Items/Controller/ShootData.cs"
-			],
-			[
-				"quick",
-				"Assets/Scripts/Eden/UI/Panels/QuickSlot.cs"
-			],
-			[
-				"blackb",
-				"Assets/Scripts/Eden/Life/BlackBox.cs"
-			],
-			[
-				"conte",
-				"Assets/Scripts/Eden/Modules/Delegates/UI/ContextDelegate.cs"
-			],
-			[
-				"playerqui",
-				"Assets/PlayerQuickslotInventory.cs"
-			],
-			[
-				"gri",
-				"Assets/Scripts/Eden/UI/Subpanels/Building/Grid.cs"
-			],
-			[
-				"controller",
-				"Assets/Frameworks/Dumpster/System/Built In Modules/Input/Controller.cs"
-			],
-			[
-				"input",
-				"Assets/Scripts/Eden/Modules/Subclasses/Input/Input.cs"
-			],
-			[
-				"uide",
-				"Assets/Scripts/Eden/Modules/Delegates/UI/ContextDelegate.cs"
-			],
-			[
-				"edens",
-				"Assets/Scripts/Eden/EdensGarden.cs"
-			],
-			[
-				"butt",
-				"Assets/Textures/ButtonActions.cs"
-			],
-			[
-				"inveit",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"itemb",
-				"Assets/Scripts/Eden/UI/Elements/_Base/ItemBubbleUI.cs"
-			],
-			[
-				"itembu",
-				"Assets/Scripts/Eden/UI/Elements/_Base/ItemBubbleUI.cs"
-			],
-			[
-				"invn",
-				"Assets/Scripts/Eden/UI/Panels/_Base/InventoryUI1.cs"
-			],
-			[
-				"inve",
-				"Assets/Scripts/To Be Moved/Model/Inventory.cs"
-			],
-			[
-				"inventory",
-				"Assets/Scriptable/_Base/InventoryItems/InventoryItem.cs"
-			],
-			[
-				"gunc",
-				"Assets/GunCrafting.cs"
-			],
-			[
-				"stat",
-				"Assets/Scripts/Eden/UI/Elements/Building/Stats Block/StatBlock.cs"
-			],
-			[
-				"guncraf",
-				"Assets/GunCrafting.cs"
-			],
-			[
-				"recie",
-				"Assets/Scripts/Eden/UI/Elements/Building/Part/Reciever.cs"
-			],
-			[
-				"guncr",
-				"Assets/GunCrafting.cs"
-			],
-			[
-				"piece",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Piece.cs"
-			],
-			[
-				"guncraft",
-				"Assets/GunCrafting.cs"
-			],
-			[
-				"blo",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Block.cs"
-			],
-			[
-				"partls",
-				"Assets/Scripts/Eden/UI/Subpanels/Building/PartList.cs"
-			],
-			[
-				"partvi",
-				"Assets/Scripts/Eden/UI/Elements/Building/Part List/PartVisual.cs"
-			],
-			[
-				"over",
-				"Assets/Scripts/Eden/UI/Subpanels/Building/PartOverlay.cs"
-			],
-			[
-				"guncra",
-				"Assets/GunCrafting.cs"
-			],
-			[
-				"projector",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Projector.cs"
-			],
-			[
-				"reciever",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Reciever.cs"
-			],
-			[
-				"partli",
-				"Assets/Scripts/Eden/UI/Subpanels/Building/PartList.cs"
-			],
-			[
-				"pie",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Piece.cs"
-			],
-			[
-				"bl",
-				"Assets/Scripts/Eden/UI/Elements/Building/Piece/Block.cs"
-			],
-			[
-				"par",
-				"Assets/PartOverlay.cs"
-			],
-			[
-				"sta",
-				"Assets/Scripts/Eden/Interactable/Stats.cs"
-			],
-			[
-				"partl",
-				"Assets/Scripts/Eden/UI/Subpanels/Building/PartList.cs"
-			],
-			[
-				"partvu",
-				"Assets/PartVisual.cs"
-			],
-			[
-				"visual",
-				"Assets/PartVisual.cs"
-			],
-			[
-				"t",
-				"Assets/TrashFire.cs"
-			],
-			[
-				"re",
-				"Assets/Reciever.cs"
 			]
 		],
 		"width": 0.0
