@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63bf11a4a29bd415aa0187902612c738
+guid: 00c5430eaf76d480d9d8136e4983fc03
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -375,14 +375,11 @@ ModelImporter:
     4300040: hairband
     4300042: cheek
     4300044: Leg
-    7400000: Jumping
-    7400002: Jumping Up
-    7400004: Jumping Down
-    7400006: Jumping Up (1)
-    7400008: Jumping Down (1)
-    7400010: Jumping (1)
-    7400012: Jumping (2)
-    7400014: Jumping (3)
+    7400000: Right Strafe Walk
+    7400002: Right Strafe Walk (1)
+    7400004: Right Strafe Walk (2)
+    7400006: Right Strafe Walk (3)
+    7400008: Right Strafe Walk (4)
     9500000: //RootNode
     13700000: BLW_DEF
     13700002: button
@@ -432,10 +429,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jumping
+      name: Right Strafe Walk
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 113
+      lastFrame: 55
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -460,10 +457,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Jumping Up
+      name: Right Strafe Walk (1)
       takeName: mixamo.com
-      firstFrame: 39
-      lastFrame: 40
+      firstFrame: 0
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -488,10 +485,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Jumping Down
+      name: Right Strafe Walk (2)
       takeName: mixamo.com
-      firstFrame: 50
-      lastFrame: 51
+      firstFrame: 13
+      lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -516,10 +513,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Jumping Up (1)
+      name: Right Strafe Walk (3)
       takeName: mixamo.com
-      firstFrame: 43
-      lastFrame: 44
+      firstFrame: 27
+      lastFrame: 28
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -544,94 +541,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Jumping Down (1)
+      name: Right Strafe Walk (4)
       takeName: mixamo.com
-      firstFrame: 57
-      lastFrame: 58
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Jumping (1)
-      takeName: mixamo.com
-      firstFrame: 9
-      lastFrame: 10
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Jumping (2)
-      takeName: mixamo.com
-      firstFrame: 35
-      lastFrame: 36
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Jumping (3)
-      takeName: mixamo.com
-      firstFrame: 48
-      lastFrame: 49
+      firstFrame: 41
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

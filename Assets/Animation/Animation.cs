@@ -25,13 +25,6 @@ public class Animation : PlayableBehaviour {
 		parent.ConnectInput( parentInputPort, newPlayable, 0 );
 
 
-		// set layer mask?
-		// if ( setter.Mask != null ) {
-		// 	parent.SetLayerMaskFromAvatarMask( (uint)parentInputPort, setter.Mask );
-		// 	parent.SetLayerAdditive( (uint)parentInputPort, false );
-		// }
-
-
 		// set weight
 		newPlayable.SetInputWeight( 0 , 1f );
 

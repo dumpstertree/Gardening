@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -30,6 +31,34 @@ public class Animator2 : MonoBehaviour {
 			_blendTrees[ animation ].SetGrowthPoint( growthX, growthY );
 		}
 	}
+	public void SetWeight ( string animation, float weight, float lerpTime = 0f ) {
+
+		if ( _animations.ContainsKey( animation ) ) {
+
+			if ( lerpTime > 0f ) {
+				
+				if ( _lerps.ContainsKey( animation ) ) { 
+					StopCoroutine( _lerps[ animation ] ); 
+					_lerps.Remove( animation );
+				}
+				
+				_lerps.Add( 
+					animation, 
+					StartCoroutine( LerpWeight( _animations[ animation ].Playable, lerpTime, weight ) )
+				);
+			} else {
+				_playable.SetInputWeight( _animations[ animation ].Playable, weight );
+			}
+		}
+		if ( _blendTrees.ContainsKey( animation ) ) {
+
+			if ( lerpTime > 0f ) {
+
+			} else {
+				_playable.SetInputWeight( _blendTrees[ animation ].Playable, weight );
+			}
+		}
+	}
 
 	
 	// ****************** Private **********************
@@ -42,16 +71,18 @@ public class Animator2 : MonoBehaviour {
 	private AnimationLayerMixerPlayable _playable;
 	private Dictionary<string,Animation> _animations;
 	private Dictionary<string,BlendTree> _blendTrees;
+	private Dictionary<string,Coroutine> _lerps;
 
 
 	private void Awake () {
 
 		_animations = new Dictionary<string,Animation>();
 		_blendTrees = new Dictionary<string,BlendTree>();
+		_lerps = new Dictionary<string,Coroutine>();
 		
 		BuildGraph ();
-		BuildAnimations ();
 		BuildBlendTrees ();
+		BuildAnimations ();
 
 		// this will change when layers are fully supported
 		_playable.SetInputWeight( 0, 1f );
@@ -66,7 +97,7 @@ public class Animator2 : MonoBehaviour {
 		// create job
 		_playable = AnimationLayerMixerPlayable.Create( _graph );
 		_playable.SetOutputCount( 1 );
-		_playable.SetInputCount( 3 );
+		_playable.SetInputCount( _animationLayers.Length + _blendTreeLayers.Length );
 
 
 		// create output
@@ -85,18 +116,36 @@ public class Animator2 : MonoBehaviour {
 	private void BuildAnimations () {
 
 		for ( int i=0; i<_animationLayers.Length; i++ ) {
+		
 			var l = _animationLayers[ i ];
-			_animations.Add( l.Name, Animation.Create( _playable, i, l.Animation ) );
+			_animations.Add( l.Name, Animation.Create( _playable, i + _blendTrees.Count, l.Animation ) );
+
+			if ( l.Animation.Mask != null ) {
+				_playable.SetLayerMaskFromAvatarMask( (uint)i, l.Animation.Mask );
+			}
 		}
 	}
 	private void BuildBlendTrees () {
 
 		for ( int i=0; i<_blendTreeLayers.Length; i++ ) {
-			var l = _blendTreeLayers[ i ];
-			_blendTrees.Add( l.Name, BlendTree.Create( _playable, i, l.BlendTree ) );
+			
+			var l = _blendTreeLayers[ i  ];
+			_blendTrees.Add( l.Name, BlendTree.Create( _playable, i + _animations.Count, l.BlendTree ) );
 		}
 	}
 
+	private IEnumerator LerpWeight ( Playable playable, float time, float targetWeight ) {
+	
+		var startWeight = 0f;
+		// this should eventually check the fraction of the animation 			
+		for ( float t=0; t<time; t+=Time.deltaTime ) {
+
+			_playable.SetInputWeight( playable, Mathf.Lerp( startWeight, targetWeight, t/time ) );
+			yield return null;
+		}
+
+		_playable.SetInputWeight( playable, targetWeight );
+	}
 
 	[System.Serializable]
 	private class AnimationLayer {
@@ -113,4 +162,6 @@ public class Animator2 : MonoBehaviour {
 		public string Name;
 		public BlendTree.Setter BlendTree;
 	}
+
+
 }

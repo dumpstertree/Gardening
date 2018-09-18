@@ -40,6 +40,10 @@ public class BlendTree : PlayableBehaviour {
 
 	public void SetProgress ( float progress ) {
 
+		if ( _center != null ) { 
+			_center.SetProgress( progress ); 
+		}
+
 		if ( _posX != null ) {
 			_posX.SetProgress( progress ); 
 		}
@@ -72,8 +76,6 @@ public class BlendTree : PlayableBehaviour {
 			_mixer.SetInputWeight( _center.Playable, centerWeight );
 			_center.SetGrowth( centerWeight ); 
 		}
-
-		Debug.Log( xWeight );
 
 		// set posX
 		if ( _posX != null ) {
@@ -134,6 +136,7 @@ public class BlendTree : PlayableBehaviour {
 	
 	private void Init ( ScriptPlayable<BlendTree> thisPlayable, Setter setter ) {
 
+		_playable = thisPlayable;
 		_centerFadeinDistance = setter.CenterFadeinDistance;
 		_mixer = CreateMixer( thisPlayable, 5 );
 		
