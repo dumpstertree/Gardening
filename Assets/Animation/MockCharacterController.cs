@@ -121,12 +121,12 @@ public class MockCharacterController : MonoBehaviour {
 
 
 		// set camera garbage
-		_camera.position = Vector3.Lerp( _camera.position, _cameraPos.position, 0.5f);
+		// _camera.position = Vector3.Lerp( _camera.position, _cameraPos.position, 0.5f);
 		
-		var startRot = _camera.rotation;
-		_camera.LookAt( transform );
-		var targetRot = _camera.rotation;
-		_camera.rotation = Quaternion.Slerp( startRot, targetRot, 0.5f );
+		// var startRot = _camera.rotation;
+		// _camera.LookAt( transform );
+		// var targetRot = _camera.rotation;
+		// _camera.rotation = Quaternion.Slerp( startRot, targetRot, 0.5f );
 	}
 	private void OnDrawGizmos () {
 		

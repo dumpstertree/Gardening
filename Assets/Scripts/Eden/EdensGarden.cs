@@ -83,9 +83,10 @@ public class EdensGarden : Dumpster.Core.Game {
 
 	protected override void BuildGame () {
 
+		Debug.LogWarning( "Camera is currently not installed" );
 		// Default Modules
 		Async   = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Async ) ) as Dumpster.Core.BuiltInModules.Async;
-		Camera  = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Camera ) ) as Dumpster.Core.BuiltInModules.Camera;
+		// Camera  = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Camera ) ) as Dumpster.Core.BuiltInModules.Camera;
 		Rooms   = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Rooms.Controller ) ) as Dumpster.Core.BuiltInModules.Rooms.Controller;
 		Effects = Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.Effects.Controller ) ) as Dumpster.Core.BuiltInModules.Effects.Controller;
 		UI 		= Dumpster.Core.Module.Install( this, typeof( Dumpster.Core.BuiltInModules.UI.Controller ) ) as Dumpster.Core.BuiltInModules.UI.Controller;
@@ -103,7 +104,7 @@ public class EdensGarden : Dumpster.Core.Game {
 	protected override void InitGame () {
 
 		Async.Init ();
-		Camera.Init ();
+		// Camera.Init ();
 		Rooms.Init ();
 		Input.Init ();
 		Effects.Init (); 
@@ -120,7 +121,7 @@ public class EdensGarden : Dumpster.Core.Game {
 
 		Rooms.Run ();
 		Async.Run ();
-		Camera.Run ();
+		// Camera.Run ();
 		Input.Run ();
 		Effects.Run (); 
 		UI.Run ();
