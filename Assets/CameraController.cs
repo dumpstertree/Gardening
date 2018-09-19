@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Dumpster.Core.BuiltInModules.Input;
 
 public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package> {
@@ -33,6 +31,7 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 	private bool _moving;
 	private float _horizontal;
 	private float _vertical;
+
 	
 	// mono
 	private void Start () {
@@ -71,7 +70,7 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 		Gizmos.color = Color.green;
 		Gizmos.DrawRay( transform.position, right );
 	}
-
+		
 
 	private void Move () {
 
@@ -80,7 +79,7 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 			
 		
 		// find direction to target
-		var toTarget = ( _target.position - transform.position ).normalized;
+		var toTarget =  ( _target.position - transform.position ).normalized;
 
 		
 		// find local directions
@@ -89,7 +88,7 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 			
 		
 		// find new camera target position
-		var targetPos = _target.position + (toTarget * _lerpPos);
+		var targetPos = _target.position + (forward * _lerpPos);
 
 		
 		// move camera
@@ -107,7 +106,7 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 		transform.RotateAround( _target.position, Vector3.up, horizontalInput * _cameraRotateSpeed );
 	}
 	private void RotateVertical ( float verticalInput ) {
-		
+	
 		// get angle to target
 		var toTarget = (_target.position - transform.position).normalized;
 		var angle = Vector3.Angle( Vector3.up, toTarget );
@@ -124,7 +123,6 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 		} 
 	}
 	private void LookAt () {
-
 
 		// find direction to target
 		var toTarget = ( _target.position - transform.position ).normalized;

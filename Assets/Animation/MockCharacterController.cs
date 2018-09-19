@@ -1,32 +1,53 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Dumpster.Core.BuiltInModules.Input;
 
-public class MockCharacterController : MonoBehaviour {
+public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.Package> {
 
+	// ************** Public ****************
+
+	public void RecieveInput ( Eden.Input.Package package ) {
+
+		if ( package.Face.Down_Down && _isOnGround ) {
+			_ignoreGravity = true;
+			Jump ();
+		}
+	}
+	public void EnteredInputFocus () {
+	}
+	public void ExitInputFocus () {
+	}
+
+
+	// ************** Private ****************
+
+	[Header( "References" )]
 	[SerializeField] private Animator2 _animator;
 
 	[Header( "Physics" )]	
 	[SerializeField] private float _terminalVelocity = 20f;
-
-	[Header( "Strides" )]
-	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
-	[SerializeField] private float _stridesPerMeterRun  = 0.2f;
-
-	[SerializeField] private Vector3 _distanceCovered;
-	[SerializeField] private float _stride;
-	[SerializeField] private Vector3 _velocity;
-	[SerializeField] private Vector2 _strideGrowth;
-
 	[SerializeField] private float _jumpPower;
 	[SerializeField] private float _gravity;
 
-	[SerializeField] private bool _strafing = false;
-
-	[SerializeField] private Transform _camera;
-	[SerializeField] private Transform _cameraPos;
-	
+	[Header( "Movement Settings" )]
+	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
+	[SerializeField] private float _stridesPerMeterRun  = 0.2f;
 	[SerializeField] private float _walkThreshold = 0.15f;
 	[SerializeField] private float _maxTurnSpeed = 30f;
+
+	[Header( "Gameplay Settings" )]
+	[SerializeField] private bool _strafing = false;
+	
+	private const string MOVE_TAG = "Move";
+	private const string JUMP_TAG = "Jump";
+	private const string FALL_TAG = "Fall";
+	private const string LAND_TAG = "Land";
+	
+	private Vector3 _distanceCovered;
+	private Vector3 _velocity;
+	private bool _ignoreGravity;
+	private float _stride;
+
 
 	private Vector3 _localVelocity {
 		get { return transform.InverseTransformVector( _velocity ); }
@@ -41,15 +62,18 @@ public class MockCharacterController : MonoBehaviour {
 		get { return !_isOnGround && GetComponent<Rigidbody>().velocity.y <= 0f; }
 	}
 	private bool _isOnGround {
-		get { return Physics.Raycast( transform.position, -Vector3.up, 0.3f ); }
+		get { return Physics.Raycast( transform.position, -Vector3.up, 0.1f ); }
 	}
 
 
 
 	// Mono
 	private void Start () { 
-	
-		_animator.SetWeight( "Move", 1.0f );
+		
+		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
+		EdensGarden.Instance.Input.RequestInput( "Testing" );
+		
+		_animator.SetWeight( MOVE_TAG, 1.0f );
 	}
 	private void Update () {
 
@@ -59,10 +83,8 @@ public class MockCharacterController : MonoBehaviour {
 		);
 
 
-		ApplyGravity ();
-
-		if ( Input.GetKeyDown( KeyCode.Space ) && _isOnGround ) {
-			Jump ();
+		if ( !_ignoreGravity ) {
+			ApplyGravity ();
 		}
 
 		if ( !_strafing ) {
@@ -77,56 +99,47 @@ public class MockCharacterController : MonoBehaviour {
 		_stride += new Vector2( _localVelocity.x, _localVelocity.z ).magnitude * Time.deltaTime * _stridesPerMeter;
 
 		GetComponent<Rigidbody>().velocity = _velocity;
+
+		_ignoreGravity = false;
 	}
 	private void LateUpdate () {
 
-	
-		if ( !_isJumping && !_isFalling && !_wasJumping && !_wasFalling ) {
-				
-			OnGround ();
 		
-		} else {
-
-			// Jumping
-			if ( !_wasJumping && _isJumping ) {
-				OnBeginJump ();
-			} else if ( _wasJumping && !_isJumping ) {
-				OnEndJump ();
-			} else if ( _isJumping ) { 
-				OnJump (); 
-			}
-
-			_wasJumping =  _isJumping;
-
-
-			// Falling
-			if ( !_wasFalling && _isFalling ) {
-				OnBeginFall ();
-			} else if ( _wasFalling && !_isFalling ) {
-				OnEndFall ();
-			} else if ( _isFalling ) { 
-				OnFall (); 
-			}
-
-			_wasFalling =  _isFalling;
+		// On Ground
+		if ( !_wasOnGround && _isOnGround ) {
+			OnBeginOnGround ();
+		} else if ( _wasOnGround && !_isOnGround ) {
+			OnEndOnGround ();
+		} else if ( _isOnGround) { 
+			OnGround (); 
 		}
 
-	
+		_wasOnGround =  _isOnGround;
 
-		_animator.SetProgress( 
-			"Move",
-			Mathf.Repeat( _stride, 1.0f )
-		);
-
-
-
-		// set camera garbage
-		// _camera.position = Vector3.Lerp( _camera.position, _cameraPos.position, 0.5f);
 		
-		// var startRot = _camera.rotation;
-		// _camera.LookAt( transform );
-		// var targetRot = _camera.rotation;
-		// _camera.rotation = Quaternion.Slerp( startRot, targetRot, 0.5f );
+		// Jumping
+		if ( !_wasJumping && _isJumping ) {
+			OnBeginJump ();
+		} else if ( _wasJumping && !_isJumping ) {
+			OnEndJump ();
+		} else if ( _isJumping ) { 
+			OnJump (); 
+		}
+
+		_wasJumping =  _isJumping;
+
+
+		// Falling
+		if ( !_wasFalling && _isFalling ) {
+			OnBeginFall ();
+		} else if ( _wasFalling && !_isFalling ) {
+			OnEndFall ();
+		} else if ( _isFalling ) { 
+			OnFall (); 
+		}
+
+		_wasFalling =  _isFalling;
+		
 	}
 	private void OnDrawGizmos () {
 		
@@ -209,24 +222,33 @@ public class MockCharacterController : MonoBehaviour {
 
 	private void OnBeginFall () {
 		
-		_animator.SetProgress( "Fall", 0f );
-		_animator.SetWeight( "Fall", 1.0f );
+		_animator.SetProgress( FALL_TAG, 0f );
+		_animator.SetWeight( FALL_TAG, 1.0f );
 	}
 	private void OnFall () {
 
+		var prog = Mathf.Clamp01( _velocity.y / -_jumpPower );
+		
 		_animator.SetProgress( 
-			"Fall",
-			Mathf.Clamp01( _velocity.y / -_jumpPower )
+			FALL_TAG,
+			prog
 		);
 	}
 	private void OnEndFall () {
 
-		_animator.SetWeight( "Fall", 0.0f );
+		_animator.SetWeight( 
+			FALL_TAG, 
+			0.0f 
+		);
 
-		_animator.SetWeight( "Land", 1.0f );
-
-		StartCoroutine( LerpProgress( "Land", 0f, 1f, 0.2f ) );
-		StartCoroutine( LerpWeight( "Land", 1f, 0f, 0.2f ) );
+		StartCoroutine( 
+			LerpProgress( 
+				LAND_TAG, 
+				0f, 
+				1f, 
+				0.2f 
+			) 
+		);
 	}
 
 
@@ -235,31 +257,70 @@ public class MockCharacterController : MonoBehaviour {
 
 	private void OnBeginJump () {
 
-		_animator.SetProgress( "Jump", 0f );
-		_animator.SetWeight( "Jump", 1.0f, 0.1f );
+		_animator.SetProgress( 
+			JUMP_TAG, 
+			0f 
+		);
+
+		_animator.SetWeight( 
+			JUMP_TAG, 
+			1.0f, 
+			0.1f 
+		);
 	}
 	private void OnJump () {
-		
+
+		var prog = Mathf.Clamp01( 1f - _velocity.y / _jumpPower );
+
 		_animator.SetProgress( 
-			"Jump",
-			Mathf.Clamp01( 1f - _velocity.y / _jumpPower )
+			JUMP_TAG,
+			prog
 		);
 	}
 	private void OnEndJump () {
 
-		_animator.SetWeight( "Jump", 0.0f, 0 );
+		_animator.SetWeight( 
+			JUMP_TAG, 
+			0.0f
+		);
 	}
 
 
 	// Grounded
 
+	private bool _wasOnGround;
+
+	private void OnBeginOnGround () {
+		
+		_animator.SetWeight(
+			LAND_TAG, 
+			1.0f 
+		);
+		
+		StartCoroutine( 
+			LerpWeight( 
+				LAND_TAG, 
+				1f, 
+				0f, 
+				0.2f 
+			) 
+		);
+	}
 	private void OnGround () {
 
+		_animator.SetProgress( 
+			MOVE_TAG,
+			Mathf.Repeat( _stride, 1.0f )
+		);
+
 		_animator.SetGrowthPoint( 
-			"Move", 
+			MOVE_TAG, 
 			_localVelocity.x / _terminalVelocity,
 			_localVelocity.z / _terminalVelocity
 		);
+	}
+	private void OnEndOnGround () {
+
 	}
 
 
