@@ -10,6 +10,13 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 
 		_horizontal = package.RightAnalog.Horizontal;
 		_vertical = package.RightAnalog.Vertical;
+
+		if ( package.BackLeft.Bumper_Down ) {
+			_strafing= true;
+		}
+		if ( package.BackLeft.Bumper_Up ) {
+			_strafing= false;
+		}
 	}
 	public void EnteredInputFocus () {
 	}
@@ -19,120 +26,101 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 	
 	// **************** Private ******************
 	
-	[SerializeField] private Transform _target;
-	[SerializeField] private float _minDistanceToTarget;
-	[SerializeField] private float _maxDistanceToTarget;
-	[SerializeField] private float _lerpPos;
-
-	[SerializeField] private float _cameraRotateSpeed;
-	[SerializeField] private float _maxVerticalRotation;
-	[SerializeField] private float _minVerticalRotation;
-
-	private bool _moving;
-	private float _horizontal;
-	private float _vertical;
+	private float _distanceToTarget {
+		get{ return Vector3.Distance( transform.position, _target.position ); }
+	}
+	private bool _targetOutOfRange {
+		get{ return !(_distanceToTarget > _targetDistance + OUT_OF_RANGE && _distanceToTarget < _targetDistance - OUT_OF_RANGE); }
+	}
+	private float _targetDistance {
+		get{ return _strafing ? _strafeDistance : _followDistance; }
+	}
+	private float _lerpSpeed {
+		get { return _strafing ? _strafeLerpSpeed : _followLerpSpeed; }
+	}
 
 	
-	// mono
+	[Header( "Target" )]
+	[SerializeField] private Transform _target;
+
+	[Header( "Limits" )]
+	[SerializeField] private float _minVerticalRotation = -80f;
+	[SerializeField] private float _maxVerticalRotation =  80f;
+
+	[SerializeField] private float _followDistance = 6f;
+	[SerializeField] private float _strafeDistance = 3f;
+
+	[Header( "Sensitivity" )]
+	[SerializeField] private float _horizontalSensitivity = 180f;
+	[SerializeField] private float _verticalSensitivity = 100f;
+
+	[Header( "Lerping" )]
+	[SerializeField] private float _followLerpSpeed = 0.3f;
+	[SerializeField] private float _strafeLerpSpeed = 0.6f;
+	
+	[Header( "Raycast" )]
+	[SerializeField] private float _minDistanceToCollider = 1f;
+	
+	private const float OUT_OF_RANGE = 0.01f;
+
+	
+	private float _horizontal;
+	private float _vertical;
+	private float _verticalRot;
+	private bool _strafing;
+
+
 	private void Start () {
 
 		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
 		EdensGarden.Instance.Input.RequestInput( "Testing" );
 	}
-	private void LateUpdate () {
-
-		var distanceToTarget = Vector3.Distance( transform.position, _target.position );
-
-		if ( !(distanceToTarget > _minDistanceToTarget && distanceToTarget < _maxDistanceToTarget) || _moving ) {
-			Move ();
-		}
+	private void FixedUpdate () {
 
 		RotateHorizontal( _horizontal );
 		RotateVertical( _vertical );
 
-		LookAt ();
-	}
-	private void OnDrawGizmos () {
+		if ( _targetOutOfRange) {
 
-		var toTarget = ( _target.position - transform.position ).normalized;
-		var right = Vector3.Cross( toTarget, Vector3.up ).normalized; 
-		var forward = Vector3.Cross( right, Vector3.up ).normalized;
-		
-		Gizmos.color = Color.white;
-		Gizmos.DrawRay( transform.position, toTarget );
-		
-		Gizmos.color = Color.red;
-		Gizmos.DrawRay( transform.position, Vector3.up );
-		
-		Gizmos.color = Color.blue;
-		Gizmos.DrawRay( transform.position, forward );
-		
-		Gizmos.color = Color.green;
-		Gizmos.DrawRay( transform.position, right );
-	}
-		
+			var right = Vector3.Cross( transform.forward, Vector3.up ).normalized; 
+			var forward = Vector3.Cross( right, Vector3.up ).normalized;
+			var direction = Quaternion.AngleAxis( _verticalRot, right ) * forward;
+			var targetPos =  _target.position + (direction * _targetDistance);
 
-	private void Move () {
-
-		// start moving
-		_moving = true;
+			var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, _target.position, targetPos );
 			
-		
-		// find direction to target
-		var toTarget =  ( _target.position - transform.position ).normalized;
-
-		
-		// find local directions
-		var right   = Vector3.Cross( toTarget, Vector3.up ).normalized;
-		var forward = Vector3.Cross( right,    Vector3.up ).normalized;
-			
-		
-		// find new camera target position
-		var targetPos = _target.position + (forward * _lerpPos);
-
-		
-		// move camera
-		transform.position = Vector3.Lerp( transform.position, targetPos, 0.2f );
-
-
-		// if close enough to the target's position stop moving
-		if ( Vector3.Distance( transform.position, _target.position ) - _lerpPos < 0.1f ) {
-			_moving = false;
+			transform.position = Vector3.Lerp( transform.position, collisionTargetPos, _lerpSpeed );
+			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
 		}
 	}
+	private Vector3 AccountForCollision( float minDistanceToCollider, float distanceFromCamera, Vector3 startPos, Vector3 targetPosition ) {
+
+		var dir = targetPosition - startPos;
+
+		RaycastHit hit;
+		if ( Physics.Raycast( startPos, dir, out hit, distanceFromCamera ) ) {
+
+			return hit.point + (-dir * minDistanceToCollider);
+		}
+
+		return targetPosition;
+	} 
+
 	private void RotateHorizontal ( float horizontalInput ) {
 
 		// rotate around the target
-		transform.RotateAround( _target.position, Vector3.up, horizontalInput * _cameraRotateSpeed );
+		transform.RotateAround( _target.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
 	}
 	private void RotateVertical ( float verticalInput ) {
-	
-		// get angle to target
-		var toTarget = (_target.position - transform.position).normalized;
-		var angle = Vector3.Angle( Vector3.up, toTarget );
-		
 		
 		// project what the next angle will be
-		var projectedAngle = angle + (verticalInput * _cameraRotateSpeed);
-			
-
+		var projectedRot = _verticalRot + (verticalInput * (_verticalSensitivity * Time.fixedDeltaTime) );
+		
 		// as long as the projected angle fits in the rules do it
-		if ( projectedAngle < _maxVerticalRotation && projectedAngle > _minVerticalRotation ) {
+		if ( projectedRot < _maxVerticalRotation && projectedRot > _minVerticalRotation ) {
 
-			transform.RotateAround( _target.position, transform.right, verticalInput * _cameraRotateSpeed );
+			// save new rotation
+			_verticalRot = projectedRot;
 		} 
-	}
-	private void LookAt () {
-
-		// find direction to target
-		var toTarget = ( _target.position - transform.position ).normalized;
-
-
-		// lerp to face target
-		transform.rotation = Quaternion.Slerp( 
-			transform.rotation, 
-			Quaternion.LookRotation( toTarget ), 
-			0.5f
-		);
 	}
 }

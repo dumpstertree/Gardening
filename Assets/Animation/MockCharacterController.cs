@@ -15,6 +15,13 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		_horizontal = package.LeftAnalog.Horizontal;
 		_vertical = package.LeftAnalog.Vertical;
+
+		if ( package.BackLeft.Bumper_Down ) {
+			_strafing= true;
+		}
+		if ( package.BackLeft.Bumper_Up ) {
+			_strafing= false;
+		}
 	}
 	public void EnteredInputFocus () {
 	}
@@ -111,22 +118,27 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 	private void Update () {
 
-		ApplyVelocity( 
-			Input.GetAxis( "Horizontal" ), 
-			Input.GetAxis( "Vertical" ) 
-		);
+		if ( _strafing ) {
+			
+			ApplyVelocity (
+				Input.GetAxis( "Horizontal" ), 
+				Input.GetAxis( "Vertical" ) 
+			);
 
+			FaceCameraForward ();
+		
+		} else {
+			
+			ApplyVelocity( 
+				Input.GetAxis( "Horizontal" ), 
+				Input.GetAxis( "Vertical" ) 
+			);
+			
+			FaceMomentum ();
+		}
 
 		if ( !_ignoreGravity ) {
 			ApplyGravity ();
-		}
-
-		if ( !_strafing ) {
-			FaceMomentum ();
-			// Balance ( 
-			// 	Input.GetAxis( "Horizontal" ), 
-			// 	Input.GetAxis( "Vertical" ) 
-			// );
 		}
 
 		_distanceCovered += _localVelocity * Time.deltaTime;
@@ -135,8 +147,10 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		GetComponent<Rigidbody>().velocity = _velocity;
 
 		_ignoreGravity = false;
+
+		Animate ();
 	}
-	private void LateUpdate () {
+	private void Animate () {
 
 		
 		// On Ground
@@ -260,6 +274,23 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		_velocity = lerpedVelocity;
 	}
+	private void ApplyVelocityStrafing ( float horizontalInput, float verticalInput ) {
+
+		var input = Mathf.Clamp01( new Vector2( horizontalInput, verticalInput ).magnitude );
+
+		if ( input < _walkThreshold ) {
+			_velocity = new Vector3( 0, _velocity.y, 0 );
+			return;
+		}
+
+		var xVelocity = horizontalInput * _terminalVelocity;
+		var zVelocity = verticalInput * _terminalVelocity;
+
+		var newXYVelocity = new Vector3( xVelocity, _velocity.y, zVelocity );
+		var lerpedVelocity = Vector3.Lerp ( new Vector3( newXYVelocity.x, _velocity.y, newXYVelocity.z ), newXYVelocity,  0.2f );
+
+		_velocity = lerpedVelocity;
+	}
 	private void Balance ( float horizontalInput, float verticalInput  ) {
 
 		var cameraRight = Camera.main.transform.right;
@@ -283,6 +314,14 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		}
 
 		transform.rotation = Quaternion.LookRotation( xzVelocity );
+	}
+	private void FaceCameraForward () {
+
+		var cameraForward = Camera.main.transform.forward;
+		var right = Vector3.Cross( cameraForward, Vector3.up );
+		var forward = Vector3.Cross( Vector3.up, right );
+
+		transform.rotation = Quaternion.LookRotation( forward, Vector3.up );
 	}
 	private void Jump () {
 
