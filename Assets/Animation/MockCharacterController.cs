@@ -12,6 +12,9 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			_ignoreGravity = true;
 			Jump ();
 		}
+
+		_horizontal = package.LeftAnalog.Horizontal;
+		_vertical = package.LeftAnalog.Vertical;
 	}
 	public void EnteredInputFocus () {
 	}
@@ -26,8 +29,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 	[Header( "Physics" )]	
 	[SerializeField] private float _terminalVelocity = 20f;
-	[SerializeField] private float _jumpPower;
-	[SerializeField] private float _gravity;
+	[SerializeField] private float _jumpPower = 15f;
+	[SerializeField] private float _gravity = 25f;
 
 	[Header( "Movement Settings" )]
 	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
@@ -37,16 +40,25 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 	[Header( "Gameplay Settings" )]
 	[SerializeField] private bool _strafing = false;
+
+	[SerializeField] private Dumpster.Physics.PhysicsPlane _down;
+	[SerializeField] private LayerMask _mask;
 	
+
 	private const string MOVE_TAG = "Move";
+	private const string IDLE_TAG = "Idle";
 	private const string JUMP_TAG = "Jump";
 	private const string FALL_TAG = "Fall";
 	private const string LAND_TAG = "Land";
-	
+		
+
 	private Vector3 _distanceCovered;
 	private Vector3 _velocity;
 	private bool _ignoreGravity;
 	private float _stride;
+
+	private float _horizontal;
+	private float _vertical;
 
 
 	private Vector3 _localVelocity {
@@ -62,7 +74,22 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		get { return !_isOnGround && GetComponent<Rigidbody>().velocity.y <= 0f; }
 	}
 	private bool _isOnGround {
-		get { return Physics.Raycast( transform.position, -Vector3.up, 0.1f ); }
+		get { return Physics.Raycast( transform.position, -Vector3.up, 0.1f, _mask ); }
+	}
+	private bool _isMoving {
+		get { return _isOnGround && new Vector2( _horizontal, _vertical ).magnitude > _walkThreshold; }
+	}
+	private bool _isIdling {
+		get{ return _isOnGround && !_isMoving; }
+	}
+	private bool _isWalking {
+		get{ return false; }
+	}
+	private bool _isRunning {
+		get{ return false; }
+	}
+	private bool _isFastRunning {
+		get{ return false; }
 	}
 
 
@@ -72,8 +99,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		
 		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
 		EdensGarden.Instance.Input.RequestInput( "Testing" );
-		
-		_animator.SetWeight( MOVE_TAG, 1.0f );
 	}
 	private void Update () {
 
@@ -89,10 +114,10 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		if ( !_strafing ) {
 			FaceMomentum ();
-			Balance ( 
-				Input.GetAxis( "Horizontal" ), 
-				Input.GetAxis( "Vertical" ) 
-			);
+			// Balance ( 
+			// 	Input.GetAxis( "Horizontal" ), 
+			// 	Input.GetAxis( "Vertical" ) 
+			// );
 		}
 
 		_distanceCovered += _localVelocity * Time.deltaTime;
@@ -139,7 +164,30 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		}
 
 		_wasFalling =  _isFalling;
-		
+
+	
+		// Moving
+		if ( !_wasMoving && _isMoving ) {
+			OnBeginMoving ();
+		} else if ( _wasMoving && !_isMoving ) {
+			OnEndMoving ();
+		} else if ( _isMoving ) { 
+			OnMoving (); 
+		}
+
+		_wasMoving =  _isMoving;
+
+
+		// Idling
+		if ( !_wasIdling && _isIdling ) {
+			OnBeginIdle ();
+		} else if ( _wasIdling && !_isIdling ) {
+			OnEndIdle ();
+		} else if ( _isIdling ) { 
+			OnIdle (); 
+		}
+
+		_wasIdling =  _isIdling;
 	}
 	private void OnDrawGizmos () {
 		
@@ -217,13 +265,25 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 
 
+
 	// Falling
 	private bool _wasFalling;
 
 	private void OnBeginFall () {
 		
-		_animator.SetProgress( FALL_TAG, 0f );
-		_animator.SetWeight( FALL_TAG, 1.0f );
+		_animator.SetProgress( 
+			FALL_TAG, 
+			0f 
+		);
+
+		StartCoroutine( 
+			LerpWeight(
+				FALL_TAG, 
+				0f, 
+				1f, 
+				0.2f
+			) 
+		);
 	}
 	private void OnFall () {
 
@@ -240,15 +300,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			FALL_TAG, 
 			0.0f 
 		);
-
-		StartCoroutine( 
-			LerpProgress( 
-				LAND_TAG, 
-				0f, 
-				1f, 
-				0.2f 
-			) 
-		);
 	}
 
 
@@ -262,10 +313,13 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			0f 
 		);
 
-		_animator.SetWeight( 
-			JUMP_TAG, 
-			1.0f, 
-			0.1f 
+		StartCoroutine( 
+			LerpWeight( 
+				JUMP_TAG, 
+				0f,
+				1f,
+				0.1f
+			)
 		);
 	}
 	private void OnJump () {
@@ -279,15 +333,24 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 	private void OnEndJump () {
 
-		_animator.SetWeight( 
-			JUMP_TAG, 
-			0.0f
+		// the issue here is that when it fades out it overshoots the animation and goes back
+		StartCoroutine( 
+			LerpWeight(
+				JUMP_TAG, 
+				1f, 
+				0f, 
+				0.1f
+			) 
 		);
+
+		// _animator.SetWeight( 
+		// 	JUMP_TAG, 
+		// 	0.0f
+		// );
 	}
 
 
 	// Grounded
-
 	private bool _wasOnGround;
 
 	private void OnBeginOnGround () {
@@ -298,6 +361,15 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		);
 		
 		StartCoroutine( 
+			LerpProgress( 
+				LAND_TAG, 
+				0f, 
+				1f, 
+				0.2f 
+			) 
+		);
+
+		StartCoroutine( 
 			LerpWeight( 
 				LAND_TAG, 
 				1f, 
@@ -307,6 +379,63 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		);
 	}
 	private void OnGround () {
+	}
+	private void OnEndOnGround () {
+	}
+
+	
+	// Idle
+	private bool _wasIdling;
+
+	private void OnBeginIdle () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				IDLE_TAG, 
+				0f, 
+				1f, 
+				0.2f 
+			)
+		);
+	}
+	private void OnIdle () {
+
+		var prog = Mathf.Repeat( Time.time, 1.0f );
+
+		_animator.SetProgress( 
+			IDLE_TAG, 
+			prog
+		);
+	}
+	private void OnEndIdle () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				IDLE_TAG, 
+				1f, 
+				0f, 
+				0.2f 
+			)
+		);
+	}
+
+
+	// Move
+	private bool _wasMoving;
+
+	private void OnBeginMoving () {
+		Debug.Log( "move begin" );
+		StartCoroutine( 
+			LerpWeight( 
+				MOVE_TAG, 
+				0f, 
+				1f, 
+				0.2f 
+			)
+		);
+	}
+	private void OnMoving () {
+		Debug.Log( "move" );
 
 		_animator.SetProgress( 
 			MOVE_TAG,
@@ -319,9 +448,27 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			_localVelocity.z / _terminalVelocity
 		);
 	}
-	private void OnEndOnGround () {
+	private void OnEndMoving () {
+		Debug.Log( "move end" );
 
+		StartCoroutine( 
+			LerpWeight( 
+				MOVE_TAG, 
+				1f, 
+				0f, 
+				0.2f 
+			)
+		);
 	}
+
+	
+	// Walking
+
+	
+	// Running
+
+	
+	// Fast Running
 
 
 
@@ -336,12 +483,12 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		_animator.SetProgress( animation , toValue );
 	}
 	private IEnumerator LerpWeight ( string animation, float fromValue, float toValue, float time  ) {
-		print ( animation + "," + toValue + " : "+ toValue );
+
 		for ( float t=0f; t<time; t+=Time.deltaTime ) {
 			_animator.SetWeight( animation , Mathf.Lerp( fromValue , toValue,  t/time ) );
 			yield return null;
 		}
 
-		_animator.SetProgress( animation , toValue );
+		_animator.SetWeight( animation , toValue );
 	}
 }
