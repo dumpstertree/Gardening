@@ -36,6 +36,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
 	[SerializeField] private float _stridesPerMeterRun  = 0.2f;
 	[SerializeField] private float _walkThreshold = 0.15f;
+	[SerializeField] private float _runThreshold = 0.95f;
 	[SerializeField] private float _maxTurnSpeed = 30f;
 
 	[Header( "Gameplay Settings" )]
@@ -44,7 +45,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	[SerializeField] private Dumpster.Physics.PhysicsPlane _down;
 	[SerializeField] private LayerMask _mask;
 	
-
+	private const string WALK_TAG = "Walk";
+	private const string RUN_TAG  = "Run";
 	private const string MOVE_TAG = "Move";
 	private const string IDLE_TAG = "Idle";
 	private const string JUMP_TAG = "Jump";
@@ -77,21 +79,28 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		get { return Physics.Raycast( transform.position, -Vector3.up, 0.1f, _mask ); }
 	}
 	private bool _isMoving {
-		get { return _isOnGround && new Vector2( _horizontal, _vertical ).magnitude > _walkThreshold; }
+		get { return _isOnGround && _inputMagnitude > _walkThreshold; }
 	}
 	private bool _isIdling {
-		get{ return _isOnGround && !_isMoving; }
+		get{ return _isOnGround && _inputMagnitude < _walkThreshold; }
 	}
 	private bool _isWalking {
-		get{ return false; }
+		get{ return _isOnGround && _inputMagnitude > _walkThreshold && _inputMagnitude < _runThreshold; }
 	}
 	private bool _isRunning {
-		get{ return false; }
-	}
-	private bool _isFastRunning {
-		get{ return false; }
+		get{ return _isOnGround && _inputMagnitude > _runThreshold; }
 	}
 
+	private bool _leftFoodDown {
+		get{ return Mathf.Repeat( _stride, 1.0f ) < 0.5f; }
+	}
+	private bool _rightFoodDown {
+		get{ return !_leftFoodDown; }
+	}
+
+	private float _inputMagnitude {
+		get{ return new Vector2( _horizontal, _vertical ).magnitude; }
+	}
 
 
 	// Mono
@@ -188,6 +197,30 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		}
 
 		_wasIdling =  _isIdling;
+
+		
+		// Walk
+		if ( !_wasWalking && _isWalking ) {
+			OnBeginWalk ();
+		} else if ( _wasWalking && !_isWalking ) {
+			OnEndWalk ();
+		} else if ( _isWalking ) { 
+			OnWalk (); 
+		}
+
+		_wasWalking =  _isWalking;
+
+
+		// Run
+		if ( !_wasRunning && _isRunning ) {
+			OnBeginRun ();
+		} else if ( _wasRunning && !_isRunning ) {
+			OnEndRun ();
+		} else if ( _isRunning ) { 
+			OnRun (); 
+		}
+
+		_wasRunning =  _isRunning;
 	}
 	private void OnDrawGizmos () {
 		
@@ -281,7 +314,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 				FALL_TAG, 
 				0f, 
 				1f, 
-				0.2f
+				0.0f
 			) 
 		);
 	}
@@ -318,7 +351,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 				JUMP_TAG, 
 				0f,
 				1f,
-				0.1f
+				0.0f
 			)
 		);
 	}
@@ -339,7 +372,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 				JUMP_TAG, 
 				1f, 
 				0f, 
-				0.1f
+				0.0f
 			) 
 		);
 
@@ -424,52 +457,113 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private bool _wasMoving;
 
 	private void OnBeginMoving () {
-		Debug.Log( "move begin" );
-		StartCoroutine( 
-			LerpWeight( 
-				MOVE_TAG, 
-				0f, 
-				1f, 
-				0.2f 
-			)
-		);
+
+		// StartCoroutine( 
+		// 	LerpWeight( 
+		// 		MOVE_TAG, 
+		// 		0f, 
+		// 		1f, 
+		// 		0.2f 
+		// 	)
+		// );
 	}
 	private void OnMoving () {
-		Debug.Log( "move" );
 
-		_animator.SetProgress( 
-			MOVE_TAG,
-			Mathf.Repeat( _stride, 1.0f )
-		);
+		// _animator.SetProgress( 
+		// 	MOVE_TAG,
+		// 	Mathf.Repeat( _stride, 1.0f )
+		// );
 
-		_animator.SetGrowthPoint( 
-			MOVE_TAG, 
-			_localVelocity.x / _terminalVelocity,
-			_localVelocity.z / _terminalVelocity
-		);
+		// _animator.SetGrowthPoint( 
+		// 	MOVE_TAG, 
+		// 	_localVelocity.x / _terminalVelocity,
+		// 	_localVelocity.z / _terminalVelocity
+		// );
 	}
 	private void OnEndMoving () {
-		Debug.Log( "move end" );
 
-		StartCoroutine( 
-			LerpWeight( 
-				MOVE_TAG, 
-				1f, 
-				0f, 
-				0.2f 
-			)
-		);
+		// StartCoroutine( 
+		// 	LerpWeight( 
+		// 		MOVE_TAG, 
+		// 		1f, 
+		// 		0f, 
+		// 		0.2f 
+		// 	)
+		// );
 	}
 
 	
 	// Walking
+	private bool _wasWalking;
 
+	private void OnBeginWalk () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				WALK_TAG,
+				0f,
+				1f,
+				0.2f
+			)
+		);
+	}
+	private void OnWalk () {
+
+		var prog = Mathf.Repeat( _stride, 1.0f );
+
+		_animator.SetProgress( 
+			WALK_TAG, 
+			prog
+		);
+	}
+	private void OnEndWalk () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				WALK_TAG,
+				1f,
+				0f,
+				0.2f
+			)
+		);
+	}
+	
 	
 	// Running
+	private bool _wasRunning;
 
+	private void OnBeginRun () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				RUN_TAG,
+				0f,
+				1f,
+				0.2f
+			)
+		);
+	}
+	private void OnRun () {
+
+		var prog = Mathf.Repeat( _stride, 1.0f );
+
+		_animator.SetProgress( 
+			RUN_TAG, 
+			prog
+		);
+	}
+	private void OnEndRun () {
+
+		StartCoroutine( 
+			LerpWeight( 
+				RUN_TAG,
+				1f,
+				0f,
+				0.2f
+			)
+		);
+	}
 	
-	// Fast Running
-
 
 
 	// helpers
