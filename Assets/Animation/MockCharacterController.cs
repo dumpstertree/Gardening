@@ -40,11 +40,15 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	[SerializeField] private float _gravity = 25f;
 
 	[Header( "Movement Settings" )]
-	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
-	[SerializeField] private float _stridesPerMeterRun  = 0.2f;
+	[SerializeField] private float _walkMovementSpeed = 20f;
+	[SerializeField] private float _runMovementSpeed = 20f;
 	[SerializeField] private float _walkThreshold = 0.15f;
 	[SerializeField] private float _runThreshold = 0.95f;
-	[SerializeField] private float _maxTurnSpeed = 30f;
+
+	[Header( "Animation Settings" )]
+	[SerializeField] private float _stridesPerMeterWalk = 0.5f;
+	[SerializeField] private float _stridesPerMeterRun  = 0.2f;
+
 
 	[Header( "Gameplay Settings" )]
 	[SerializeField] private bool _strafing = false;
@@ -77,16 +81,16 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		get { return Mathf.Lerp( _stridesPerMeterWalk, _stridesPerMeterRun, Vector3.Distance(Vector3.zero, _velocity)/_terminalVelocity ); }
 	}
 	private bool _isJumping {
-		get { return !_isOnGround && GetComponent<Rigidbody>().velocity.y > 0; }
+		get { return !_isOnGround && _velocity.y > 0; }
 	}
 	private bool _isFalling {
-		get { return !_isOnGround && GetComponent<Rigidbody>().velocity.y <= 0f; }
+		get { return !_isOnGround && _velocity.y <= 0f; }
 	}
 	private bool _isOnGround {
-		get { return Physics.Raycast( transform.position, -Vector3.up, 0.1f, _mask ); }
+		get { return Physics.Raycast( transform.position + Vector3.up, -Vector3.up, 1.1f, _mask ); }
 	}
-	private bool _isMoving {
-		get { return _isOnGround && _inputMagnitude > _walkThreshold; }
+	private bool _isInAir {
+		get { return !_isOnGround; }
 	}
 	private bool _isIdling {
 		get{ return _isOnGround && _inputMagnitude < _walkThreshold; }
@@ -97,6 +101,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private bool _isRunning {
 		get{ return _isOnGround && _inputMagnitude > _runThreshold; }
 	}
+
 
 	private bool _leftFoodDown {
 		get{ return Mathf.Repeat( _stride, 1.0f ) < 0.5f; }
@@ -116,39 +121,58 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
 		EdensGarden.Instance.Input.RequestInput( "Testing" );
 	}
-	private void Update () {
-
-		if ( _strafing ) {
+	private void FixedUpdate () {
 			
-			ApplyVelocity (
-				Input.GetAxis( "Horizontal" ), 
-				Input.GetAxis( "Vertical" ) 
-			);
+		// update velocity
+		ApplyVelocity (
+			_horizontal, 
+			_vertical
+		);
 
-			FaceCameraForward ();
 		
+		// rotate character
+		if ( _strafing ) {
+			FaceCameraForward ();
 		} else {
-			
-			ApplyVelocity( 
-				Input.GetAxis( "Horizontal" ), 
-				Input.GetAxis( "Vertical" ) 
-			);
-			
 			FaceMomentum ();
 		}
 
+		
+		// apply gravity
 		if ( !_ignoreGravity ) {
 			ApplyGravity ();
 		}
 
-		_distanceCovered += _localVelocity * Time.deltaTime;
-		_stride += new Vector2( _localVelocity.x, _localVelocity.z ).magnitude * Time.deltaTime * _stridesPerMeter;
 
-		GetComponent<Rigidbody>().velocity = _velocity;
-
+		// update values
+		UpdateDistanceCovered ();
+		UpdateStride ();
+		UpdateRigidbody ();
+		
+	
+		// stop ignoring gravity	
 		_ignoreGravity = false;
+	}
+	private void LateUpdate () {
 
 		Animate ();
+	}
+	private void OnDrawGizmos () {
+		Debug.DrawRay( transform.position + Vector3.up, -Vector3.up * 1.1f);
+	}
+	private void UpdateDistanceCovered () {
+	
+		_distanceCovered += _localVelocity * Time.deltaTime;
+	}
+	private void UpdateStride () {
+	
+		_stride += new Vector2( _localVelocity.x, _localVelocity.z ).magnitude * Time.deltaTime * _stridesPerMeter;
+	}
+	private void UpdateRigidbody () {
+
+		// GetComponent<Rigidbody>().velocity = _velocity;
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().MovePosition( transform.position + (_velocity * Time.deltaTime) );
 	}
 	private void Animate () {
 
@@ -189,18 +213,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		_wasFalling =  _isFalling;
 
 	
-		// Moving
-		if ( !_wasMoving && _isMoving ) {
-			OnBeginMoving ();
-		} else if ( _wasMoving && !_isMoving ) {
-			OnEndMoving ();
-		} else if ( _isMoving ) { 
-			OnMoving (); 
-		}
-
-		_wasMoving =  _isMoving;
-
-
 		// Idling
 		if ( !_wasIdling && _isIdling ) {
 			OnBeginIdle ();
@@ -236,21 +248,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		_wasRunning =  _isRunning;
 	}
-	private void OnDrawGizmos () {
-		
-		var cameraRight = Camera.main.transform.right;
-		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var deg = Mathf.Rad2Deg * Mathf.Atan2(  Input.GetAxis( "Horizontal"), Input.GetAxis( "Vertical" ) );
-		var inputVector = Quaternion.AngleAxis( deg, Vector3.up ) * cameraForward;
-		
-		Debug.DrawRay( transform.position, inputVector);
-			
-		var minPoint = new Vector3( transform.position.x, transform.position.y + 2, transform.position.z );
-		var maxPoint = transform.position + new Vector3( inputVector.x, transform.position.y + 2, inputVector.z );
-		var targetPoint = Vector3.Lerp( minPoint, maxPoint, _velocity.magnitude/_terminalVelocity );
-		
-		Gizmos.DrawWireSphere( targetPoint, 0.2f );
-	}
 
 
 	// Physics
@@ -266,44 +263,12 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		var cameraRight = Camera.main.transform.right;
 		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
 		var deg = Mathf.Rad2Deg * Mathf.Atan2(  horizontalInput, verticalInput );
-		var clampedDeg = Mathf.Clamp(  deg, -_maxTurnSpeed, _maxTurnSpeed );
-		var inputVector = Quaternion.AngleAxis( clampedDeg, Vector3.up ) * cameraForward;
+		var inputVector = Quaternion.AngleAxis( deg, Vector3.up ) * cameraForward;
 		var newVelocity = inputVector * ( _terminalVelocity * input );
 		var newXYVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z  );
 		var lerpedVelocity = Vector3.Lerp ( new Vector3( newXYVelocity.x, _velocity.y, newXYVelocity.z ), newXYVelocity,  0.2f );
 
 		_velocity = lerpedVelocity;
-	}
-	private void ApplyVelocityStrafing ( float horizontalInput, float verticalInput ) {
-
-		var input = Mathf.Clamp01( new Vector2( horizontalInput, verticalInput ).magnitude );
-
-		if ( input < _walkThreshold ) {
-			_velocity = new Vector3( 0, _velocity.y, 0 );
-			return;
-		}
-
-		var xVelocity = horizontalInput * _terminalVelocity;
-		var zVelocity = verticalInput * _terminalVelocity;
-
-		var newXYVelocity = new Vector3( xVelocity, _velocity.y, zVelocity );
-		var lerpedVelocity = Vector3.Lerp ( new Vector3( newXYVelocity.x, _velocity.y, newXYVelocity.z ), newXYVelocity,  0.2f );
-
-		_velocity = lerpedVelocity;
-	}
-	private void Balance ( float horizontalInput, float verticalInput  ) {
-
-		var cameraRight = Camera.main.transform.right;
-		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var deg = Mathf.Rad2Deg * Mathf.Atan2( horizontalInput, verticalInput );			
-		var inputVector = Quaternion.AngleAxis( deg, Vector3.up ) * cameraForward;
-		
-		var minPoint = new Vector3( transform.position.x, transform.position.y + 2, transform.position.z );
-		var maxPoint = transform.position + new Vector3( inputVector.x, transform.position.y + 2, inputVector.z );
-		
-		var targetPoint = Vector3.Lerp( minPoint, maxPoint, _velocity.magnitude/_terminalVelocity );
-
-		transform.rotation = Quaternion.LookRotation( transform.forward, targetPoint - transform.position );
 	}
 	private void FaceMomentum () {
 
@@ -323,10 +288,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		transform.rotation = Quaternion.LookRotation( forward, Vector3.up );
 	}
-	private void Jump () {
-
-		_velocity += Vector3.up * _jumpPower;
-	}
 	private void ApplyGravity () {
 
 		if ( !_isOnGround ) {
@@ -334,6 +295,11 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		} else {
 			_velocity.y = 0;
 		}
+	}
+
+	private void Jump () {
+
+		_velocity += Vector3.up * _jumpPower;
 	}
 
 
@@ -490,47 +456,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			)
 		);
 	}
-
-
-	// Move
-	private bool _wasMoving;
-
-	private void OnBeginMoving () {
-
-		// StartCoroutine( 
-		// 	LerpWeight( 
-		// 		MOVE_TAG, 
-		// 		0f, 
-		// 		1f, 
-		// 		0.2f 
-		// 	)
-		// );
-	}
-	private void OnMoving () {
-
-		// _animator.SetProgress( 
-		// 	MOVE_TAG,
-		// 	Mathf.Repeat( _stride, 1.0f )
-		// );
-
-		// _animator.SetGrowthPoint( 
-		// 	MOVE_TAG, 
-		// 	_localVelocity.x / _terminalVelocity,
-		// 	_localVelocity.z / _terminalVelocity
-		// );
-	}
-	private void OnEndMoving () {
-
-		// StartCoroutine( 
-		// 	LerpWeight( 
-		// 		MOVE_TAG, 
-		// 		1f, 
-		// 		0f, 
-		// 		0.2f 
-		// 	)
-		// );
-	}
-
 	
 	// Walking
 	private bool _wasWalking;
@@ -549,6 +474,12 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private void OnWalk () {
 
 		var prog = Mathf.Repeat( _stride, 1.0f );
+
+		_animator.SetGrowthPoint( 
+			WALK_TAG, 
+			_localVelocity.x / _terminalVelocity,
+			_localVelocity.z / _terminalVelocity
+		);
 
 		_animator.SetProgress( 
 			WALK_TAG, 
@@ -586,7 +517,13 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		var prog = Mathf.Repeat( _stride, 1.0f );
 
-		_animator.SetProgress( 
+		_animator.SetGrowthPoint( 
+			RUN_TAG, 
+			_localVelocity.x / _terminalVelocity,
+			_localVelocity.z / _terminalVelocity
+		);
+		
+			_animator.SetProgress( 
 			RUN_TAG, 
 			prog
 		);
