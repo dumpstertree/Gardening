@@ -1,4 +1,5 @@
-﻿using Dumpster.Core.BuiltInModules.Input;
+﻿using UnityEngine;
+using Dumpster.Core.BuiltInModules.Input;
 
 namespace Eden.Life.BlackBoxes {
 
@@ -20,6 +21,8 @@ namespace Eden.Life.BlackBoxes {
 		
 		// *************** Private ******************
 		
+		[SerializeField] private Transform _cameraTarget;
+
 		private void FireRecieveInputEvent ( Input.Package package ) {
 
 			if ( _isPowered ) {
@@ -57,7 +60,7 @@ namespace Eden.Life.BlackBoxes {
 			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
 				
 			// Set this player as the camera focus
-			EdensGarden.Instance.Camera.SetFocus( transform );	
+			EdensGarden.Instance.Camera.SetFocus( _cameraTarget );	
 		}
 	}
 }

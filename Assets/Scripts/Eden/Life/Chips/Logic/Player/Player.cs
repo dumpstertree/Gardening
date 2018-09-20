@@ -32,37 +32,37 @@ namespace Eden.Life.Chips.Logic {
 
 		private void Awake () {
 			
-			_player.OnRecieveInput += RecieveInput;
+			// _player.OnRecieveInput += RecieveInput;
 
-			_player.QuickslotChip.OnInputChanged += QuickslotChanged;
+			// _player.QuickslotChip.OnInputChanged += QuickslotChanged;
 		}
 		private void RecieveInput ( Eden.Input.Package package ) {
 			
-			_horizontal = package.LeftAnalog.Horizontal;
-			_vertical = package.LeftAnalog.Vertical;
+			// _horizontal = package.LeftAnalog.Horizontal;
+			// _vertical = package.LeftAnalog.Vertical;
 
-			_cameraHorizontal = package.RightAnalog.Horizontal;
-			_cameraVertical = package.RightAnalog.Vertical;
+			// _cameraHorizontal = package.RightAnalog.Horizontal;
+			// _cameraVertical = package.RightAnalog.Vertical;
 
-			_jump = package.Face.Down_Down;
-			_dash = package.Face.Left_Down;
+			// _jump = package.Face.Down_Down;
+			// _dash = package.Face.Left_Down;
 
-			if ( package.BackRight.Bumper ) {
-				_player.Interactor.Use();
-			}
+			// if ( package.BackRight.Bumper ) {
+			// 	_player.Interactor.Use();
+			// }
 		}
 		private void QuickslotChanged ( int index ) {
 
-			var item = _player.EquipedItems.GetInventoryItem( index );			
+			// var item = _player.EquipedItems.GetInventoryItem( index );			
 			
-			if ( item != null && item.IsShootable ) {
-				_agressive.WillBecomeActive();
-				_cameraType = CameraType.Agressive;
-				_passive.Think( 0, 0, 0, 0 );
-			} else {
-				_cameraType = CameraType.Passive;
-				_agressive.Think( 0, 0, 0, 0 , false);
-			}
+			// if ( item != null && item.IsShootable ) {
+			// 	_agressive.WillBecomeActive();
+			// 	_cameraType = CameraType.Agressive;
+			// 	_passive.Think( 0, 0, 0, 0 );
+			// } else {
+			// 	_cameraType = CameraType.Passive;
+			// 	_agressive.Think( 0, 0, 0, 0 , false);
+			// }
 		}
 		
 
@@ -72,16 +72,16 @@ namespace Eden.Life.Chips.Logic {
 		}	
 		public override void Analayze () {
 			
-			switch ( _cameraType ) {
+			// switch ( _cameraType ) {
 				
-				case CameraType.Passive:
-					_passive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical );
-					break;
+			// 	case CameraType.Passive:
+			// 		_passive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical );
+			// 		break;
 				
-				case CameraType.Agressive:
-					_agressive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical, _dash );
-					break;
-			}
+			// 	case CameraType.Agressive:
+			// 		_agressive.Think( _horizontal, _vertical, _cameraHorizontal, _cameraVertical, _dash );
+			// 		break;
+			// }
 		}
 	}
 }

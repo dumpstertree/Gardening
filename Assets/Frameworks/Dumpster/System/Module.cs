@@ -22,6 +22,7 @@ namespace Dumpster.Core {
 		}
 		public void Init () {
 
+			_hasBeenInitialized = true;
 			OnInit();
 		}
 		public void Run () {
@@ -33,6 +34,7 @@ namespace Dumpster.Core {
 			OnReload();
 		}
 
+		protected bool _hasBeenInitialized;
 		protected Dumpster.Core.Game _game;
 
 		protected virtual void OnInstall () {}

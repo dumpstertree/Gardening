@@ -25,6 +25,7 @@ namespace Dumpster.Core.BuiltInModules {
 		public virtual void WillGainControl () {}
 		public virtual void WillLoseControl () {}
 
+		
 		// ****************** Private *********************
 
 		[SerializeField] private bool _isDefaultController;

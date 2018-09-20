@@ -8,7 +8,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	public void RecieveInput ( Eden.Input.Package package ) {
 
 		if ( package.Face.Down_Down && _isOnGround ) {
-			_ignoreGravity = true;
+
 			Jump ();
 		}
 
@@ -58,7 +58,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	
 	private Vector3 _distanceCovered;
 	private Vector3 _velocity;
-	private bool _ignoreGravity;
+	private bool _jumping;
 	private float _stride;
 
 	private float _horizontal;
@@ -168,8 +168,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	// Mono
 	private void Start () { 
 		
-		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
-		EdensGarden.Instance.Input.RequestInput( "Testing" );
+		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
+		EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
 
 		_aimDampener  = new AnimationDampener( _animator, "Aim" );
 		_jumpDampener = new AnimationDampener( _animator, "Jump" );
@@ -197,7 +197,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private void Update () {
 		
 
-		if ( _isOnGround ) {
+		if ( _isOnGround && !_jumping) {
 		
 			CalculateVelocityOnGround ();
 		
@@ -222,7 +222,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		
 		
 		// stop ignoring gravity	
-		_ignoreGravity = false;
+		_jumping = false;
 	}
 	private void FixedUpdate () {
 
@@ -231,34 +231,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private void LateUpdate () {
 
 		Animate ();
-	}
-	private void OnDrawGizmos () {
-
-		var shortest = Mathf.Infinity;
-		var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
-
-		for ( int x=0; x<5; x++ ) {
-			for ( int y=0; y<5; y++ ) {
-				
-				RaycastHit hit;
-				var pos = startPos + new Vector3( (float)x/5f, 0, (float)y/5f );
-				var ray = -Vector3.up;
-				
-				Debug.DrawRay( pos, ray * 1.2f );
-			}
-		}
-
-		Gizmos.color = Color.red;
-		var cameraRight = Camera.main.transform.right;
-		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
-		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
-		var groundNormal = GetGroundNormal();
-
-		var right = Vector3.Cross( Vector3.up, inputVector );
-		var newVector = Vector3.Cross( right, groundNormal );
-
-		Gizmos.DrawRay( transform.position, newVector * 5);
 	}
 	private void UpdateDistanceCovered () {
 	
@@ -402,11 +374,11 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		_velocity = Vector3.Lerp( _velocity, newVelocity, 0.5f );
 	}
 	private void CalculateVelocityInAir () {
-		
-		if ( !_ignoreGravity ) {
+
+		if ( !_jumping ) {
 			_velocity += Vector3.down * Time.deltaTime * _gravity;
 		}
-
+		
 		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
 			_velocity = new Vector3( 0, _velocity.y, 0 );
 			return;
@@ -422,9 +394,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		var xzVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z );
 		
 		_velocity = Vector3.Lerp( _velocity, xzVelocity, 0.2f );
-	}
-	
 
+	}
 	private void ApplyVelocity ( float horizontalInput, float verticalInput ) {
 
 		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
@@ -482,6 +453,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 	private void Jump () {
 
+		_jumping = true;
 		_velocity += Vector3.up * _jumpPower;
 	}
 

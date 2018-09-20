@@ -127,7 +127,11 @@ namespace Dumpster.Core.BuiltInModules {
 				}
 			}
 		}
-		private void LateUpdate () {
+		private void FixedUpdate () {
+				
+			if ( !_hasBeenInitialized ) {
+				return;
+			}
 			
 			if ( _controller != _lastController ) {
 

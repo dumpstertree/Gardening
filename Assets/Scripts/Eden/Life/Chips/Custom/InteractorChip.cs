@@ -11,6 +11,7 @@ namespace Eden.Life.Chip {
 			get{ return _interactable; }
 		}
 		
+		[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 		[SerializeField] private Eden.Life.BlackBox _blackBox;
 
 		private List<Eden.Interactable.InteractableObject> _interactableObjectStack;
@@ -24,6 +25,12 @@ namespace Eden.Life.Chip {
 			if( _blackBox.QuickslotChip ) _blackBox.QuickslotChip.OnInputChanged += OnItemChanged;
 
 			_currentItem = _blackBox.EquipedItems.GetInventoryItem( 0 ); // TODO this is placeholder 
+
+			_player.OnRecieveInput += p => {
+				if ( p.BackRight.Bumper ) {
+					Use();
+				}
+			};
 		}
 		public void Use () {
 

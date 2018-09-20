@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Dumpster.Core.BuiltInModules.Input;
 
-public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package> {
+public class CameraController : Dumpster.Core.BuiltInModules.CameraController, IInputReciever<Eden.Input.Package> {
 	
 	
 	// **************** Public ******************
@@ -26,11 +26,11 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 	
 	// **************** Private ******************
 	
-	private float _distanceToTarget {
-		get{ return Vector3.Distance( transform.position, _target.position ); }
+	private float _distanceToTarget ( Transform cameraInstance, Transform focus ){
+		return Vector3.Distance( cameraInstance.position, focus.position );
 	}
-	private bool _targetOutOfRange {
-		get{ return !(_distanceToTarget > _targetDistance + OUT_OF_RANGE && _distanceToTarget < _targetDistance - OUT_OF_RANGE); }
+	private bool _targetOutOfRange ( Transform cameraInstance, Transform focus ){
+		return !(_distanceToTarget( cameraInstance, focus ) > _targetDistance + OUT_OF_RANGE && _distanceToTarget( cameraInstance, focus ) < _targetDistance - OUT_OF_RANGE);
 	}
 	private float _targetDistance {
 		get{ return _strafing ? _strafeDistance : _followDistance; }
@@ -39,9 +39,6 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 		get { return _strafing ? _strafeLerpSpeed : _followLerpSpeed; }
 	}
 
-	
-	[Header( "Target" )]
-	[SerializeField] private Transform _target;
 
 	[Header( "Limits" )]
 	[SerializeField] private float _minVerticalRotation = -80f;
@@ -71,27 +68,29 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 
 	private void Start () {
 
-		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
-		EdensGarden.Instance.Input.RequestInput( "Testing" );
+		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
+		EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
 	}
-	private void FixedUpdate () {
+	
+	public override void Control ( Transform cameraInstance, Transform focus ){
 
-		RotateHorizontal( _horizontal );
-		RotateVertical( _vertical );
+		RotateHorizontal( cameraInstance, focus, _horizontal );
+		RotateVertical( cameraInstance, focus, _vertical );
 
-		if ( _targetOutOfRange) {
+		if ( _targetOutOfRange( cameraInstance, focus )) {
 
-			var right = Vector3.Cross( transform.forward, Vector3.up ).normalized; 
+			var right = Vector3.Cross( cameraInstance.forward, Vector3.up ).normalized; 
 			var forward = Vector3.Cross( right, Vector3.up ).normalized;
 			var direction = Quaternion.AngleAxis( _verticalRot, right ) * forward;
-			var targetPos =  _target.position + (direction * _targetDistance);
+			var targetPos =  focus.position + (direction * _targetDistance);
 
-			var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, _target.position, targetPos );
+			var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, focus.position, targetPos );
 			
-			transform.position = Vector3.Lerp( transform.position, collisionTargetPos, _lerpSpeed );
-			transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
+			cameraInstance.position = Vector3.Lerp( cameraInstance.position, collisionTargetPos, _lerpSpeed );
+			cameraInstance.rotation = Quaternion.Slerp( cameraInstance.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
 		}
 	}
+	
 	private Vector3 AccountForCollision( float minDistanceToCollider, float distanceFromCamera, Vector3 startPos, Vector3 targetPosition ) {
 
 		var dir = targetPosition - startPos;
@@ -105,12 +104,12 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 		return targetPosition;
 	} 
 
-	private void RotateHorizontal ( float horizontalInput ) {
+	private void RotateHorizontal ( Transform cameraInstance, Transform cameraTarget, float horizontalInput ) {
 
 		// rotate around the target
-		transform.RotateAround( _target.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
+		cameraInstance.RotateAround( cameraTarget.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
 	}
-	private void RotateVertical ( float verticalInput ) {
+	private void RotateVertical ( Transform cameraInstance, Transform cameraTarget, float verticalInput ) {
 		
 		// project what the next angle will be
 		var projectedRot = _verticalRot + (verticalInput * (_verticalSensitivity * Time.fixedDeltaTime) );

@@ -58,7 +58,7 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		private void LoadPlayer ( string doorIdentider ) {
 
 			var door = _doors.ContainsKey( doorIdentider ) ? _doors[ doorIdentider ] : _defaultDoor;
-			// _playerInstance = door.LoadPlayer( _playerPrefab );
+			_playerInstance = door.LoadPlayer( _playerPrefab );
 		}
 		private void OnDrawGizmos () {
 			
