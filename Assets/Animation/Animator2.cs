@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -15,9 +14,6 @@ public class Animator2 : MonoBehaviour {
 		if ( _animations.ContainsKey( animation ) ) {
 			_animations[ animation ].SetProgress( progress );
 		}
-		if ( _blendTrees.ContainsKey( animation ) ) {
-			_blendTrees[ animation ].SetProgress( progress );
-		}
 	}
 	public void SetGrowth ( string animation, float growth ) {
 		
@@ -25,38 +21,10 @@ public class Animator2 : MonoBehaviour {
 			_animations[ animation ].SetGrowth( growth );
 		}
 	}
-	public void SetGrowthPoint ( string animation, float growthX, float growthY ) {
-		
-		if ( _blendTrees.ContainsKey( animation ) ) {
-			_blendTrees[ animation ].SetGrowthPoint( growthX, growthY );
-		}
-	}
-	public void SetWeight ( string animation, float weight, float lerpTime = 0f ) {
+	public void SetWeight ( string animation, float weight) {
 
 		if ( _animations.ContainsKey( animation ) ) {
-
-			if ( lerpTime > 0f ) {
-				
-				if ( _lerps.ContainsKey( animation ) ) { 
-					StopCoroutine( _lerps[ animation ] ); 
-					_lerps.Remove( animation );
-				}
-				
-				_lerps.Add( 
-					animation, 
-					StartCoroutine( LerpWeight( _animations[ animation ].Playable, lerpTime, weight ) )
-				);
-			} else {
-				_playable.SetInputWeight( _animations[ animation ].Playable, weight );
-			}
-		}
-		if ( _blendTrees.ContainsKey( animation ) ) {
-
-			if ( lerpTime > 0f ) {
-
-			} else {
-				_playable.SetInputWeight( _blendTrees[ animation ].Playable, weight );
-			}
+			_playable.SetInputWeight( _animations[ animation ].Playable, weight );
 		}
 	}
 
@@ -65,27 +33,19 @@ public class Animator2 : MonoBehaviour {
 
 	[SerializeField] private Animator _animator;
 	[SerializeField] private AnimationLayer[] _animationLayers;
-	[SerializeField] private BlendTreeLayer[] _blendTreeLayers;
 
 	private PlayableGraph _graph;
 	private AnimationLayerMixerPlayable _playable;
 	private Dictionary<string,Animation> _animations;
-	private Dictionary<string,BlendTree> _blendTrees;
-	private Dictionary<string,Coroutine> _lerps;
-
 
 	private void Awake () {
 
-		_animations = new Dictionary<string,Animation>();
-		_blendTrees = new Dictionary<string,BlendTree>();
-		_lerps = new Dictionary<string,Coroutine>();
+		_animations = new Dictionary<string,Animation>();		 
+		 var layers = new List<AnimationLayer>( _animationLayers ) ;
+		layers.Sort( ( a1, a2 )=> a1.Priority.CompareTo( a2.Priority ) );
 		
 		BuildGraph ();
-		BuildBlendTrees ();
-		BuildAnimations ();
-
-		// this will change when layers are fully supported
-		_playable.SetInputWeight( 0, 1f );
+		BuildAnimations ( layers );
 	}
 	private void BuildGraph () {
 
@@ -97,7 +57,7 @@ public class Animator2 : MonoBehaviour {
 		// create job
 		_playable = AnimationLayerMixerPlayable.Create( _graph );
 		_playable.SetOutputCount( 1 );
-		_playable.SetInputCount( _animationLayers.Length + _blendTreeLayers.Length );
+		_playable.SetInputCount( _animationLayers.Length );
 
 
 		// create output
@@ -113,38 +73,17 @@ public class Animator2 : MonoBehaviour {
 		// show graph
 		GraphVisualizerClient.Show( _graph );
 	}
-	private void BuildAnimations () {
+	private void BuildAnimations ( List<AnimationLayer> animationLayers ) {
 
-		for ( int i=0; i<_animationLayers.Length; i++ ) {
+		for ( int i=0; i<animationLayers.Count; i++ ) {
 		
-			var l = _animationLayers[ i ];
-			_animations.Add( l.Name, Animation.Create( _playable, i + _blendTrees.Count, l.Animation ) );
+			var l = animationLayers[ i ];
+			_animations.Add( l.Name, Animation.Create( _playable, i, l.Animation ) );
 
 			if ( l.Animation.Mask != null ) {
 				_playable.SetLayerMaskFromAvatarMask( (uint)i, l.Animation.Mask );
 			}
 		}
-	}
-	private void BuildBlendTrees () {
-
-		for ( int i=0; i<_blendTreeLayers.Length; i++ ) {
-			
-			var l = _blendTreeLayers[ i  ];
-			_blendTrees.Add( l.Name, BlendTree.Create( _playable, i + _animations.Count, l.BlendTree ) );
-		}
-	}
-
-	private IEnumerator LerpWeight ( Playable playable, float time, float targetWeight ) {
-	
-		var startWeight = 0f;
-		// this should eventually check the fraction of the animation 			
-		for ( float t=0; t<time; t+=Time.deltaTime ) {
-
-			_playable.SetInputWeight( playable, Mathf.Lerp( startWeight, targetWeight, t/time ) );
-			yield return null;
-		}
-
-		_playable.SetInputWeight( playable, targetWeight );
 	}
 
 	[System.Serializable]
@@ -154,14 +93,4 @@ public class Animator2 : MonoBehaviour {
 		public string Name;
 		public Animation.Setter Animation;
 	}
-
-	[System.Serializable]
-	private class BlendTreeLayer {
-
-		public int Priority;
-		public string Name;
-		public BlendTree.Setter BlendTree;
-	}
-
-
 }

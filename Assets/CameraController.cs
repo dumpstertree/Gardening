@@ -69,7 +69,6 @@ public class CameraController : MonoBehaviour, IInputReciever<Eden.Input.Package
 	private float _verticalRot;
 	private bool _strafing;
 
-
 	private void Start () {
 
 		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );

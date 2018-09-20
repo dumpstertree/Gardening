@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Dumpster.Core.BuiltInModules.Input;
 
 public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.Package> {
@@ -17,10 +16,10 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		_vertical = package.LeftAnalog.Vertical;
 
 		if ( package.BackLeft.Bumper_Down ) {
-			_strafing= true;
+			_isStrafing= true;
 		}
 		if ( package.BackLeft.Bumper_Up ) {
-			_strafing= false;
+			_isStrafing= false;
 		}
 	}
 	public void EnteredInputFocus () {
@@ -40,6 +39,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	[SerializeField] private float _gravity = 25f;
 
 	[Header( "Movement Settings" )]
+	[SerializeField] private float _airMovementSpeed = 5f;
 	[SerializeField] private float _walkMovementSpeed = 20f;
 	[SerializeField] private float _runMovementSpeed = 20f;
 	[SerializeField] private float _walkThreshold = 0.15f;
@@ -51,20 +51,11 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 
 	[Header( "Gameplay Settings" )]
-	[SerializeField] private bool _strafing = false;
+	[SerializeField] private bool _isStrafing = false;
 
 	[SerializeField] private Dumpster.Physics.PhysicsPlane _down;
 	[SerializeField] private LayerMask _mask;
 	
-	private const string WALK_TAG = "Walk";
-	private const string RUN_TAG  = "Run";
-	private const string MOVE_TAG = "Move";
-	private const string IDLE_TAG = "Idle";
-	private const string JUMP_TAG = "Jump";
-	private const string FALL_TAG = "Fall";
-	private const string LAND_TAG = "Land";
-		
-
 	private Vector3 _distanceCovered;
 	private Vector3 _velocity;
 	private bool _ignoreGravity;
@@ -72,6 +63,14 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 	private float _horizontal;
 	private float _vertical;
+
+	private AnimationDampener _jumpDampener;	
+	private AnimationDampener _fallDampener;
+	private AnimationDampener _landDampener;
+	private AnimationDampener _aimDampener;
+
+	private KindaBlendTree _runningBlendTree;
+	private KindaBlendTree _walkingBlendTree;
 
 
 	private Vector3 _localVelocity {
@@ -87,7 +86,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		get { return !_isOnGround && _velocity.y <= 0f; }
 	}
 	private bool _isOnGround {
-		get { return Physics.Raycast( transform.position + Vector3.up, -Vector3.up, 1.1f, _mask ); }
+		get { return RaycastDown() < 1.1f; }
 	}
 	private bool _isInAir {
 		get { return !_isOnGround; }
@@ -114,51 +113,152 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		get{ return new Vector2( _horizontal, _vertical ).magnitude; }
 	}
 
+	private float RaycastDown () {
+
+		var shortest = Mathf.Infinity;
+		var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
+
+		for ( int x=0; x<5; x++ ) {
+			for ( int y=0; y<5; y++ ) {
+				
+				RaycastHit hit;
+				var pos = startPos + new Vector3( (float)x/5f, 0, (float)y/5f );
+				var ray = -Vector3.up;
+				
+				if( Physics.Raycast( pos, ray, out hit, 1.1f, _mask ) ) {
+					var d = Vector3.Distance( pos, hit.point);
+					
+					if ( d < shortest ) {
+					 	shortest = d;
+					}
+				}
+			}
+		}
+
+		return shortest;
+	}
+	private Vector3 GetGroundNormal () {
+
+		RaycastHit rh = new RaycastHit();
+		var shortest = Mathf.Infinity;
+		var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
+
+		for ( int x=0; x<5; x++ ) {
+			for ( int y=0; y<5; y++ ) {
+				
+				RaycastHit hit;
+				var pos = startPos + new Vector3( (float)x/5f, 0, (float)y/5f );
+				var ray = -Vector3.up;
+				
+				if( Physics.Raycast( pos, ray, out hit, 1.1f, _mask ) ) {
+					var d = Vector3.Distance( pos, hit.point);
+					
+					if ( d < shortest ) {
+					 	shortest = d;
+					 	rh = hit;
+					}
+				}
+			}
+		}
+
+		return rh.normal;
+	}
+
 
 	// Mono
 	private void Start () { 
 		
 		EdensGarden.Instance.Input.RegisterToInputLayer( "Testing", this );
 		EdensGarden.Instance.Input.RequestInput( "Testing" );
-	}
-	private void FixedUpdate () {
-			
-		// update velocity
-		ApplyVelocity (
-			_horizontal, 
-			_vertical
+
+		_aimDampener  = new AnimationDampener( _animator, "Aim" );
+		_jumpDampener = new AnimationDampener( _animator, "Jump" );
+		_fallDampener = new AnimationDampener( _animator, "Fall" );
+		_landDampener = new AnimationDampener( _animator, "Land" );
+
+		_runningBlendTree = new KindaBlendTree( 
+			animator : _animator,
+			posX : "Run_Right",
+			negX : "Run_Left",
+			posY : "Run_Forward",
+			negY : "Run_Back"
 		);
 
+		_walkingBlendTree = new KindaBlendTree( 
+			animator : _animator,
+			posX : "Walk_Right",
+			negX : "Walk_Left",
+			posY : "Walk_Forward",
+			negY : "Walk_Back"
+		);
+
+		_animator.SetWeight( "Idle", 1f );
+	}
+	private void Update () {
 		
+
+		if ( _isOnGround ) {
+		
+			CalculateVelocityOnGround ();
+		
+		} else {
+			
+			CalculateVelocityInAir ();
+		}
+
+	
 		// rotate character
-		if ( _strafing ) {
+		if ( _isStrafing ) {
 			FaceCameraForward ();
+
 		} else {
 			FaceMomentum ();
 		}
 
 		
-		// apply gravity
-		if ( !_ignoreGravity ) {
-			ApplyGravity ();
-		}
-
-
 		// update values
 		UpdateDistanceCovered ();
 		UpdateStride ();
-		UpdateRigidbody ();
 		
-	
+		
 		// stop ignoring gravity	
 		_ignoreGravity = false;
+	}
+	private void FixedUpdate () {
+
+		UpdateRigidbody ();
 	}
 	private void LateUpdate () {
 
 		Animate ();
 	}
 	private void OnDrawGizmos () {
-		Debug.DrawRay( transform.position + Vector3.up, -Vector3.up * 1.1f);
+
+		var shortest = Mathf.Infinity;
+		var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
+
+		for ( int x=0; x<5; x++ ) {
+			for ( int y=0; y<5; y++ ) {
+				
+				RaycastHit hit;
+				var pos = startPos + new Vector3( (float)x/5f, 0, (float)y/5f );
+				var ray = -Vector3.up;
+				
+				Debug.DrawRay( pos, ray * 1.2f );
+			}
+		}
+
+		Gizmos.color = Color.red;
+		var cameraRight = Camera.main.transform.right;
+		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
+		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
+		var groundNormal = GetGroundNormal();
+
+		var right = Vector3.Cross( Vector3.up, inputVector );
+		var newVector = Vector3.Cross( right, groundNormal );
+
+		Gizmos.DrawRay( transform.position, newVector * 5);
 	}
 	private void UpdateDistanceCovered () {
 	
@@ -170,13 +270,23 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 	private void UpdateRigidbody () {
 
-		// GetComponent<Rigidbody>().velocity = _velocity;
 		GetComponent<Rigidbody>().velocity = Vector3.zero;
-		GetComponent<Rigidbody>().MovePosition( transform.position + (_velocity * Time.deltaTime) );
+		GetComponent<Rigidbody>().MovePosition( transform.position + (_velocity * Time.fixedDeltaTime) );
 	}
 	private void Animate () {
 
+		// Strafing
+		if ( !_wasStrafing && _isStrafing ) {
+			OnBeginStrafing ();
+		} else if ( _wasStrafing && !_isStrafing ) {
+			OnEndStrafing ();
+		} else if ( _isStrafing) { 
+			OnStrafing (); 
+		}
+
+		_wasStrafing = _isStrafing;
 		
+
 		// On Ground
 		if ( !_wasOnGround && _isOnGround ) {
 			OnBeginOnGround ();
@@ -250,25 +360,107 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 
 
+
 	// Physics
-	private void ApplyVelocity ( float horizontalInput, float verticalInput ) {
+	private void CalculateVelocityOnGround () {
 
-		var input = Mathf.Clamp01( new Vector2( horizontalInput, verticalInput ).magnitude );
+		// if no input just abort
+		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
+			_velocity = new Vector3( 0, 0, 0 );
+			return;
+		}
 
-		if ( input < _walkThreshold ) {
+
+		// calculate speed
+		var speed = 0f;
+		
+		if ( _isWalking ) { speed = _walkMovementSpeed; }
+		if ( _isRunning ) { speed = _runMovementSpeed; }
+
+		
+		// input vector
+		var cameraRight = Camera.main.transform.right;
+		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
+		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
+		
+		
+		// ground vector
+		var groundNormalVector = GetGroundNormal();
+
+		
+		// new direction vector
+		var inputRight = Vector3.Cross( Vector3.up, inputVector );
+		var newVector = Vector3.Cross( inputRight, groundNormalVector );
+
+		
+		// calculate new velocity
+		var newVelocity = newVector * speed;
+
+
+		// set new velocity
+		_velocity = Vector3.Lerp( _velocity, newVelocity, 0.5f );
+	}
+	private void CalculateVelocityInAir () {
+		
+		if ( !_ignoreGravity ) {
+			_velocity += Vector3.down * Time.deltaTime * _gravity;
+		}
+
+		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
 			_velocity = new Vector3( 0, _velocity.y, 0 );
 			return;
 		}
 
+		// input vector
 		var cameraRight = Camera.main.transform.right;
 		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var deg = Mathf.Rad2Deg * Mathf.Atan2(  horizontalInput, verticalInput );
-		var inputVector = Quaternion.AngleAxis( deg, Vector3.up ) * cameraForward;
-		var newVelocity = inputVector * ( _terminalVelocity * input );
-		var newXYVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z  );
-		var lerpedVelocity = Vector3.Lerp ( new Vector3( newXYVelocity.x, _velocity.y, newXYVelocity.z ), newXYVelocity,  0.2f );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
+		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
+		
+		var newVelocity = inputVector * _runMovementSpeed;
+		var xzVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z );
+		
+		_velocity = Vector3.Lerp( _velocity, xzVelocity, 0.2f );
+	}
+	
 
-		_velocity = lerpedVelocity;
+	private void ApplyVelocity ( float horizontalInput, float verticalInput ) {
+
+		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
+			_velocity = new Vector3( 0, 0, 0 );
+			return;
+		}
+
+		var speed = 0f;
+		
+		if ( _isWalking ) { speed = _walkMovementSpeed; }
+		if ( _isRunning ) { speed = _runMovementSpeed; }
+		if ( !_isOnGround ) { speed = _runMovementSpeed; }
+
+		
+		// input vector
+		var cameraRight = Camera.main.transform.right;
+		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  horizontalInput, verticalInput );
+		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
+		
+		// ground vector
+		var groundNormal = GetGroundNormal();
+
+		// new direction vector
+		var inputRight = Vector3.Cross( Vector3.up, inputVector );
+		var newVector = Vector3.Cross( inputRight, groundNormal );
+
+
+		var newVelocity = newVector * speed;
+
+
+		if ( _isOnGround ) {
+			_velocity = new Vector3( newVelocity.x, newVelocity.y, newVelocity.z );
+		} else {
+			_velocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z  );
+		}
 	}
 	private void FaceMomentum () {
 
@@ -288,15 +480,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		transform.rotation = Quaternion.LookRotation( forward, Vector3.up );
 	}
-	private void ApplyGravity () {
-
-		if ( !_isOnGround ) {
-			_velocity += Vector3.down * Time.deltaTime * _gravity;
-		} else {
-			_velocity.y = 0;
-		}
-	}
-
 	private void Jump () {
 
 		_velocity += Vector3.up * _jumpPower;
@@ -304,40 +487,37 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 
 
+	// Strafing
+	private bool _wasStrafing;
+
+	private void OnBeginStrafing () {
+
+		_aimDampener.SetProgress( 1f );
+		_aimDampener.SetWeight( 1f, 0.2f );
+	}
+	private void OnStrafing () {
+	}
+	private void OnEndStrafing () {
+
+		_aimDampener.SetWeight( 0f, 0.2f );
+	}
+
+
 	// Falling
 	private bool _wasFalling;
 
 	private void OnBeginFall () {
 		
-		_animator.SetProgress( 
-			FALL_TAG, 
-			0f 
-		);
-
-		StartCoroutine( 
-			LerpWeight(
-				FALL_TAG, 
-				0f, 
-				1f, 
-				0.0f
-			) 
-		);
+		_fallDampener.SetProgress( 0f );
+		_fallDampener.SetWeight( 1f, 0.2f );
 	}
 	private void OnFall () {
 
 		var prog = Mathf.Clamp01( _velocity.y / -_jumpPower );
 		
-		_animator.SetProgress( 
-			FALL_TAG,
-			prog
-		);
+		_fallDampener.SetProgress( prog );
 	}
 	private void OnEndFall () {
-
-		_animator.SetWeight( 
-			FALL_TAG, 
-			0.0f 
-		);
 	}
 
 
@@ -346,45 +526,16 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 	private void OnBeginJump () {
 
-		_animator.SetProgress( 
-			JUMP_TAG, 
-			0f 
-		);
-
-		StartCoroutine( 
-			LerpWeight( 
-				JUMP_TAG, 
-				0f,
-				1f,
-				0.0f
-			)
-		);
+		_jumpDampener.SetProgress( 0f );
+		_jumpDampener.SetWeight( 1f );
 	}
 	private void OnJump () {
 
 		var prog = Mathf.Clamp01( 1f - _velocity.y / _jumpPower );
 
-		_animator.SetProgress( 
-			JUMP_TAG,
-			prog
-		);
+		_jumpDampener.SetProgress( prog );
 	}
 	private void OnEndJump () {
-
-		// the issue here is that when it fades out it overshoots the animation and goes back
-		StartCoroutine( 
-			LerpWeight(
-				JUMP_TAG, 
-				1f, 
-				0f, 
-				0.0f
-			) 
-		);
-
-		// _animator.SetWeight( 
-		// 	JUMP_TAG, 
-		// 	0.0f
-		// );
 	}
 
 
@@ -392,29 +543,12 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private bool _wasOnGround;
 
 	private void OnBeginOnGround () {
+		_fallDampener.SetWeight( 0f, 0.2f );
+		_jumpDampener.SetWeight( 0f, 0.2f );
 		
-		_animator.SetWeight(
-			LAND_TAG, 
-			1.0f 
-		);
-		
-		StartCoroutine( 
-			LerpProgress( 
-				LAND_TAG, 
-				0f, 
-				1f, 
-				0.2f 
-			) 
-		);
-
-		StartCoroutine( 
-			LerpWeight( 
-				LAND_TAG, 
-				1f, 
-				0f, 
-				0.2f 
-			) 
-		);
+		_landDampener.SetWeight( 1f );
+		_landDampener.SetProgress( 0, 0.3f );
+		_landDampener.SetWeight( 0, 0.3f );
 	}
 	private void OnGround () {
 	}
@@ -426,76 +560,41 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private bool _wasIdling;
 
 	private void OnBeginIdle () {
-
-		StartCoroutine( 
-			LerpWeight( 
-				IDLE_TAG, 
-				0f, 
-				1f, 
-				0.2f 
-			)
-		);
 	}
 	private void OnIdle () {
 
 		var prog = Mathf.Repeat( Time.time, 1.0f );
 
 		_animator.SetProgress( 
-			IDLE_TAG, 
+			"Idle", 
 			prog
 		);
 	}
 	private void OnEndIdle () {
-
-		StartCoroutine( 
-			LerpWeight( 
-				IDLE_TAG, 
-				1f, 
-				0f, 
-				0.2f 
-			)
-		);
 	}
+
 	
 	// Walking
 	private bool _wasWalking;
 
 	private void OnBeginWalk () {
 
-		StartCoroutine( 
-			LerpWeight( 
-				WALK_TAG,
-				0f,
-				1f,
-				0.2f
-			)
-		);
+		_walkingBlendTree.SetWeight( 1f, 0.2f );
 	}
 	private void OnWalk () {
 
 		var prog = Mathf.Repeat( _stride, 1.0f );
 
-		_animator.SetGrowthPoint( 
-			WALK_TAG, 
-			_localVelocity.x / _terminalVelocity,
-			_localVelocity.z / _terminalVelocity
-		);
+		_walkingBlendTree.SetProgress( prog );
 
-		_animator.SetProgress( 
-			WALK_TAG, 
-			prog
+		_walkingBlendTree.SetBlendPoint( 
+			_localVelocity.x / _walkMovementSpeed,
+			_localVelocity.z / _walkMovementSpeed
 		);
 	}
 	private void OnEndWalk () {
 
-		StartCoroutine( 
-			LerpWeight( 
-				WALK_TAG,
-				1f,
-				0f,
-				0.2f
-			)
-		);
+		_walkingBlendTree.SetWeight( 0f, 0.2f );
 	}
 	
 	
@@ -504,61 +603,21 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 	private void OnBeginRun () {
 
-		StartCoroutine( 
-			LerpWeight( 
-				RUN_TAG,
-				0f,
-				1f,
-				0.2f
-			)
-		);
+		_runningBlendTree.SetWeight( 1f, 0.2f );
 	}
 	private void OnRun () {
 
 		var prog = Mathf.Repeat( _stride, 1.0f );
-
-		_animator.SetGrowthPoint( 
-			RUN_TAG, 
-			_localVelocity.x / _terminalVelocity,
-			_localVelocity.z / _terminalVelocity
-		);
 		
-			_animator.SetProgress( 
-			RUN_TAG, 
-			prog
+		_runningBlendTree.SetProgress( prog );
+
+		_runningBlendTree.SetBlendPoint( 
+			_localVelocity.x / _runMovementSpeed,
+			_localVelocity.z / _runMovementSpeed
 		);
 	}
 	private void OnEndRun () {
 
-		StartCoroutine( 
-			LerpWeight( 
-				RUN_TAG,
-				1f,
-				0f,
-				0.2f
-			)
-		);
-	}
-	
-
-
-	// helpers
-	private IEnumerator LerpProgress ( string animation, float fromValue, float toValue, float time  ) {
-
-		for ( float t=0f; t<time; t+=Time.deltaTime ) {
-			_animator.SetProgress( animation , Mathf.Lerp( fromValue , toValue,  t/time ) );
-			yield return null;
-		}
-
-		_animator.SetProgress( animation , toValue );
-	}
-	private IEnumerator LerpWeight ( string animation, float fromValue, float toValue, float time  ) {
-
-		for ( float t=0f; t<time; t+=Time.deltaTime ) {
-			_animator.SetWeight( animation , Mathf.Lerp( fromValue , toValue,  t/time ) );
-			yield return null;
-		}
-
-		_animator.SetWeight( animation , toValue );
+		_runningBlendTree.SetWeight( 0f, 0.2f );
 	}
 }
