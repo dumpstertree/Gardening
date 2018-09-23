@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
-using Eden.Life;
 using Dumpster.Events;
 
 namespace Eden.Interactable {
 	
 	public class Hitable : MonoBehaviour {
 
-		public delegate void HitEvent ( BlackBox user, HitData data );
+		public delegate void HitEvent ( HitData data );
 		public HitEvent OnHit;
 
 		[SerializeField] private SmartEvent[] _onHit;
 
-		public void Hit( BlackBox user, HitData data ){
+		public void Hit(  HitData data ){
 
-			FireHitEvent( user, data );
+			FireHitEvent( data );
 		}
-		private void FireHitEvent ( BlackBox user, HitData data ) {
+		private void FireHitEvent ( HitData data ) {
 			
 			if ( OnHit != null ) {
-				OnHit ( user, data );
+				OnHit ( data );
 			}
 
 			foreach ( SmartEvent e in _onHit ){

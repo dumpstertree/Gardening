@@ -1,42 +1,57 @@
 ﻿using UnityEngine;
-using Dumpster.Core.BuiltInModules.Input;
 
-public class CameraController : Dumpster.Core.BuiltInModules.CameraController, IInputReciever<Eden.Input.Package> {
-	
+public class CameraController : Dumpster.Core.BuiltInModules.CameraController {
+
 	
 	// **************** Public ******************
-	
-	public void RecieveInput ( Eden.Input.Package package ) {
 
-		_horizontal = package.RightAnalog.Horizontal;
-		_vertical = package.RightAnalog.Vertical;
+	public float HorizontalInput {
+		get; set;
+	}
+	public float VericalInput {
+		get; set;
+	}
+	public bool IsStrafing {
+		get; set;
+	}
 
-		if ( package.BackLeft.Bumper_Down ) {
-			_strafing= true;
+	public override void Control ( Transform cameraInstance, Transform focus ){
+
+
+		RotateHorizontal( cameraInstance, focus, HorizontalInput );
+		RotateVertical( cameraInstance, focus, VericalInput );
+
+
+		if ( TargetOutOfRange( cameraInstance, focus )) {
+
+			var right = Vector3.Cross( cameraInstance.forward, Vector3.up ).normalized; 
+			var forward = Vector3.Cross( right, Vector3.up ).normalized;
+			
+			var direction =  Quaternion.AngleAxis( _verticalRot, right ) * Quaternion.AngleAxis( _horizontalRot, Vector3.up) * Vector3.forward;
+			var targetPos =  focus.position + (direction * _targetDistance);
+
+			var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, focus.position, targetPos );
+			
+			cameraInstance.position = Vector3.Lerp( cameraInstance.position, collisionTargetPos, _lerpSpeed );
+			cameraInstance.rotation = Quaternion.Slerp( cameraInstance.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
 		}
-		if ( package.BackLeft.Bumper_Up ) {
-			_strafing= false;
-		}
-	}
-	public void EnteredInputFocus () {
-	}
-	public void ExitInputFocus () {
 	}
 
 	
 	// **************** Private ******************
 	
-	private float _distanceToTarget ( Transform cameraInstance, Transform focus ){
-		return Vector3.Distance( cameraInstance.position, focus.position );
-	}
-	private bool _targetOutOfRange ( Transform cameraInstance, Transform focus ){
-		return !(_distanceToTarget( cameraInstance, focus ) > _targetDistance + OUT_OF_RANGE && _distanceToTarget( cameraInstance, focus ) < _targetDistance - OUT_OF_RANGE);
-	}
+
 	private float _targetDistance {
-		get{ return _strafing ? _strafeDistance : _followDistance; }
+		get{ return IsStrafing ? _strafeDistance : _followDistance; }
 	}
 	private float _lerpSpeed {
-		get { return _strafing ? _strafeLerpSpeed : _followLerpSpeed; }
+		get { return IsStrafing ? _strafeLerpSpeed : _followLerpSpeed; }
+	}
+	private float _horizontalSensitivity {
+		get { return IsStrafing ? _horizontalStrafingSensitivity : _horizontalFollowSensitivity; }
+	}
+	private float _verticalSensitivity {
+		get { return IsStrafing ? _verticalStrafingSensitivity : _verticalFollowSensitivity; }
 	}
 
 
@@ -48,8 +63,10 @@ public class CameraController : Dumpster.Core.BuiltInModules.CameraController, I
 	[SerializeField] private float _strafeDistance = 3f;
 
 	[Header( "Sensitivity" )]
-	[SerializeField] private float _horizontalSensitivity = 180f;
-	[SerializeField] private float _verticalSensitivity = 100f;
+	[SerializeField] private float _horizontalStrafingSensitivity = 55;
+	[SerializeField] private float _verticalStrafingSensitivity = 40;
+	[SerializeField] private float _horizontalFollowSensitivity = 110;
+	[SerializeField] private float _verticalFollowSensitivity = 80;
 
 	[Header( "Lerping" )]
 	[SerializeField] private float _followLerpSpeed = 0.3f;
@@ -57,57 +74,21 @@ public class CameraController : Dumpster.Core.BuiltInModules.CameraController, I
 	
 	[Header( "Raycast" )]
 	[SerializeField] private float _minDistanceToCollider = 1f;
+
 	
 	private const float OUT_OF_RANGE = 0.01f;
 
-	
-	private float _horizontal;
-	private float _vertical;
+
 	private float _verticalRot;
-	private bool _strafing;
+	private float _horizontalRot;
 
-	private void Start () {
-
-		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
-		EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
-	}
-	
-	public override void Control ( Transform cameraInstance, Transform focus ){
-
-		RotateHorizontal( cameraInstance, focus, _horizontal );
-		RotateVertical( cameraInstance, focus, _vertical );
-
-		if ( _targetOutOfRange( cameraInstance, focus )) {
-
-			var right = Vector3.Cross( cameraInstance.forward, Vector3.up ).normalized; 
-			var forward = Vector3.Cross( right, Vector3.up ).normalized;
-			var direction = Quaternion.AngleAxis( _verticalRot, right ) * forward;
-			var targetPos =  focus.position + (direction * _targetDistance);
-
-			var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, focus.position, targetPos );
-			
-			cameraInstance.position = Vector3.Lerp( cameraInstance.position, collisionTargetPos, _lerpSpeed );
-			cameraInstance.rotation = Quaternion.Slerp( cameraInstance.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
-		}
-	}
-	
-	private Vector3 AccountForCollision( float minDistanceToCollider, float distanceFromCamera, Vector3 startPos, Vector3 targetPosition ) {
-
-		var dir = targetPosition - startPos;
-
-		RaycastHit hit;
-		if ( Physics.Raycast( startPos, dir, out hit, distanceFromCamera ) ) {
-
-			return hit.point + (-dir * minDistanceToCollider);
-		}
-
-		return targetPosition;
-	} 
 
 	private void RotateHorizontal ( Transform cameraInstance, Transform cameraTarget, float horizontalInput ) {
 
 		// rotate around the target
-		cameraInstance.RotateAround( cameraTarget.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
+		// cameraInstance.RotateAround( cameraTarget.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
+
+		_horizontalRot += horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime );
 	}
 	private void RotateVertical ( Transform cameraInstance, Transform cameraTarget, float verticalInput ) {
 		
@@ -121,4 +102,24 @@ public class CameraController : Dumpster.Core.BuiltInModules.CameraController, I
 			_verticalRot = projectedRot;
 		} 
 	}
+	private float DistanceToTarget ( Transform cameraInstance, Transform focus ){
+		
+		return Vector3.Distance( cameraInstance.position, focus.position );
+	}
+	private bool TargetOutOfRange ( Transform cameraInstance, Transform focus ){
+		
+		return !(DistanceToTarget( cameraInstance, focus ) > _targetDistance + OUT_OF_RANGE && DistanceToTarget( cameraInstance, focus ) < _targetDistance - OUT_OF_RANGE);
+	}
+	private Vector3 AccountForCollision( float minDistanceToCollider, float distanceFromCamera, Vector3 startPos, Vector3 targetPosition ) {
+
+		var dir = targetPosition - startPos;
+
+		RaycastHit hit;
+		if ( Physics.Raycast( startPos, dir, out hit, distanceFromCamera ) ) {
+
+			return hit.point + (-dir * minDistanceToCollider);
+		}
+
+		return targetPosition;
+	} 
 }

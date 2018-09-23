@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using Eden.Life.Chip;
-using Dumpster.Core.Life;
-using System.Collections.Generic;
-using Eden.Controller;
+﻿using Eden.Controller;
+using Eden.Interactable;
+using Eden.Interactors;
+using Eden.Model;
+using UnityEngine;
 
 namespace Eden.Life {
 
@@ -12,24 +12,18 @@ namespace Eden.Life {
 		Friendly,
 		Player
 	}
+
 	
+	[RequireComponent( typeof( InteractableObject ) ) ]
+	[RequireComponent( typeof( PropertiesObject ) ) ]
 	public class BlackBox : Dumpster.Core.Life.BlackBox<Model.Life.Visual> {
+		
+
+		// ***************************** Public ************************************
+
 			
-		public Transform ProjectileSpawner {
-			get{ return _projectileSpawner; }
-		}
 		public Transform MeleeSpawner {
 			get{ return _meleeSpawner; }
-		}
-
-		public SightChip SightChip {
-			get{ return _sightChip; }
-		}
-		public InteractorChip Interactor {
-			get{ return _interactorChip; }
-		}
-		public QuickSlotChip QuickslotChip {
-			get { return _quickslotChip; }
 		}
 		public Inventory Inventory {
 			get{ return _inventory; }
@@ -37,58 +31,60 @@ namespace Eden.Life {
 		public Inventory EquipedItems {
 			get{ return _equipedItems; }
 		}
-		public Dumpster.Physics.Controller Physics {
-			get{ return _physics; }
-		}
-		public List<Collider> Colliders {
-			get { return new List<Collider>( GetComponentsInChildren<Collider>() ); } 
+		public Item PrimaryEquipedItem{
+			get{ return _primaryItem; }
 		}
 
+		// ***************************** Private ************************************
 
-		[Header( "Chips" )]
-		[SerializeField] private InteractorChip _interactorChip;
-		[SerializeField] private QuickSlotChip  _quickslotChip;
-		[SerializeField] private SightChip _sightChip;
 
-		[Header( "Controllers" )]
-		[SerializeField] private Interactable.InteractableObject _interactableObject;
-		[SerializeField] private PropertiesObject _propertiesObject;
+		[Header( "ICanUseMeleeWeapon" )]
+		[SerializeField] private Transform _meleeSpawner;
 
 
 		[Header( "Interactables" )]
-		[SerializeField] private Interactable.Stats _stats;
+		[SerializeField] private Stats _stats;
 
-		[Header( "Misc" )]
-		[SerializeField] private Dumpster.Physics.Controller _physics;
-
-		[SerializeField] private Eden.Templates.Item _equippedItemCenter;
-		[SerializeField] private Eden.Templates.Item _equippedItemTop;
-		[SerializeField] private Eden.Templates.Item _equippedItemBottom;
-		[SerializeField] private Eden.Templates.Item _equippedItemLeft;
-		[SerializeField] private Eden.Templates.Item _equippedItemRight;
-
-		[Header( "Spawners" )]
-		[SerializeField] private Transform _projectileSpawner;
-		[SerializeField] private Transform _meleeSpawner;
 
 		[Header( "Properties" )]
 		[SerializeField] private Alignment _alignment;
 
 
-		private Inventory _inventory;
-		private Inventory _equipedItems;
+		[Header( "Equipment" )]
+		[SerializeField] private int InventoryItemCount = 15;
+		[SerializeField] private int EquipedItemsCount = 5;
+		[SerializeField] private Eden.Templates.Item _primaryEquipedItem;
+		[SerializeField] private Eden.Templates.Item [] _equipedStartingItems;
 
-		private const int INVENTORY_ITEMS_COUNT = 15;
-		private const int EQUIPED_ITEMS_COUNT = 5;
+
+		private Item _primaryItem;
+		private Inventory _inventory;
+		private Inventory _equipedItems;		
+		private InteractableObject _interactableObject;
+		private PropertiesObject _propertiesObject;
+
 
 
 		protected override void Init () {
 
+
+			// bas init
 			base.Init ();
+
+
+			// get dependencies
+			_interactableObject = GetComponent<InteractableObject>();
+			_propertiesObject   = GetComponent<PropertiesObject>();
+
+			
+			//  setup items
+			_primaryItem = _primaryEquipedItem.CreateInstance();
 
 			BuildInventory ();
 			BuildEquipedItems ();
 
+
+			// listen for life events
 			_stats.OnDeath += Shutdown;
 
 			OnStartup += () => { 
@@ -107,25 +103,22 @@ namespace Eden.Life {
 
 		private void BuildInventory () {
 			
-			_inventory = new Inventory( INVENTORY_ITEMS_COUNT );
+			_inventory = new Inventory( InventoryItemCount );
 		}
 		private void BuildEquipedItems () {
 
-			_equipedItems = new Inventory( EQUIPED_ITEMS_COUNT );
-			
-			if( _equippedItemCenter != null ) { _equipedItems.AddInventoryItem( _equippedItemCenter.CreateInstance() ); }
-			if( _equippedItemTop != null )    { _equipedItems.AddInventoryItem( _equippedItemTop.CreateInstance() ); }
-			if( _equippedItemRight != null )  { _equipedItems.AddInventoryItem( _equippedItemRight.CreateInstance() ); }
-			if( _equippedItemBottom != null ) { _equipedItems.AddInventoryItem( _equippedItemBottom.CreateInstance() ); }
-			if( _equippedItemLeft != null )   { _equipedItems.AddInventoryItem( _equippedItemLeft.CreateInstance()  ); }
-		}
+			_equipedItems = new Inventory( EquipedItemsCount );
+			_equipedItems.AddInventoryItem( _primaryEquipedItem.CreateInstance() );
 
+			for ( int i=0; i<_equipedStartingItems.Length; i++ ) {
+				
+				if ( i + 1 > EquipedItemsCount ) {
+					break;
+				}
 
-		// ****************** Handler ****************
-
-		protected override Eden.Model.Life.Visual GetVisual () {
-			
-			return new Model.Life.Visual( _alignment );
+				var item = _equipedStartingItems[ i ];
+				_equipedItems.AddInventoryItem( item.CreateInstance() );
+			}
 		}
 	}
 }

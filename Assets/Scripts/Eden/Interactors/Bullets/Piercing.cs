@@ -8,7 +8,7 @@ namespace Eden.Interactors.Bullets {
 
 			MoveForward();
 
-			var collision = LookForCollision();
+			var collision = LookForCollision( _user );
 			if ( collision != null ) {
 					
 				Collide( collision, false );

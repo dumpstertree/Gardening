@@ -9,7 +9,7 @@ namespace Eden.Interactors.Bullets {
 
 			MoveForward();
 
-			var collision = LookForCollision();
+			var collision = LookForCollision ( _user );
 			if ( collision != null ) {
 				
 				var interactable = collision.GetComponent<Eden.Interactable.InteractableObject>();

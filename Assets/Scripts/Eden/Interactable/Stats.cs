@@ -81,7 +81,7 @@ namespace Eden.Interactable {
 
 			_hitable.OnHit += HandleOnHit;
 		}
-		private void HandleOnHit( BlackBox user, HitData data ) {
+		private void HandleOnHit( HitData data ) {
 
 			RemoveHealth( 1 );
 		}

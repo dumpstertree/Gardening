@@ -42,7 +42,7 @@ public class Explosion : MonoBehaviour {
 			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
 
 			if ( interactable && interactable.Hitable ){
-				interactable.HitDelegate.Hit( _attacker, _hitData );
+				interactable.HitDelegate.Hit( _hitData );
 			}
   		}
 	}

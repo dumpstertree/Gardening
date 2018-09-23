@@ -31,15 +31,15 @@ namespace Eden.UI.Panels {
 			
 			base.OnPresent ();
 
-			_blackBox.QuickslotChip.OnIndexChanged += index => { SetIndex( index, false ); };
+			// _blackBox.QuickslotChip.OnIndexChanged += index => { SetIndex( index, false ); };
 
 			Clear ();
 			Reload ();
-			SetIndex( _blackBox.QuickslotChip.Index, true ); 
+			// SetIndex( _blackBox.QuickslotChip.Index, true ); 
 		}
 		protected override void OnDismiss () {
 			
-			_blackBox.QuickslotChip.OnIndexChanged -= index => { SetIndex( index, false ); };
+			// _blackBox.QuickslotChip.OnIndexChanged -= index => { SetIndex( index, false ); };
 
 			base.OnDismiss ();
 		}

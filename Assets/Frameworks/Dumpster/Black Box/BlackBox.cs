@@ -2,7 +2,8 @@
 
 namespace Dumpster.Core.Life {
 
-	public abstract class BlackBox<T> : MonoBehaviour {
+	public abstract class BlackBox<T> : MonoBehaviour where T : class {
+
 
 		public delegate void InitEvent();
 		public InitEvent OnInit;
@@ -16,35 +17,38 @@ namespace Dumpster.Core.Life {
 		public delegate void ShutdownEvent();
 		public ShutdownEvent OnShutDown;
 
+		public delegate void ThinkEvent();
+		public ThinkEvent OnThink;
+
+		public delegate void GetVisualvent( T visual );
+		public GetVisualvent OnGetVisual;
 
 		public T Visual {
 			get{ return GetVisual(); }
-		}
-		public Animator Animator {
-			get { return _animator; }
 		}
 		public bool IsPowered {
 			get{ return _isPowered; }
 		}
 
-		[SerializeField] private Animator _animator;
-		[SerializeField] private LogicChip _logicChip;
-
-		protected bool _isPowered = true;
+		
 		
 		// **************** Private ********************
+
+		protected bool _isPowered = true;
 
 		private void Awake () {
 
 			Init ();
 			Run ();
 		}
+		
 		private void Update () {
 
-			if( _isPowered && CanThink() ){
+			if( _isPowered ){
 				Think();
 			}
 		}
+		
 		private void FireOnInit () {
 
 			if ( OnInit != null ) {
@@ -58,6 +62,7 @@ namespace Dumpster.Core.Life {
 				OnRun ();
 			}
 		}
+		
 		private void FireShutdownEvent() {
 
 			if ( OnShutDown != null ) {
@@ -72,40 +77,67 @@ namespace Dumpster.Core.Life {
 			}
 		}
 
+		private void FireGetVisualEvent ( T visual ) {
+
+			if ( OnGetVisual != null ) {
+				OnGetVisual( visual );
+			}
+		}
+		private void FireThinkEvent () {
+
+			if ( OnThink != null ) {
+				OnThink ();
+			}
+		}
+
 
 		// **************** Virtual ********************
 		
+
 		protected virtual void Init (){
+
+			foreach ( Chip<T> chip in GetComponentsInChildren<Chip<T>>() ){
+				chip.Install( this );
+			}
 
 			FireOnInit ();
 			FireStartupEvent ();
 		}
+		
 		protected virtual void Run () {
 
 			FireOnRun ();
 		}
+		
 		protected virtual void Think () {
 
-			_logicChip.Analayze();
+			FireThinkEvent ();
 		}
+		
 		protected virtual void Shutdown () {
 
 			_isPowered = false;
 
 			FireShutdownEvent();
 		}
+		
 		protected virtual void Reboot () {
 
 			_isPowered = true;
 
 			FireStartupEvent();
 		}		
-		protected virtual bool CanThink () {
-			return ( _animator != null && _animator.tag != "RestrictInput" || _animator == null );
-		}
 
+		
 		// **************** Abstract ********************
 
-		protected abstract T GetVisual ();
+
+		private T GetVisual () {
+
+			var visual = default( T );
+			FireGetVisualEvent( visual );
+
+			return visual;
+		}
 	}
 }

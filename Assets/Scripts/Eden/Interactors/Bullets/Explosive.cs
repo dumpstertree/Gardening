@@ -10,7 +10,7 @@ namespace Eden.Interactors.Bullets {
 
 			MoveForward();
 
-			var collision = LookForCollision();
+			var collision = LookForCollision( _user );
 			if ( collision != null ) {
 				
 				Explode();
@@ -25,7 +25,7 @@ namespace Eden.Interactors.Bullets {
 			var hitData = new HitData();
 			hitData.Power = 1;
 
-			explosion.Set( _user, hitData );
+			// explosion.Set( _user, hitData );
 		}
 	}
 }

@@ -97,9 +97,9 @@ namespace Eden.Model {
 		
 		// ***************** Public *******************
 		
-		public void Use( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete ) {
+		public void Use( Eden.Life.Chips.InteractorChip interactor, Action onComplete ) {
 
-			OnUse( user, interactable, onComplete );
+			OnUse( interactor, onComplete );
 
 			if ( Expendable ) {
 				ReduceCount( 1 );
@@ -124,7 +124,7 @@ namespace Eden.Model {
 		
 		// ***************** Protected *******************
 
-		protected virtual void OnUse ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete ) {}
+		protected virtual void OnUse ( Eden.Life.Chips.InteractorChip interactor, Action onComplete ) {}
 		
 		
 		// ***************** Private *******************

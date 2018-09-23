@@ -1,112 +1,25 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core.Life;
+using UnityEngine;
 
-namespace Eden.Life.Chip {
+namespace Eden.Life.Chips {
 	
-	public class QuickSlotChip: MonoBehaviour {
+	public class QuickSlotChip: Chip<Eden.Model.Life.Visual> {
 
-		[SerializeField] private Eden.Life.BlackBoxes.Player _player;
 
-		// ***************** PUBLIC *******************
-
-		public delegate void InputChangedEvent( int index );
-		public InputChangedEvent OnInputChanged;
-
-		public delegate void IndexChangedEvent( int index );
-		public IndexChangedEvent OnIndexChanged;
-
-		public int Index {
-			get{ return _index; }
-		}
-		public bool ItemIsEquiped{
-			get{ return _equipIsDown; }
+		public int EquipedIndex {
+			get; set;
 		}
 
-		
-		// ***************** PRIVATE *******************
 
-		private int _index = 1;
-		private int _numOfItems;
-		private bool _equipIsDown;
+		public void ShiftLeft () {
 
-		private const int _idleIndex = 0;
-
-
-		// ********************** Private  ************************
-		
-		private void Awake () {
-			
-			_player.OnRecieveInput += RecieveInput;
-			_numOfItems = _player.EquipedItems.InventoryCount;
+			var blackBox = BlackBox as Eden.Life.BlackBox;
+			EquipedIndex = Mathf.RoundToInt( Mathf.Repeat( (float)EquipedIndex - 1, (float)blackBox.EquipedItems.InventoryCount ) );
 		}
-		private void RecieveInput( Input.Package package ) {
+		public void ShiftRight () {
 
-			if ( package.Dpad.Left_Down ) {
-				
-				ShiftLeft();
-			}
-			if ( package.Dpad.Right_Down ) {
-				
-				ShiftRight();
-			}
-			
-			if ( package.BackLeft.Bumper_Down ) {
-				
-				_equipIsDown = true;
-				FireOnInputChange( _index );
-			}
-			
-			if ( package.BackLeft.Bumper_Up ) {
-				
-				_equipIsDown = false;
-				FireOnInputChange( _idleIndex );
-			}
-		} 
-		private void ShiftLeft () {
-
-			_index -= 1;
-			WrapIndex();
-
-			FireIndexChangedEvent ( _index );
-
-			if( _equipIsDown ) {
-				FireOnInputChange( _index );
-			}
-		}
-		private void ShiftRight () {
-
-			_index += 1;
-			WrapIndex();
-
-			FireIndexChangedEvent ( _index );
-
-			if( _equipIsDown ) {
-				FireOnInputChange( _index );
-			}
-		}
-		private void WrapIndex () {
-
-			_index = Mathf.Clamp( _index, 1, _numOfItems - 1 );
-
-			// eventauly this should wrap probably
-
-			// if( _index <= 0) {
-			// 	_index = _numOfItems - 1;
-			// }
-			// if( _index >= _numOfItems) {
-			// 	_index = 1;
-			// }
-		}
-		private void FireOnInputChange ( int index  ) {
-
-			if (OnInputChanged != null){
-				OnInputChanged( index );  
-			}
-		}
-		private void FireIndexChangedEvent ( int index  ) {
-
-			if (OnIndexChanged != null){
-				OnIndexChanged( index );  
-			}
+			var blackBox = BlackBox as Eden.Life.BlackBox;
+			EquipedIndex = Mathf.RoundToInt( Mathf.Repeat( (float)EquipedIndex + 1, (float)blackBox.EquipedItems.InventoryCount  ) );
 		}
 	}
 }

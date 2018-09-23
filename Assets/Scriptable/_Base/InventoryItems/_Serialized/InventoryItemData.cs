@@ -9,6 +9,7 @@ public abstract class InventoryItemData {
 
 [System.Serializable] public class HitData : InventoryItemData {
 
+	public Eden.Life.BlackBox _user;
 	public int Power;
 	public HitType Type;
 	

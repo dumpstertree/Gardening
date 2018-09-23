@@ -21,8 +21,8 @@ namespace Eden.UI.Panels {
 			_stats.OnHealthChanged += HandleHealthChange;
 			HandleHealthChange( _stats.CurrentHealth );
 
-			_blackBox.QuickslotChip.OnIndexChanged += OnQuickslotIndexChanged;
-			OnQuickslotIndexChanged( _blackBox.QuickslotChip.Index );
+			// _blackBox.QuickslotChip.OnIndexChanged += OnQuickslotIndexChanged;
+			// OnQuickslotIndexChanged( _blackBox.QuickslotChip.Index );
 		}
 
 		
@@ -66,18 +66,7 @@ namespace Eden.UI.Panels {
 		[SerializeField] private LayerMask _layerMask;
 		private void Update () {
 
-			_reticle.gameObject.SetActive( _item != null && _item.IsShootable && _blackBox.QuickslotChip.ItemIsEquiped );
-
-			if ( _item != null && _item.IsShootable ) {
-				
-				RaycastHit hit;
-				if (Physics.Raycast( _blackBox.ProjectileSpawner.position, _blackBox.ProjectileSpawner.forward, out hit, Mathf.Infinity, _layerMask )) {
-        		
-        			// _reticle.position = Vector3.Lerp( _reticle.position, Camera.main.WorldToScreenPoint( hit.point ), 0.2f );
-        			_reticle.position = new Vector3( Screen.width/2f, Screen.height/2f, 0 );
-        		}
-			}
-        	
+			// _reticle.gameObject.SetActive( _item != null && _item.IsShootable && _blackBox.QuickslotChip.ItemIsEquiped );        	
 		}
 	}
 }

@@ -1,36 +1,27 @@
 ﻿using UnityEngine;
-using Dumpster.Core.BuiltInModules.Input;
 
-public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.Package> {
+public class MockCharacterController : MonoBehaviour {
 
+	
 	// ************** Public ****************
 
-	public void RecieveInput ( Eden.Input.Package package ) {
+	public float HorizontalInput { get; set; }
+	public float VerticalInput { get; set; }
+	public bool IsStrafing { get; set; }
 
-		if ( package.Face.Down_Down && _isOnGround ) {
-
-			Jump ();
+	public void Jump () {
+		
+		if ( _isOnGround ) {
+			_jumping = true;
+			_velocity += Vector3.up * _jumpPower;
 		}
-
-		_horizontal = package.LeftAnalog.Horizontal;
-		_vertical = package.LeftAnalog.Vertical;
-
-		if ( package.BackLeft.Bumper_Down ) {
-			_isStrafing= true;
-		}
-		if ( package.BackLeft.Bumper_Up ) {
-			_isStrafing= false;
-		}
-	}
-	public void EnteredInputFocus () {
-	}
-	public void ExitInputFocus () {
 	}
 
 
 	// ************** Private ****************
 
 	[Header( "References" )]
+	[SerializeField] private Rigidbody _rigidBody;
 	[SerializeField] private Animator2 _animator;
 
 	[Header( "Physics" )]	
@@ -51,9 +42,6 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 
 	[Header( "Gameplay Settings" )]
-	[SerializeField] private bool _isStrafing = false;
-
-	[SerializeField] private Dumpster.Physics.PhysicsPlane _down;
 	[SerializeField] private LayerMask _mask;
 	
 	private Vector3 _distanceCovered;
@@ -61,8 +49,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	private bool _jumping;
 	private float _stride;
 
-	private float _horizontal;
-	private float _vertical;
+
+
 
 	private AnimationDampener _jumpDampener;	
 	private AnimationDampener _fallDampener;
@@ -110,7 +98,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 
 	private float _inputMagnitude {
-		get{ return new Vector2( _horizontal, _vertical ).magnitude; }
+		get{ return new Vector2( HorizontalInput, VerticalInput ).magnitude; }
 	}
 
 	private float RaycastDown () {
@@ -166,10 +154,37 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 
 	// Mono
-	private void Start () { 
+	private void Update () {
 		
-		EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );
-		EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
+		if ( _isOnGround && !_jumping) {
+		
+			CalculateVelocityOnGround ();
+		
+		} else {
+			
+			CalculateVelocityInAir ();
+		}
+
+		// rotate character
+		if ( IsStrafing ) {
+			FaceCameraForward ();
+
+		} else {
+			FaceMomentum ();
+		}
+
+		
+		// update values
+		UpdateDistanceCovered ();
+		UpdateStride ();
+		
+		
+		// stop ignoring gravity	
+		_jumping = false;
+	}
+
+	private void Start () { 
+
 
 		_aimDampener  = new AnimationDampener( _animator, "Aim" );
 		_jumpDampener = new AnimationDampener( _animator, "Jump" );
@@ -194,36 +209,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 
 		_animator.SetWeight( "Idle", 1f );
 	}
-	private void Update () {
-		
 
-		if ( _isOnGround && !_jumping) {
-		
-			CalculateVelocityOnGround ();
-		
-		} else {
-			
-			CalculateVelocityInAir ();
-		}
-
-	
-		// rotate character
-		if ( _isStrafing ) {
-			FaceCameraForward ();
-
-		} else {
-			FaceMomentum ();
-		}
-
-		
-		// update values
-		UpdateDistanceCovered ();
-		UpdateStride ();
-		
-		
-		// stop ignoring gravity	
-		_jumping = false;
-	}
 	private void FixedUpdate () {
 
 		UpdateRigidbody ();
@@ -242,21 +228,21 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 	}
 	private void UpdateRigidbody () {
 
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
-		GetComponent<Rigidbody>().MovePosition( transform.position + (_velocity * Time.fixedDeltaTime) );
+		_rigidBody.velocity = Vector3.zero;
+		_rigidBody.MovePosition( transform.position + (_velocity * Time.fixedDeltaTime) );
 	}
 	private void Animate () {
 
 		// Strafing
-		if ( !_wasStrafing && _isStrafing ) {
+		if ( !_wasStrafing && IsStrafing ) {
 			OnBeginStrafing ();
-		} else if ( _wasStrafing && !_isStrafing ) {
+		} else if ( _wasStrafing && !IsStrafing ) {
 			OnEndStrafing ();
-		} else if ( _isStrafing) { 
+		} else if ( IsStrafing) { 
 			OnStrafing (); 
 		}
 
-		_wasStrafing = _isStrafing;
+		_wasStrafing = IsStrafing;
 		
 
 		// On Ground
@@ -353,7 +339,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		// input vector
 		var cameraRight = Camera.main.transform.right;
 		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  HorizontalInput, VerticalInput );
 		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
 		
 		
@@ -378,7 +364,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		if ( !_jumping ) {
 			_velocity += Vector3.down * Time.deltaTime * _gravity;
 		}
-		
+
 		if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
 			_velocity = new Vector3( 0, _velocity.y, 0 );
 			return;
@@ -387,7 +373,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		// input vector
 		var cameraRight = Camera.main.transform.right;
 		var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  _horizontal, _vertical );
+		var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  HorizontalInput, VerticalInput );
 		var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
 		
 		var newVelocity = inputVector * _runMovementSpeed;
@@ -441,7 +427,7 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 			return;
 		}
 
-		transform.rotation = Quaternion.LookRotation( xzVelocity );
+		_rigidBody.MoveRotation( Quaternion.LookRotation( xzVelocity ) ); 
 	}
 	private void FaceCameraForward () {
 
@@ -449,14 +435,8 @@ public class MockCharacterController : MonoBehaviour, IInputReciever<Eden.Input.
 		var right = Vector3.Cross( cameraForward, Vector3.up );
 		var forward = Vector3.Cross( Vector3.up, right );
 
-		transform.rotation = Quaternion.LookRotation( forward, Vector3.up );
+		_rigidBody.MoveRotation( Quaternion.LookRotation( forward, Vector3.up ) );
 	}
-	private void Jump () {
-
-		_jumping = true;
-		_velocity += Vector3.up * _jumpPower;
-	}
-
 
 
 	// Strafing

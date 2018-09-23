@@ -1,18 +1,18 @@
-using UnityEngine;
 using Eden.Properties;
 using System.Linq;
+using UnityEngine;
 
 namespace Eden.Interactors {
 
-	public class Bullet : MonoBehaviour {
+	public interface ICanUseRangedWeapon {
 
-		// ***************************************************
-		/* 
-			- The SetForward function checks the type of the user
-		 	  there is probably a more generic way this can 
-		 	  be handeled
-		*/
-		// ***************************************************
+		Vector3 GetSpawnLocation ();
+		Vector3 GetLookingDirection ();
+		Collider[] GetForbiddenColliders ();
+		float GetAimAssistRange  ();
+	}
+
+	public class Bullet : MonoBehaviour {
 
 
 		[SerializeField] protected LayerMask _layermask;
@@ -20,7 +20,7 @@ namespace Eden.Interactors {
 				
 		private const float CASING_KILL_TIME = 15.0f;
 
-		protected Eden.Life.BlackBox _user;
+		protected ICanUseRangedWeapon _user;
 		protected HitData _hitData;
 		protected float _bulletSize;
 		protected float _bulletSpeed;
@@ -29,8 +29,9 @@ namespace Eden.Interactors {
 		
 		// ******************* Public **************************
 
-		public void SetBullet ( Eden.Life.BlackBox user, HitData hitData, float bulletSize, float bulletSpeed, float spread ) {
+		public void SetBullet ( ICanUseRangedWeapon user, HitData hitData, float bulletSize, float bulletSpeed, float spread ) {
 			
+		
 			// set all protected variables
 			_user = user;
 			_hitData = hitData;
@@ -38,17 +39,37 @@ namespace Eden.Interactors {
 			_bulletSpeed = bulletSpeed;
 			_spread = spread;
 
-			// set start position
-			transform.position = user.ProjectileSpawner.position;
 
-			// set bullet direction
-			SetForward( user, spread );
+			// set start position
+			SetStartPosition( user.GetSpawnLocation() );
+			
+			
+			// get initial direction
+			var forward = GetForward( user.GetSpawnLocation() );
+
+
+			// set forward taking into account spread
+			forward = AddSpread( forward, spread );
+
+
+			// find targetable
+			var targetable = GetTargetable( user.GetSpawnLocation(), forward, user.GetAimAssistRange() );
+			if ( targetable != null ) {
+				forward = targetable.transform.position - user.GetSpawnLocation();
+			}
+
+		
+			// set forward
+			transform.forward = forward;
+
 
 			// set bullet size
 			SetSize( bulletSize );
 
+
 			// create a bullet casing
 			CreateCasing ();
+
 
 			// play effects through effects system
 			PlayEffects();
@@ -56,6 +77,7 @@ namespace Eden.Interactors {
 
 
 		// ******************* Protected **************************
+
 
 		protected void CreateCasing () {
 			
@@ -82,14 +104,14 @@ namespace Eden.Interactors {
 			
 			if ( interactable != null && interactable.Hitable ) {
 				
-				interactable.HitDelegate.Hit( _user, _hitData );
+				interactable.HitDelegate.Hit( _hitData );
 			}
 
 			if ( destroyThis ) {
 				Destroy( gameObject );
 			}
 		}
-		protected Collider LookForCollision () {
+		protected Collider LookForCollision ( ICanUseRangedWeapon user ) {
 
 			var distance = _bulletSpeed * Time.deltaTime;
 
@@ -100,17 +122,12 @@ namespace Eden.Interactors {
 
 	            var invalid = false;
 
-	            if ( hit.transform == _user.transform ) {
+	            if ( user.GetForbiddenColliders().Contains( hit.collider ) ) {
 	            	invalid = true;
-	            } else {
-		            foreach ( Transform t in _user.transform ) {
-		            	if ( hit.transform == t ) { invalid = true; break; }
-		            }
-		        }
+	            }
 
 	            if ( !invalid ) {
-
-	            	return hit.collider;
+					return hit.collider;
 	            }
 	        }
 
@@ -123,6 +140,46 @@ namespace Eden.Interactors {
 
 
 		// ******************* Private ****************************
+		
+		private void SetStartPosition ( Vector3 spawnLocation ) {
+
+			transform.position = spawnLocation;
+		}
+		private Vector3 GetForward ( Vector3 spawnLocation ) { // this will only work for the player, create an interface and ask the interface for the forward
+
+			var targetPoint = Vector3.zero;
+
+			RaycastHit hit;
+
+			if ( Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, _layermask )) {
+				targetPoint = hit.point;
+			} else {
+				targetPoint = Camera.main.transform.forward * 9999f;
+			}
+
+			return targetPoint - spawnLocation;
+		}
+		private Vector3 AddSpread ( Vector3 forward, float spread ) {
+
+			var ySpread = Random.Range( -spread, spread );
+			var xSpread = Random.Range( -spread, spread );
+
+			var newFor = Quaternion.AngleAxis( ySpread, Vector3.up ) * 
+						 Quaternion.AngleAxis( xSpread, Vector3.Cross( forward, Vector3.up ) ) *
+						 forward;
+
+			return newFor;
+		}
+		private Targetable GetTargetable ( Vector3 spawnLocation, Vector3 forwardWithSpread, float aimAssistRange ) {
+
+			var targetable = FindClosestTarget (); // this does not work for anyone besides the player
+			var directionToTargetable = targetable.transform.position - spawnLocation;
+			var angle = Vector3.Angle( forwardWithSpread, directionToTargetable );
+
+			return ( angle < aimAssistRange ) ? targetable : null;
+		}
+
+
 
 		private void SetSize ( float bulletSize ) {
 
@@ -131,23 +188,6 @@ namespace Eden.Interactors {
 				transform.localScale.y * bulletSize, 
 				transform.localScale.z * bulletSize 
 			);
-		}
-		private void SetForward ( Eden.Life.BlackBox user, float spread ) {
-
-			if ( user is Eden.Life.BlackBoxes.Player ) {
-
-				RaycastHit hit;
-				if ( Physics.Raycast( Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, _layermask )) {
-					transform.LookAt( hit.point );
-				} else {
-					transform.LookAt( Camera.main.transform.forward * 100 );
-				}
-			} else {
-
-				transform.forward = user.ProjectileSpawner.forward;
-			}
-
-			transform.forward = Quaternion.Euler( new Vector3( Random.Range( -spread, spread ), Random.Range( -spread, spread ), Random.Range( -spread, spread ) ) ) * transform.forward;
 		}
 		private void PlayEffects () {
 

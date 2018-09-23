@@ -2,18 +2,26 @@
 
 namespace Dumpster.Core.Life {
 
-	public abstract class Chip<T> : MonoBehaviour {
+	public abstract class Chip<T> : MonoBehaviour where T : class {
 
-		private BlackBox<T> _blackBox;
-		
-		public void Install ( BlackBox<T> blackbBox ) {
-			
-			_blackBox = blackbBox;
-
-			_blackBox.OnInit += OnInit;
-			_blackBox.OnRun += OnRun;
+		public BlackBox<T> BlackBox { 
+			get; private set; 
 		}
-		protected virtual void OnInit () {}
-		protected virtual void OnRun () {}
+		
+		public virtual void Install ( BlackBox<T> blackbBox ) {
+			
+			BlackBox = blackbBox;
+
+			BlackBox.OnInit += Init;
+			BlackBox.OnStartup += Startup;
+			BlackBox.OnShutDown += Shutdown;
+			BlackBox.OnGetVisual += GetVisual;
+		}
+
+
+		protected virtual void Init () {}
+		protected virtual void Startup () {}
+		protected virtual void Shutdown () {}
+		protected virtual void GetVisual ( T visual ) {}
 	}
 }

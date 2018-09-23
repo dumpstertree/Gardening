@@ -23,19 +23,19 @@ public class Slash : MonoBehaviour {
 	private void OnTriggerEnter( Collider collision ) {
 
 
-  		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
+  	// 	if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
 
-  			if ( _attacker.Colliders.Contains( collision ) ) {
-  				return;
-  			}
+  	// 		if ( _attacker.Colliders.Contains( collision ) ) {
+  	// 			return;
+  	// 		}
 
-			// if ( _attacker.Colliders. )
-			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
+			// // if ( _attacker.Colliders. )
+			// var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
 
-			if ( interactable && interactable.Hitable ){
-				interactable.HitDelegate.Hit( _attacker, _hitData );
-			}
-  		}
+			// if ( interactable && interactable.Hitable ){
+			// 	interactable.HitDelegate.Hit( _hitData );
+			// }
+  	// 	}
 	}
 	private void Update () {
 

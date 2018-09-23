@@ -16,7 +16,7 @@ namespace Eden.Interactors.Bullets {
 			var target = FindClosestTarget ();
 			if ( target != null ) { RotateTowardsTarget( target ); }
 
-			var collision = LookForCollision ();
+			var collision = LookForCollision ( _user );
 			if ( collision != null ) { Collide( collision ); }
 		}
 

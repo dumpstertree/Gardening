@@ -78,9 +78,10 @@ namespace Eden {
 		private Input.Package.Analog GetRightAnalog () {
 			
 			return new Input.Package.Analog( 
-			
-				UnityEngine.Input.GetAxis( "Horizontal" ),
-				UnityEngine.Input.GetAxis( "Vertical" ) );
+				0f, 0f
+				);
+				// UnityEngine.Input.GetAxis( "Horizontal" ),
+				// UnityEngine.Input.GetAxis( "Vertical" ) );
 		}
 		private Input.Package.Back GetLeftBackAnalog () {
 

@@ -56,7 +56,7 @@ namespace Eden.Model {
 				EdensGarden.Instance.Async.WaitForSeconds( _reloadSpeed, onStart, onWait, onComplete );
 			}
 		}
-		public void Fire ( Eden.Life.BlackBox user ) {
+		public void Fire (  Eden.Life.Chips.InteractorChip interactor ) {
 			
 			// if trying to fire and no bullets reload
 			if ( _availableBullets <= 0 ) {
@@ -73,7 +73,7 @@ namespace Eden.Model {
 				// create all the bullets
 				Action onStart = () => {
 					_firing = true;
-					for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( user );  }
+					for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( interactor );  }
 				};
 				
 				// end firing				
@@ -88,9 +88,9 @@ namespace Eden.Model {
 		
 		// ************ Protected **************
 		
-		protected override void OnUse ( Eden.Life.BlackBox user, Eden.Interactable.InteractableObject interactable, Action onComplete  ) {
+		protected override void OnUse ( Eden.Life.Chips.InteractorChip interactor, Action onComplete  ) {
 
-			Fire( user );
+			Fire( interactor );
 			onComplete();
 		}
 
@@ -124,13 +124,13 @@ namespace Eden.Model {
 		}
 
 
-		private void CreateBullet ( Eden.Life.BlackBox user ) {
+		private void CreateBullet (  Eden.Life.Chips.InteractorChip interactor ) {
 
 			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
 			var hitData = new HitData();
 			hitData.Power = 1;
 
-			bullet.SetBullet( user, hitData, _bulletSize, _bulletSpeed, _accuracy );
+			bullet.SetBullet( interactor.RangedWeaponChip, hitData, _bulletSize, _bulletSpeed, _accuracy );
 
 			AvailableBullets--;
 		}		
