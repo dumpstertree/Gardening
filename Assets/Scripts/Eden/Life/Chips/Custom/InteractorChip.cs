@@ -2,11 +2,12 @@
 using UnityEngine;
 using Eden.Model;
 using Eden.Interactable;
+using Eden.Model.Life;
 
 namespace Eden.Life.Chips {
 
 	[RequireComponent( typeof( Collider ) )]
-	public class InteractorChip : Dumpster.Core.Life.Chip<Eden.Model.Life.Visual> {
+	public class InteractorChip : Dumpster.Core.Life.Chip<Visual> {
 
 
 
@@ -78,7 +79,6 @@ namespace Eden.Life.Chips {
 
 			_interactableObjectStack = new List<Eden.Interactable.InteractableObject>();
 		}
-
 		
 		// mono
 		private void OnTriggerEnter ( Collider collider ) {

@@ -131,10 +131,11 @@ namespace Dumpster.Core.Life {
 		
 		// **************** Abstract ********************
 
+		protected abstract T GetVisualInstance ();
 
 		private T GetVisual () {
 
-			var visual = default( T );
+			var visual = GetVisualInstance();
 			FireGetVisualEvent( visual );
 
 			return visual;

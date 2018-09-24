@@ -16,12 +16,18 @@ namespace Eden.Interactable {
 		public Transform InteractablePivot {
 			get { return _interactablePivot ? _interactablePivot : transform; }
 		}
+		public Transform UIAnchor {
+			get { return _uiAnchor ? _uiAnchor : transform; }
+		}
+
+
 		public bool Hitable { 
 			get{ return _hitDelegate != null; } 
 		}
 		public bool Actionable { 
 			get{ return _actionDelegate != null; }
 		}
+
 
 		public Hitable HitDelegate {
 			get { return _hitDelegate; }
@@ -30,11 +36,13 @@ namespace Eden.Interactable {
 			get{ return _actionDelegate; }
 		}
 
+
 		// ***************** PRIVATE ********************
 
 		[Header( "Interactable Properties" )]
 		[SerializeField] private bool _active = true;
 		[SerializeField] private Transform _interactablePivot;
+		[SerializeField] private Transform _uiAnchor;
 
 		private Hitable _hitDelegate;
 		private Actionable _actionDelegate;
@@ -48,4 +56,8 @@ namespace Eden.Interactable {
 			_actionDelegate = GetComponent<Actionable>();
 		}
 	}
+}
+public interface IInteractable {
+	
+	void Update ();
 }

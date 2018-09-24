@@ -27,6 +27,13 @@ namespace Eden.Model {
 			get{ return _availableBullets; }
 			set{ HandleOnAvailableBulletsChanged( value ); }
 		}
+		public int ClipSize {
+			get{ return _clipSize; }
+		}
+		public bool IsReloading {
+			get{ return _reloading; }
+		}
+
 
 
 		// ************ Methods *****************

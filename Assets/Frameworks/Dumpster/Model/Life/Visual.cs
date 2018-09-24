@@ -1,12 +1,26 @@
-﻿namespace Eden.Model.Life {
+﻿using Eden.Interactable;
+using Eden.Life;
+
+namespace Eden.Model.Life {
 	
 	public class Visual {
 
-		public Eden.Life.Alignment Alignment { get; }
 		
-		public Visual ( Eden.Life.Alignment alignemnt ) {
+		// Alignment
+		public Alignment Alignment { get; set; }
 
-			Alignment = alignemnt;
-		}
+		
+		// Health
+		public int CurrentHealth { get; set; }
+		public int MaxHealth { get; set; }
+
+
+		// Equipment
+		public int EquipedItemNumber { get; set; }
+		public Item CurrentItemInHand { get; set; }
+
+
+		// Interaction
+		public InteractableObject InteractingWith { get; set; }
 	}
 }

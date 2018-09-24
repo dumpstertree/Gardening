@@ -17,9 +17,9 @@ TagManager:
   - IgnoredByBullet
   - Bullet
   - 3DUI
-  - 
-  - 
-  - 
+  - TertiaryObject
+  - SecondaryObject
+  - PrimaryObject
   - 
   - 
   - 

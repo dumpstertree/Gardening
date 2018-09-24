@@ -1,65 +1,128 @@
 ﻿using UnityEngine;
-using Dumpster.Core.BuiltInModules;
 
-namespace Dumpster.Core.BuiltInModules {
+namespace Dumpster.BuiltInModules.Camera.Defaults {
 
-	public class ShoulderCameraController : CameraController {
+	public class ShoulderCameraController : Dumpster.Core.BuiltInModules.CameraController {
+
+		
+		// **************** Public ******************
+
+		public float HorizontalInput {
+			get; set;
+		}
+		public float VericalInput {
+			get; set;
+		}
+		public bool IsStrafing {
+			get; set;
+		}
+
+		public override void Control ( Transform cameraInstance, Transform focus ){
 
 
-		// *********************** Public ***********************
+			RotateHorizontal( cameraInstance, focus, HorizontalInput );
+			RotateVertical( cameraInstance, focus, VericalInput );
 
-		public float MovementHorizontal { get; set; }
-		public float MovementVertical { get; set; }
-		public float CameraHorizontal{ get; set; }
-		public float CameraVertical{ get; set; }
 
-		public Vector3 Forward { get; set; }
+			if ( TargetOutOfRange( cameraInstance, focus )) {
 
-		public Vector2 ReticlePosition { get; set; }
+				var right = Vector3.Cross( cameraInstance.forward, Vector3.up ).normalized; 
+				var forward = Vector3.Cross( right, Vector3.up ).normalized;
+				
+				var direction =  Quaternion.AngleAxis( _verticalRot, right ) * Quaternion.AngleAxis( _horizontalRot, Vector3.up) * Vector3.forward;
+				var targetPos =  focus.position + (direction * _targetDistance);
 
-		public override void Control( Transform cameraTarget, Transform cameraFocus ) {
+				var collisionTargetPos = AccountForCollision( _minDistanceToCollider, _targetDistance, focus.position, targetPos );
+				
+				cameraInstance.position = Vector3.Lerp( cameraInstance.position, collisionTargetPos, _lerpSpeed );
+				cameraInstance.rotation = Quaternion.Slerp( cameraInstance.rotation, Quaternion.LookRotation( -direction ), _lerpSpeed );
+			}
+		}
 
-			MoveCameraTarget( cameraTarget, cameraFocus );
-			// CenterOnReticle( cameraTarget );
+		
+		// **************** Private ******************
+		
+
+		private float _targetDistance {
+			get{ return IsStrafing ? _strafeDistance : _followDistance; }
+		}
+		private float _lerpSpeed {
+			get { return IsStrafing ? _strafeLerpSpeed : _followLerpSpeed; }
+		}
+		private float _horizontalSensitivity {
+			get { return IsStrafing ? _horizontalStrafingSensitivity : _horizontalFollowSensitivity; }
+		}
+		private float _verticalSensitivity {
+			get { return IsStrafing ? _verticalStrafingSensitivity : _verticalFollowSensitivity; }
 		}
 
 
-		// *********************** Private ***********************
+		[Header( "Limits" )]
+		[SerializeField] private float _minVerticalRotation = -80f;
+		[SerializeField] private float _maxVerticalRotation =  80f;
 
-		[Header( "Settings" )]
-		[SerializeField] private Transform _followObject;
-		[SerializeField] private float _lerpSpeed = 0.5f;
-
-		[Header( "Positions" )]
-		[SerializeField] private Vector3 _targetPosLeft;
-		[SerializeField] private Vector3 _targetPosRight;
+		[SerializeField] private float _followDistance = 6f;
+		[SerializeField] private float _strafeDistance = 3f;
 
 		[Header( "Sensitivity" )]
-		[SerializeField] private float _horizontalSensitivity= 0.1f;
-		[SerializeField] private float _verticalSensitivity= 0.05f;
+		[SerializeField] private float _horizontalStrafingSensitivity = 55;
+		[SerializeField] private float _verticalStrafingSensitivity = 40;
+		[SerializeField] private float _horizontalFollowSensitivity = 110;
+		[SerializeField] private float _verticalFollowSensitivity = 80;
 
-		[Header( "Aim Assist" )]
-		[SerializeField] private float _reticlePullForce = 0.1f;
+		[Header( "Lerping" )]
+		[SerializeField] private float _followLerpSpeed = 0.3f;
+		[SerializeField] private float _strafeLerpSpeed = 0.6f;
+		
+		[Header( "Raycast" )]
+		[SerializeField] private float _minDistanceToCollider = 1f;
+
+		
+		private const float OUT_OF_RANGE = 0.01f;
 
 
-		private void MoveCameraTarget( Transform cameraTarget, Transform cameraFocus ) {
+		private float _verticalRot;
+		private float _horizontalRot;
+
+
+		private void RotateHorizontal ( Transform cameraInstance, Transform cameraTarget, float horizontalInput ) {
+
+			// rotate around the target
+			// cameraInstance.RotateAround( cameraTarget.position, Vector3.up, horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime) );
+
+			_horizontalRot += horizontalInput * (_horizontalSensitivity * Time.fixedDeltaTime );
+		}
+		private void RotateVertical ( Transform cameraInstance, Transform cameraTarget, float verticalInput ) {
 			
-			var targetPosLocal = Vector3.Lerp( _targetPosLeft, _targetPosRight, (MovementHorizontal+1) /2 );
-			var worldPos = _followObject.TransformPoint( targetPosLocal );
+			// project what the next angle will be
+			var projectedRot = _verticalRot + (verticalInput * (_verticalSensitivity * Time.fixedDeltaTime) );
+			
+			// as long as the projected angle fits in the rules do it
+			if ( projectedRot < _maxVerticalRotation && projectedRot > _minVerticalRotation ) {
 
-			cameraTarget.position = Vector3.Lerp( cameraTarget.position, worldPos, _lerpSpeed );
-			cameraTarget.forward = Forward;
+				// save new rotation
+				_verticalRot = projectedRot;
+			} 
 		}
-		private void CenterOnReticle( Transform cameraTarget ) {
+		private float DistanceToTarget ( Transform cameraInstance, Transform focus ){
+			
+			return Vector3.Distance( cameraInstance.position, focus.position );
+		}
+		private bool TargetOutOfRange ( Transform cameraInstance, Transform focus ){
+			
+			return !(DistanceToTarget( cameraInstance, focus ) > _targetDistance + OUT_OF_RANGE && DistanceToTarget( cameraInstance, focus ) < _targetDistance - OUT_OF_RANGE);
+		}
+		private Vector3 AccountForCollision( float minDistanceToCollider, float distanceFromCamera, Vector3 startPos, Vector3 targetPosition ) {
 
-			var offsetFromCenter = new Vector2( Screen.width/2, Screen.height/2 ) - ReticlePosition;
-			cameraTarget.rotation = Quaternion.AngleAxis( -offsetFromCenter.x * _reticlePullForce, Vector3.up ) * Quaternion.AngleAxis( offsetFromCenter.y * _reticlePullForce, cameraTarget.right ) * cameraTarget.rotation ; 
-		}
-		public override void WillGainControl () {
-			// UnityEngine.Camera.main.fieldOfView = 45;
-		}
-		public override void WillLoseControl () {
-			// UnityEngine.Camera.main.fieldOfView = 60;
-		}
+			var dir = targetPosition - startPos;
+
+			RaycastHit hit;
+			if ( Physics.Raycast( startPos, dir, out hit, distanceFromCamera ) ) {
+
+				return hit.point + (-dir * minDistanceToCollider);
+			}
+
+			return targetPosition;
+		} 
 	}
 }

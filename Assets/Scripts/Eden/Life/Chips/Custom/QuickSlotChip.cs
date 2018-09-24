@@ -1,4 +1,5 @@
 ﻿using Dumpster.Core.Life;
+using Eden.Model.Life;
 using UnityEngine;
 
 namespace Eden.Life.Chips {
@@ -20,6 +21,12 @@ namespace Eden.Life.Chips {
 
 			var blackBox = BlackBox as Eden.Life.BlackBox;
 			EquipedIndex = Mathf.RoundToInt( Mathf.Repeat( (float)EquipedIndex + 1, (float)blackBox.EquipedItems.InventoryCount  ) );
+		}
+
+
+		protected override void GetVisual( Visual visual ) {
+			
+			visual.EquipedItemNumber = EquipedIndex;
 		}
 	}
 }

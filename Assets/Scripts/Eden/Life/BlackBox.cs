@@ -1,7 +1,7 @@
 ﻿using Eden.Controller;
 using Eden.Interactable;
-using Eden.Interactors;
 using Eden.Model;
+using Eden.Model.Life;
 using UnityEngine;
 
 namespace Eden.Life {
@@ -96,11 +96,17 @@ namespace Eden.Life {
 				_interactableObject.Active = false;
 				_propertiesObject.Active = false;
 			};
+
+
+			// listen for get visual event
+			OnGetVisual += GetVisual;
+		}
+		protected override Visual GetVisualInstance () {
+
+			return new Visual ();
 		}
 
 		
-		// ****************** Handler ****************
-
 		private void BuildInventory () {
 			
 			_inventory = new Inventory( InventoryItemCount );
@@ -119,6 +125,12 @@ namespace Eden.Life {
 				var item = _equipedStartingItems[ i ];
 				_equipedItems.AddInventoryItem( item.CreateInstance() );
 			}
+		}
+		private void GetVisual ( Visual visual ) {
+
+			visual.Alignment = _alignment;
+			visual.MaxHealth = _stats.MaxHealth;
+			visual.CurrentHealth = _stats.CurrentHealth;
 		}
 	}
 }

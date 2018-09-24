@@ -120,15 +120,11 @@ namespace Eden.Interactors {
 
 	        foreach( RaycastHit hit in hits ) {
 
-	            var invalid = false;
-
 	            if ( user.GetForbiddenColliders().Contains( hit.collider ) ) {
-	            	invalid = true;
+	            	continue;
 	            }
 
-	            if ( !invalid ) {
-					return hit.collider;
-	            }
+	            return hit.collider;
 	        }
 
 	        return null;
@@ -141,6 +137,11 @@ namespace Eden.Interactors {
 
 		// ******************* Private ****************************
 		
+		private void OnDrawGizmos () {
+
+			Debug.DrawRay( transform.position, transform.forward * _bulletSpeed * Time.deltaTime );
+
+		}
 		private void SetStartPosition ( Vector3 spawnLocation ) {
 
 			transform.position = spawnLocation;

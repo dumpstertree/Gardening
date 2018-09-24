@@ -6088,7 +6088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meleeSpawner: {fileID: 4677880437988630}
-  _stats: {fileID: 0}
+  _stats: {fileID: 114769090589725088}
   _alignment: 0
   InventoryItemCount: 15
   EquipedItemsCount: 5
@@ -6149,6 +6149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 1
   _interactablePivot: {fileID: 0}
+  _uiAnchor: {fileID: 0}
 --- !u!114 &114401763773443214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6210,7 +6211,7 @@ MonoBehaviour:
   _stridesPerMeterRun: 0.15
   _mask:
     serializedVersion: 2
-    m_Bits: 1843
+    m_Bits: 14131
 --- !u!114 &114491513064649376
 MonoBehaviour:
   m_ObjectHideFlags: 1

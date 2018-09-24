@@ -1,5 +1,8 @@
 ﻿using Dumpster.Core.BuiltInModules.Input;
+using Dumpster.Controllers;
+using Dumpster.BuiltInModules.Camera.Defaults;
 using Eden.Model;
+using Eden.Model.Life;
 using UnityEngine;
 
 namespace Eden.Life.Chips.Logic {
@@ -9,7 +12,6 @@ namespace Eden.Life.Chips.Logic {
 		
 		// *************** IInputReciever ******************
 		
-
 		public void RecieveInput ( Input.Package package ) {
 
 			if ( package.Dpad.Left_Down )     	{ ShiftQuickSlotLeft (); }
@@ -35,15 +37,32 @@ namespace Eden.Life.Chips.Logic {
 		// *************** Public ******************
 
 		private Eden.Life.BlackBox _blackBox {
-			get{ return BlackBox as Eden.Life.BlackBox; }
+			get { return BlackBox as Eden.Life.BlackBox; }
+		}
+		private Item _currentItem {
+			get {
+
+				Item item;
+				if ( _itemIsEquiped ) {
+					var index = _quickslotChip.EquipedIndex;
+					item = _blackBox.EquipedItems.GetInventoryItem( index );
+					if ( item == null ) {
+						item  = _blackBox.PrimaryEquipedItem;
+					}
+				} else {
+					item = _blackBox.PrimaryEquipedItem;
+				}
+				return item;
+
+			}
 		}
 
 		[Header( "Camera" )]
 		[SerializeField] private Transform _cameraTarget;
-		[SerializeField] private CameraController _cameraController;
+		[SerializeField] private ShoulderCameraController _cameraController;
 
 		[Header( "Movement" )]
-		[SerializeField] private MockCharacterController _characterController;
+		[SerializeField] private Dumpster.Controllers.CharacterController _characterController;
 
 		[Header( "Interactable" )]
 		[SerializeField] private QuickSlotChip _quickslotChip;
@@ -59,8 +78,11 @@ namespace Eden.Life.Chips.Logic {
 
 			_itemIsEquiped = true;
 
-			_cameraController.IsStrafing = true;
-			_characterController.IsStrafing = true;
+			if ( _currentItem.IsShootable )  {
+
+				_cameraController.IsStrafing = true;
+				_characterController.IsStrafing = true;
+			}
 		}
 		private void EndAiming () {
 
@@ -95,16 +117,7 @@ namespace Eden.Life.Chips.Logic {
 		}
 		private void UseItem () {
 
-			Item item;
-			if ( _itemIsEquiped ) {
-				var index = _quickslotChip.EquipedIndex;
-				item = _blackBox.EquipedItems.GetInventoryItem( index );
-			} else {
-				item = _blackBox.PrimaryEquipedItem;
-			}
-			
-			Debug.Log( item.DisplayName );
-			_interactorChip.Use( item );
+			_interactorChip.Use( _currentItem );
 		}
 		private void ShiftQuickSlotLeft () {
 
@@ -125,11 +138,17 @@ namespace Eden.Life.Chips.Logic {
 		protected override void Init () {
 	
 		}
+		protected override void GetVisual( Visual visual ) {
+
+			visual.CurrentItemInHand = _currentItem;
+			visual.InteractingWith = _interactorChip.GetInteractableObject( _currentItem );
+		}
 
 		private void Start () {
 
 			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );		
 			EdensGarden.Instance.Camera.SetFocus( _cameraTarget );	
 		}
+
 	}
 }

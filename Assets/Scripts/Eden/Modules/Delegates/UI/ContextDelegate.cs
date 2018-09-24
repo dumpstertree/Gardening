@@ -48,6 +48,7 @@ namespace Eden.UI {
 				new List<InteractivePanel>{
 				}, 
 				new List<Panel>{ 
+					ConditionForCanvas( _interactablePanel ),
 					ConditionForCanvas( _hudUIPanel ),
 					ConditionForCanvas( _quickslotPanel ) 
 				}
@@ -107,7 +108,9 @@ namespace Eden.UI {
 		private Panel _hudUIPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "HUD" ) ).GetComponent<Panel>(); }
 		}
-		
+		private Panel _interactablePanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Interactable" ) ).GetComponent<Panel>(); }
+		}
 		
 
 		// *************** Interactive Panels *******************

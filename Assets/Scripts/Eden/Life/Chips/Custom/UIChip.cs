@@ -1,4 +1,5 @@
-﻿
+﻿using Eden.Interactable;
+
 namespace Eden.Life.Chips {
 
 	public class UIChip : Dumpster.Core.Life.Chip<Eden.Model.Life.Visual> {

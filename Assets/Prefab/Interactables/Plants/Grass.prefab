@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23408215729614810}
   - component: {fileID: 54656346054086670}
   - component: {fileID: 135939411213084130}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244177939127644}
   m_LocalRotation: {x: 0, y: 0.7367279, z: 0, w: 0.6761893}
-  m_LocalPosition: {x: 17.446108, y: 2, z: 4.3763676}
+  m_LocalPosition: {x: -38.18, y: 2.45, z: 36.86}
   m_LocalScale: {x: 1.1299876, y: 1.1314918, z: 1.1101594}
   m_Children:
   - {fileID: 4504766706752852}
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _active: 1
   _interactablePivot: {fileID: 0}
+  _uiAnchor: {fileID: 0}
 --- !u!114 &114407310071273354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,5 +272,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05
+  m_Radius: 0.2
   m_Center: {x: -0.03, y: 0.06, z: 0}
