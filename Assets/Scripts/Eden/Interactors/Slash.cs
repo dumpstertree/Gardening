@@ -5,7 +5,7 @@ public class Slash : MonoBehaviour {
 	public void Set ( Eden.Life.BlackBox attacker , HitData hitData ) {
 		
 		_attacker = attacker;
-		_hitData = hitData;
+		// _hitData = hitData;
 
 		EdensGarden.Instance.Async.WaitForSeconds( KILL_TIME, () => { if ( gameObject != null ) { Destroy( gameObject ); } } );
 	}
@@ -17,7 +17,7 @@ public class Slash : MonoBehaviour {
 	private const float KILL_TIME = 0.25f;
 
 	private Eden.Life.BlackBox _attacker;
-	private HitData _hitData;
+	// private HitData _hitData;
 
 
 	private void OnTriggerEnter( Collider collision ) {

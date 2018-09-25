@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 
-namespace Eden {
+namespace Eden.Data {
 
-	public class Data {
+	public class Controller {
 
 		public enum Path {
 			Player,

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Dumpster.Events;
 using Eden.Interactable;
+using Eden.Life;
 
 namespace Eden.Events {
 	

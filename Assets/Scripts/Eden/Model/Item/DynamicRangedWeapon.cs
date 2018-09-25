@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Eden.Data;
 
 namespace Eden.Model {
 
@@ -24,14 +25,14 @@ namespace Eden.Model {
 		
 		private void SaveRangedWeapon ( Eden.Model.Building.RangedWeapon rangedWeapon ) {
 			
-			var path = Data.Path.RangedWeapon;
+			var path = Data.Controller.Path.RangedWeapon;
 			var fileName = UniqueID;
 
 			EdensGarden.Instance.Data.Save( path, fileName, rangedWeapon );
 		}
 		private Eden.Model.Building.RangedWeapon LoadRangedWeapon () {
 
-			var path = Data.Path.RangedWeapon;
+			var path = Data.Controller.Path.RangedWeapon;
 			var fileName = UniqueID;
 			var loadedRangedWeapon = EdensGarden.Instance.Data.Load<Eden.Model.Building.RangedWeapon>( path, fileName ); 
 

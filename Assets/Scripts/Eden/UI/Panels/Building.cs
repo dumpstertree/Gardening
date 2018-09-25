@@ -88,13 +88,13 @@ namespace Eden.UI.Panels {
 
 
 			// save all data
-			EdensGarden.Instance.Data.Save( Data.Path.RangedWeapon, _item.UniqueID, rangedWeapondata );
-			EdensGarden.Instance.Data.Save( Data.Path.Buildable, _item.UniqueID, saveData );
+			EdensGarden.Instance.Data.Save( Data.Controller.Path.RangedWeapon, _item.UniqueID, rangedWeapondata );
+			EdensGarden.Instance.Data.Save( Data.Controller.Path.Buildable, _item.UniqueID, saveData );
 		}
 		public void Load () {
 
 			// look for save data
-			var saveData = EdensGarden.Instance.Data.Load<Eden.Model.Building.Grid.SaveData>( Data.Path.Buildable, _item.UniqueID );
+			var saveData = EdensGarden.Instance.Data.Load<Eden.Model.Building.Grid.SaveData>( Data.Controller.Path.Buildable, _item.UniqueID );
 			if( saveData == null ) { saveData = new Eden.Model.Building.Grid.SaveData( new Eden.Model.Building.Grid.Part[]{} ); }
 			
 			// if save data is found create parts

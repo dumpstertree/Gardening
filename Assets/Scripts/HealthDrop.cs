@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using Eden.Events;
 using Dumpster.Events;
-using Eden.Interactable;
 using Eden.Properties;
+using Eden.Life;
 
 public class HealthDrop : MonoBehaviour {
 
@@ -32,7 +32,7 @@ public class HealthDrop : MonoBehaviour {
 
 		_magnetic.OnReachedTarget += HandleReachedTarget;
 	}
-	private void HandleReachedTarget( Eden.Properties.Magnet magnet ) {
+	private void HandleReachedTarget( Magnet magnet ) {
 	
 		_addHealth.Health = Health;
 		_addHealth.Stats = magnet.Root.GetComponentInChildren<Stats>();

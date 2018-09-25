@@ -16,13 +16,22 @@ public class DropItem : MonoBehaviour {
 		Item = item;
 		
 		if ( Item != null ) {
-			
-			_rend.material.mainTexture = item.Sprite.texture;
+				
 
-			if ( item.Count > 1 ){
+			// Set Texture 
+			_rend.material.mainTexture = Item.Sprite.texture;
+
+
+			// Set count
+			if ( Item.Count > 1 ){
+			
 				_count.SetActive( true );
-				_countText.text = item.Count.ToString() + "x";
+				_countText.text = Item.Count.ToString() + "x";
+			
+		
+			// Set Count Not Active
 			} else{
+			
 				_count.SetActive( false );
 			}
 		}

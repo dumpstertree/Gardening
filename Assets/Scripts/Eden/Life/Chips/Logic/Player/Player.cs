@@ -30,7 +30,7 @@ namespace Eden.Life.Chips.Logic {
 		}
 		public void EnteredInputFocus () {
 		}
-		public void ExitInputFocus () {
+		public void ExitInputFocus () {	
 		}
 
 		
@@ -62,7 +62,7 @@ namespace Eden.Life.Chips.Logic {
 		[SerializeField] private ShoulderCameraController _cameraController;
 
 		[Header( "Movement" )]
-		[SerializeField] private Dumpster.Controllers.CharacterController _characterController;
+		[SerializeField] private Dumpster.Controllers.ThirdPersonCharacterController _characterController;
 
 		[Header( "Interactable" )]
 		[SerializeField] private QuickSlotChip _quickslotChip;
@@ -128,16 +128,9 @@ namespace Eden.Life.Chips.Logic {
 			_quickslotChip.ShiftRight ();	
 		}
 
-
 		protected override void Think () {
 		}
-		protected override void Shutdown () {
-		}
-		protected override void Startup () {
-		}
-		protected override void Init () {
-	
-		}
+
 		protected override void GetVisual( Visual visual ) {
 
 			visual.CurrentItemInHand = _currentItem;

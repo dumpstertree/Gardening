@@ -42,6 +42,7 @@ public class KindaBlendTree {
 		
 		} else {
 
+			if ( _weightCoroutine != null ) { _animator.StopCoroutine( _weightCoroutine ); }
 			_weightCoroutine = _animator.StartCoroutine (
 
 				Dampen( _lastWeight, weight, overTime, 

@@ -68,7 +68,7 @@ public class EdensGarden : Dumpster.Core.Game {
 	public Eden.Targeting Targeting {
 		get; private set;
 	}
-	public Eden.Data Data {
+	public Eden.Data.Controller Data {
 		get; private set;
 	}
 	public Eden.Model.StatsForLevel StatsForLevel {
@@ -94,7 +94,7 @@ public class EdensGarden : Dumpster.Core.Game {
 		Input     = Dumpster.Core.Module.Install( this, typeof( Eden.Input )) as Eden.Input;
 		Targeting = Dumpster.Core.Module.Install( this, typeof( Eden.Targeting )) as Eden.Targeting;
 
-		Data = new Eden.Data();
+		Data = new Eden.Data.Controller ();
 
 		// Custom Modules
 		var t = Instantiate( Instance._transitionCreator );

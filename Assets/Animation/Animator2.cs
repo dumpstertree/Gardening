@@ -89,8 +89,8 @@ public class Animator2 : MonoBehaviour {
 	[System.Serializable]
 	private class AnimationLayer {
 
-		public int Priority;
-		public string Name;
-		public Animation.Setter Animation;
+		[SerializeField] public int Priority;
+		[SerializeField] public string Name;
+		[SerializeField] public Animation.Setter Animation;
 	}
 }

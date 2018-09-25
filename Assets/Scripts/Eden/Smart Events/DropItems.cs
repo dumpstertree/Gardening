@@ -21,7 +21,7 @@ namespace Eden.Events {
 		private Eden.Model.Item Roll () {
 
 			Eden.Model.Item rolledItem = null;
-			var itemList = new List<Eden.Model.Item>();
+
 			var roll = UnityEngine.Random.Range(0.0f,1f);
 			var maxSuccess = 0.0f;
 
@@ -64,6 +64,8 @@ namespace Eden.Events {
 			drop.transform.position = transform.position;
 			drop.transform.rotation = transform.rotation;
 			drop.SetItem( item );
+
+			drop.GetComponent<Rigidbody>().velocity = Vector3.up * 5;
 		}
 
 		[System.Serializable]

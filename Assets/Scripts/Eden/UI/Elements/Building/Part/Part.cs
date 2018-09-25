@@ -44,7 +44,6 @@ namespace Eden.UI.Elements.Building {
 
 			PartData = part;
 
-			_stats = part.Stats;
 			_blocks = GetComponentsInChildren<Block>();
 			_projectors = GetComponentsInChildren<Projector>();
 			_lights = GetComponentsInChildren<ActivationLight>( true );
@@ -89,7 +88,6 @@ namespace Eden.UI.Elements.Building {
 		private const float IDLE_HEIGHT = 0;
 		private const float GRABBED_HEIGHT = -1;
 
-		private Eden.Model.Building.Stats.Gun _stats;
 		private bool _isGrabbed;
 		private Vector3 _grabPoint;
 		private Vector3 _grabOffset;

@@ -5,7 +5,7 @@ public class Explosion : MonoBehaviour {
 
 	public void Set ( Eden.Life.BlackBox attacker , HitData hitData ) {
 		
-		_attacker = attacker;
+		// _attacker = attacker;
 		_hitData = hitData;
 	}
 
@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour {
 	[SerializeField] private float _size;
 	[SerializeField] private float _duration;
 
-	private Eden.Life.BlackBox _attacker;
+	// private Eden.Life.BlackBox _attacker;
 	private HitData _hitData;
 
 	private void Awake () {

@@ -2,7 +2,7 @@
 
 namespace Dumpster.Controllers {
 	
-	public class CharacterController : MonoBehaviour {
+	public class ThirdPersonCharacterController : MonoBehaviour {
 
 		
 		// ************** Public ****************
@@ -32,7 +32,7 @@ namespace Dumpster.Controllers {
 		[SerializeField] private float _gravity = 25f;
 
 		[Header( "Movement Settings" )]
-		[SerializeField] private float _airMovementSpeed = 5f;
+		[SerializeField] private float _airMovementSpeed = 20f;
 		[SerializeField] private float _walkMovementSpeed = 20f;
 		[SerializeField] private float _runMovementSpeed = 20f;
 		[SerializeField] private float _walkThreshold = 0.15f;
@@ -378,48 +378,11 @@ namespace Dumpster.Controllers {
 			var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  HorizontalInput, VerticalInput );
 			var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
 			
-			var newVelocity = inputVector * _runMovementSpeed;
+			var newVelocity = inputVector * _airMovementSpeed;
 			var xzVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z );
 			
 			_velocity = Vector3.Lerp( _velocity, xzVelocity, 0.2f );
 
-		}
-		private void ApplyVelocity ( float horizontalInput, float verticalInput ) {
-
-			if ( Mathf.Approximately( _inputMagnitude, 0f ) ) {
-				_velocity = new Vector3( 0, 0, 0 );
-				return;
-			}
-
-			var speed = 0f;
-			
-			if ( _isWalking ) { speed = _walkMovementSpeed; }
-			if ( _isRunning ) { speed = _runMovementSpeed; }
-			if ( !_isOnGround ) { speed = _runMovementSpeed; }
-
-			
-			// input vector
-			var cameraRight = Camera.main.transform.right;
-			var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
-			var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  horizontalInput, verticalInput );
-			var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
-			
-			// ground vector
-			var groundNormal = GetGroundNormal();
-
-			// new direction vector
-			var inputRight = Vector3.Cross( Vector3.up, inputVector );
-			var newVector = Vector3.Cross( inputRight, groundNormal );
-
-
-			var newVelocity = newVector * speed;
-
-
-			if ( _isOnGround ) {
-				_velocity = new Vector3( newVelocity.x, newVelocity.y, newVelocity.z );
-			} else {
-				_velocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z  );
-			}
 		}
 		private void FaceMomentum () {
 

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Eden.Life;
+using Eden.Model.Life;
 using Dumpster.Events;
 
-namespace Eden.Interactable {
+namespace Eden.Life {
 	
-	public class Stats : MonoBehaviour {
+	public class Stats : Dumpster.Core.Life.Chip<Visual> {
 
 		public delegate void HealthChangedEvent( int currentHealth );
 		public HealthChangedEvent OnHealthChanged;
@@ -37,11 +38,7 @@ namespace Eden.Interactable {
 			OnSetHealth( amount );
 		}
 
-		public Stats () {
-
-			_currentHealth = _maxHealth;
-		}
-
+		
 		// **************** PRIVATE *****************
 		
 		[SerializeField] private int _maxHealth;
@@ -51,6 +48,7 @@ namespace Eden.Interactable {
 		[Header( "Smart Events" )]
 		[SerializeField] SmartEvent[] _onHurt;
 		[SerializeField] SmartEvent[] _onDeath;
+
 
 		// *****************************************
 
@@ -80,6 +78,7 @@ namespace Eden.Interactable {
 		private void Awake () {
 
 			_hitable.OnHit += HandleOnHit;
+			_currentHealth = _maxHealth;
 		}
 		private void HandleOnHit( HitData data ) {
 

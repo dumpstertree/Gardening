@@ -25,5 +25,5 @@ MonoBehaviour:
     _clipSize: 1
     _bulletSpeed: 10
     _bulletSize: 1
-  _bulletPrefab: {fileID: 114104430923206604, guid: 696a7fc7ce7254cc7a20f8f8b37b6a38,
+  _bulletPrefab: {fileID: 114083237891081260, guid: 6bd1dfe00ee46495abb52976927ff207,
     type: 2}

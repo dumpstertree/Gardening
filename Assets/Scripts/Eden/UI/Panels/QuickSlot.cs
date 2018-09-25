@@ -39,7 +39,7 @@ namespace Eden.UI.Panels {
 		private Tween[] _movementTweens;
 		private Tween[] _scaleTweens;
 
-		private float _animationDuration = 0.5f;
+		private float _animationDuration = 0.2f;
 		private float _spacing = 125;
 		private int _index = -1;
 
@@ -157,7 +157,7 @@ namespace Eden.UI.Panels {
 				setter: v =>  item.transform.localScale = v, 
 				startValue: item.transform.localScale,
 				targetValue: Vector3.zero, 
-				time: 0.2f
+				time: _animationDuration
 			).OnComplete( () => Destroy( item.gameObject ) );
 		}
 		private void DestroyItemOnRight () {
@@ -168,7 +168,7 @@ namespace Eden.UI.Panels {
 				setter: v =>  item.transform.localScale = v, 
 				startValue: item.transform.localScale,
 				targetValue: Vector3.zero, 
-				time: 0.2f
+				time: _animationDuration
 			).OnComplete( () => Destroy( item.gameObject ) );
 		}
 		private void AddItemOnLeft (  int centerIndex  ) {
@@ -197,10 +197,8 @@ namespace Eden.UI.Panels {
 			
 			for( int i=0; i<_items.Length; i++ ) {
 
-				var targetPos = PosForIndex( i );
 				var item = _items[ i ];
 
-				
 				// move
 				if( _movementTweens[ i ] != null ) { _movementTweens[ i ].Kill(); }
 
@@ -208,7 +206,7 @@ namespace Eden.UI.Panels {
 					setter: v => item.transform.localPosition = v , 
 					startValue: item.transform.localPosition,
 					targetValue: PosForIndex( i ), 
-					time: 0.2f
+					time: _animationDuration
 				);
 
 				// scale
@@ -218,7 +216,7 @@ namespace Eden.UI.Panels {
 					setter: v => item.transform.localScale = v , 
 					startValue: item.transform.localScale,
 					targetValue: ScaleForIndex( i ), 
-					time: 0.2f
+					time: _animationDuration
 				);
 			}
 		}

@@ -25,7 +25,6 @@ namespace Eden.Events {
 				var dialog = panel.GetComponent<Eden.UI.Panels.Dialog>();
 				if ( dialog != null ) {
 
-					var seq = _dialogSequence.GetController();
 					dialog.PresentDialogSequence( _dialogSequence.GetController(), FireOnExitEvent );
 				}
 			}

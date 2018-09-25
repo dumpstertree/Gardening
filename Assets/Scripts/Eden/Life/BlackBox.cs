@@ -114,7 +114,6 @@ namespace Eden.Life {
 		private void BuildEquipedItems () {
 
 			_equipedItems = new Inventory( EquipedItemsCount );
-			_equipedItems.AddInventoryItem( _primaryEquipedItem.CreateInstance() );
 
 			for ( int i=0; i<_equipedStartingItems.Length; i++ ) {
 				

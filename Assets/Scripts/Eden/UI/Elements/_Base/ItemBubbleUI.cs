@@ -94,13 +94,11 @@ public class ItemBubbleUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	private const string DEFAULT_STATE_TRIGGER = "Default";
 	private const string HOVER_STATE_TRIGGER = "Hover";
 
-	private Animator _animator;
 	private int _index = -1;
 	private Item _item;
 
 	private void Awake () {
 	
-		_animator = GetComponent<Animator>();
 		_button.onClick.AddListener( () => FireClickEvent()  );
 	}
 	private void SetFilledSlot ( Item item) {

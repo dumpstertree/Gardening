@@ -6,16 +6,7 @@ namespace Eden.Model {
 	public abstract class ShootableItem : Item {
 
 		protected ShootableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite ) : base (prefabID, displayName, maxCount, expendable, sprite) {}
-
 		
-		// ************ Events *****************
-
-		public delegate void AvailableBulletsChangeEvent( int availableBullets );
-		public AvailableBulletsChangeEvent OnAvailableBulletsChange;
-
-		public delegate void ReloadTimeChangedEvent( float currentReloadTime, float maxReloadTime );
-		public ReloadTimeChangedEvent OnReloadTimeChanged;
-			
 		
 		// ************ Properties *****************
 
@@ -25,7 +16,6 @@ namespace Eden.Model {
 
 		public int AvailableBullets {
 			get{ return _availableBullets; }
-			set{ HandleOnAvailableBulletsChanged( value ); }
 		}
 		public int ClipSize {
 			get{ return _clipSize; }
@@ -42,25 +32,12 @@ namespace Eden.Model {
 
 			if ( !_reloading ) {
 
-				// start reloading.
-				Action onStart = () => {
-					_reloading = true;
-				};
-				
-				// alert others that you are reloading.
-				Action<float> onWait = t => {
+				_reloading = true;
 
-					HandleOnReloadTimeChanged( t, _reloadSpeed );
-				};
-				
-				// tell others you are no longer loading. finish reloading.
-				Action onComplete = () => {
-					HandleOnReloadTimeChanged( _reloadSpeed, _reloadSpeed );
-					AvailableBullets = _clipSize;
-					_reloading = false;
-				};
-					
-				EdensGarden.Instance.Async.WaitForSeconds( _reloadSpeed, onStart, onWait, onComplete );
+				EdensGarden.Instance.Async.WaitForSeconds( _reloadSpeed, () => {
+					_availableBullets = _clipSize;
+					_reloading = false; 
+				});
 			}
 		}
 		public void Fire (  Eden.Life.Chips.InteractorChip interactor ) {
@@ -139,21 +116,7 @@ namespace Eden.Model {
 
 			bullet.SetBullet( interactor.RangedWeaponChip, hitData, _bulletSize, _bulletSpeed, _accuracy );
 
-			AvailableBullets--;
-		}		
-		private void HandleOnAvailableBulletsChanged ( int availableBullets ) {
-			
-			_availableBullets = availableBullets;
-			
-			if ( OnAvailableBulletsChange != null ) {
-				OnAvailableBulletsChange( _availableBullets );
-			}
-		}
-		private void HandleOnReloadTimeChanged ( float currentReloadTime, float maxReloadTime ) {
-			
-			if ( OnReloadTimeChanged != null ) {
-				OnReloadTimeChanged( currentReloadTime, maxReloadTime );
-			}
-		}
+			_availableBullets--;
+		}	
 	}
 }
