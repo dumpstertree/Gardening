@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Eden.UI;
 using Eden.Model;
 
 namespace Eden.Controller {
@@ -106,21 +105,21 @@ namespace Eden.Controller {
 		}
 
 		
-		public static void MoveItem( InventoryUI1.DragObject fromObject, InventoryUI1.DragObject toObject ){
+		// public static void MoveItem( InventoryUI1.DragObject fromObject, InventoryUI1.DragObject toObject ){
 
-			var fromItem = fromObject.Inventory.GetInventoryItem( fromObject.Index );
-			var toItem = toObject.Inventory.GetInventoryItem( toObject.Index );
+		// 	var fromItem = fromObject.Inventory.GetInventoryItem( fromObject.Index );
+		// 	var toItem = toObject.Inventory.GetInventoryItem( toObject.Index );
 
-			if ( fromItem != null ) {
-				fromItem.OnCountChanged = null;
-			}
-			if ( toItem != null ) {
-				toItem.OnCountChanged = null;
-			}
+		// 	if ( fromItem != null ) {
+		// 		fromItem.OnCountChanged = null;
+		// 	}
+		// 	if ( toItem != null ) {
+		// 		toItem.OnCountChanged = null;
+		// 	}
 
-			fromObject.Inventory.SetInventoryItem( fromObject.Index, toItem );
-			toObject.Inventory.SetInventoryItem( toObject.Index, fromItem );
-		}
+		// 	fromObject.Inventory.SetInventoryItem( fromObject.Index, toItem );
+		// 	toObject.Inventory.SetInventoryItem( toObject.Index, fromItem );
+		// }
 
 		
 		// ***************** PRIVATE *******************

@@ -6,93 +6,93 @@ using Eden.Model;
 
 namespace Eden.UI.Panels {
 
-	public class PlayerQuickslotInventory : InventoryUI1 {
+	public class PlayerQuickslotInventory { //: Eden.UI.Elements.InventoryUI1 {
 
-		[SerializeField] private GridLayoutGroup _layoutGroup;
-		[SerializeField] private ButtonActions _buttonActions;
+		// [SerializeField] private GridLayoutGroup _layoutGroup;
+		// [SerializeField] private ButtonActions _buttonActions;
 		
-		private const int COLLUMNS = 3;
-		private const float PADDING = 25;
+		// private const int COLLUMNS = 3;
+		// private const float PADDING = 25;
 
-		private Item _item;
+		// private Item _item;
 		
-		private BlackBox _player {
-			get{ 
-				return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
-			}		
-		}
-		private bool _canCustomize  {
-			get{ 
-				return ( _item != null && _item.IsShootable ); 
-			}
-		}
+		// private BlackBox _player {
+		// 	get{ 
+		// 		return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
+		// 	}		
+		// }
+		// private bool _canCustomize  {
+		// 	get{ 
+		// 		return ( _item != null && _item.IsShootable ); 
+		// 	}
+		// }
 
 
-		// ************** Override ****************
+		// // ************** Override ****************
 		
-		public override void ReciveInput( Eden.Input.Package package ) {
+		// public override void ReciveInput( Eden.Input.Package package ) {
 
-			if ( package.Face.Right_Down ) {
-				Exit ();	
-			}
+		// 	if ( package.Face.Right_Down ) {
+		// 		Exit ();	
+		// 	}
 
-			if ( package.Face.Up_Down && _canCustomize ) {
-				Customize ();
-			}
-		}
+		// 	if ( package.Face.Up_Down && _canCustomize ) {
+		// 		Customize ();
+		// 	}
+		// }
 		
-		protected override Inventory GetInventory () {
+		// protected override Inventory GetInventory () {
 			
-			return _player.EquipedItems;
-		}
-		protected override ItemBubbleUI[] GetItemBubbles () {
+		// 	return _player.EquipedItems;
+		// }
+		// protected override Eden.UI.Elements.ItemSlot[] GetItemBubbles () {
 
-			var itemBubbles = new ItemBubbleUI[ _player.EquipedItems.InventoryCount ];
-			for ( int i = 0; i<itemBubbles.Length; i++  ){
+		// 	var itemBubbles = new Eden.UI.Elements.ItemSlot[ _player.EquipedItems.InventoryCount ];
+		// 	for ( int i = 0; i<itemBubbles.Length; i++  ){
 
-				var itemBubble = Instantiate( _itemBubblePrefab );
-				itemBubble.transform.SetParent( _layoutGroup.transform, false );
-				itemBubble.Index = i;
+		// 		var itemBubble = Instantiate( _itemBubblePrefab );
+		// 		itemBubble.transform.SetParent( _layoutGroup.transform, false );
+		// 		itemBubble.Index = i;
 
-				itemBubbles[ i ] = itemBubble;
+		// 		itemBubbles[ i ] = itemBubble;
 
-				itemBubble.OnSelect += () => { HandleOnSelectableChanged( itemBubble.Item ); };
-			}
+		// 		// itemBubble.OnSelect += () => { HandleOnSelectableChanged( itemBubble.Item ); };
+		// 	}
 
-			return itemBubbles;
-		}
+		// 	return itemBubbles;
+		// }
 
-		private void Start () {
+		// private void Start () {
 
-			_buttonActions.FaceRightActionText = "Exit";
-			_buttonActions.FaceDownActionText = "Move";
-		}
-		private void Customize () {
+		// 	_buttonActions.FaceRightActionText = "Exit";
+		// 	_buttonActions.FaceDownActionText = "Move";
+		// }
+		// private void Customize () {
 
-			EdensGarden.Instance.UI.Present( 
-				EdensGarden.Constants.NewUILayers.Midground,
-				EdensGarden.Constants.UIContexts.Building, context => {
-					var building = context.GetContext( "Building(Clone)" ).GetComponent<Building>();
-					building.SetItemToEdit( _item );
-				}
-			);
-		}
-		private void Exit () {
+		// 	EdensGarden.Instance.UI.Present( 
+		// 		EdensGarden.Constants.NewUILayers.Midground,
+		// 		EdensGarden.Constants.UIContexts.Building, context => {
+		// 			var building = context.GetContext( "Building(Clone)" ).GetComponent<Building>();
+		// 			building.SetItemToEdit( _item );
+		// 		}
+		// 	);
+		// }
+		// private void Exit () {
 			
-			EdensGarden.Instance.UI.Dismiss( 
-				EdensGarden.Constants.NewUILayers.Midground,
-				EdensGarden.Constants.UIContexts.Inventory 
-			);
-		}
-		private void HandleOnSelectableChanged ( Item item ) {
+		// 	EdensGarden.Instance.UI.Dismiss( 
+		// 		EdensGarden.Constants.NewUILayers.Midground,
+		// 		EdensGarden.Constants.UIContexts.Inventory 
+		// 	);
+		// }
+		// private void HandleOnSelectableChanged ( Item item ) {
 
-			_item = item;
+		// 	_item = item;
 
-			if( _canCustomize ) {
-				_buttonActions.FaceUpActionText = "Customize";
-			} else {
-				_buttonActions.FaceUpActionText = "";
-			}
-		} 
+		// 	if( _canCustomize ) {
+		// 		_buttonActions.FaceUpActionText = "Customize";
+		// 	} else {
+		// 		_buttonActions.FaceUpActionText = "";
+		// 	}
+		// } 
 	}
 }

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Eden.Interactors.Ranged;
 using System.Collections.Generic;
-using Eden.Interactors;
+using UnityEngine;
 
 namespace Eden.Model.Building {
 	

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Dumpster.Core.BuiltInModules.Input {
 
@@ -27,7 +28,7 @@ namespace Dumpster.Core.BuiltInModules.Input {
 			}
 		}
 		public void RequestInput( string identifier ) {
-
+			
 			Layer<T> layer;
 			if ( _registeredLayers.ContainsKey( identifier ) ) {
 				layer = _registeredLayers[ identifier ];

@@ -92,6 +92,9 @@ MonoBehaviour:
     type: 2}
   _contextDelegate: {fileID: 114564313150220088}
   _statsForLevel: {fileID: 114928535738004492}
+  _targetingLayermask:
+    serializedVersion: 2
+    m_Bits: 28672
 --- !u!114 &114512193140990732
 MonoBehaviour:
   m_ObjectHideFlags: 1

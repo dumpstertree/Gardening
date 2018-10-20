@@ -15,6 +15,13 @@ namespace Dumpster.Tweening {
 
 			return t;
 		}
+		public static Tween Color ( Action<Color> setter, Color startValue, Color targetValue, float time  ) {
+
+			var t = new Tween();
+			t._tweenValue = EdensGarden.Instance.StartCoroutine( t.TweenValue( time, v => t.OnColorValueChange( setter, startValue, targetValue, v ) ) );
+
+			return t;
+		}
 
 		
 		// ***************** Public *********************
@@ -41,6 +48,11 @@ namespace Dumpster.Tweening {
 		private void OnVector3ValueChange ( Action<Vector3> setter, Vector3 startPos, Vector3 targetPos, float progress ) {
 
 			var val = UnityEngine.Vector3.Lerp( startPos, targetPos, progress );
+			setter( val );
+		}
+		private void OnColorValueChange ( Action<Color> setter, Color startColor, Color targetColor, float progress ) {
+
+			var val = UnityEngine.Color.Lerp( startColor, targetColor, progress );
 			setter( val );
 		}
 		private IEnumerator TweenValue ( float time, Action<float> onValueChange ) {

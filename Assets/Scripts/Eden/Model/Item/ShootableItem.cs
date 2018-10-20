@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Eden.Model.Interactable;
+using UnityEngine;
 using System;
 
 namespace Eden.Model {
@@ -108,11 +109,10 @@ namespace Eden.Model {
 		}
 
 
-		private void CreateBullet (  Eden.Life.Chips.InteractorChip interactor ) {
+		private void CreateBullet ( Eden.Life.Chips.InteractorChip interactor ) {
 
 			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
-			var hitData = new HitData();
-			hitData.Power = 1;
+			var hitData = new Hit( null, 1 );
 
 			bullet.SetBullet( interactor.RangedWeaponChip, hitData, _bulletSize, _bulletSpeed, _accuracy );
 

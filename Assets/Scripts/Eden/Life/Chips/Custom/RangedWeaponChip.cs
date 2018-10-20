@@ -1,4 +1,4 @@
-﻿using Eden.Interactors;
+﻿using Eden.Interactors.Ranged;
 using UnityEngine;
 
 namespace Eden.Life.Chips {

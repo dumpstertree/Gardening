@@ -1,5 +1,4 @@
 ﻿using Dumpster.Core.BuiltInModules.Input;
-using Dumpster.Controllers;
 using Dumpster.BuiltInModules.Camera.Defaults;
 using Eden.Model;
 using Eden.Model.Life;
@@ -31,6 +30,8 @@ namespace Eden.Life.Chips.Logic {
 		public void EnteredInputFocus () {
 		}
 		public void ExitInputFocus () {	
+
+			RecieveInput( new Input.Package() );
 		}
 
 		
@@ -132,6 +133,13 @@ namespace Eden.Life.Chips.Logic {
 		}
 
 		protected override void GetVisual( Visual visual ) {
+			
+			// i should bring back the targeting chip probably to interfact with the targetable system
+
+			if ( _currentItem.IsShootable ) {
+				var t = EdensGarden.Instance.Targeting.GetTargetable( Camera.main.transform.position, Camera.main.transform.forward, 15f );
+				if ( t != null ) visual.Target = t.GetComponentInParent<BlackBox>();
+			}
 
 			visual.CurrentItemInHand = _currentItem;
 			visual.InteractingWith = _interactorChip.GetInteractableObject( _currentItem );
@@ -140,7 +148,11 @@ namespace Eden.Life.Chips.Logic {
 		private void Start () {
 
 			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );		
+			EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
+
 			EdensGarden.Instance.Camera.SetFocus( _cameraTarget );	
+
+			EdensGarden.Instance.UI.Present( EdensGarden.Constants.NewUILayers.Midground, EdensGarden.Constants.UIContexts.Player );
 		}
 
 	}

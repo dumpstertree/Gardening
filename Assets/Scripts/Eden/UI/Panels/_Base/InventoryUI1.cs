@@ -2,112 +2,127 @@
 using UnityEngine.EventSystems;
 using Eden.Controller;
 using Eden.Model;
+using Eden.UI.Elements;
 
-namespace Eden.UI {
+namespace Eden.UI.Elements {
 	
 	public abstract class InventoryUI1 : InteractivePanel {
 
-		private static DragObject HOVER_OBJECT;
-		private static DragObject DRAG_OBJECT;
+	// 	private static DragObject HOVER_OBJECT;
+	// 	private static DragObject DRAG_OBJECT;
 
-		[SerializeField] protected ItemBubbleUI _itemBubblePrefab;
+	// 	[SerializeField] protected ItemSlot _itemBubblePrefab;
+	// 	[SerializeField] protected Item _itemPrefab;
 
-		private const int COLLUMNS = 3;
-		private const float PADDING = 25;
+	// 	private const int COLLUMNS = 3;
+	// 	private const float PADDING = 25;
 
-		private Inventory _inventory;
-		private ItemBubbleUI[] _itemBubbles;
+	// 	private Inventory _inventory;
+	// 	private ItemSlot[] _itemBubbles;
 
-		
-		// *******************************
+	// 	private static ItemSlot HoveringSlot;
+	// 	private static ItemSlot DraggingSlot;
+	// 	private static Item ItemBeingDragged;
 
-		protected override void OnPresent () {
-			
-			base.OnPresent();
-			
-			Clear();
-			Load();
+	// 	public static void SetDragSlot ( ItemSlot slot  ) {
 
-			EventSystem.current.SetSelectedGameObject( _itemBubbles[ 0 ].gameObject );
-		}
+	// 		// Start dragging new object
+	// 		if ( DraggingSlot == null ) {
 
-		
-		// *******************************
+	// 			if ( slot.Item != null ) {
 
-		private void Clear () {
-			
-			if ( _itemBubbles != null ) {
-				
-				foreach ( ItemBubbleUI item in _itemBubbles ) {
+	// 				ItemBeingDragged = slot.ItemInSlot;
 					
-					if ( !item.Indestuctable ){
-						Destroy( item.gameObject );
-					}
-				}
-			}
+	// 				HoveringSlot = slot; 
+	// 				HoveringSlot.SetItem( null );
+	// 				return;
+	// 			}
 
-			_itemBubbles = null;
-			_inventory = null;
-		}
-		private void Load () {
+	// 		// Perform a swap
+	// 		} else {
 
-			_inventory = GetInventory();
-			_itemBubbles = GetItemBubbles();
+	// 			// Inventory.MoveItem( DraggingSlot., HOVER_OBJECT );
+	// 			ItemBeingDragged = null;
+	// 			DraggingSlot = null;
+	// 		}
+	// 	}
+	// 	public static void SetHoverSlot ( ItemSlot slot ) {
 
-			_inventory.OnInventoryItemChanged += ( index, item ) => { 
-				SetItemBubble( index, item );
-			};
+	// 		HoveringSlot = slot;
+	// 	}
 		
-			foreach( ItemBubbleUI itemBubble in _itemBubbles ){
+	// 	// *******************************
 
-				var index = itemBubble.Index;
-				var ib = itemBubble;
-				SetItemBubble( index, _inventory.GetInventoryItem( index ) );
+	// 	protected override void OnPresent () {
+			
+	// 		base.OnPresent();
+			
+	// 		Clear();
+	// 		Load();
 
-				itemBubble.OnSelect += () => {
-					HOVER_OBJECT = new DragObject( _inventory, itemBubble.Index );
-				};
+	// 		EventSystem.current.SetSelectedGameObject( _itemBubbles[ 0 ].gameObject );
+	// 	}
 
-				itemBubble.OnClick += () => {
-
-					if ( DRAG_OBJECT == null ) {
-						if ( ib.HasItem ) {
-							DRAG_OBJECT = HOVER_OBJECT; 
-							return;
-						}
-					} else {
-						Inventory.MoveItem( DRAG_OBJECT, HOVER_OBJECT );
-						DRAG_OBJECT = null;
-					}
-				};
-			}
-		}
-		private void SetItemBubble( int index, Item item ){
-
-			if (index > _itemBubbles.Length || _itemBubbles[ index ] == null){
-				return;
-			}
-
-			var itemBubble = _itemBubbles[ index ];
-			itemBubble.SetItem( item );
-		}
 		
-		// *******************************
+	// 	// *******************************
 
-		protected abstract Inventory GetInventory ();
-		protected abstract ItemBubbleUI[] GetItemBubbles ();
+	// 	private void Clear () {
+			
+	// 		if ( _itemBubbles != null ) {
+				
+	// 			foreach ( ItemSlot item in _itemBubbles ) {
+					
+	// 				item.SetItem( null );
+	// 			}
+	// 		}
 
-		// *******************************
+	// 		_itemBubbles = null;
+	// 		_inventory = null;
+	// 	}
+	// 	private void Load () {
 
-		public class DragObject {
+	// 		_inventory = GetInventory();
+	// 		_itemBubbles = GetItemBubbles();
+			
+	// 		foreach( ItemSlot slot in _itemBubbles ){
 
-			public Inventory Inventory{get;}
-			public int Index{get;}
+	// 			var index = slot.Index;
+	// 			var itemBackingValue = _inventory.GetInventoryItem( index );
 
-			public DragObject( Inventory inventory, int index ){
-				Inventory = inventory;
-				Index = index;
-			}
-		}
+	// 			if ( itemBackingValue != null ) {
+					
+	// 				var item = CreateItem( itemBackingValue );
+	// 				slot.ItemInSlot = item;
+	// 			}
+	// 		}
+	// 	}
+
+	// 	private Item CreateItem ( Eden.Model.Item backingItem ) {
+
+	// 		var item = Instantiate( _itemPrefab );
+	// 		item.SetBackingItem( backingItem );
+
+	// 		return item;
+	// 	}
+	
+	// 	// *******************************
+
+	// 	protected abstract Inventory GetInventory ();
+	// 	protected abstract ItemSlot[] GetItemBubbles ();
+
+		
+	// 	// *******************************
+
+
+	// 	public class DragObject {
+
+	// 		public Inventory Inventory{ get; }
+	// 		public int Index{ get; }
+
+	// 		public DragObject( Inventory inventory, int index ){
+	// 			Inventory = inventory;
+	// 			Index = index;
+	// 		}
+	// 	}
 	}
 }

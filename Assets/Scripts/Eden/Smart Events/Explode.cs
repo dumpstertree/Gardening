@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Eden.Model.Interactable;
+using UnityEngine;
 
 namespace Eden.Interactable {
 	
 	public class Explode : Dumpster.Events.SmartEvent {
 			
 		[SerializeField] private GameObject _objectRoot;
-		[SerializeField] private HitData _hitData;
+		[SerializeField] private Hit _hitData;
 		[SerializeField] private Explosion _explosionPrefab;
 
 		public override void EventTriggered () {

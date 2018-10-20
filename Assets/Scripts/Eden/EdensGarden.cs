@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class EdensGarden : Dumpster.Core.Game {
 
@@ -65,7 +65,7 @@ public class EdensGarden : Dumpster.Core.Game {
 	public Eden.Input Input {
 		get; private set;
 	}
-	public Eden.Targeting Targeting {
+	public Eden.Modules.Targeting Targeting {
 		get; private set;
 	}
 	public Eden.Data.Controller Data {
@@ -79,6 +79,7 @@ public class EdensGarden : Dumpster.Core.Game {
 	[SerializeField] private TransitionCreator _transitionCreator;
 	[SerializeField] private Eden.UI.ContextDelegate _contextDelegate;
 	[SerializeField] private Eden.Model.StatsForLevel _statsForLevel;
+	[SerializeField] private LayerMask _targetingLayermask;
 
 
 	protected override void BuildGame () {
@@ -92,13 +93,15 @@ public class EdensGarden : Dumpster.Core.Game {
 
 		// Subclass Modules
 		Input     = Dumpster.Core.Module.Install( this, typeof( Eden.Input )) as Eden.Input;
-		Targeting = Dumpster.Core.Module.Install( this, typeof( Eden.Targeting )) as Eden.Targeting;
+		Targeting = Dumpster.Core.Module.Install( this, typeof( Eden.Modules.Targeting )) as Eden.Modules.Targeting;
 
 		Data = new Eden.Data.Controller ();
 
 		// Custom Modules
 		var t = Instantiate( Instance._transitionCreator );
 		t.transform.SetParent( Instance.transform, false );
+
+		Targeting._layermask = _targetingLayermask; // this is garbage
 	}
 	protected override void InitGame () {
 
@@ -116,8 +119,6 @@ public class EdensGarden : Dumpster.Core.Game {
 
 		Rooms.OnChangeArea += FireOnSceneChangedEvent;
 
-		Input.RequestInput( Constants.InputLayers.Player );
-
 		Rooms.Run ();
 		Async.Run ();
 		Camera.Run ();
@@ -125,7 +126,5 @@ public class EdensGarden : Dumpster.Core.Game {
 		Effects.Run (); 
 		UI.Run ();
 		Targeting.Run ();
-
-		UI.Present( Constants.NewUILayers.Midground, Constants.UIContexts.Player );
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Dumpster.Core.Life {
+namespace Dumpster.Life.Chips {
 	
 	public class SightChip : MonoBehaviour {
 

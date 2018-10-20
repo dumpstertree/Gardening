@@ -48,6 +48,7 @@ namespace Eden.UI {
 				new List<InteractivePanel>{
 				}, 
 				new List<Panel>{ 
+					ConditionForCanvas( _targetingPanel ),
 					ConditionForCanvas( _interactablePanel ),
 					ConditionForCanvas( _hudUIPanel ),
 					ConditionForCanvas( _quickslotPanel ) 
@@ -72,11 +73,10 @@ namespace Eden.UI {
 			return new InteractiveContext( 
 				
 				EdensGarden.Constants.UIContexts.Inventory, 
-				EdensGarden.Constants.InputLayers.InventoryUI, 
+				EdensGarden.Constants.InputLayers.MidgroundUI, 
 				
 				new List<InteractivePanel>{
 					ConditionForCanvas( _inventoryPanel ),
-					ConditionForCanvas( _quickslotInventoryPanel )
 				}, 
 				new List<Panel>{ 
 				}
@@ -111,15 +111,16 @@ namespace Eden.UI {
 		private Panel _interactablePanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Interactable" ) ).GetComponent<Panel>(); }
 		}
+		private Panel _targetingPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Targeting" ) ).GetComponent<Panel>(); }
+		}
+
 		
 
 		// *************** Interactive Panels *******************
 
 		private InteractivePanel _inventoryPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "InventoryUIPanel" ) ).GetComponent<InteractivePanel>(); }
-		}
-		private InteractivePanel _quickslotInventoryPanel {
-			get { return GameObject.Instantiate( Resources.Load<GameObject>( "QuickslotInventory" ) ).GetComponent<InteractivePanel>(); }
 		}
 		private InteractivePanel _dialogPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "DialogUIPanel" ) ).GetComponent<InteractivePanel>(); }

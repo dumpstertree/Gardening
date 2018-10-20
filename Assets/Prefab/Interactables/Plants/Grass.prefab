@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23408215729614810}
   - component: {fileID: 54656346054086670}
   - component: {fileID: 135939411213084130}
+  - component: {fileID: 114541601591212482}
   m_Layer: 11
   m_Name: Grass
   m_TagString: Untagged
@@ -46,6 +47,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1556102794517172
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4593038633841250}
+  - component: {fileID: 114178160837961986}
+  m_Layer: 11
+  m_Name: Hitable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1621376364272866
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,9 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4504766706752852}
-  - component: {fileID: 114085241083859158}
-  - component: {fileID: 114948379102355534}
-  - component: {fileID: 114439074624070708}
   m_Layer: 0
   m_Name: Interactable Object
   m_TagString: Untagged
@@ -80,17 +94,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1856728644158834
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4645751505005250}
+  - component: {fileID: 114554706443039852}
+  m_Layer: 11
+  m_Name: Actionable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4161583369655008
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731867963699626}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4504766706752852}
+  m_Father: {fileID: 4593038633841250}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4504766706752852
@@ -103,8 +133,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4161583369655008}
-  - {fileID: 4574150643301964}
+  - {fileID: 4593038633841250}
+  - {fileID: 4645751505005250}
   m_Father: {fileID: 4663101678997918}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,6 +148,34 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 4593038633841250}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4593038633841250
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1556102794517172}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4161583369655008}
+  - {fileID: 4574150643301964}
+  m_Father: {fileID: 4504766706752852}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4645751505005250
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1856728644158834}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.000002, y: 0.9999984, z: 1.0000001}
+  m_Children: []
   m_Father: {fileID: 4504766706752852}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1244177939127644}
   m_LocalRotation: {x: 0, y: 0.7367279, z: 0, w: 0.6761893}
-  m_LocalPosition: {x: -38.18, y: 2.45, z: 36.86}
+  m_LocalPosition: {x: -40.010002, y: 2.45, z: 31.880003}
   m_LocalScale: {x: 1.1299876, y: 1.1314918, z: 1.1101594}
   m_Children:
   - {fileID: 4504766706752852}
@@ -205,20 +263,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectToDestroy: {fileID: 1244177939127644}
   _onDestroyed: []
---- !u!114 &114085241083859158
+--- !u!114 &114178160837961986
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1621376364272866}
+  m_GameObject: {fileID: 1556102794517172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ca82c0be6c674f2ebc22544a63091c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 84ad8a735d95f4c6c81f455e3161c232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _active: 1
-  _interactablePivot: {fileID: 0}
-  _uiAnchor: {fileID: 0}
+  _onHit:
+  - {fileID: 114066339077797800}
+  - {fileID: 114407310071273354}
 --- !u!114 &114407310071273354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,26 +292,28 @@ MonoBehaviour:
     type: 2}
   _instantiateAt: {fileID: 4574150643301964}
   _onInstantiate: []
---- !u!114 &114439074624070708
+--- !u!114 &114541601591212482
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1621376364272866}
+  m_GameObject: {fileID: 1244177939127644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ad8a735d95f4c6c81f455e3161c232, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ca82c0be6c674f2ebc22544a63091c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onHit:
-  - {fileID: 114066339077797800}
-  - {fileID: 114407310071273354}
---- !u!114 &114948379102355534
+  _active: 1
+  _interactablePivot: {fileID: 0}
+  _uiAnchor: {fileID: 0}
+  _hitDelegate: {fileID: 114178160837961986}
+  _actionDelegate: {fileID: 114554706443039852}
+--- !u!114 &114554706443039852
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1621376364272866}
+  m_GameObject: {fileID: 1856728644158834}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59cdb769909a1461caf28601fe9cbc5f, type: 3}

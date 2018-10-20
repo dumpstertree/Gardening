@@ -11,6 +11,15 @@ namespace Dumpster.Controllers {
 		public float VerticalInput { get; set; }
 		public bool IsStrafing { get; set; }
 
+		public bool IsSwinging { get; set; }
+		public float SwingProgress { get; set; }
+
+		public bool IsSwingingCombo1 { get; set; }
+		public float SwingProgressCombo1 { get; set; }
+
+		public bool IsSwingingCombo2 { get; set; }
+		public float SwingProgressCombo2 { get; set; }
+
 		public void Jump () {
 			
 			if ( _isOnGround ) {
@@ -51,9 +60,12 @@ namespace Dumpster.Controllers {
 		private bool _jumping;
 		private float _stride;
 
+		private AnimationDampener _combo1DampenerIdling;
+		private AnimationDampener _combo1DampenerMoving;
 
+		private AnimationDampener _combo2Dampener;
 
-
+		private AnimationDampener _attackDampener;
 		private AnimationDampener _jumpDampener;	
 		private AnimationDampener _fallDampener;
 		private AnimationDampener _landDampener;
@@ -90,6 +102,12 @@ namespace Dumpster.Controllers {
 		private bool _isRunning {
 			get{ return _isOnGround && _inputMagnitude > _runThreshold; }
 		}
+		private bool _isSwingingCombo1Moving {
+			get{ return IsSwingingCombo1 && (_isWalking || _isRunning); }
+		}
+		private bool _isSwingingCombo1Idling {
+			get{ return IsSwingingCombo1 && _isIdling; }
+		}
 
 
 		private bool _leftFoodDown {
@@ -98,10 +116,10 @@ namespace Dumpster.Controllers {
 		private bool _rightFoodDown {
 			get{ return !_leftFoodDown; }
 		}
-
 		private float _inputMagnitude {
 			get{ return new Vector2( HorizontalInput, VerticalInput ).magnitude; }
 		}
+
 
 		private float RaycastDown () {
 
@@ -184,10 +202,13 @@ namespace Dumpster.Controllers {
 			// stop ignoring gravity	
 			_jumping = false;
 		}
-
 		private void Start () { 
 
+			_combo1DampenerIdling  = new AnimationDampener( _animator, "Combo 1 Idling" );
+			_combo1DampenerMoving  = new AnimationDampener( _animator, "Combo 1 Moving" );
 
+			_combo2Dampener = new AnimationDampener( _animator, "Combo 2" );
+			_attackDampener  = new AnimationDampener( _animator, "Attack" );
 			_aimDampener  = new AnimationDampener( _animator, "Aim" );
 			_jumpDampener = new AnimationDampener( _animator, "Jump" );
 			_fallDampener = new AnimationDampener( _animator, "Fall" );
@@ -212,6 +233,7 @@ namespace Dumpster.Controllers {
 			_animator.SetWeight( "Idle", 1f );
 		}
 
+
 		private void FixedUpdate () {
 
 			UpdateRigidbody ();
@@ -234,6 +256,43 @@ namespace Dumpster.Controllers {
 			_rigidBody.MovePosition( transform.position + (_velocity * Time.fixedDeltaTime) );
 		}
 		private void Animate () {
+
+
+			// Swinging Combo 1 Idle
+			if ( !_wasSwingingCombo1Idling && _isSwingingCombo1Idling) {
+				OnBeginSwingingCombo1Idling ();
+			} else if ( _wasSwingingCombo1Idling && !_isSwingingCombo1Idling) {
+				OnEndSwingingCombo1Idling ();
+			} else if ( _isSwingingCombo1Idling) { 
+				OnSwingingCombo1Idling (); 
+			}
+
+			_wasSwingingCombo1Idling = _isSwingingCombo1Idling;
+
+
+			// Swinging Combo 1 Move
+			if ( !_wasSwingingCombo1Moving && _isSwingingCombo1Moving  ) {
+				OnBeginSwingingCombo1Moving ();
+			} else if ( _wasSwingingCombo1Moving && !_isSwingingCombo1Moving ) {
+				OnEndSwingingCombo1Moving ();
+			} else if ( _isSwingingCombo1Moving ) { 
+				OnSwingingCombo1Moving (); 
+			}
+
+			_wasSwingingCombo1Moving = _isSwingingCombo1Moving;
+
+
+			// Swinging Combo 1
+			if ( !_wasSwingingCombo2 && IsSwingingCombo2  ) {
+				OnBeginSwingingCombo2 ();
+			} else if ( _wasSwingingCombo2  && !IsSwingingCombo2  ) {
+				OnEndSwingingCombo2 ();
+			} else if ( IsSwingingCombo2 ) { 
+				OnSwingingCombo2 (); 
+			}
+
+			_wasSwingingCombo2 = IsSwingingCombo2;
+
 
 			// Strafing
 			if ( !_wasStrafing && IsStrafing ) {
@@ -382,7 +441,6 @@ namespace Dumpster.Controllers {
 			var xzVelocity = new Vector3( newVelocity.x, _velocity.y, newVelocity.z );
 			
 			_velocity = Vector3.Lerp( _velocity, xzVelocity, 0.2f );
-
 		}
 		private void FaceMomentum () {
 
@@ -402,6 +460,62 @@ namespace Dumpster.Controllers {
 
 			_rigidBody.MoveRotation( Quaternion.LookRotation( forward, Vector3.up ) );
 		}
+
+
+		
+		// Combo 1
+		private bool _wasSwingingCombo1Idling;
+
+		private void OnBeginSwingingCombo1Idling () {
+				
+			_combo1DampenerIdling.SetProgress( 0f );
+			_combo1DampenerIdling.SetWeight( 1f, 0.2f );
+		}
+		private void OnSwingingCombo1Idling () {
+
+			_combo1DampenerIdling.SetProgress( SwingProgressCombo1 );
+		}
+		private void OnEndSwingingCombo1Idling () {
+
+			_combo1DampenerIdling.SetWeight( 0f, 0.2f );		
+		}
+
+
+		private bool _wasSwingingCombo1Moving;
+
+		private void OnBeginSwingingCombo1Moving () {
+				
+			_combo1DampenerMoving.SetProgress( 0f );
+			_combo1DampenerMoving.SetWeight( 1f, 0.2f );
+		}
+		private void OnSwingingCombo1Moving () {
+
+			_combo1DampenerMoving.SetProgress( SwingProgressCombo1 );
+		}
+		private void OnEndSwingingCombo1Moving () {
+
+			_combo1DampenerMoving.SetWeight( 0f, 0.2f );		
+		}
+
+
+
+		// Combo 2
+		private bool _wasSwingingCombo2;
+
+		private void OnBeginSwingingCombo2 () {
+
+			_combo2Dampener.SetProgress( 0f  );
+			_combo2Dampener.SetWeight( 1f, 0.2f );
+		}
+		private void OnSwingingCombo2 () {
+
+			_combo2Dampener.SetProgress( SwingProgressCombo2 );
+		}
+		private void OnEndSwingingCombo2 () {
+
+			_combo2Dampener.SetWeight( 0f, 0.2f );
+		}
+
 
 
 		// Strafing

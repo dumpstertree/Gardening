@@ -11,6 +11,7 @@ namespace Crafting {
 		public string RecipeName { get{ return _recipeName; } }
 		public Item OutputObject { get{ return _outputObject; } }
 		public List<Component> Components { get{ return _components; } }
+		
 
 		// *********** PRIVATE ****************
 

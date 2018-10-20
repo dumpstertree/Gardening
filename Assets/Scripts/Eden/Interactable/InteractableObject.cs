@@ -39,22 +39,14 @@ namespace Eden.Interactable {
 
 		// ***************** PRIVATE ********************
 
-		[Header( "Interactable Properties" )]
+		[Header( "Properties" )]
 		[SerializeField] private bool _active = true;
 		[SerializeField] private Transform _interactablePivot;
 		[SerializeField] private Transform _uiAnchor;
 
-		private Hitable _hitDelegate;
-		private Actionable _actionDelegate;
-
-
-		// ***********************************************
-
-		protected virtual void Awake () {
-
-			_hitDelegate = GetComponent<Hitable>();
-			_actionDelegate = GetComponent<Actionable>();
-		}
+		[Header( "Interactable" )]
+		[SerializeField] private Hitable _hitDelegate;
+		[SerializeField] private Actionable _actionDelegate;
 	}
 }
 public interface IInteractable {

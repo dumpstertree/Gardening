@@ -1,4 +1,6 @@
-﻿namespace Eden {
+﻿using UnityEngine;
+
+namespace Eden {
 	
 	public class Input : Dumpster.Core.BuiltInModules.Input.Controller<Input.Package> {
 
@@ -29,7 +31,7 @@
 			var package = PollPackage();
 
 			if ( _lastPackage == null || ShouldUpdate( package, _lastPackage ) ) {
-				
+
 				PushInputPackage( package );
 				_lastPackage = package;
 			}
@@ -57,7 +59,6 @@
 
 			if ( package2.BackLeft.Bumper ) return true;
 			if ( package2.BackRight.Bumper ) return true;
-
 
 			return false;
 		}

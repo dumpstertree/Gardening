@@ -25,6 +25,9 @@ namespace Eden.Life.Chips {
 		public RangedWeaponChip RangedWeaponChip {
 			get{ return _rangedWeaponChip; }
 		}
+		public MeleeWeaponChip MeleeWeaponChip {
+			get{ return _meleeWeaponChip; }
+		}
 
 		public InteractableObject GetInteractableObject ( Item item ) {
 
@@ -69,6 +72,7 @@ namespace Eden.Life.Chips {
 		// *********************** Private ************************
 
 		[SerializeField] private RangedWeaponChip _rangedWeaponChip;
+		[SerializeField] private MeleeWeaponChip _meleeWeaponChip;
 
 		private List<InteractableObject> _interactableObjectStack;
 		private bool _inAction;

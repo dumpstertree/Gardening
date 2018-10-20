@@ -117,7 +117,7 @@ namespace Eden.Life {
 
 			for ( int i=0; i<_equipedStartingItems.Length; i++ ) {
 				
-				if ( i + 1 > EquipedItemsCount ) {
+				if ( i > EquipedItemsCount ) {
 					break;
 				}
 

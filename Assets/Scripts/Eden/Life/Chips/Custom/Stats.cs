@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Eden.Life;
+using Eden.Model.Interactable;
 using Eden.Model.Life;
 using Dumpster.Events;
 
@@ -80,7 +81,7 @@ namespace Eden.Life {
 			_hitable.OnHit += HandleOnHit;
 			_currentHealth = _maxHealth;
 		}
-		private void HandleOnHit( HitData data ) {
+		private void HandleOnHit( Hit data ) {
 
 			RemoveHealth( 1 );
 		}

@@ -44,6 +44,20 @@ public static class CreateDynamicRangedWeapon{
 }
 
 
+public static class CreateMeleeWeapon{
+   
+    [MenuItem("Assets/Create/Items/Melee")]
+    public static Eden.Templates.MeleeWeapon Create() {
+        
+        Eden.Templates.MeleeWeapon asset = ScriptableObject.CreateInstance<Eden.Templates.MeleeWeapon>();
+
+        AssetDatabase.CreateAsset(asset, "Assets/New Melee Item.asset");
+        AssetDatabase.SaveAssets();
+        
+        return asset;
+    }
+}
+
 public static class CreateActionableItem {
    
     [MenuItem("Assets/Create/Items/Actionable")]
