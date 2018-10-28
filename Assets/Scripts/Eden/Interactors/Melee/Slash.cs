@@ -4,6 +4,8 @@ using Eden.Model.Interactable;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
 
 namespace Eden.Interactors.Melee {
 	
@@ -21,7 +23,7 @@ namespace Eden.Interactors.Melee {
 			
 			user.SetSwingActive( true, comboNumber );
 
-			EdensGarden.Instance.Async.WaitForSeconds( _maxTime, () => {
+			Game.GetModule<Async>()?.WaitForSeconds( _maxTime, () => {
 				_user.SetSwingActive( false, comboNumber );
 				endSwing ();
 			});

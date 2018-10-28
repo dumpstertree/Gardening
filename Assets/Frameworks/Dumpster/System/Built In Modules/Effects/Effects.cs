@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Dumpster.Core.BuiltInModules.Effects {
+namespace Dumpster.BuiltInModules {
 
-	public class Controller : Module {
+	[CreateAssetMenu(menuName = "Dumpster/Modules/Effects")]	
+	public class Effects : Module {
 
 		private GameObject _smoke {
 			get{ return Resources.Load( "SmokeEffect" ) as GameObject; }
@@ -61,7 +63,7 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 		}
 		public void FreezeFrame ( float time ) {
 
-			StartCoroutine( FreezeFrameCoroutine(time) );
+			_game.StartCoroutine( FreezeFrameCoroutine(time) );
 		}
 		IEnumerator FreezeFrameCoroutine ( float time ) {
 

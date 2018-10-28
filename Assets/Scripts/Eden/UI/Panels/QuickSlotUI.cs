@@ -1,4 +1,5 @@
 ﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
 using Dumpster.Tweening;
 using Eden.Life;
 using Eden.Model;
@@ -7,7 +8,7 @@ using Eden.UI.Elements;
 
 namespace Eden.UI.Panels {
 	
-	public class QuickSlotUI: Dumpster.Core.BuiltInModules.UI.Panel {
+	public class QuickSlotUI: Dumpster.BuiltInModules.Panel {
 		
 
 		//***************** Override **********************
@@ -46,7 +47,7 @@ namespace Eden.UI.Panels {
 
 		private BlackBox _blackBox {
 			
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
 		}
 		private int _leftMostArrayIndex {
 			

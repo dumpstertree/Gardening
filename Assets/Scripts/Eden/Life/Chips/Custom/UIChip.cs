@@ -1,5 +1,6 @@
-using UnityEngine;
-using Eden.Interactable;
+using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using Eden.Modules;
 
 namespace Eden.Life.Chips {
 
@@ -7,10 +8,10 @@ namespace Eden.Life.Chips {
 	
 		public void OpenInventory () {
 			
-			EdensGarden.Instance.UI.Present( 
+			Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
 				
-				EdensGarden.Constants.NewUILayers.Midground, 
-				EdensGarden.Constants.UIContexts.Inventory 
+				Game.GetModule<Constants>().UILayers.Midground,
+				Game.GetModule<Constants>().UIContexts.Inventory
 			);
 		}
 	}

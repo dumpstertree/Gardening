@@ -2,7 +2,7 @@
 
 public class ShakeIn3DSpace : MonoBehaviour {
 
-	[SerializeField] private Dumpster.Core.BuiltInModules.Effects.Shakable _shakable;
+	[SerializeField] private Dumpster.BuiltInModules.Shakable _shakable;
 	
 	private void Awake () {
 

@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using Eden.Modules;
+using UnityEngine;
 using UI.Subpanels.Dialog;
+
 
 namespace Eden.UI.Panels {
 	
@@ -34,7 +37,7 @@ namespace Eden.UI.Panels {
 		}
 		private void Exit () {
 
-			EdensGarden.Instance.UI.Dismiss( EdensGarden.Constants.NewUILayers.Foreground, EdensGarden.Constants.UIContexts.Dialog );
+			Game.GetModule<Dumpster.BuiltInModules.UI>().Dismiss( Game.GetModule<Constants>().UILayers.Foreground, Game.GetModule<Constants>().UIContexts.Dialog );
 
 			if ( _onExit != null ) {
 				_onExit();

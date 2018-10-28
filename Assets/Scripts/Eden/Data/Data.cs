@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 
-namespace Eden.Data {
+namespace Dumpster.Core {
 
-	public class Controller {
+	public class Data {
 
 		public enum Path {
 			Player,
@@ -15,34 +15,23 @@ namespace Eden.Data {
 		private const string BUILDABLE_PATH = "/buildable/";
 		private const string RANGED_WEAPON_PATH = "/ranged/";
 
-		public void Save<T> ( Path path, string fileName, T data ) {
+		public void Save<T> ( string path, string fileName, T data ) {
 
-			if ( !Directory.Exists( Application.persistentDataPath + GetPath( path ) ) ) {
-                Directory.CreateDirectory( Application.persistentDataPath + GetPath( path ) );
+			if ( !Directory.Exists( Application.persistentDataPath + path ) ) {
+                Directory.CreateDirectory( Application.persistentDataPath + path );
             }
 
 			var json = JsonUtility.ToJson( data, true );
-			var fullPath = Application.persistentDataPath + GetPath( path ) + fileName;
+			var fullPath = Application.persistentDataPath + path + fileName;
 			File.WriteAllText( fullPath, json );
 		}
-		public T Load<T> ( Path path, string fileName ) {
+		public T Load<T> ( string path, string fileName ) {
 
-			var fullPath = Application.persistentDataPath + GetPath( path ) + fileName;
+			var fullPath = Application.persistentDataPath + path + fileName;
 			var json = LoadFileFromPath( fullPath );
 			var data = JsonUtility.FromJson<T>( json );
 
 			return data;
-		}
-
-		private string GetPath ( Path path ) {
-			
-			switch ( path ) {
-				case Path.Player : return PLAYER_PATH;
-				case Path.Buildable : return BUILDABLE_PATH;
-				case Path.RangedWeapon : return RANGED_WEAPON_PATH;
-			}
-
-			return "/";
 		}
 		private string LoadFileFromPath ( string path ) {
 

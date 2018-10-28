@@ -2,44 +2,53 @@
 
 namespace Dumpster.Core {
 
-	public abstract class Module : MonoBehaviour {
+	public abstract class Module : ScriptableObject {
 
-		public static Module Install ( Game game, System.Type type ) {
-
-			var m = game.gameObject.AddComponent( type ) as Module;
+		// ************* Public *******************
+		public void Install ( Game game ) {
 			
-			if ( m != null ) {
-				m._game = game;
-				m.OnInstall ();
-				game.OnSceneChanged += m.OnSceneChange;
-			} else {
-
-				Debug.LogWarning( "Trying to install " + type.ToString() + " which is not a Module!" );
-				return null;
-			}
-
-			return m;
+			_game = game;
+			
+			game.OnInit += Init;
+			game.OnSceneChanged += Reload;
+			game.OnUpdate += Update;
+			game.OnFixedUpdate += FixedUpdate;
 		}
-		public void Init () {
 
+		
+		// ************ Private *******************
+
+		private void Init () {
+		
 			_hasBeenInitialized = true;
 			OnInit();
 		}
-		public void Run () {
+		private void Reload () {
 
-			OnRun ();
+			OnReload ();
 		}
-		private void OnSceneChange () {
+		private void Update () {
 
-			OnReload();
+			OnUpdate ();
+		}
+		private void FixedUpdate () {
+
+			OnFixedUpdate ();
+		}
+
+
+		// ************ Protected *******************
+
+		protected Game _game {
+			private set; get;
 		}
 
 		protected bool _hasBeenInitialized;
-		protected Dumpster.Core.Game _game;
+		protected bool _hasRun;
 
-		protected virtual void OnInstall () {}
 		protected virtual void OnInit () {}
-		protected virtual void OnRun () {}
 		protected virtual void OnReload () {}
+		protected virtual void OnUpdate () {}
+		protected virtual void OnFixedUpdate () {}
 	}
 }

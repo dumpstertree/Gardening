@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Dumpster.Core.BuiltInModules.UI {
+namespace Dumpster.BuiltInModules {
 	
 	public class Context {
 
@@ -73,6 +73,5 @@ namespace Dumpster.Core.BuiltInModules.UI {
 				p.ExitFocus ();
 			}
 		}
-
 	}
 }

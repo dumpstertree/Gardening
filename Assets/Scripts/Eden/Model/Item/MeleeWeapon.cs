@@ -3,6 +3,8 @@ using Eden.Life.Chips;
 using Eden.Model.Interactable;
 using System;
 using UnityEngine;
+using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
 
 namespace Eden.Model {
 		
@@ -68,7 +70,7 @@ namespace Eden.Model {
 		private void AllowForCombo () {
 
 			_canConnectCombo = true;
-			EdensGarden.Instance.Async.WaitForSeconds( _comboConnectTime, () => _canConnectCombo = false );
+			Game.GetModule<Async>()?.WaitForSeconds( _comboConnectTime, () => _canConnectCombo = false );
 		}
 		private int GetComboIndex () {
 

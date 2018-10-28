@@ -2,6 +2,10 @@ using Eden.Properties;
 using Eden.Model.Interactable;
 using System.Linq;
 using UnityEngine;
+using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using Dumpster.Core.BuiltInModules;
+using Eden.Modules;
 
 namespace Eden.Interactors.Ranged {
 
@@ -24,7 +28,7 @@ namespace Eden.Interactors.Ranged {
 
 		public void SetBullet ( ICanUseRangedWeapon user, Hit hitData, float bulletSize, float bulletSpeed, float spread ) {
 			
-		
+
 			// set all protected variables
 			_user = user;
 			_hitData = hitData;
@@ -46,7 +50,7 @@ namespace Eden.Interactors.Ranged {
 
 
 			// find targetable
-			var targetable = EdensGarden.Instance.Targeting.GetTargetable( Camera.main.transform.position, user.GetLookingDirection(), 3f );
+			var targetable = Game.GetModule<Targeting>()?.GetTargetable( UnityEngine.Camera.main.transform.position, user.GetLookingDirection(), 3f );
 			if ( targetable != null ) {
 				forward = targetable.transform.position - user.GetSpawnLocation();
 			}
@@ -85,7 +89,7 @@ namespace Eden.Interactors.Ranged {
 
 			inst.GetComponent<Rigidbody>().velocity = velocity;
 
-			EdensGarden.Instance.Async.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
+			Game.GetModule<Async>()?.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
 		}
 		protected void MoveForward () {
 
@@ -136,7 +140,7 @@ namespace Eden.Interactors.Ranged {
 
 			RaycastHit hit;
 
-			if ( Physics.Raycast( Camera.main.transform.position, forward, out hit, Mathf.Infinity, _layermask )) {
+			if ( Physics.Raycast( UnityEngine.Camera.main.transform.position, forward, out hit, Mathf.Infinity, _layermask )) {
 				targetPoint = hit.point;
 			} else {
 				targetPoint = forward * 9999f;
@@ -166,7 +170,7 @@ namespace Eden.Interactors.Ranged {
 		}
 		private void PlayEffects () {
 
-			EdensGarden.Instance.Effects.Shake( transform.position, Dumpster.Core.BuiltInModules.Effects.ShakePower.Miniscule, Dumpster.Core.BuiltInModules.Effects.DecayRate.Quick );
+			Game.GetModule<Effects>()?.Shake( transform.position, Dumpster.BuiltInModules.ShakePower.Miniscule, Dumpster.BuiltInModules.DecayRate.Quick );
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Dumpster.BuiltInModules;
+using Dumpster.Core;
+using UnityEngine;
 
 namespace Eden.Interactable {
 	
@@ -9,7 +11,7 @@ namespace Eden.Interactable {
 		
 		public override void EventTriggered () {
 		
-			EdensGarden.Instance.Effects.FreezeFrame( _freezeFrameLength );
+			Game.GetModule<Effects>()?.FreezeFrame( _freezeFrameLength );
 		}
 	}
 }

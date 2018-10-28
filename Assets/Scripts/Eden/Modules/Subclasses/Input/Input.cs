@@ -2,6 +2,7 @@
 
 namespace Eden {
 	
+	[CreateAssetMenu( menuName = "Eden/Module/Input" )]
 	public class Input : Dumpster.Core.BuiltInModules.Input.Controller<Input.Package> {
 
 		private Package _lastPackage;
@@ -13,7 +14,7 @@ namespace Eden {
 		}
 
 		protected override Package PollPackage () {
-			
+
 			if ( _hasController ) {
 				return _ps4Controller.GetPackage();
 			} else {
@@ -26,7 +27,7 @@ namespace Eden {
 		}
 
 
-		private void Update () {
+		protected override void OnUpdate () {
 
 			var package = PollPackage();
 

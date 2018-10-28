@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
 
 namespace Eden.Model {
 	
@@ -15,7 +17,7 @@ namespace Eden.Model {
 
 				interactableObject.ActionDelegate.Action( interactor.BlackBox as Eden.Life.BlackBox );
 
-				EdensGarden.Instance.Async.WaitForSeconds( 0.5f, () => { 
+				Game.GetModule<Async>()?.WaitForSeconds( 0.5f, () => { 
 					onComplete ();
 				});
 			}

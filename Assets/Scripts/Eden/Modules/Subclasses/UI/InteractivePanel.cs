@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Dumpster.Core.BuiltInModules.UI;
+using Dumpster.BuiltInModules;
 
 namespace Eden.UI {
 

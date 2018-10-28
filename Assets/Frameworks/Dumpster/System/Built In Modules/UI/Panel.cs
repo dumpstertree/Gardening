@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
+namespace Dumpster.BuiltInModules {
 	
-namespace Dumpster.Core.BuiltInModules.UI {
-	
-	public class Panel: MonoBehaviour {
+	public class Panel : MonoBehaviour {
 
 		public void Init () {
 

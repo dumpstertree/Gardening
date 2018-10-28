@@ -1,12 +1,14 @@
-﻿using Eden.Life;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using Eden.Life;
 using UnityEngine;
 
 namespace Eden.UI.Panels {
 
-	public class Interactable : Dumpster.Core.BuiltInModules.UI.Panel {
+	public class Interactable : Dumpster.BuiltInModules.Panel {
 
 		private BlackBox _blackBox {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
 		}
 
 		[SerializeField] private Transform _visual;
@@ -25,7 +27,6 @@ namespace Eden.UI.Panels {
 
 				_visual.gameObject.SetActive( false );
 			}
-
 		}
 	}
 }

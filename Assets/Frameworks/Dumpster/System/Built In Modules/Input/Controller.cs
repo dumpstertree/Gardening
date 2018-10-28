@@ -70,10 +70,15 @@ namespace Dumpster.Core.BuiltInModules.Input {
 
 		// *************** Protected ******************
 		
+		protected override void OnReload () {
+
+			_layers = new List<Layer<T>>();
+			_registeredLayers = new Dictionary<string,Layer<T>>();
+		}
 		protected override void OnInit () {
 
-			 _layers = new List<Layer<T>>();
-			 _registeredLayers = new Dictionary<string,Layer<T>>();
+			_layers = new List<Layer<T>>();
+			_registeredLayers = new Dictionary<string,Layer<T>>();
 		}
 		protected void PushInputPackage ( T package ) {
 

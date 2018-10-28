@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+using Dumpster.Core;
 
-namespace Dumpster.Core.BuiltInModules.UI {
+namespace Dumpster.BuiltInModules {
 
 	public interface IContextDelgate {
 		Context GetContext ( string forContextIdentifier );
 		void ReturnContext ( Context context );
 	}
 
-	public class Controller : Module {
+	[CreateAssetMenu(menuName = "Dumpster/Modules/UI")]
+	public class UI : Module {
 
 		
 		// ***************** Public *********************
 
 		public IContextDelgate ContextDelgate {
-			private get; set;
+			set{ }
+			get{ return _game.GetComponent<IContextDelgate>(); }
 		}
 
 		public void Present( int layer, string contextIdentifier, System.Action<Context> onComplete = null ) {

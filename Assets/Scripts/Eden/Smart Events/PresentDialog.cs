@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
 using Dumpster.Events;
+using Eden.Modules;
+using UnityEngine;
 
 namespace Eden.Events {
 	
@@ -15,9 +17,13 @@ namespace Eden.Events {
 		}
 		private void HandleRecieveAction( Eden.Life.BlackBox user ) {
 			
-			EdensGarden.Instance.UI.Present( EdensGarden.Constants.NewUILayers.Foreground, EdensGarden.Constants.UIContexts.Dialog, SetDialog );
+			Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
+				Game.GetModule<Constants>().UILayers.Foreground, 
+				Game.GetModule<Constants>().UIContexts.Dialog, 
+				SetDialog 
+			);
 		}
-		private void SetDialog ( Dumpster.Core.BuiltInModules.UI.Context context ) {
+		private void SetDialog ( Dumpster.BuiltInModules.Context context ) {
 
 			var panel = context.GetContext( "DialogUIPanel(Clone)" );
 			if ( panel != null ) {

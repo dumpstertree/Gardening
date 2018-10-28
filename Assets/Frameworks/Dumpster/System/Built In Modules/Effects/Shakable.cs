@@ -1,7 +1,7 @@
-﻿
+﻿using Dumpster.Core;
 using UnityEngine;
 
-namespace Dumpster.Core.BuiltInModules.Effects {
+namespace Dumpster.BuiltInModules {
 	
 	public class Shakable : MonoBehaviour {
 
@@ -14,7 +14,7 @@ namespace Dumpster.Core.BuiltInModules.Effects {
 		}
 		private void Update () {
 
-			EdensGarden.Instance.Effects.RegisterShakableForFrame( this );
+			Game.GetModule<Effects>()?.RegisterShakableForFrame( this );
 		}
 		private void FireShakeEvent ( float magnitude ) {
 

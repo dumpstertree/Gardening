@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19a6fb6e0c0d443ba4d4bde83aedba8, type: 3}
+  m_Name: Constants
+  m_EditorClassIdentifier: 
+  _rangedWeapons:
+    _maxLevel: 10
+    _minRateOfFire: 3
+    _maxRateOfFire: 0.05
+    _minReloadSpeed: 3
+    _maxReloadSpeed: 0.5
+    _minAccuracy: 15
+    _maxAccuracy: 0
+    _minBulletSize: 1
+    _maxBulletSize: 5
+    _minBulletSpeed: 1
+    _maxBulletSpeed: 30
+    _minClipSize: 1
+    _maxClipSize: 1000
+    _minNumOfBullets: 1
+    _maxNumOfBullets: 10
+  _paths:
+    _playerPath: /player/
+    _buildablePath: /buildable/
+    _rangedWeaponPath: /ranged/

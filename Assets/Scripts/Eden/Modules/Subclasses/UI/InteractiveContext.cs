@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using UnityEngine;
 using Dumpster.Core.BuiltInModules.Input;
-using Dumpster.Core.BuiltInModules.UI;
 using System.Collections.Generic;
+using Dumpster.BuiltInModules;
 
 namespace Eden.UI {
 
-	public class InteractiveContext : Dumpster.Core.BuiltInModules.UI.Context, IInputReciever<Eden.Input.Package> {
+	public class InteractiveContext : Dumpster.BuiltInModules.Context, IInputReciever<Eden.Input.Package> {
 
 		void IInputReciever<Eden.Input.Package>.RecieveInput ( Eden.Input.Package package ) {
 			
@@ -56,8 +57,9 @@ namespace Eden.UI {
 			foreach ( Panel p in _registeredInteractivePanels ) {
 				p.Present ();
 			}
-			EdensGarden.Instance.Input.RegisterToInputLayer( _inputLayer, this );
-			EdensGarden.Instance.Input.RequestInput( _inputLayer );
+			
+			Game.GetModule<Eden.Input>()?.RegisterToInputLayer( _inputLayer, this );
+			Game.GetModule<Eden.Input>()?.RequestInput( _inputLayer );
 		}
 		public override void Dismiss () {
 
@@ -67,8 +69,8 @@ namespace Eden.UI {
 				p.Dismiss ();
 			}
 
-			EdensGarden.Instance.Input.RelinquishInput( _inputLayer );
-			EdensGarden.Instance.Input.DeregisterFromInputLayer( _inputLayer, this ); // this should probably be tied to destroy
+			Game.GetModule<Eden.Input>()?.RelinquishInput( _inputLayer );
+			Game.GetModule<Eden.Input>()?.DeregisterFromInputLayer( _inputLayer, this ); // this should probably be tied to destroy
 		}
 		public override void EnterFocus () {
 

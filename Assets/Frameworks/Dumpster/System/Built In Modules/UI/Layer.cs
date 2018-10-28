@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dumpster.Core.BuiltInModules.UI {
+namespace Dumpster.BuiltInModules {
 
 	public class Layer {
 

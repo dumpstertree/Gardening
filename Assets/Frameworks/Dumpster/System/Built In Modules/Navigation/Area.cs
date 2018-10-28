@@ -11,8 +11,8 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 			get { return _playerInstance; }
 		}
 			
-		public void ActivateArea ( string doorIdentider ) {
-
+		public void Activate ( string doorIdentider ) {
+			
 			LoadDoors ();
 			LoadPlayer ( doorIdentider );
 		}
@@ -126,5 +126,4 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 			}
 		}
 	}
-
 }

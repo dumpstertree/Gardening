@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using UnityEngine;
 using Eden.Life;
 
 namespace Eden.UI.Panels {
 
-	public class HUD : Dumpster.Core.BuiltInModules.UI.Panel {
-
+	public class HUD : Dumpster.BuiltInModules.Panel {
 
 		[Header( "Energy" )]
 		[SerializeField] private Transform _energyBar;
@@ -19,7 +20,7 @@ namespace Eden.UI.Panels {
 
 		
 		private BlackBox _blackBox {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
 		}
 
 

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UI.Elements;
-using Dumpster.Core.BuiltInModules.UI;
 
 namespace Eden.UI.Panels {
 
@@ -15,9 +15,9 @@ namespace Eden.UI.Panels {
 
 		// ************* PRIVATE *****************
 
-		[SerializeField] private GridLayoutGroup _layoutGroup;
+		[SerializeField] private UnityEngine.UI.GridLayoutGroup _layoutGroup;
 		[SerializeField] private RecipeBubbleUI _recipeBubblePrefab;
-		[SerializeField] private ToggleGroup _toggleGroup;
+		[SerializeField] private UnityEngine.UI.ToggleGroup _toggleGroup;
 			
 		private const int COLLUMNS = 3;
 		private const float PADDING = 25;
@@ -26,14 +26,14 @@ namespace Eden.UI.Panels {
 		// 	get{ return null; }
 		// }
 		private Eden.Life.BlackBox _player {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }		
 		}
 
 		// *************************************
 
 		protected override void OnInit () {
 			
-			_layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+			_layoutGroup.constraint = UnityEngine.UI.GridLayoutGroup.Constraint.FixedColumnCount;
 			_layoutGroup.constraintCount = COLLUMNS;
 			_layoutGroup.cellSize = _recipeBubblePrefab.GetComponent<RectTransform>().sizeDelta;
 			_layoutGroup.spacing = new Vector2( PADDING, PADDING );

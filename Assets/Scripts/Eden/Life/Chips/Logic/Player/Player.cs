@@ -1,8 +1,11 @@
-﻿using Dumpster.Core.BuiltInModules.Input;
+﻿using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
+using Dumpster.Core.BuiltInModules.Input;
 using Dumpster.BuiltInModules.Camera.Defaults;
 using Eden.Model;
 using Eden.Model.Life;
 using UnityEngine;
+using Eden.Modules;
 
 namespace Eden.Life.Chips.Logic {
 
@@ -54,7 +57,6 @@ namespace Eden.Life.Chips.Logic {
 					item = _blackBox.PrimaryEquipedItem;
 				}
 				return item;
-
 			}
 		}
 
@@ -137,7 +139,7 @@ namespace Eden.Life.Chips.Logic {
 			// i should bring back the targeting chip probably to interfact with the targetable system
 
 			if ( _currentItem.IsShootable ) {
-				var t = EdensGarden.Instance.Targeting.GetTargetable( Camera.main.transform.position, Camera.main.transform.forward, 15f );
+				var t = Game.GetModule<Targeting>()?.GetTargetable( UnityEngine.Camera.main.transform.position, UnityEngine.Camera.main.transform.forward, 15f );
 				if ( t != null ) visual.Target = t.GetComponentInParent<BlackBox>();
 			}
 
@@ -147,13 +149,15 @@ namespace Eden.Life.Chips.Logic {
 
 		private void Start () {
 
-			EdensGarden.Instance.Input.RegisterToInputLayer( EdensGarden.Constants.InputLayers.Player, this );		
-			EdensGarden.Instance.Input.RequestInput( EdensGarden.Constants.InputLayers.Player );
+			Game.GetModule<Eden.Input>()?.RegisterToInputLayer( Game.GetModule<Constants>().InputLayers.Player, this );		
+			Game.GetModule<Eden.Input>()?.RequestInput( Game.GetModule<Constants>().InputLayers.Player );
 
-			EdensGarden.Instance.Camera.SetFocus( _cameraTarget );	
+			Game.GetModule<Dumpster.Core.BuiltInModules.Camera>()?.SetFocus( _cameraTarget );	
 
-			EdensGarden.Instance.UI.Present( EdensGarden.Constants.NewUILayers.Midground, EdensGarden.Constants.UIContexts.Player );
+			Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
+				Game.GetModule<Constants>().UILayers.Midground,
+				Game.GetModule<Constants>().UIContexts.Player 
+			);
 		}
-
 	}
 }

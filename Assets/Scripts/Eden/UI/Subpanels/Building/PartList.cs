@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using System.Collections.Generic;
 using UnityEngine;
 using Eden.UI.Elements.Building;
 
@@ -91,7 +93,7 @@ namespace Eden.UI.Subpanels.Building {
 		
 		private Eden.Life.BlackBox _player {
  			get{ 
- 				return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
+ 				return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
  			}
  		}
 

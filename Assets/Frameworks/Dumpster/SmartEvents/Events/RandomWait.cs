@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
 
 namespace Dumpster.Events {
 	
@@ -17,7 +19,7 @@ namespace Dumpster.Events {
 		public override void EventTriggered() {
 
 			var rand = Random.Range( _minWait, _maxWait );
-			EdensGarden.Instance.Async.WaitForSeconds( rand, FireOnWaited );
+			Game.GetModule<Async>()?.WaitForSeconds( rand, FireOnWaited );
 		}
 
 

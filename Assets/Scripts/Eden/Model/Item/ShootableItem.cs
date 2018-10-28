@@ -1,4 +1,7 @@
-﻿using Eden.Model.Interactable;
+﻿using Dumpster.Core;
+using Dumpster.Core.BuiltInModules;
+using Eden.Model.Interactable;
+using Eden.Modules;
 using UnityEngine;
 using System;
 
@@ -35,7 +38,7 @@ namespace Eden.Model {
 
 				_reloading = true;
 
-				EdensGarden.Instance.Async.WaitForSeconds( _reloadSpeed, () => {
+				Game.GetModule<Async>()?.WaitForSeconds( _reloadSpeed, () => {
 					_availableBullets = _clipSize;
 					_reloading = false; 
 				});
@@ -56,17 +59,15 @@ namespace Eden.Model {
 				var fireRate = _rateOfFire;
 				
 				// create all the bullets
-				Action onStart = () => {
-					_firing = true;
-					for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( interactor );  }
-				};
+				_firing = true;
+				for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( interactor );  }
 				
 				// end firing				
 				Action onComplete = () => {
 					_firing = false;
 				};
 
-				EdensGarden.Instance.Async.WaitForSeconds( fireRate, onStart, null, onComplete );
+				Game.GetModule<Async>()?.WaitForSeconds( fireRate, onComplete );
 			}
 		}
 	
@@ -87,25 +88,25 @@ namespace Eden.Model {
 		private int _availableBullets;
 
 		private float _rateOfFire {
-			get { return EdensGarden.Instance.StatsForLevel.RateOfFire( Gun.Stats.RateOfFire ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.RateOfFire( Gun.Stats.RateOfFire ); }
 		}
 		private float _reloadSpeed {
-			get { return EdensGarden.Instance.StatsForLevel.ReloadSpeed( Gun.Stats.ReloadSpeed ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.ReloadSpeed( Gun.Stats.ReloadSpeed ); }
 		}
 		private float _accuracy {
-			get { return EdensGarden.Instance.StatsForLevel.Accuracy( Gun.Stats.Accuracy ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.Accuracy( Gun.Stats.Accuracy ); }
 		}
 		private int _numOfBullets {
-			get { return EdensGarden.Instance.StatsForLevel.NumOfBullets( Gun.Stats.NumOfBullets ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.NumOfBullets( Gun.Stats.NumOfBullets ); }
 		}
 		private int _clipSize {
-			get { return EdensGarden.Instance.StatsForLevel.ClipSize( Gun.Stats.ClipSize ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.ClipSize( Gun.Stats.ClipSize ); }
 		}
 		private float _bulletSpeed {
-			get { return EdensGarden.Instance.StatsForLevel.BulletSpeed( Gun.Stats.BulletSpeed ); }
+			get { return Game.GetModule<Eden.Modules.Constants>().RangedWeapons.BulletSpeed( Gun.Stats.BulletSpeed ); }
 		}
 		private float _bulletSize  {
-			get { return EdensGarden.Instance.StatsForLevel.BulletSize( Gun.Stats.BulletSize ); }
+			get { return  Game.GetModule<Eden.Modules.Constants>().RangedWeapons.BulletSize( Gun.Stats.BulletSize ); }
 		}
 
 

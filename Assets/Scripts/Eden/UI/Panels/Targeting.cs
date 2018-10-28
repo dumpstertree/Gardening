@@ -1,11 +1,12 @@
-﻿using Eden.Life;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using Eden.Life;
 using UnityEngine;
-using UnityEngine.UI;
 using Dumpster.Tweening;
 
 namespace Eden.UI.Panels {
 
-	public class Targeting :  Dumpster.Core.BuiltInModules.UI.Panel {
+	public class Targeting :  Dumpster.BuiltInModules.Panel {
 
 		protected override void OnInit () {
 			
@@ -15,7 +16,7 @@ namespace Eden.UI.Panels {
 
 
 		[SerializeField] private Transform _visual;
-		[SerializeField] private Image _healthFill;
+		[SerializeField] private UnityEngine.UI.Image _healthFill;
 
 		
 		private bool _visualWasVisible;
@@ -23,7 +24,7 @@ namespace Eden.UI.Panels {
 
 		
 		private BlackBox _blackBox {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
 		}
 
 

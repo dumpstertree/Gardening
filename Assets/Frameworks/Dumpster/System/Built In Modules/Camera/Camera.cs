@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 namespace Dumpster.Core.BuiltInModules {
-	
+
+	[CreateAssetMenu(menuName = "Dumpster/Modules/Camera")]	
 	public class Camera : Module {
 
 		public enum Priority {
@@ -21,23 +22,46 @@ namespace Dumpster.Core.BuiltInModules {
 			// create camera instance 
 			_cameraInstance = Instantiate( Resources.Load( CAMERA_PATH ) ) as GameObject;
 			_cameraTarget = new GameObject( "Camera Target" ).transform;
-			
-			_cameraInstance.transform.SetParent( transform, false );
-			_cameraTarget.SetParent( transform, false );
-			
-		}
-		protected override void OnRun () {
 
-			FindCameraControllers ();
+			_cameraInstance.transform.SetParent( _game.transform, false );
+			_cameraTarget.SetParent( _game.transform, false );
+			
 		}
 		protected override void OnReload () {
-
-			_lowPriorityControllerStack = new List<CameraController>();
-			_mediumPriorityControllerStack = new List<CameraController>();
-			_highPriorityControllerStack = new List<CameraController>();
+			
+			_lowPriorityControllerStack.Clear ();
+			_mediumPriorityControllerStack.Clear ();
+			_highPriorityControllerStack.Clear ();
 			_defaultController = null;
 
 			FindCameraControllers ();
+		}
+		protected override void OnFixedUpdate() {
+			
+			if ( !_hasBeenInitialized ) {
+				return;
+			}
+
+		
+			
+			if ( _controller != _lastController ) {
+
+				if ( _controller != null ) {
+					_controller.WillGainControl ();
+				}
+				if( _lastController != null ) {
+					_lastController.WillLoseControl ();
+				}
+			}
+
+			if ( _controller != null ) {
+				_controller.Control ( _cameraTarget, _cameraFocus );
+			}
+			
+			_cameraInstance.transform.position = _cameraTarget.position;
+			_cameraInstance.transform.rotation = _cameraTarget.rotation;
+
+			_lastController = _controller;
 		}
 
 
@@ -75,7 +99,7 @@ namespace Dumpster.Core.BuiltInModules {
 						_highPriorityControllerStack.Add( controller );
 					}
 					break;
-			} 
+			}
 		}
 		public void RelinquishControl ( CameraController controller ) {
 
@@ -113,7 +137,7 @@ namespace Dumpster.Core.BuiltInModules {
 			}
 		}
 		private void FindCameraControllers () {
-			
+					
 			foreach ( CameraController c in FindObjectsOfType<CameraController>() ) {
 
 				var cameraController = c;
@@ -126,31 +150,6 @@ namespace Dumpster.Core.BuiltInModules {
 					else { Debug.LogWarning( "More than one Default Controller in Scene" ); }
 				}
 			}
-		}
-		private void FixedUpdate () {
-				
-			if ( !_hasBeenInitialized ) {
-				return;
-			}
-			
-			if ( _controller != _lastController ) {
-
-				if ( _controller != null ) {
-					_controller.WillGainControl ();
-				}
-				if( _lastController != null ) {
-					_lastController.WillLoseControl ();
-				}
-			}
-
-			if ( _controller != null ) {
-				_controller.Control ( _cameraTarget, _cameraFocus );
-			}
-			
-			_cameraInstance.transform.position = _cameraTarget.position;
-			_cameraInstance.transform.rotation = _cameraTarget.rotation;
-
-			_lastController = _controller;
-		}		
+		}	
 	}
 }

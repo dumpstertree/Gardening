@@ -1,6 +1,8 @@
-﻿using Dumpster.Core.BuiltInModules.UI;
+﻿using Dumpster.Core;
+using Eden.Modules;
 using UnityEngine;
 using System.Collections.Generic;
+using Dumpster.BuiltInModules;
 
 namespace Eden.UI {
 	
@@ -8,27 +10,20 @@ namespace Eden.UI {
 
 		Context IContextDelgate.GetContext ( string forContextIdentifier ) {
 
-			switch ( forContextIdentifier ) {
-				
-				case EdensGarden.Constants.UIContexts.None: 
-					return null;
-				
-				case EdensGarden.Constants.UIContexts.Player:
-					return GetPlayerContext ();
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Player ) {
+				return GetPlayerContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Dialog ) {
+				return GetDialogContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Inventory ) {
+				return GetInventoryContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Building ) {
+				return GetBuildingContext ();
+			}
 
-				case EdensGarden.Constants.UIContexts.Dialog:
-					return GetDialogContext ();
-
-				case EdensGarden.Constants.UIContexts.Inventory:
-					return GetInventoryContext ();
-
-				case EdensGarden.Constants.UIContexts.Building:
-					return GetBuildingContext ();
-
-				default:
-					return null;
-
-			} 
+			return null;
 		}
 		void IContextDelgate.ReturnContext ( Context context ) {
 
@@ -42,8 +37,8 @@ namespace Eden.UI {
 
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Player, 
-				EdensGarden.Constants.InputLayers.Player, 
+				Game.GetModule<Constants>().UIContexts.Player, 
+				Game.GetModule<Constants>().InputLayers.Player, 
 				
 				new List<InteractivePanel>{
 				}, 
@@ -59,8 +54,8 @@ namespace Eden.UI {
 			
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Dialog, 
-				EdensGarden.Constants.InputLayers.ForegroundUI, 
+				Game.GetModule<Constants>().UIContexts.Dialog, 
+				Game.GetModule<Constants>().InputLayers.ForegroundUI, 
 				
 				new List<InteractivePanel>{
 					ConditionForCanvas( _dialogPanel )
@@ -72,8 +67,8 @@ namespace Eden.UI {
 		private Context GetInventoryContext () {
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Inventory, 
-				EdensGarden.Constants.InputLayers.MidgroundUI, 
+				Game.GetModule<Constants>().UIContexts.Inventory, 
+				Game.GetModule<Constants>().InputLayers.MidgroundUI, 
 				
 				new List<InteractivePanel>{
 					ConditionForCanvas( _inventoryPanel ),
@@ -85,8 +80,8 @@ namespace Eden.UI {
 		private Context GetBuildingContext () {
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Building, 
-				EdensGarden.Constants.InputLayers.BuildingUI, 
+				Game.GetModule<Constants>().UIContexts.Building, 
+				Game.GetModule<Constants>().InputLayers.MidgroundUI, 
 				
 				new List<InteractivePanel>{
 					ConditionForCanvas( _buildingPanel ) 

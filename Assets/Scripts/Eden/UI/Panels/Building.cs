@@ -1,4 +1,6 @@
-﻿using Eden.UI.Elements.Building;
+﻿using Dumpster.Core;
+using Eden.Modules;
+using Eden.UI.Elements.Building;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,9 +23,9 @@ namespace Eden.UI.Panels {
 		public override void ReciveInput( Input.Package package ){
 			
 			if ( package.Face.Right_Down ) {
-				EdensGarden.Instance.UI.Dismiss( 
-					EdensGarden.Constants.NewUILayers.Midground,
-					EdensGarden.Constants.UIContexts.Building 
+				Game.GetModule<Dumpster.BuiltInModules.UI>().Dismiss( 
+					Game.GetModule<Constants>().UILayers.Midground,
+					Game.GetModule<Constants>().UIContexts.Building 
 				);
 				return;
 			}
@@ -88,13 +90,13 @@ namespace Eden.UI.Panels {
 
 
 			// save all data
-			EdensGarden.Instance.Data.Save( Data.Controller.Path.RangedWeapon, _item.UniqueID, rangedWeapondata );
-			EdensGarden.Instance.Data.Save( Data.Controller.Path.Buildable, _item.UniqueID, saveData );
+			Game.Data.Save( Game.GetModule<Constants>().Paths.RangedWeaponPath, _item.UniqueID, rangedWeapondata );
+			Game.Data.Save( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID, saveData );
 		}
 		public void Load () {
 
 			// look for save data
-			var saveData = EdensGarden.Instance.Data.Load<Eden.Model.Building.Grid.SaveData>( Data.Controller.Path.Buildable, _item.UniqueID );
+			var saveData = Game.Data.Load<Eden.Model.Building.Grid.SaveData>( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID );
 			if( saveData == null ) { saveData = new Eden.Model.Building.Grid.SaveData( new Eden.Model.Building.Grid.Part[]{} ); }
 			
 			// if save data is found create parts

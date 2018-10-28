@@ -4,6 +4,7 @@ using Eden.Properties;
 
 namespace Eden.Modules {
 
+	[CreateAssetMenu( menuName = "Eden/Module/Targeting" )]
 	public class Targeting : Dumpster.Core.Module {
 
 
@@ -21,7 +22,6 @@ namespace Eden.Modules {
 			GetTargetablesInRange( targetables, position, forward, maxRange );
 			GetVisibleTargetables( targetables, position );
 
-			Debug.Log( targetables.Count );
 			var best = GetBestTarget( targetables, position, forward );
 
 			return best;

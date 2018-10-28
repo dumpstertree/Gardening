@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using UnityEngine;
 	
 namespace Dumpster.Core.BuiltInModules.Rooms {
 
@@ -25,11 +27,14 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 
 		private void Awake () {
 			
-			_trigger.OnTriggerZoneEnter += () => { EdensGarden.Instance.Rooms.ChangeArea( 
-				_targetRoomIdentifier, 
-				_targetDoorIdentifier, 
-				_transitionIdentifier ); 
-			};
+			if ( _trigger != null ) {
+			
+				_trigger.OnTriggerZoneEnter += () => { Game.GetModule<Navigation>()?.ChangeArea( 
+					_targetRoomIdentifier, 
+					_targetDoorIdentifier, 
+					_transitionIdentifier ); 
+				};
+			}
 		}
 		public GameObject LoadPlayer( GameObject playerPrefab ) {
 

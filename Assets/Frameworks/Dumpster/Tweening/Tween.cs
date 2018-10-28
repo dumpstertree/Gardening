@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dumpster.Core;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,14 +12,14 @@ namespace Dumpster.Tweening {
 		public static Tween Vector3 ( Action<Vector3> setter, Vector3 startValue, Vector3 targetValue, float time ) {
 
 			var t = new Tween();
-			t._tweenValue = EdensGarden.Instance.StartCoroutine( t.TweenValue( time, v => t.OnVector3ValueChange( setter, startValue, targetValue, v ) ) );
+			t._tweenValue = Game.Instance.StartCoroutine( t.TweenValue( time, v => t.OnVector3ValueChange( setter, startValue, targetValue, v ) ) );
 
 			return t;
 		}
 		public static Tween Color ( Action<Color> setter, Color startValue, Color targetValue, float time  ) {
 
 			var t = new Tween();
-			t._tweenValue = EdensGarden.Instance.StartCoroutine( t.TweenValue( time, v => t.OnColorValueChange( setter, startValue, targetValue, v ) ) );
+			t._tweenValue = Game.Instance.StartCoroutine( t.TweenValue( time, v => t.OnColorValueChange( setter, startValue, targetValue, v ) ) );
 
 			return t;
 		}
@@ -29,7 +30,7 @@ namespace Dumpster.Tweening {
 	
 		public void Kill () {
 
-			EdensGarden.Instance.StopCoroutine( _tweenValue );
+			Game.Instance.StopCoroutine( _tweenValue );
 		}
 		public Tween OnComplete( Action onComplete ) {
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Dumpster.Core;
 using Eden.Modules;
 
 namespace Eden.Properties {
@@ -7,7 +8,7 @@ namespace Eden.Properties {
 
 		void IProperty.Update () {
 
-			EdensGarden.Instance.Targeting.RegisterTargetableForFrame( this );
+			Game.GetModule<Targeting>()?.RegisterTargetableForFrame( this );
 		}
 	}
 }

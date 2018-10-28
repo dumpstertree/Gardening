@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+using Dumpster.Core;
+using Dumpster.BuiltInModules;
 using Eden.Life;
 using Eden.UI.Elements;
+using Eden.Modules;
 
 namespace Eden.UI.Panels {
 	
@@ -10,7 +13,7 @@ namespace Eden.UI.Panels {
 		[SerializeField] private ItemSlot[] _equipedItemsSlots;
 
 		private BlackBox _blackBox {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
 		}
 
 		protected override void OnInit () {
@@ -25,10 +28,10 @@ namespace Eden.UI.Panels {
 
 			if ( package.Face.Right_Down ) {
 				
-				EdensGarden.Instance.UI.Dismiss (
+				Game.GetModule<Dumpster.BuiltInModules.UI>().Dismiss (
 					
-					EdensGarden.Constants.NewUILayers.Midground, 
-					EdensGarden.Constants.UIContexts.Inventory 
+					Game.GetModule<Constants>().UILayers.Midground, 
+					Game.GetModule<Constants>().UIContexts.Inventory 
 				);
 			}
 		}

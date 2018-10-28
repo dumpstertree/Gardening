@@ -4,32 +4,18 @@ using UnityEngine;
 
 namespace Dumpster.Core.BuiltInModules {
 	
+	[CreateAssetMenu(menuName = "Dumpster/Modules/Async")]
 	public class Async : Module {
 
-		public void WaitForSeconds( float seconds, Action onStart, Action<float> onWait, Action onComplete ) {
-			
-			StartCoroutine( WaitForSecondsCoroutine( seconds, onStart, onWait, onComplete ) );
-		}
 		public void WaitForSeconds( float seconds, Action onComplete ) {
 			
-			StartCoroutine( WaitForSecondsCoroutine( seconds, onComplete ) );
+			_game.StartCoroutine( WaitForSecondsCoroutine( seconds, onComplete ) );
 		}
 		public void WaitForEndOfFrame( Action onComplete ){
 			
-			StartCoroutine( WaitForEndOfFrameCoroutine( onComplete ) );
+			_game.StartCoroutine( WaitForEndOfFrameCoroutine( onComplete ) );
 		}
 
-		IEnumerator WaitForSecondsCoroutine( float seconds, Action onStart, Action<float> onWait, Action onComplete  ) {
-
-			if ( onStart != null ) { onStart(); }
-			
-			for (float t = 0f; t<seconds; t+=Time.deltaTime ) {
-				if ( onWait != null ) { onWait( t ); }
-				yield return null;
-			}
-
-			if ( onComplete != null ) onComplete();
-		}
 		IEnumerator WaitForSecondsCoroutine( float seconds, Action onComplete ) {
 			yield return new WaitForSeconds( seconds );
 			onComplete();
