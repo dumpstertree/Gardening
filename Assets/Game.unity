@@ -483,7 +483,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2062995901}
   - component: {fileID: 2062995900}
-  - component: {fileID: 2062995899}
   - component: {fileID: 2062995902}
   m_Layer: 0
   m_Name: Game
@@ -492,17 +491,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2062995899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2062995898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6eaf8ee69bc415daf12f31cdf916f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2062995900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,6 +506,10 @@ MonoBehaviour:
   _modules:
   - _module: {fileID: 11400000, guid: b57c6603f8c58442ea408dd38b4049b4, type: 2}
     _instantiate: 0
+  - _module: {fileID: 11400000, guid: cc7af73c0d4e846ce80ae4e50f9a4081, type: 2}
+    _instantiate: 0
+  - _module: {fileID: 11400000, guid: 2adce836331fa4af7a301dcc92c8a38b, type: 2}
+    _instantiate: 1
   - _module: {fileID: 11400000, guid: 9cf6dc440afa34d62a72fb03ca34a3e7, type: 2}
     _instantiate: 1
   - _module: {fileID: 11400000, guid: 7f8d26933aaa54e279f050ad24de31c2, type: 2}
@@ -532,8 +524,6 @@ MonoBehaviour:
     _instantiate: 1
   - _module: {fileID: 11400000, guid: 9c9c6176e26f04b99b30cbe8af91c81c, type: 2}
     _instantiate: 1
-  _installedModules: []
-  _dataSourceTransform: {fileID: 2062995901}
 --- !u!4 &2062995901
 Transform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
 using Eden.Modules;
 using Eden.UI.Elements.Building;
 using System.Collections.Generic;
@@ -90,13 +91,13 @@ namespace Eden.UI.Panels {
 
 
 			// save all data
-			Game.Data.Save( Game.GetModule<Constants>().Paths.RangedWeaponPath, _item.UniqueID, rangedWeapondata );
-			Game.Data.Save( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID, saveData );
+			Game.GetModule<Data>()?.Save( Game.GetModule<Constants>().Paths.RangedWeaponPath, _item.UniqueID, rangedWeapondata );
+			Game.GetModule<Data>()?.Save( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID, saveData );
 		}
 		public void Load () {
 
 			// look for save data
-			var saveData = Game.Data.Load<Eden.Model.Building.Grid.SaveData>( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID );
+			var saveData = Game.GetModule<Data>()?.Load<Eden.Model.Building.Grid.SaveData>( Game.GetModule<Constants>().Paths.BuildablePath, _item.UniqueID );
 			if( saveData == null ) { saveData = new Eden.Model.Building.Grid.SaveData( new Eden.Model.Building.Grid.Part[]{} ); }
 			
 			// if save data is found create parts

@@ -51,7 +51,7 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		private IEnumerator Transition ( Game game, Action onComplete ) {
 			
 			// play audio
-			game.AudioSource.PlayOneShot( _audio );
+			Game.GetModule<Audio>().PlayScreenAudio( _audio );
 
 			// loop through transition sprites
 			for ( int i =0; i<_frames.Length; i++ ) {

@@ -1,19 +1,17 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using UnityEngine;
 using System.IO;
 
-namespace Dumpster.Core {
+namespace Dumpster.BuiltInModules {
 
-	public class Data {
+	[CreateAssetMenu(menuName = "Dumpster/Modules/Data")]
+	public class Data : Module {
 
 		public enum Path {
 			Player,
 			RangedWeapon,
 			Buildable
 		}
-
-		private const string PLAYER_PATH = "/player/";
-		private const string BUILDABLE_PATH = "/buildable/";
-		private const string RANGED_WEAPON_PATH = "/ranged/";
 
 		public void Save<T> ( string path, string fileName, T data ) {
 

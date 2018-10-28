@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Dumpster.BuiltInModules;
 using Dumpster.Core;
 using Eden.Modules;
+using UnityEngine;
 
 namespace Eden.Model {
 
@@ -29,13 +30,13 @@ namespace Eden.Model {
 			var path = Game.GetModule<Eden.Modules.Constants>().Paths.RangedWeaponPath;
 			var fileName = UniqueID;
 
-			Game.Data.Save( path, fileName, rangedWeapon );
+			Game.GetModule<Data>()?.Save( path, fileName, rangedWeapon );
 		}
 		private Eden.Model.Building.RangedWeapon LoadRangedWeapon () {
 
 			var path = Game.GetModule<Eden.Modules.Constants>().Paths.RangedWeaponPath;
 			var fileName = UniqueID;
-			var loadedRangedWeapon = Game.Data.Load<Eden.Model.Building.RangedWeapon>( path, fileName ); 
+			var loadedRangedWeapon = Game.GetModule<Data>()?.Load<Eden.Model.Building.RangedWeapon>( path, fileName ); 
 
 			return loadedRangedWeapon;
 		}

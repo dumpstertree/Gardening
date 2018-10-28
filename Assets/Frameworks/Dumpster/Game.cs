@@ -6,7 +6,7 @@ namespace Dumpster.Core {
 	
 public class Game : MonoBehaviour {
 
-		public AudioSource AudioSource;
+	// ****************** Public ********************
 
 		public static Game Instance {
 			get{
@@ -31,21 +31,7 @@ public class Game : MonoBehaviour {
 			Debug.LogWarning( "Game does not have a module installed of type '" + typeof( T ).ToString() + "'!" );
 			return null;
 		}
-		
-		[SerializeField] private ModuleInstallInstructions[] _modules;
-		[SerializeField] private List<Module> _installedModules;
-
-		[SerializeField] private Transform _dataSourceTransform;
-		private IGameDataSource _dataSource { 
-			get { 
-				return _dataSourceTransform.GetComponent<IGameDataSource>(); 
-			} 
-		}
-
-		public static Dumpster.Core.Data Data {
-			get{ return _instance._data; }
-		}
-
+	
 
 		public delegate void OnInitEvent();
 		public OnInitEvent OnInit;
@@ -59,10 +45,14 @@ public class Game : MonoBehaviour {
 		public delegate void OnFixedUpdateEvent();
 		public OnFixedUpdateEvent OnFixedUpdate;
 
-		protected static Game _instance;
+
+		// ****************** Private ********************
+
+		[SerializeField] private ModuleInstallInstructions[] _modules;
 
 
-		private Data _data;
+		private static Game _instance;
+		private List<Module> _installedModules;
 
 
 		private void Awake () {
@@ -70,9 +60,6 @@ public class Game : MonoBehaviour {
 			if ( _instance == null ){ 
 				
 				_installedModules = new List<Module>();
-				_data = new Dumpster.Core.Data ();
-
-				AudioSource = gameObject.AddComponent<AudioSource>();
 				
 				SetInstance( this );
 				
@@ -120,10 +107,6 @@ public class Game : MonoBehaviour {
 				module.Install( this );
 				_installedModules.Add( module );
 			}
-
-			foreach( Module m in _dataSource.Modules() ) {
-				m.Install( this );
-			}
 		}
 		private void FireInitEvent () {
 			
@@ -162,11 +145,5 @@ public class Game : MonoBehaviour {
 			[SerializeField] private Module _module;
 			[SerializeField] private bool _instantiate = true;
 		}
-	}
-	
-
-	public interface IGameDataSource {
-	
-		Module[] Modules ();
 	}
 }
