@@ -8,7 +8,7 @@ namespace Eden.Interactors.Ranged {
 
 			MoveForward ();
 
-			var collision = LookForCollision( _user );
+			var collision = LookForCollision( _ranged );
 			if ( collision != null ) {
 					
 				Collide( collision, false );

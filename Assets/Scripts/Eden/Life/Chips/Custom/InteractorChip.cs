@@ -18,7 +18,7 @@ namespace Eden.Life.Chips {
 			if ( !_inAction ) {
 
 				_inAction = true;
-				item.Use( this, EndAction );
+				// item.Use( this, EndAction );
 			}
 		}
 

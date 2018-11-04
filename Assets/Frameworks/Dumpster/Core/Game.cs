@@ -45,6 +45,8 @@ public class Game : MonoBehaviour {
 		public delegate void OnFixedUpdateEvent();
 		public OnFixedUpdateEvent OnFixedUpdate;
 
+		public delegate void OnLateUpdateEvent();
+		public OnLateUpdateEvent OnLateUpdate;
 
 		// ****************** Private ********************
 
@@ -80,6 +82,10 @@ public class Game : MonoBehaviour {
 		private void FixedUpdate () {
 			
 			FireOnFixedUpdate ();
+		}
+		private void LateUpdate () {
+			
+			FireOnLateUpdate ();
 		}
 		
 		private void SetInstance ( Game newInstance ) {
@@ -124,6 +130,12 @@ public class Game : MonoBehaviour {
 
 			if ( OnFixedUpdate != null ) {
 				OnFixedUpdate ();
+			}
+		}
+		private void FireOnLateUpdate () {
+
+			if ( OnLateUpdate != null ) {
+				OnLateUpdate ();
 			}
 		}
 		private void FireOnSceneChangedEvent () {

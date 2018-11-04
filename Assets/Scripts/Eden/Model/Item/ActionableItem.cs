@@ -2,6 +2,7 @@
 using UnityEngine;
 using Dumpster.Core;
 using Dumpster.Core.BuiltInModules;
+using Eden.Characteristics;
 
 namespace Eden.Model {
 	
@@ -9,13 +10,13 @@ namespace Eden.Model {
 
 		public ActionableItem( string prefabID, string displayName, int maxCount, bool expendable, Sprite sprite ) : base (prefabID, displayName, maxCount, expendable, sprite)  {}
 
-		protected override void OnUse (  Eden.Life.Chips.InteractorChip interactor, Action onComplete ) {
+		protected override void OnUse ( Dumpster.Core.Actor actor, Action onComplete ) {
 
-			var interactableObject = interactor.GetInteractableObject( this );
+			var otherActor = actor.GetCharacteristic<Interactor>()?.GetActor( this );
 			
-			if ( interactableObject != null && interactableObject.Actionable ) {
+			if ( otherActor != null) {
 
-				interactableObject.ActionDelegate.Action( interactor.BlackBox as Eden.Life.BlackBox );
+				otherActor.GetCharacteristic<Talkable>()?.Talk();
 
 				Game.GetModule<Async>()?.WaitForSeconds( 0.5f, () => { 
 					onComplete ();

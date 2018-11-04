@@ -16,7 +16,7 @@ namespace Eden.Interactors.Ranged {
 			// var target = FindClosestTarget ();
 			// if ( target != null ) { RotateTowardsTarget( target ); }
 
-			var collision = LookForCollision ( _user );
+			var collision = LookForCollision ( _ranged );
 			if ( collision != null ) { Collide( collision ); }
 		}
 

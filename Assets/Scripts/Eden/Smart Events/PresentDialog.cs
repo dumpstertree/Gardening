@@ -17,7 +17,7 @@ namespace Eden.Events {
 		}
 		private void HandleRecieveAction( Eden.Life.BlackBox user ) {
 			
-			Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
+			Game.GetModule<Dumpster.BuiltInModules.UI>()?.Present( 
 				Game.GetModule<Constants>().UILayers.Foreground, 
 				Game.GetModule<Constants>().UIContexts.Dialog, 
 				SetDialog 

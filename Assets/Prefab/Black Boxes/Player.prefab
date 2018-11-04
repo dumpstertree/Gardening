@@ -764,6 +764,8 @@ GameObject:
   - component: {fileID: 54899388647120888}
   - component: {fileID: 136428736992455976}
   - component: {fileID: 114650701459894084}
+  - component: {fileID: 114706612844276248}
+  - component: {fileID: 114462890574150466}
   m_Layer: 14
   m_Name: Player
   m_TagString: Untagged
@@ -7377,6 +7379,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meleeSpawner: {fileID: 4677880437988630}
   _characterController: {fileID: 114487617437686728}
+--- !u!114 &114462890574150466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215791882758422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a4b918c021749058d663d981bd2120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTarget: {fileID: 4280075936743590}
+  _cameraController: {fileID: 114401763773443214}
+  _characterController: {fileID: 114487617437686728}
+  _quickslotChip: {fileID: 114038802407540838}
+  _interactorChip: {fileID: 114922633580215252}
+  _uiChip: {fileID: 114915138388761852}
 --- !u!114 &114487617437686728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7643,6 +7662,17 @@ MonoBehaviour:
   _uiAnchor: {fileID: 0}
   _hitDelegate: {fileID: 114764095314829112}
   _actionDelegate: {fileID: 0}
+--- !u!114 &114706612844276248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215791882758422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3192be71a15d446909acba76631b330e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114739309654146876
 MonoBehaviour:
   m_ObjectHideFlags: 1

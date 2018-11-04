@@ -6,6 +6,7 @@ using Dumpster.Core;
 using Dumpster.BuiltInModules;
 using Dumpster.Core.BuiltInModules;
 using Eden.Modules;
+using Eden.Characteristics;
 
 namespace Eden.Interactors.Ranged {
 
@@ -17,7 +18,8 @@ namespace Eden.Interactors.Ranged {
 				
 		private const float CASING_KILL_TIME = 15.0f;
 
-		protected ICanUseRangedWeapon _user;
+		protected Actor _user;
+		protected CanUseRangedWeapons _ranged;
 		protected Hit _hitData;
 		protected float _bulletSize;
 		protected float _bulletSpeed;
@@ -26,11 +28,12 @@ namespace Eden.Interactors.Ranged {
 		
 		// ******************* Public **************************
 
-		public void SetBullet ( ICanUseRangedWeapon user, Hit hitData, float bulletSize, float bulletSpeed, float spread ) {
+		public void SetBullet ( Actor actor, Hit hitData, float bulletSize, float bulletSpeed, float spread ) {
 			
 
 			// set all protected variables
-			_user = user;
+			_user = actor;
+			_ranged = actor.GetCharacteristic<CanUseRangedWeapons>( true );
 			_hitData = hitData;
 			_bulletSize = bulletSize;
 			_bulletSpeed = bulletSpeed;
@@ -38,11 +41,11 @@ namespace Eden.Interactors.Ranged {
 
 
 			// set start position
-			SetStartPosition( user.GetSpawnLocation() );
+			SetStartPosition( _ranged.GetSpawnLocation() );
 			
 			
 			// get initial direction
-			var forward = GetForward( user.GetSpawnLocation(), user.GetLookingDirection() );
+			var forward = GetForward( _ranged.GetSpawnLocation(), _ranged.GetLookingDirection() );
 
 
 			// set forward taking into account spread
@@ -50,9 +53,9 @@ namespace Eden.Interactors.Ranged {
 
 
 			// find targetable
-			var targetable = Game.GetModule<Targeting>()?.GetTargetable( UnityEngine.Camera.main.transform.position, user.GetLookingDirection(), 3f );
+			var targetable = Game.GetModule<Targeting>()?.GetTargetable( UnityEngine.Camera.main.transform.position, _ranged.GetLookingDirection(), 3f );
 			if ( targetable != null ) {
-				forward = targetable.transform.position - user.GetSpawnLocation();
+				forward = targetable.transform.position - _ranged.GetSpawnLocation();
 			}
 
 		
@@ -97,18 +100,17 @@ namespace Eden.Interactors.Ranged {
 		}
 		protected void Collide ( Collider collision, bool destroyThis = true ) {
 
-			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
+			var actor = collision.GetComponentInChildren<Actor>();
 			
-			if ( interactable != null && interactable.Hitable ) {
-				
-				interactable.HitDelegate.Hit( _hitData );
+			if ( actor != null ) {
+				actor.GetCharacteristic<Dumpster.Characteristics.Damageable>()?.Damage();
 			}
 
 			if ( destroyThis ) {
 				Destroy( gameObject );
 			}
 		}
-		protected Collider LookForCollision ( ICanUseRangedWeapon user ) {
+		protected Collider LookForCollision ( CanUseRangedWeapons user ) {
 
 			var distance = _bulletSpeed * Time.deltaTime;
 

@@ -1,6 +1,8 @@
 ﻿using Eden.Model.Interactable;
 using System.Collections;
 using UnityEngine;
+using Dumpster.Core;
+using Dumpster.Characteristics;
 
 public class Explosion : MonoBehaviour {
 
@@ -37,13 +39,13 @@ public class Explosion : MonoBehaviour {
 		Destroy( gameObject );
 	}
 	private void OnTriggerEnter( Collider collision ) {
-
-  		if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
+		
+		  if( _layermask == (_layermask | (1 << collision.gameObject.layer) ) ) {
 			
-			var interactable = collision.GetComponentInChildren<Eden.Interactable.InteractableObject>();
-
-			if ( interactable && interactable.Hitable ){
-				interactable.HitDelegate.Hit( _hitData );
+			var actor = collision.GetComponent<Actor>();
+			if ( actor != null ) {
+				
+				actor.GetCharacteristic<Damageable>()?.Damage();
 			}
   		}
 	}

@@ -8,7 +8,6 @@ namespace Dumpster.Core.BuiltInModules.Input {
 		// *************** Public ******************
 		
 		public void RegisterToInputLayer( string identifier, IInputReciever<T> reciever ) {
-
 			Layer<T> layer;
 
 			if ( _registeredLayers.ContainsKey( identifier ) ) {

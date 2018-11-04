@@ -13,6 +13,7 @@ namespace Dumpster.Core {
 			game.OnSceneChanged += Reload;
 			game.OnUpdate += Update;
 			game.OnFixedUpdate += FixedUpdate;
+			game.OnLateUpdate += LateUpdate;
 		}
 
 		
@@ -35,6 +36,10 @@ namespace Dumpster.Core {
 
 			OnFixedUpdate ();
 		}
+		private void LateUpdate () {
+
+			OnLateUpdate ();
+		}
 
 
 		// ************ Protected *******************
@@ -50,5 +55,6 @@ namespace Dumpster.Core {
 		protected virtual void OnReload () {}
 		protected virtual void OnUpdate () {}
 		protected virtual void OnFixedUpdate () {}
+		protected virtual void OnLateUpdate () {}
 	}
 }

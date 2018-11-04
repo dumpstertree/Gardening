@@ -23,7 +23,7 @@ namespace Eden.Properties {
 		void IProperty.Update () {
 
 			if ( _activeMagnets.Count > 0 ) {
-					
+				
 				var magnet = GetClosest ();
 				var distance = Vector3.Distance( magnet.transform.position, transform.position );
 

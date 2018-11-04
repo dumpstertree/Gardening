@@ -1,5 +1,6 @@
 ﻿using Dumpster.Core;
 using Dumpster.Core.BuiltInModules;
+using Eden.Characteristics;
 using Eden.Model.Interactable;
 using Eden.Modules;
 using UnityEngine;
@@ -44,7 +45,7 @@ namespace Eden.Model {
 				});
 			}
 		}
-		public void Fire (  Eden.Life.Chips.InteractorChip interactor ) {
+		public void Fire ( Actor actor ) {
 			
 			// if trying to fire and no bullets reload
 			if ( _availableBullets <= 0 ) {
@@ -60,7 +61,7 @@ namespace Eden.Model {
 				
 				// create all the bullets
 				_firing = true;
-				for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( interactor );  }
+				for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( actor );  }
 				
 				// end firing				
 				Action onComplete = () => {
@@ -74,10 +75,16 @@ namespace Eden.Model {
 		
 		// ************ Protected **************
 		
-		protected override void OnUse ( Eden.Life.Chips.InteractorChip interactor, Action onComplete  ) {
+		protected override void OnUse ( Actor actor, Action onComplete  ) {
 
-			Fire( interactor );
-			onComplete();
+			var ranged = actor.GetCharacteristic<CanUseRangedWeapons>( true );
+			
+			if ( ranged != null ) {
+				Fire( actor );
+				onComplete();
+			} else {
+				onComplete();
+			}
 		}
 
 		
@@ -110,12 +117,12 @@ namespace Eden.Model {
 		}
 
 
-		private void CreateBullet ( Eden.Life.Chips.InteractorChip interactor ) {
+		private void CreateBullet ( Actor actor ) {
 
 			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
 			var hitData = new Hit( null, 1 );
 
-			bullet.SetBullet( interactor.RangedWeaponChip, hitData, _bulletSize, _bulletSpeed, _accuracy );
+			bullet.SetBullet( actor, hitData, _bulletSize, _bulletSpeed, _accuracy );
 
 			_availableBullets--;
 		}	

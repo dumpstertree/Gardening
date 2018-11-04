@@ -2,30 +2,37 @@
 using Dumpster.BuiltInModules;
 using Eden.Life;
 using UnityEngine;
+using Eden.Characteristics;
 
 namespace Eden.UI.Panels {
 
 	public class Interactable : Dumpster.BuiltInModules.Panel {
 
-		private BlackBox _blackBox {
-			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+		private Actor _actor {
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
 
 		[SerializeField] private Transform _visual;
 
 		private void Update () {
 
-			var interactable = _blackBox.Visual.InteractingWith;
-			if ( interactable != null ) {
+			var interactor = _actor.GetCharacteristic<Interactor>( true );
+			var playerLogic = _actor.GetCharacteristic<PlayerLogic>( true );
 
-				_visual.gameObject.SetActive( true );
+			if ( interactor != null && playerLogic != null ) {
+				
+				var interactable = interactor.GetActor( playerLogic.CurrentItemInHand );
+				if ( interactable != null ) {
 
-				var pos = Camera.main.WorldToScreenPoint( interactable.UIAnchor.transform.position );
-				_visual.position = pos;
-			
-			} else {
+					_visual.gameObject.SetActive( true );
 
-				_visual.gameObject.SetActive( false );
+					var pos = Camera.main.WorldToScreenPoint( interactable.transform.position );
+					_visual.position = pos;
+				
+				} else {
+
+					_visual.gameObject.SetActive( false );
+				}
 			}
 		}
 	}

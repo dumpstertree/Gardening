@@ -5,6 +5,7 @@ using Eden.Life;
 using Eden.Model;
 using UnityEngine;
 using Eden.UI.Elements;
+using Eden.Characteristics;
 
 namespace Eden.UI.Panels {
 	
@@ -45,9 +46,9 @@ namespace Eden.UI.Panels {
 		private int _index = -1;
 
 
-		private BlackBox _blackBox {
+		private Actor _blackBox {
 			
-			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
 		private int _leftMostArrayIndex {
 			
@@ -76,8 +77,8 @@ namespace Eden.UI.Panels {
 		
 			// left
 			_items[ 0 ] = CreateItem (
-				 _blackBox.EquipedItems.GetInventoryItem( 
-					Wrap( _blackBox.Visual.EquipedItemNumber - 1 )
+				 _blackBox.GetCharacteristic<EquippedItemsInventory>().Inventory.GetInventoryItem( 
+					Wrap( _blackBox.GetCharacteristic<EquippedItemsInventory>().NumOfItem - 1 )
 				), 0
 			);
 			_items[ 0 ].transform.localScale = ScaleForIndex( 0 );
@@ -85,8 +86,8 @@ namespace Eden.UI.Panels {
 		
 			// center
 			_items[ 1 ] = CreateItem (
-				 _blackBox.EquipedItems.GetInventoryItem( 
-					Wrap( _blackBox.Visual.EquipedItemNumber  )
+				 _blackBox.GetCharacteristic<EquippedItemsInventory>().Inventory.GetInventoryItem( 
+					Wrap( _blackBox.GetCharacteristic<EquippedItemsInventory>().NumOfItem )
 				), 1
 			);
 			_items[ 1 ].transform.localScale = ScaleForIndex( 1 );
@@ -94,20 +95,20 @@ namespace Eden.UI.Panels {
 
 			// right
 			_items[ 2 ] = CreateItem (
-				 _blackBox.EquipedItems.GetInventoryItem( 
-					Wrap( _blackBox.Visual.EquipedItemNumber + 1 ) 
+				 _blackBox.GetCharacteristic<EquippedItemsInventory>().Inventory.GetInventoryItem( 
+					Wrap( _blackBox.GetCharacteristic<EquippedItemsInventory>().NumOfItem + 1 )
 				), 2
 			);
 			_items[ 2 ].transform.localScale = ScaleForIndex( 2 );
 
 
-			_index = _blackBox.Visual.EquipedItemNumber;
+			_index = _blackBox.GetCharacteristic<EquipedItemSwapper>().EquipedIndex;
 		}
 	
 		
 		private void CheckIndexChange () {
 
-			var index = _blackBox.Visual.EquipedItemNumber;
+			var index = _blackBox.GetCharacteristic<EquipedItemSwapper>().EquipedIndex;
 
 			if ( _index == index ) {
 				return;
@@ -226,12 +227,12 @@ namespace Eden.UI.Panels {
 
 		private int Wrap ( int index ) {
 
-			var max = (float)_blackBox.EquipedItems.InventoryCount;
+			var max = (float) _blackBox.GetCharacteristic<EquippedItemsInventory>().NumOfItem ;
 			return Mathf.RoundToInt( Mathf.Repeat( (float)index, max ) );
 		}
 		private Eden.Model.Item ItemForIndex ( int index ) {
 		
-			return _blackBox.EquipedItems.GetInventoryItem( Wrap( index ) );
+			return  _blackBox.GetCharacteristic<EquippedItemsInventory>().Inventory.GetInventoryItem( Wrap( index ) );
 		}
 		private Vector3 PosForIndex ( int index ) {
 

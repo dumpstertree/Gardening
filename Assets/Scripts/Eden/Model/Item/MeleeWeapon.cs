@@ -5,6 +5,7 @@ using System;
 using UnityEngine;
 using Dumpster.Core;
 using Dumpster.Core.BuiltInModules;
+using Eden.Characteristics;
 
 namespace Eden.Model {
 		
@@ -19,10 +20,12 @@ namespace Eden.Model {
 		}
 
 
-		protected override void OnUse( InteractorChip interactor, Action onComplete ) {
+		protected override void OnUse( Dumpster.Core.Actor actor, Action onComplete ) {
 
-			if ( interactor.MeleeWeaponChip != null ) {
-				StartSwing( interactor, onComplete );
+			var melee = actor.GetCharacteristic<CanUseMeleeItems>( true );
+			
+			if ( melee != null ) {
+				StartSwing( actor, onComplete );
 			} else {
 				onComplete ();
 			}
@@ -43,21 +46,19 @@ namespace Eden.Model {
 		}
 
 
-		private void StartSwing ( InteractorChip interactor, Action onComplete ) {
+		private void StartSwing ( Dumpster.Core.Actor actor, Action onComplete ) {
 
 			// update combo
 			_combo = GetComboIndex();
-
 			
 			// get new swing prefab
 			var prefab = _swingPrefabs[ _combo ];
 
-
 			// create the swing
-			CreateSwing( prefab, interactor, () => EndSwing( interactor, onComplete ) );
+			CreateSwing( prefab, actor, () => EndSwing( actor, onComplete ) );
 		}
 		
-		private void EndSwing ( InteractorChip interactor, Action onComplete ) {
+		private void EndSwing ( Dumpster.Core.Actor actor, Action onComplete ) {
 
 			// allow for a combo
 			if ( _hasMoreCombos ) {
@@ -77,12 +78,12 @@ namespace Eden.Model {
 			return ( _canConnectCombo && _hasMoreCombos ) ? _combo + 1 : 0;
 		}
 
-		private void CreateSwing ( Slash swingPrefab, InteractorChip interactor, Action endSwing ) {
+		private void CreateSwing ( Slash swingPrefab, Dumpster.Core.Actor actor, Action endSwing ) {
 
 			var swing = GameObject.Instantiate( swingPrefab );
 			var hit = new Hit( null, 1 );
 
-			swing.Set( interactor.MeleeWeaponChip, hit, _combo, endSwing );
+			swing.Set( actor, hit, _combo, endSwing );
 		}
 	}
 }

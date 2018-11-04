@@ -29,10 +29,11 @@ namespace Eden {
 
 		protected override void OnUpdate () {
 
+			
 			var package = PollPackage();
 
 			if ( _lastPackage == null || ShouldUpdate( package, _lastPackage ) ) {
-
+			
 				PushInputPackage( package );
 				_lastPackage = package;
 			}

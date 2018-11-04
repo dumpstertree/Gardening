@@ -97,9 +97,9 @@ namespace Eden.Model {
 		
 		// ***************** Public *******************
 		
-		public void Use( Eden.Life.Chips.InteractorChip interactor, Action onComplete ) {
+		public void Use( Dumpster.Core.Actor actor, Action onComplete ) {
 
-			OnUse( interactor, onComplete );
+			OnUse( actor, onComplete );
 
 			if ( Expendable ) {
 				ReduceCount( 1 );
@@ -124,7 +124,8 @@ namespace Eden.Model {
 		
 		// ***************** Protected *******************
 
-		protected virtual void OnUse ( Eden.Life.Chips.InteractorChip interactor, Action onComplete ) {}
+		protected virtual void OnUse ( Dumpster.Core.Actor actor, Action onComplete ) {
+		}
 		
 		
 		// ***************** Private *******************

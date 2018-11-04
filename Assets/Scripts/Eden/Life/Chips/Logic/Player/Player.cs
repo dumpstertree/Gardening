@@ -149,15 +149,15 @@ namespace Eden.Life.Chips.Logic {
 
 		private void Start () {
 
-			Game.GetModule<Eden.Input>()?.RegisterToInputLayer( Game.GetModule<Constants>().InputLayers.Player, this );		
-			Game.GetModule<Eden.Input>()?.RequestInput( Game.GetModule<Constants>().InputLayers.Player );
+			// Game.GetModule<Eden.Input>()?.RegisterToInputLayer( Game.GetModule<Constants>().InputLayers.Player, this );		
+			// Game.GetModule<Eden.Input>()?.RequestInput( Game.GetModule<Constants>().InputLayers.Player );
 
-			Game.GetModule<Dumpster.Core.BuiltInModules.Camera>()?.SetFocus( _cameraTarget );	
+			// Game.GetModule<Dumpster.Core.BuiltInModules.Camera>()?.SetFocus( _cameraTarget );	
 
-			Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
-				Game.GetModule<Constants>().UILayers.Midground,
-				Game.GetModule<Constants>().UIContexts.Player 
-			);
+			// Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
+			// 	Game.GetModule<Constants>().UILayers.Midground,
+			// 	Game.GetModule<Constants>().UIContexts.Player 
+			// );
 		}
 	}
 }

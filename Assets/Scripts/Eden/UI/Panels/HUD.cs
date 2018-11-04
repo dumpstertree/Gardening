@@ -2,6 +2,7 @@
 using Dumpster.BuiltInModules;
 using UnityEngine;
 using Eden.Life;
+using Dumpster.Characteristics;
 
 namespace Eden.UI.Panels {
 
@@ -19,47 +20,52 @@ namespace Eden.UI.Panels {
 		[SerializeField] private Transform _reticle;
 
 		
-		private BlackBox _blackBox {
-			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+		private Actor _actor {
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
 
 
 		private void Update () {
 
-			var visual = _blackBox.Visual;
+			var health = _actor.GetCharacteristic<Health>( true );
+			if ( health != null ) {
 
-			SizeHealthBar( visual.CurrentHealth, visual.MaxHealth );
+				SizeHealthBar ( health.Current, health.Max );
+			}
 
-
-			// Is Shootable
-			if ( visual.CurrentItemInHand.IsShootable ) {
-
-				SetReticleVisible( true );
+			var playerLogic = _actor.GetCharacteristic<PlayerLogic>( true );
+			if ( playerLogic != null ) {
 				
-				
-				// Is reloading
-				if ( visual.CurrentItemInHand.AsShootableItem.IsReloading ) {
+				if ( playerLogic.CurrentItemInHand.IsShootable ) {
 
-					SizeReloadingBar( 0f, 0f );
+					SetReticleVisible( true );
+					
+					
+					// Is reloading
+					if ( playerLogic.CurrentItemInHand.AsShootableItem.IsReloading ) {
 
-				
-				// Is Not Reloading
+						SizeReloadingBar( 0f, 0f );
+
+					
+					// Is Not Reloading
+					} else {
+							
+						SetEnergyBarVisible( true );
+						SizeEnergyBar( 
+							playerLogic.CurrentItemInHand.AsShootableItem.AvailableBullets, 
+							playerLogic.CurrentItemInHand.AsShootableItem.ClipSize 
+						);
+					}
+
+			
+				// Not Shootable
 				} else {
-						
-					SetEnergyBarVisible( true );
-					SizeEnergyBar( 
-						visual.CurrentItemInHand.AsShootableItem.AvailableBullets, 
-						visual.CurrentItemInHand.AsShootableItem.ClipSize 
-					);
+
+					SetReticleVisible( false );
+					SetEnergyBarVisible( false );
 				}
 
-		
-			// Not Shootable
-			} else {
-
-				SetReticleVisible( false );
-				SetEnergyBarVisible( false );
-			}
+				}
 		}
 
 
