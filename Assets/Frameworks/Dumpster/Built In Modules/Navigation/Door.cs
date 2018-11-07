@@ -15,7 +15,7 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 
 
 		[Header( "Door Properties" )]
-		[SerializeField] private Dumpster.Triggers.BoxZone _trigger;
+		// [SerializeField] private Dumpster.Triggers.BoxZone _trigger;
 		[SerializeField] private Transform _spawnLocation;
 		[SerializeField] private string _identifier;
 		[SerializeField] private bool _isDefualtSpawnLocation;
@@ -27,14 +27,15 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 
 		private void Awake () {
 			
-			if ( _trigger != null ) {
+			Debug.LogWarning( "No Longer Supported!" );
+			// if ( _trigger != null ) {
 			
-				_trigger.OnTriggerZoneEnter += () => { Game.GetModule<Navigation>()?.ChangeArea( 
-					_targetRoomIdentifier, 
-					_targetDoorIdentifier, 
-					_transitionIdentifier ); 
-				};
-			}
+			// 	_trigger.OnTriggerZoneEnter += () => { Game.GetModule<Navigation>()?.ChangeArea( 
+			// 		_targetRoomIdentifier, 
+			// 		_targetDoorIdentifier, 
+			// 		_transitionIdentifier ); 
+			// 	};
+			// }
 		}
 		public GameObject LoadPlayer( GameObject playerPrefab ) {
 

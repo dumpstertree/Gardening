@@ -1,7 +1,6 @@
 ﻿using Dumpster.Core;
 using Dumpster.Core.BuiltInModules;
 using Eden.Characteristics;
-using Eden.Model.Interactable;
 using Eden.Modules;
 using UnityEngine;
 using System;
@@ -120,9 +119,8 @@ namespace Eden.Model {
 		private void CreateBullet ( Actor actor ) {
 
 			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
-			var hitData = new Hit( null, 1 );
 
-			bullet.SetBullet( actor, hitData, _bulletSize, _bulletSpeed, _accuracy );
+			bullet.SetBullet( actor, _bulletSize, _bulletSpeed, _accuracy );
 
 			_availableBullets--;
 		}	

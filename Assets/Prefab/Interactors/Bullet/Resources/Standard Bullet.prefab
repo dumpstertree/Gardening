@@ -19,14 +19,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4820381963303684}
-  - component: {fileID: 135039299264318436}
   - component: {fileID: 96339480096629574}
   - component: {fileID: 33275583903188522}
   - component: {fileID: 23498702888689708}
   - component: {fileID: 82815114137213740}
   - component: {fileID: 114083237891081260}
   m_Layer: 9
-  m_Name: Bullet
+  m_Name: Standard Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,18 +295,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layermask:
     serializedVersion: 2
-    m_Bits: 14353
+    m_Bits: 12305
   _casingPrefab: {fileID: 1751685824669476, guid: 52a45de127aa548d5a5ba457d244f8ab,
     type: 2}
---- !u!135 &135039299264318436
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1669668533054396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}

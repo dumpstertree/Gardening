@@ -1,7 +1,6 @@
 ﻿using Dumpster.Core;
 using Dumpster.BuiltInModules;
 using Dumpster.Tweening;
-using Eden.Life;
 using Eden.Model;
 using UnityEngine;
 using Eden.UI.Elements;

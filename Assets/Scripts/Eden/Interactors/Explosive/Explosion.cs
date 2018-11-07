@@ -1,15 +1,12 @@
-﻿using Eden.Model.Interactable;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Dumpster.Core;
 using Dumpster.Characteristics;
 
 public class Explosion : MonoBehaviour {
 
-	public void Set ( Eden.Life.BlackBox attacker , Hit hitData ) {
+	public void Set () {
 		
-		// _attacker = attacker;
-		_hitData = hitData;
 	}
 
 
@@ -17,8 +14,6 @@ public class Explosion : MonoBehaviour {
 	[SerializeField] private float _size;
 	[SerializeField] private float _duration;
 
-	// private Eden.Life.BlackBox _attacker;
-	private Hit _hitData;
 
 	private void Awake () {
 

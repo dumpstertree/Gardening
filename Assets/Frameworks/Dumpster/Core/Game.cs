@@ -48,6 +48,9 @@ public class Game : MonoBehaviour {
 		public delegate void OnLateUpdateEvent();
 		public OnLateUpdateEvent OnLateUpdate;
 
+		public delegate void OnDrawGizmosEvent();
+		public OnDrawGizmosEvent OnDrawGameGizmos;
+
 		// ****************** Private ********************
 
 		[SerializeField] private ModuleInstallInstructions[] _modules;
@@ -86,6 +89,10 @@ public class Game : MonoBehaviour {
 		private void LateUpdate () {
 			
 			FireOnLateUpdate ();
+		}
+		private void OnDrawGizmos () {
+
+			FireOnDrawGizmosEvent ();
 		}
 		
 		private void SetInstance ( Game newInstance ) {
@@ -144,6 +151,12 @@ public class Game : MonoBehaviour {
 				OnSceneChanged ();
 			}
 		}
+		private void FireOnDrawGizmosEvent () {
+
+			if( OnDrawGameGizmos != null ) {
+				OnDrawGameGizmos ();
+			}
+		}
 
 		[System.Serializable]
 		private class ModuleInstallInstructions {
@@ -154,6 +167,7 @@ public class Game : MonoBehaviour {
 			public bool Instantiate {
 				get{ return _instantiate; }
 			}
+			
 			[SerializeField] private Module _module;
 			[SerializeField] private bool _instantiate = true;
 		}

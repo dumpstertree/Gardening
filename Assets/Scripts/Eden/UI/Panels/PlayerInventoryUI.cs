@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using Dumpster.Core;
 using Dumpster.BuiltInModules;
-using Eden.Life;
 using Eden.UI.Elements;
 using Eden.Modules;
+using Eden.Characteristics;
 
 namespace Eden.UI.Panels {
 	
@@ -12,16 +12,16 @@ namespace Eden.UI.Panels {
 		[SerializeField] private ItemSlot[] _inventorySlots;
 		[SerializeField] private ItemSlot[] _equipedItemsSlots;
 
-		private BlackBox _blackBox {
-			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
+		private Actor _actor {
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
 
 		protected override void OnInit () {
 
 			base.OnInit ();
 
-			RegisterInventory( _blackBox.Inventory, _inventorySlots );
-			RegisterInventory( _blackBox.EquipedItems, _equipedItemsSlots );
+			RegisterInventory( _actor.GetCharacteristic<Inventory>().Inv, _inventorySlots );
+			RegisterInventory( _actor.GetCharacteristic<EquippedItemsInventory>().Inventory, _equipedItemsSlots );
 		}
 		
 		public override void ReciveInput( Input.Package package ) {

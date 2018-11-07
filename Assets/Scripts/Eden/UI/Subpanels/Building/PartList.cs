@@ -3,6 +3,7 @@ using Dumpster.BuiltInModules;
 using System.Collections.Generic;
 using UnityEngine;
 using Eden.UI.Elements.Building;
+using Eden.Characteristics;
 
 namespace Eden.UI.Subpanels.Building {
 
@@ -52,7 +53,7 @@ namespace Eden.UI.Subpanels.Building {
 				
 				var part = _parts[ atIndex ];
 				_parts.RemoveAt( atIndex );
-				_player.Inventory.SetInventoryItem( atIndex, null );
+				_actor.GetCharacteristic<Inventory>().Inv.SetInventoryItem( atIndex, null );
 				RemovePartVisual( atIndex );
 				__index = 0;
 				
@@ -91,9 +92,9 @@ namespace Eden.UI.Subpanels.Building {
 		private List<Eden.Model.GunBuildableItem> _parts;
 		private int __index;
 		
-		private Eden.Life.BlackBox _player {
+		private Actor _actor {
  			get{ 
- 				return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); 
+ 				return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); 
  			}
  		}
 
@@ -131,9 +132,9 @@ namespace Eden.UI.Subpanels.Building {
 			_parts = new List<Eden.Model.GunBuildableItem>();
 			_partVisuals = new List<PartCell>();
 			
-			for( int i =0; i<_player.Inventory.InventoryCount-1; i++ ) {
+			for( int i =0; i<_actor.GetCharacteristic<Inventory>().Inv.InventoryCount-1; i++ ) {
 				
-				var item = _player.Inventory.GetInventoryItem( i );
+				var item = _actor.GetCharacteristic<Inventory>().Inv.GetInventoryItem( i );
 				if ( item != null ) {
 					if ( item.IsGunBuildable ){
 						_parts.Add( item.AsGunBuildable );

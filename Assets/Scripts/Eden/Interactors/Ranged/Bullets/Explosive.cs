@@ -1,5 +1,4 @@
-﻿using Eden.Model.Interactable;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Eden.Interactors.Ranged {
 	
@@ -22,10 +21,6 @@ namespace Eden.Interactors.Ranged {
 
 			var explosion = Instantiate( _explosivePrefab );
 			explosion.transform.position = transform.position;
-
-			var hitData = new Hit( null, 1 );
-
-			// explosion.Set( _user, hitData );
 		}
 	}
 }

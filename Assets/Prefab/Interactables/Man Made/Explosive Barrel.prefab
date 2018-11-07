@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114682892936209396}
   - component: {fileID: 114482023185643352}
   - component: {fileID: 114449446341858860}
+  - component: {fileID: 114598678998266152}
   m_Layer: 0
   m_Name: Characteristics
   m_TagString: Untagged
@@ -216,8 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aefe2687ca0141c9b632478ee2a80e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 1
   _health: 1
+  _maxHealth: 1
+  _hasInfiniteHealth: 0
 --- !u!114 &114449446341858860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,7 +234,9 @@ MonoBehaviour:
   _onHealthDecrease: 1
   _onHealthIncrease: 0
   _onDeath: 0
-  _onMagnetTargetReached: 0
+  _onActorEnterTrigger: 0
+  _onActorExitTrigger: 0
+  _onRestore: 0
   _spawner: {fileID: 4430578654657640}
   _prefab: {fileID: 1578011619424466, guid: 905e231a42c5a4414a56281569fd2e6d, type: 2}
 --- !u!114 &114482023185643352
@@ -249,7 +253,20 @@ MonoBehaviour:
   _onHealthDecrease: 0
   _onHealthIncrease: 0
   _onDeath: 1
-  _onMagnetTargetReached: 0
+  _onActorEnterTrigger: 0
+  _onActorExitTrigger: 0
+  _onRestore: 0
+--- !u!114 &114598678998266152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275299211919376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a19e480949204303b1f0fd1ce2f3fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114682892936209396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,7 +281,9 @@ MonoBehaviour:
   _onHealthDecrease: 0
   _onHealthIncrease: 0
   _onDeath: 1
-  _onMagnetTargetReached: 0
+  _onActorEnterTrigger: 0
+  _onActorExitTrigger: 0
+  _onRestore: 0
   _explosionPrefab: {fileID: 1984029538504354, guid: 1d337624803104143aae0a4cbe791976,
     type: 2}
   _position: {fileID: 4792405969918976}

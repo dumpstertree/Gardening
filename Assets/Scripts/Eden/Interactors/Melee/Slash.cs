@@ -1,6 +1,5 @@
 ﻿using System;
 using Eden.Interactable;
-using Eden.Model.Interactable;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
@@ -12,14 +11,13 @@ namespace Eden.Interactors.Melee {
 	
 	public class Slash : MonoBehaviour { // To be renamed swing
 
-		public void Set ( Actor actor, Hit hit, int comboNumber, Action endSwing ) {
+		public void Set ( Actor actor, int comboNumber, Action endSwing ) {
 				
 
 			_alreadyHitColliders = new List<Collider>();
 			_comboNumber = comboNumber;
 			_user = actor;
 			_melee = actor.GetCharacteristic<CanUseMeleeItems>( true );
-			_hit = hit;
 
 			
 			_melee.SetSwingActive( true, comboNumber );
@@ -40,7 +38,6 @@ namespace Eden.Interactors.Melee {
 		private int _comboNumber;
 		private float _time;
 
-		private Hit _hit;
 		private Actor _user;
 		private CanUseMeleeItems _melee;
 		private List<Collider> _alreadyHitColliders;

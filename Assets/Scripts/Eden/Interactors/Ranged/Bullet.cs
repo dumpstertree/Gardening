@@ -1,10 +1,10 @@
 using Eden.Properties;
-using Eden.Model.Interactable;
 using System.Linq;
 using UnityEngine;
 using Dumpster.Core;
 using Dumpster.BuiltInModules;
 using Dumpster.Core.BuiltInModules;
+using Dumpster.Characteristics;
 using Eden.Modules;
 using Eden.Characteristics;
 
@@ -20,7 +20,6 @@ namespace Eden.Interactors.Ranged {
 
 		protected Actor _user;
 		protected CanUseRangedWeapons _ranged;
-		protected Hit _hitData;
 		protected float _bulletSize;
 		protected float _bulletSpeed;
 		protected float _spread;
@@ -28,13 +27,12 @@ namespace Eden.Interactors.Ranged {
 		
 		// ******************* Public **************************
 
-		public void SetBullet ( Actor actor, Hit hitData, float bulletSize, float bulletSpeed, float spread ) {
+		public void SetBullet ( Actor actor, float bulletSize, float bulletSpeed, float spread ) {
 			
 
 			// set all protected variables
 			_user = actor;
 			_ranged = actor.GetCharacteristic<CanUseRangedWeapons>( true );
-			_hitData = hitData;
 			_bulletSize = bulletSize;
 			_bulletSpeed = bulletSpeed;
 			_spread = spread;
@@ -51,11 +49,9 @@ namespace Eden.Interactors.Ranged {
 			// set forward taking into account spread
 			forward = AddSpread( forward, spread );
 
-
-			// find targetable
-			var targetable = Game.GetModule<Targeting>()?.GetTargetable( UnityEngine.Camera.main.transform.position, _ranged.GetLookingDirection(), 3f );
-			if ( targetable != null ) {
-				forward = targetable.transform.position - _ranged.GetSpawnLocation();
+			var target = actor.GetCharacteristic<Targeter>()?.GetBestTarget();
+			if ( target != null ) {
+				forward = target.transform.position - _ranged.GetSpawnLocation();
 			}
 
 		
@@ -118,6 +114,10 @@ namespace Eden.Interactors.Ranged {
 	        hits = Physics.RaycastAll( transform.position, transform.forward, distance ).OrderBy( h => h.distance ).ToArray();
 
 	        foreach( RaycastHit hit in hits ) {
+				
+				if ( _layermask != (_layermask | (1 << hit.transform.gameObject.layer )) ) {
+					continue;
+				}
 
 	            if ( user.GetForbiddenColliders().Contains( hit.collider ) ) {
 	            	continue;

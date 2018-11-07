@@ -15,17 +15,15 @@ namespace Eden.Model {
 			var otherActor = actor.GetCharacteristic<Interactor>()?.GetActor( this );
 			
 			if ( otherActor != null) {
-
-				otherActor.GetCharacteristic<Talkable>()?.Talk();
-
-				Game.GetModule<Async>()?.WaitForSeconds( 0.5f, () => { 
-					onComplete ();
-				});
+				
+				var talkable = otherActor.GetCharacteristic<Talkable>();
+				if ( talkable != null ) {
+					
+					otherActor.GetCharacteristic<Talkable>()?.Talk();
+				}		
 			}
-			else {
 
-				onComplete ();
-			}
+			onComplete ();
 		}
 	}
 }

@@ -6,8 +6,13 @@ namespace Eden.Characteristics {
 
 	public class Inventory : Dumpster.Core.Characteristic {
 
+		public Eden.Controller.Inventory Inv {
+			get{ return _inventory; }
+		}
+
 		[SerializeField] private int _numOfItems;
 		[SerializeField] private Eden.Templates.Item[] _items;
+
 
 		private Eden.Controller.Inventory _inventory;
 

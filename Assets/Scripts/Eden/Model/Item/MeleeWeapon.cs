@@ -1,6 +1,4 @@
 ﻿using Eden.Interactors.Melee;
-using Eden.Life.Chips;
-using Eden.Model.Interactable;
 using System;
 using UnityEngine;
 using Dumpster.Core;
@@ -81,9 +79,8 @@ namespace Eden.Model {
 		private void CreateSwing ( Slash swingPrefab, Dumpster.Core.Actor actor, Action endSwing ) {
 
 			var swing = GameObject.Instantiate( swingPrefab );
-			var hit = new Hit( null, 1 );
 
-			swing.Set( actor, hit, _combo, endSwing );
+			swing.Set( actor, _combo, endSwing );
 		}
 	}
 }

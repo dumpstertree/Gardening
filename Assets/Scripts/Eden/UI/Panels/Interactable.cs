@@ -1,6 +1,5 @@
 ﻿using Dumpster.Core;
 using Dumpster.BuiltInModules;
-using Eden.Life;
 using UnityEngine;
 using Eden.Characteristics;
 
@@ -21,13 +20,11 @@ namespace Eden.UI.Panels {
 
 			if ( interactor != null && playerLogic != null ) {
 				
-				var interactable = interactor.GetActor( playerLogic.CurrentItemInHand );
-				if ( interactable != null ) {
+				var otherActor = interactor.GetActor( playerLogic.CurrentItemInHand );
+				if ( otherActor != null && otherActor.GetCharacteristic<Talkable>() != null ) {
 
+					_visual.position = Camera.main.WorldToScreenPoint( otherActor.transform.position );
 					_visual.gameObject.SetActive( true );
-
-					var pos = Camera.main.WorldToScreenPoint( interactable.transform.position );
-					_visual.position = pos;
 				
 				} else {
 

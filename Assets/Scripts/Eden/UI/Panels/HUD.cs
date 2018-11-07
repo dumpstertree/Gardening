@@ -1,7 +1,6 @@
 ﻿using Dumpster.Core;
 using Dumpster.BuiltInModules;
 using UnityEngine;
-using Eden.Life;
 using Dumpster.Characteristics;
 
 namespace Eden.UI.Panels {

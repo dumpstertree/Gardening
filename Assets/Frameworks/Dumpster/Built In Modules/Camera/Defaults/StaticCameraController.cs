@@ -5,8 +5,8 @@ namespace Dumpster.Core.BuiltInModules {
 	public class StaticCameraController : CameraController {
 
 		[Header( "Trigger Zones" )]
-		[SerializeField] private Dumpster.Triggers.BoxZone _enterTriggerZone;
-		[SerializeField] private Dumpster.Triggers.BoxZone _exitTriggerZone;
+		// [SerializeField] private Dumpster.Triggers.BoxZone _enterTriggerZone;
+		// [SerializeField] private Dumpster.Triggers.BoxZone _exitTriggerZone;
 
 		[Header("Camera Target")]
 		[SerializeField] private Transform _cameraTarget;
@@ -38,13 +38,15 @@ namespace Dumpster.Core.BuiltInModules {
 
 		private void Awake () {
 
-			if ( _enterTriggerZone ) {
-				_enterTriggerZone.OnTriggerZoneEnter += EnterRange;
-			}
+			Debug.LogWarning( "No longer supported!" );
 
-			if ( _exitTriggerZone ) {
-				_exitTriggerZone.OnTriggerZoneExit += ExitRange;
-			}
+			// if ( _enterTriggerZone ) {
+			// 	_enterTriggerZone.OnTriggerZoneEnter += EnterRange;
+			// }
+
+			// if ( _exitTriggerZone ) {
+			// 	_exitTriggerZone.OnTriggerZoneExit += ExitRange;
+			// }
 		}
 		private void EnterRange () {
 

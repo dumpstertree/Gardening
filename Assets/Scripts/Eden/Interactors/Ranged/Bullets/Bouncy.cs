@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using Dumpster.Core;
 
 namespace Eden.Interactors.Ranged {
 	
@@ -12,7 +13,7 @@ namespace Eden.Interactors.Ranged {
 			var collision = LookForCollision ( _ranged );
 			if ( collision != null ) {
 				
-				var interactable = collision.GetComponent<Eden.Interactable.InteractableObject>();
+				var interactable = collision.GetComponent<Actor>();
 
 				if ( interactable == null ) {
 

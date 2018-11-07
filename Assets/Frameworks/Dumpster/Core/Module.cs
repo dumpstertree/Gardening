@@ -14,6 +14,7 @@ namespace Dumpster.Core {
 			game.OnUpdate += Update;
 			game.OnFixedUpdate += FixedUpdate;
 			game.OnLateUpdate += LateUpdate;
+			game.OnDrawGameGizmos += OnDrawGizmos;
 		}
 
 		
@@ -40,6 +41,10 @@ namespace Dumpster.Core {
 
 			OnLateUpdate ();
 		}
+		private void DrawGizmos () {
+
+			OnDrawGizmos ();
+		}
 
 
 		// ************ Protected *******************
@@ -56,5 +61,6 @@ namespace Dumpster.Core {
 		protected virtual void OnUpdate () {}
 		protected virtual void OnFixedUpdate () {}
 		protected virtual void OnLateUpdate () {}
+		protected virtual void OnDrawGizmos () {}
 	}
 }
