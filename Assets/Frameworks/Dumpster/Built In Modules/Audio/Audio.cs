@@ -9,18 +9,20 @@ namespace Dumpster.Core.BuiltInModules {
 
 		// ****************** Public *********************
 
-		public void PlayWorldAudio ( AudioClip clip, Vector3 pos ) {
+		public void PlayWorldAudio ( AudioClip clip, Vector3 pos, float volume = 1.0f ) {
 
 			var source = CreateAudioSource( pos );
 
 			source.clip = clip;
+			source.volume = volume;
 			source.Play();
 
 			Destroy( source.gameObject, clip.length );
 		}
-		public void PlayScreenAudio ( AudioClip clip ) {
+		public void PlayScreenAudio ( AudioClip clip, float volume = 1.0f ) {
 
 			_screenAudioSource.clip = clip;
+			_screenAudioSource.volume = volume;
 			_screenAudioSource.Play();
 		}
 

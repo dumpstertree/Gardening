@@ -16,10 +16,16 @@ namespace Eden.Model {
 			
 			if ( otherActor != null) {
 				
+				var pickup = otherActor.GetCharacteristic<PickUp>();
+				if ( pickup != null ) {
+					
+					pickup.Pickup( actor );
+				}
+				
 				var talkable = otherActor.GetCharacteristic<Talkable>();
 				if ( talkable != null ) {
 					
-					otherActor.GetCharacteristic<Talkable>()?.Talk();
+					talkable.Talk();
 				}		
 			}
 

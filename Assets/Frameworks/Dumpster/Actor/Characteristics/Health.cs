@@ -9,9 +9,9 @@ namespace Dumpster.Characteristics {
 		
 		// ************* Public *******************
 
-		public const string DEATH = "DEATH";
-		public const string DECREASED = "DECREASED";
-		public const string INCREASED = "INCREASED";
+		public const string DEATH = "Health.Death";
+		public const string DECREASED = "Health.Decreased";
+		public const string INCREASED = "Health.Increased";
 
 		public int Current  {
 			get{ return _health; }
@@ -23,7 +23,14 @@ namespace Dumpster.Characteristics {
 			get{ return _hasInfiniteHealth; }
 		}
 
+		public override List<string> GetNotifications () {
 
+			return new List<string>() {
+				DEATH,
+				DECREASED,
+				INCREASED,
+			};
+		}
 		public void AddHealth ( int health ) {
 			
 			_health = Mathf.Clamp( _health + health, 0, _maxHealth );

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Eden.Properties;
+// using Eden.Properties;
 
 namespace Eden.Interactors.Ranged {
 
@@ -17,17 +17,17 @@ namespace Eden.Interactors.Ranged {
 			// if ( target != null ) { RotateTowardsTarget( target ); }
 
 			var collision = LookForCollision ( _ranged );
-			if ( collision != null ) { Collide( collision ); }
+			if ( collision != null ) { Collide( collision.Value ); }
 		}
 
-		private void RotateTowardsTarget ( Targetable target ) {
+		// private void RotateTowardsTarget ( Targetable target ) {
 
-			var distance = Mathf.Clamp( Vector3.Distance(transform.position, target.transform.position ), 0f, MAX_DISTANCE );
-			var direction = (target.transform.position - transform.position).normalized;
-	      	var lookRotation = Quaternion.LookRotation( direction );
-	      	var speed = ( 1 - distance/MAX_DISTANCE) * (MAX_HOMING_SPEED - MIN_HOMING_SPEED) + MIN_HOMING_SPEED;
+		// 	var distance = Mathf.Clamp( Vector3.Distance(transform.position, target.transform.position ), 0f, MAX_DISTANCE );
+		// 	var direction = (target.transform.position - transform.position).normalized;
+	    //   	var lookRotation = Quaternion.LookRotation( direction );
+	    //   	var speed = ( 1 - distance/MAX_DISTANCE) * (MAX_HOMING_SPEED - MIN_HOMING_SPEED) + MIN_HOMING_SPEED;
 
-			transform.rotation = Quaternion.Slerp( transform.rotation, lookRotation, speed );
-		}
+		// 	transform.rotation = Quaternion.Slerp( transform.rotation, lookRotation, speed );
+		// }
 	}
 }

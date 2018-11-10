@@ -8,9 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b5013c75df94229b3b2a45cdd38b03, type: 3}
+  m_Script: {fileID: 11500000, guid: 09095e91fdbe4443fb5771bd63881c05, type: 3}
   m_Name: Targeting
   m_EditorClassIdentifier: 
-  _layermask:
-    serializedVersion: 2
-    m_Bits: 28672
+  _angleScore: 10
+  _distanceScore: 5
+  _raycastPrecision: 1
+  _visualization: 4

@@ -38,12 +38,12 @@ namespace Eden.Characteristics {
 			var rigid = inst.GetComponent<Rigidbody>();
 			
 			inst.transform.position = _spawner.position;
-			// rigid.MovePosition( _spawner.position );
-			// rigid.velocity = new Vector3( 
-			// 	Random.Range( -2, 2 ),
-			// 	Random.Range( 2, 4f ),
-			// 	Random.Range( -2, 2 )
-			// );
+			rigid.MovePosition( _spawner.position );
+			rigid.velocity = new Vector3( 
+				Random.Range( -7, 7 ),
+				Random.Range( 7, 15 ),
+				Random.Range( -7, 7 )
+			);
 
 			// inst.SetHealth( health );
 		}

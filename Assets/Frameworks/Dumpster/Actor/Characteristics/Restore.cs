@@ -7,10 +7,16 @@ namespace Dumpster.Characteristics {
 
 	public class Restore : Dumpster.Core.Characteristic {
 
-		public const string RESTORE = "RESTORE";
+		public const string RESTORE = "Restore.Restore";
 
 		private bool _alreadyGiven;
 
+		public override List<string> GetNotifications () {
+
+			return new List<string>() {
+				RESTORE
+			};
+		}
 		protected override void OnActorEnterTrigger ( Actor actor ) {
 
 			if ( !_alreadyGiven ) {

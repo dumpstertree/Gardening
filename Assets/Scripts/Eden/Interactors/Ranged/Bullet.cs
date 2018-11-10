@@ -1,4 +1,3 @@
-using Eden.Properties;
 using System.Linq;
 using UnityEngine;
 using Dumpster.Core;
@@ -15,7 +14,8 @@ namespace Eden.Interactors.Ranged {
 
 		[SerializeField] protected LayerMask _layermask;
 		[SerializeField] protected GameObject _casingPrefab;
-				
+		[SerializeField] protected GameObject _bulletCollisionParticlePrefab;		
+
 		private const float CASING_KILL_TIME = 15.0f;
 
 		protected Actor _user;
@@ -60,7 +60,7 @@ namespace Eden.Interactors.Ranged {
 
 
 			// set bullet size
-			SetSize( bulletSize );
+			// SetSize( bulletSize );
 
 
 			// create a bullet casing
@@ -94,9 +94,9 @@ namespace Eden.Interactors.Ranged {
 
 			transform.position += transform.forward * ( _bulletSpeed * Time.deltaTime );
 		}
-		protected void Collide ( Collider collision, bool destroyThis = true ) {
+		protected void Collide ( RaycastHit hit, bool destroyThis = true ) {
 
-			var actor = collision.GetComponentInChildren<Actor>();
+			var actor = hit.collider.GetComponentInChildren<Actor>();
 			
 			if ( actor != null ) {
 				actor.GetCharacteristic<Dumpster.Characteristics.Damageable>()?.Damage();
@@ -105,8 +105,10 @@ namespace Eden.Interactors.Ranged {
 			if ( destroyThis ) {
 				Destroy( gameObject );
 			}
+
+			CreateCollisionParticle( hit );
 		}
-		protected Collider LookForCollision ( CanUseRangedWeapons user ) {
+		protected RaycastHit? LookForCollision ( CanUseRangedWeapons user ) {
 
 			var distance = _bulletSpeed * Time.deltaTime;
 
@@ -123,10 +125,16 @@ namespace Eden.Interactors.Ranged {
 	            	continue;
 	            }
 
-	            return hit.collider;
+	            return hit;
 	        }
 
 	        return null;
+		}
+		private void CreateCollisionParticle ( RaycastHit hit ) {
+			
+			var inst = Instantiate( _bulletCollisionParticlePrefab );
+			inst.transform.position = hit.point;
+			inst.transform.forward = hit.normal;
 		}
 
 

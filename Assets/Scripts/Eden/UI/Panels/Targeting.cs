@@ -1,7 +1,9 @@
-﻿using Dumpster.Core;
+﻿using Dumpster.Characteristics;
+using Dumpster.Core;
 using Dumpster.BuiltInModules;
-using UnityEngine;
 using Dumpster.Tweening;
+using Eden.Characteristics;
+using UnityEngine;
 
 namespace Eden.UI.Panels {
 
@@ -22,26 +24,24 @@ namespace Eden.UI.Panels {
 		private Tween _presentation;
 
 		
-		// private BlackBox _blackBox {
-		// 	get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<BlackBox>(); }
-		// }
+		private Actor _actor {
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
+		}
 
 
 		private void Update () {
 
-			// var target = _blackBox.Visual.Target;
-			// if ( target != null ) {
+			var target = _actor.GetCharacteristic<Targeter>( true )?.GetBestTarget();
+			if ( target != null && target.GetCharacteristic<Eden.Characteristics.Targetable>().ShowUI ) {
 
-			// 	var visual = target.Visual;
-
-			// 	SetVisualVisible( true );
-			// 	SetUIPosition( target.transform.position );
-			// 	SetHealthFill( visual.CurrentHealth, visual.MaxHealth );
+				SetVisualVisible( true );
+				SetUIPosition( target.transform.position );
+				SetHealthFill( target.GetCharacteristic<Health>( true ).Current, target.GetCharacteristic<Health>( true ).Max );
 			
-			// } else {
+			} else {
 
-			// 	SetVisualVisible( false );
-			// }
+				SetVisualVisible( false );
+			}
 		}
 
 

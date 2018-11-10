@@ -11,7 +11,7 @@ namespace Eden.Interactors.Ranged {
 			var collision = LookForCollision( _ranged );
 			if ( collision != null ) {
 					
-				Collide( collision );
+				Collide( collision.Value );
 			}
 		}
 	}

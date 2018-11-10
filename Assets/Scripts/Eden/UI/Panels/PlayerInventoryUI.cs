@@ -20,8 +20,8 @@ namespace Eden.UI.Panels {
 
 			base.OnInit ();
 
-			RegisterInventory( _actor.GetCharacteristic<Inventory>().Inv, _inventorySlots );
-			RegisterInventory( _actor.GetCharacteristic<EquippedItemsInventory>().Inventory, _equipedItemsSlots );
+			RegisterInventory( _actor.GetCharacteristic<Inventory>( true )?.Inv, _inventorySlots );
+			RegisterInventory( _actor.GetCharacteristic<EquippedItemsInventory>( true )?.Inventory, _equipedItemsSlots );
 		}
 		
 		public override void ReciveInput( Input.Package package ) {

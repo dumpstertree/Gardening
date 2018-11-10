@@ -1,5 +1,4 @@
 ﻿using System;
-using Eden.Interactable;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;

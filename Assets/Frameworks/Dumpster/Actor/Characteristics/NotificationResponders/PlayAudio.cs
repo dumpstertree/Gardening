@@ -17,11 +17,15 @@ public class PlayAudio :  Dumpster.Characteristics.NotificationResponder {
 	// *************** Private ********************
 
 	[Header( "Play Audio" )]
+	
+	[SerializeField] private Transform _spawner;	
 	[SerializeField] private AudioClip _clip;
-	[SerializeField] private Transform _spawner;
+	
+	[Range(0f,1f)]
+	[SerializeField] private float _volume = 0.5f;
 
 	private void Play () {
 
-		Game.GetModule<Audio>()?.PlayWorldAudio( _clip, _spawner.position );
+		Game.GetModule<Audio>()?.PlayWorldAudio( _clip, _spawner.position, _volume );
 	}
 }

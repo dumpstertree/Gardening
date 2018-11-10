@@ -1,5 +1,4 @@
 ﻿using Dumpster.Core;
-using Dumpster.Events;
 using Eden.Modules;
 using UnityEngine;
 

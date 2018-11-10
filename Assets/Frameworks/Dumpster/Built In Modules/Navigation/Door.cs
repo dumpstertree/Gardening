@@ -15,7 +15,6 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 
 
 		[Header( "Door Properties" )]
-		// [SerializeField] private Dumpster.Triggers.BoxZone _trigger;
 		[SerializeField] private Transform _spawnLocation;
 		[SerializeField] private string _identifier;
 		[SerializeField] private bool _isDefualtSpawnLocation;
@@ -25,33 +24,17 @@ namespace Dumpster.Core.BuiltInModules.Rooms {
 		[SerializeField] private string _targetDoorIdentifier;
 		[SerializeField] private string _transitionIdentifier;
 
-		private void Awake () {
-			
-			Debug.LogWarning( "No Longer Supported!" );
-			// if ( _trigger != null ) {
-			
-			// 	_trigger.OnTriggerZoneEnter += () => { Game.GetModule<Navigation>()?.ChangeArea( 
-			// 		_targetRoomIdentifier, 
-			// 		_targetDoorIdentifier, 
-			// 		_transitionIdentifier ); 
-			// 	};
-			// }
+		private void OnTriggerEnter ( Collider other ) {
+
+			other.GetComponent<Actor>()?.GetCharacteristic<Navigate>()?.ChangeArea( _targetRoomIdentifier, _targetDoorIdentifier, _transitionIdentifier );
 		}
 		public GameObject LoadPlayer( GameObject playerPrefab ) {
 
 			var playerInstance = Instantiate( playerPrefab );
-			playerInstance.transform.position =  new Vector3(_spawnLocation.position.x, GetYPos(), _spawnLocation.position.z);
+			playerInstance.transform.position = _spawnLocation.position;
 			playerInstance.transform.rotation = _spawnLocation.rotation;
 
 			return playerInstance;
-		}
-		private float GetYPos () {
-
-			var ray = new Ray( _spawnLocation.position, Vector3.down);
-			RaycastHit hit;
-
-		    if ( UnityEngine.Physics.Raycast( ray, out hit, 10.0f) ) { return hit.point.y; }
-			return _spawnLocation.position.y;
 		}
 	}
 }

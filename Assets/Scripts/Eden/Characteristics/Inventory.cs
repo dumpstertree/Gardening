@@ -20,7 +20,7 @@ namespace Eden.Characteristics {
 
 			_inventory = new Eden.Controller.Inventory( _numOfItems );
 			
-			if ( _numOfItems > _items.Length ) {
+			if ( _numOfItems >= _items.Length ) {
 
 				foreach( Eden.Templates.Item item in _items ) {
 				

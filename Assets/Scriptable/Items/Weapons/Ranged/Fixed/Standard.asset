@@ -18,8 +18,8 @@ MonoBehaviour:
   _maxCount: 1
   _expendable: 1
   _rangedWeaponStats:
-    _rateOfFire: 5
-    _reloadSpeed: 5
+    _rateOfFire: 10
+    _reloadSpeed: 10
     _accuracy: 10
     _numOfBullets: 1
     _clipSize: 5

@@ -20,25 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4231977321262416}
   - component: {fileID: 114687558775432934}
+  - component: {fileID: 65186419563343914}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1178595878906116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4091306679122998}
-  - component: {fileID: 65052020815973074}
-  - component: {fileID: 114753943561212904}
-  m_Layer: 2
-  m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,34 +43,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4091306679122998
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178595878906116}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.45, z: -0.11}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4231977321262416}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4231977321262416
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1018670977838104}
-  m_LocalRotation: {x: -0, y: -0.9367733, z: -0, w: 0.34993693}
-  m_LocalPosition: {x: 3.99, y: 0.98, z: 1.71}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.67, z: 22.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4091306679122998}
   - {fileID: 4860806549546898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -139.033, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4860806549546898
 Transform:
   m_ObjectHideFlags: 1
@@ -94,23 +64,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1777352036930674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.05}
+  m_LocalPosition: {x: 3.37, y: 0, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4231977321262416}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65052020815973074
+--- !u!65 &65186419563343914
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178595878906116}
+  m_GameObject: {fileID: 1018670977838104}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 5, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114687558775432934
 MonoBehaviour:
@@ -123,21 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585cc507599e54b20849367c63dceda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trigger: {fileID: 114753943561212904}
   _spawnLocation: {fileID: 4860806549546898}
-  _identifier: HOME
+  _identifier: IN
   _isDefualtSpawnLocation: 1
-  _targetRoomIdentifier: Home
-  _targetDoorIdentifier: FARM
+  _targetRoomIdentifier: Gun Range
+  _targetDoorIdentifier: OUT
   _transitionIdentifier: NIA
---- !u!114 &114753943561212904
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178595878906116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f269608b9a394823a5c968fe48d71d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -6,6 +6,7 @@ namespace Dumpster.Core {
 	
 	public abstract class Characteristic : MonoBehaviour {
 
+		public const string RUN = "Characteristic.Run";
 		public const string ON_ACTOR_ENTER_TRIGGER = "ON_ACTOR_ENTER_TRIGGER";
 		public const string ON_ACTOR_EXIT_TRIGGER = "ON_ACTOR_EXIT_TRIGGER";
 
@@ -36,6 +37,7 @@ namespace Dumpster.Core {
 				
 				OnRun ();
 				_hasRun = true;
+				_actor.PostNotification( RUN );
 			}
 		}
 		public void ActorUpdate () {
@@ -50,6 +52,15 @@ namespace Dumpster.Core {
 		protected virtual void OnActorUpdate () {}
 		protected virtual void OnActorEnterTrigger ( Actor actor ) {}
 		protected virtual void OnActorExitTrigger ( Actor actor ) {}
+		
+		public static List<string> GetStaticNotifications () {
+
+			return new List<string>(){ RUN };
+		}
+		public virtual List<string> GetNotifications () {
+			
+			return new List<string>(){};
+		}
 
 		private void OnTriggerEnter ( Collider other ) {
 

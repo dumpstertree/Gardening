@@ -14,7 +14,7 @@ namespace Eden.Interactors.Ranged {
 			if ( collision != null ) {
 				
 				Explode();
-				Collide( collision );
+				Collide( collision.Value );
 			}
 		}
 		private void Explode () {

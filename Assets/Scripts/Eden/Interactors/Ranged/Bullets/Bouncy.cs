@@ -13,14 +13,14 @@ namespace Eden.Interactors.Ranged {
 			var collision = LookForCollision ( _ranged );
 			if ( collision != null ) {
 				
-				var interactable = collision.GetComponent<Actor>();
+				var interactable = collision?.collider.GetComponent<Actor>();
 
 				if ( interactable == null ) {
 
-					transform.forward = Vector3.Reflect( transform.forward, GetNormal( collision ) );
+					transform.forward = Vector3.Reflect( transform.forward, collision.Value.normal );
 				}
 
-				Collide( collision, interactable != null );
+				Collide( collision.Value, interactable != null );
 			}
 		}
 		private Vector3 GetNormal ( Collider objectToCollideWith ) {

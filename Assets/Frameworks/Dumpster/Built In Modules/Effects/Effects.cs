@@ -7,86 +7,11 @@ namespace Dumpster.BuiltInModules {
 
 	[CreateAssetMenu(menuName = "Dumpster/Modules/Effects")]	
 	public class Effects : Module {
-
-		private GameObject _smoke {
-			get{ return Resources.Load( "SmokeEffect" ) as GameObject; }
-		}
-		private GameObject _fireworks {
-			get{ return Resources.Load( "FireworksEffect" ) as GameObject; }
-		}
-		private GameObject _hit {
-			get{ return Resources.Load( "HitEffect" ) as GameObject; }
-		}
-		private GameObject _faint {
-			get{ return Resources.Load( "FaintEffect" ) as GameObject; }
-		}
-		private GameObject _wakeUp {
-			get{ return Resources.Load( "WakeUpEffect" ) as GameObject; }
-		}
-
-		public void OneShot( ParticleType type, Vector3 position, Quaternion rotation ) {
-
-			GameObject prefab = null;
-
-			switch( type ) {
-				
-				case ParticleType.None:
-					return;
-
-				case ParticleType.Fireworks:
-					prefab =_fireworks;
-					break;
-
-				case ParticleType.Hit:
-					prefab = _hit;
-					break;
-
-				case ParticleType.Smoke:
-					prefab = _smoke;
-					break;
-
-				case ParticleType.Faint:
-					prefab = _faint;
-					break;
-
-				case ParticleType.WakeUp:
-					prefab = _wakeUp;
-					break;
-			}
-
-			if ( prefab != null ) {
-				
-				var go = Instantiate( prefab );
-				go.transform.position = position;
-				go.transform.rotation = rotation;
-			}
-		}
-		public void FreezeFrame ( float time ) {
-
-			_game.StartCoroutine( FreezeFrameCoroutine(time) );
-		}
-		IEnumerator FreezeFrameCoroutine ( float time ) {
-
-			Time.timeScale = 0f;
-
-			for ( float t=0; t<time; t+=Time.unscaledDeltaTime ){
-				Time.timeScale = t/time;
-				yield return null;
-			}
-			// yield return new WaitForSecondsRealtime ( time );
+		
+		public void RegisterShakableForFrame ( Shakable shakable ) {
 			
-			Time.timeScale = 1f;
-		}	
-
-		private List<Shakable>_shakables = new List<Shakable>();
-		
-		
-
-		private float _magnitude;
-		private float _decay;
-		private float _maxDistance = 30;
-		private Vector3 _startPos;
-
+			_shakables.Add( shakable );
+		}
 		public void Shake ( Vector3 position, ShakePower power, DecayRate rate )  {
 
 			_startPos = position;
@@ -124,10 +49,46 @@ namespace Dumpster.BuiltInModules {
 					break;
 			}
 		}
-		public void RegisterShakableForFrame ( Shakable shakable ) {
+		public void FreezeFrame ( FreezeFrameDuration duration ) {
 			
-			_shakables.Add( shakable );
+			var time = 0f;
+
+			switch( duration ) {
+				case FreezeFrameDuration.Quick:
+					time = 0.1f;
+					break;
+				case FreezeFrameDuration.Medium:
+					time = 0.25f;
+					break;
+				case FreezeFrameDuration.Long:
+					time = 0.5f;
+					break;
+			}
+
+			_game.StartCoroutine( FreezeFrameCoroutine(time) );
 		}
+	
+	
+		IEnumerator FreezeFrameCoroutine ( float time ) {
+
+			Time.timeScale = 0f;
+
+			yield return new WaitForSecondsRealtime ( time );
+			
+			Time.timeScale = 1f;
+		}	
+
+		private List<Shakable>_shakables = new List<Shakable>();
+		
+		
+
+		private float _magnitude;
+		private float _decay;
+		private float _maxDistance = 30;
+		private Vector3 _startPos;
+
+	
+
 		public void LateUpdate () {
 
 			_magnitude = _magnitude * _decay;
@@ -148,8 +109,14 @@ namespace Dumpster.BuiltInModules {
 			_shakables.Clear();
 		}
 	}
+
+	public enum FreezeFrameDuration {
+		Quick,
+		Medium,
+		Long
+	}
+
 	public enum ShakePower {
-		
 		Miniscule,
 		Light,
 		Medium,
