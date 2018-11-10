@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10125c26b8acd400ab88dc927e9fa79e, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  _id: melee.axe
+  _displayName: axe
+  _sprite: {fileID: 21300000, guid: a0d2b9c24706941b397223acc826079b, type: 3}
+  _holdItem: {fileID: 0}
+  _maxCount: 1
+  _expendable: 1
+  _swingPrefabs:
+  - {fileID: 114196781603355574, guid: 0b03d315c0d15430899735f7a467a0f6, type: 2}
+  - {fileID: 114196781603355574, guid: a1260060e49e64fdebbd4e2eb1e8eac2, type: 2}

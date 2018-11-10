@@ -1,82 +1,98 @@
-﻿using UnityEngine;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using UnityEngine;
+using Dumpster.Characteristics;
 
 namespace Eden.UI.Panels {
 
-	public class HUD : Dumpster.Core.BuiltInModules.UI.Panel {
+	public class HUD : Dumpster.BuiltInModules.Panel {
 
-		private Eden.Life.BlackBox _blackBox {
-			get{ return EdensGarden.Instance.Rooms.CurrentArea.LoadedPlayer.GetComponent<Eden.Life.BlackBox>(); }
-		}
-		private Interactable.Stats _stats {
-			get { return _blackBox.GetComponentInChildren<Interactable.Stats>(); }
-		}
+		[Header( "Energy" )]
+		[SerializeField] private Transform _energyBar;
+		[SerializeField] private Transform _energyBarFill;
+		
+		[Header( "Health" )]
+		[SerializeField] private Transform _healthBar;
+		[SerializeField] private Transform _healthBarFill;
 
-		[SerializeField] private Transform _healthFill;
-		[SerializeField] private Transform _energyFill;
+		[Header( "Reticle" )]
 		[SerializeField] private Transform _reticle;
 
-		protected override void OnInit () {
-
-			_stats.OnHealthChanged += HandleHealthChange;
-			HandleHealthChange( _stats.CurrentHealth );
-
-			_blackBox.QuickslotChip.OnIndexChanged += OnQuickslotIndexChanged;
-			OnQuickslotIndexChanged( _blackBox.QuickslotChip.Index );
-		}
-
 		
-		// ******************** Health ****************
-
-		private void HandleHealthChange( int currentHealth ) {
-
-			_healthFill.transform.localScale = new Vector3( 1, (float)currentHealth/ (float)_stats.MaxHealth, 1 );
+		private Actor _actor {
+			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
 
 
-		// ******************** Energy ****************
-
-		private InventoryItem _item;
-
-		private void OnQuickslotIndexChanged( int index ) {
-
-			if ( _item != null ) {
-				_item._shootData.OnAvailableBulletsChange -= HandleAvailableBulletsChanged;
-				_item._shootData.OnReloadTimeChanged -= HandleReloadTimeChanged;
-			}
-
-			_item = _blackBox.EquipedItems.GetInventoryItem( index );
-
-			if ( _item != null && _item.CanShoot ) {
-				_item._shootData.OnAvailableBulletsChange += HandleAvailableBulletsChanged;
-				_item._shootData.OnReloadTimeChanged += HandleReloadTimeChanged;
-			} else {
-				_energyFill.transform.localScale = Vector3.zero;
-			}
-		}
-		private void HandleAvailableBulletsChanged ( int numOfBullets ) {
-
-			_energyFill.transform.localScale =  new Vector3( 1, (float)numOfBullets / (float)_item._shootData.Gun.WeaponStats.ClipSize, 1 );
-		}
-		private void HandleReloadTimeChanged ( float currentReloadTime, float maxReloadTime ) {
-
-			_energyFill.transform.localScale =  new Vector3( 1, currentReloadTime / maxReloadTime, 1 );
-		}
-
-		[SerializeField] private LayerMask _layerMask;
 		private void Update () {
 
-			_reticle.gameObject.SetActive( _item != null && _item.CanShoot && _blackBox.QuickslotChip.ItemIsEquiped );
+			var health = _actor.GetCharacteristic<Health>( true );
+			if ( health != null ) {
 
-			if ( _item != null && _item.CanShoot ) {
-				
-				RaycastHit hit;
-				if (Physics.Raycast( _blackBox.ProjectileSpawner.position, _blackBox.ProjectileSpawner.forward, out hit, Mathf.Infinity, _layerMask )) {
-        		
-        			// _reticle.position = Vector3.Lerp( _reticle.position, Camera.main.WorldToScreenPoint( hit.point ), 0.2f );
-        			_reticle.position = new Vector3( Screen.width/2f, Screen.height/2f, 0 );
-        		}
+				SizeHealthBar ( health.Current, health.Max );
 			}
-        	
+
+			var playerLogic = _actor.GetCharacteristic<PlayerLogic>( true );
+			if ( playerLogic != null ) {
+				
+				if ( playerLogic.CurrentItemInHand.IsShootable ) {
+
+					SetReticleVisible( true );
+					
+					
+					// Is reloading
+					if ( playerLogic.CurrentItemInHand.AsShootableItem.IsReloading ) {
+
+						SizeReloadingBar( 0f, 0f );
+
+					
+					// Is Not Reloading
+					} else {
+							
+						SetEnergyBarVisible( true );
+						SizeEnergyBar( 
+							playerLogic.CurrentItemInHand.AsShootableItem.AvailableBullets, 
+							playerLogic.CurrentItemInHand.AsShootableItem.ClipSize 
+						);
+					}
+
+			
+				// Not Shootable
+				} else {
+
+					SetReticleVisible( false );
+					SetEnergyBarVisible( false );
+				}
+
+				}
+		}
+
+
+		private void SizeHealthBar ( int currentHealth, int maxHealth ) {
+			
+			var scale = (float)currentHealth / (float)maxHealth;
+			_healthBarFill.transform.localScale = new Vector3( 1f, scale, 1f );
+		}
+		private void SizeEnergyBar ( int currentEnergy, int maxEnergy ) {
+
+			var scale = (float)currentEnergy / (float)maxEnergy;
+			_energyBarFill.transform.localScale = new Vector3( 1f, scale, 1f );
+		}
+		private void SizeReloadingBar ( float currentReload, float maxReload ) {
+		}
+
+
+		private void SetHealthBarVisible ( bool visible ) {
+
+			_healthBar.gameObject.SetActive( visible );
+		}
+		private void SetEnergyBarVisible ( bool visible ) {
+
+			_energyBar.gameObject.SetActive( visible );
+		}
+		private void SetReticleVisible ( bool visible ) {
+
+			_reticle.gameObject.SetActive( visible );
 		}
 	}
 }

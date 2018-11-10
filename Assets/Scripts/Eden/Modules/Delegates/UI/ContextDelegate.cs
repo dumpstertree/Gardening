@@ -1,6 +1,8 @@
-﻿using Dumpster.Core.BuiltInModules.UI;
+﻿using Dumpster.Core;
+using Eden.Modules;
 using UnityEngine;
 using System.Collections.Generic;
+using Dumpster.BuiltInModules;
 
 namespace Eden.UI {
 	
@@ -8,24 +10,20 @@ namespace Eden.UI {
 
 		Context IContextDelgate.GetContext ( string forContextIdentifier ) {
 
-			switch ( forContextIdentifier ) {
-				
-				case EdensGarden.Constants.UIContexts.None: 
-					return null;
-				
-				case EdensGarden.Constants.UIContexts.Player:
-					return GetPlayerContext ();
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Player ) {
+				return GetPlayerContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Dialog ) {
+				return GetDialogContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Inventory ) {
+				return GetInventoryContext ();
+			}
+			if ( forContextIdentifier == Game.GetModule<Constants>().UIContexts.Building ) {
+				return GetBuildingContext ();
+			}
 
-				case EdensGarden.Constants.UIContexts.Dialog:
-					return GetDialogContext ();
-
-				case EdensGarden.Constants.UIContexts.Inventory:
-					return GetInventoryContext ();
-
-				default:
-					return null;
-
-			} 
+			return null;
 		}
 		void IContextDelgate.ReturnContext ( Context context ) {
 
@@ -39,14 +37,15 @@ namespace Eden.UI {
 
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Player, 
-				EdensGarden.Constants.InputLayers.Player, 
+				Game.GetModule<Constants>().UIContexts.Player, 
+				Game.GetModule<Constants>().InputLayers.Player, 
 				
 				new List<InteractivePanel>{
 				}, 
 				new List<Panel>{ 
+					ConditionForCanvas( _targetingPanel ),
+					ConditionForCanvas( _interactablePanel ),
 					ConditionForCanvas( _hudUIPanel ),
-					ConditionForCanvas( _menuButtonsPanel ),
 					ConditionForCanvas( _quickslotPanel ) 
 				}
 			);
@@ -55,8 +54,8 @@ namespace Eden.UI {
 			
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Dialog, 
-				EdensGarden.Constants.InputLayers.ForegroundUI, 
+				Game.GetModule<Constants>().UIContexts.Dialog, 
+				Game.GetModule<Constants>().InputLayers.ForegroundUI, 
 				
 				new List<InteractivePanel>{
 					ConditionForCanvas( _dialogPanel )
@@ -68,11 +67,24 @@ namespace Eden.UI {
 		private Context GetInventoryContext () {
 			return new InteractiveContext( 
 				
-				EdensGarden.Constants.UIContexts.Inventory, 
-				EdensGarden.Constants.InputLayers.InventoryUI, 
+				Game.GetModule<Constants>().UIContexts.Inventory, 
+				Game.GetModule<Constants>().InputLayers.MidgroundUI, 
 				
 				new List<InteractivePanel>{
-					ConditionForCanvas( _inventoryPanel ) 
+					ConditionForCanvas( _inventoryPanel ),
+				}, 
+				new List<Panel>{ 
+				}
+			);
+		}
+		private Context GetBuildingContext () {
+			return new InteractiveContext( 
+				
+				Game.GetModule<Constants>().UIContexts.Building, 
+				Game.GetModule<Constants>().InputLayers.MidgroundUI, 
+				
+				new List<InteractivePanel>{
+					ConditionForCanvas( _buildingPanel ) 
 				}, 
 				new List<Panel>{ 
 				}
@@ -91,7 +103,13 @@ namespace Eden.UI {
 		private Panel _hudUIPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "HUD" ) ).GetComponent<Panel>(); }
 		}
-		
+		private Panel _interactablePanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Interactable" ) ).GetComponent<Panel>(); }
+		}
+		private Panel _targetingPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Targeting" ) ).GetComponent<Panel>(); }
+		}
+
 		
 
 		// *************** Interactive Panels *******************
@@ -101,6 +119,9 @@ namespace Eden.UI {
 		}
 		private InteractivePanel _dialogPanel {
 			get { return GameObject.Instantiate( Resources.Load<GameObject>( "DialogUIPanel" ) ).GetComponent<InteractivePanel>(); }
+		}
+		private InteractivePanel _buildingPanel {
+			get { return GameObject.Instantiate( Resources.Load<GameObject>( "Building" ) ).GetComponent<InteractivePanel>(); }
 		}
 		
 

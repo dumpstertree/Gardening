@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using Dumpster.BuiltInModules;
+using Dumpster.Core;
+using Eden.Modules;
+using UnityEngine;
 using UnityEngine.UI;
-using Dumpster.Core.BuiltInModules.UI;
 
 namespace Eden.UI.Panels {
 	
@@ -13,7 +15,11 @@ namespace Eden.UI.Panels {
 		protected override void OnInit() {
 			
 			_inventoryButton.onClick.AddListener( () => {
-				EdensGarden.Instance.UI.Present( EdensGarden.Constants.NewUILayers.Midground, EdensGarden.Constants.UIContexts.Inventory );
+				
+				Game.GetModule<Dumpster.BuiltInModules.UI>().Present( 
+					Game.GetModule<Constants>().UILayers.Midground, 
+					Game.GetModule<Constants>().UIContexts.Inventory 
+				);
 			});
 		}
 	}

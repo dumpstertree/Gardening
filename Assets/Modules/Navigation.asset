@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 881fceece41d445e0bd48de26e4b284a, type: 3}
+  m_Name: Navigation
+  m_EditorClassIdentifier: 
+  _transitions:
+  - Name: NIA
+    TransitionIn: {fileID: 11400000, guid: 0e8b6e464d993433181a6fc2a9109d06, type: 2}
+    TransitionOut: {fileID: 11400000, guid: a53d6fe9149814ef287e39e4b11d9766, type: 2}
