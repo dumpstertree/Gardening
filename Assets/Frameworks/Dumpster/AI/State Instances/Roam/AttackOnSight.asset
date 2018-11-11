@@ -8,9 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd00a96314214144996d7da817a4046, type: 3}
-  m_Name: Passive
+  m_Script: {fileID: 11500000, guid: 8db71ec7c570c4cf189d9e123dca43f0, type: 3}
+  m_Name: AttackOnSight
   m_EditorClassIdentifier: 
-  _roaming: {fileID: 0}
-  _attacking: {fileID: 0}
-  _fleeing: {fileID: 0}
+  _movementSpeed: 5
+  _stateOnSeeEnemy: 1

@@ -6916,7 +6916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mode: 0
-  _maxAngle: 10
+  _maxAngle: 7
   _maxDistance: 40
   _forward: {fileID: 0}
   _position: {fileID: 0}

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8db71ec7c570c4cf189d9e123dca43f0, type: 3}
-  m_Name: Roam
+  m_Name: FleeOnSight
   m_EditorClassIdentifier: 
-  _movementSpeed: 0
-  _stateOnSeeEnemy: 0
+  _movementSpeed: 5
+  _stateOnSeeEnemy: 1

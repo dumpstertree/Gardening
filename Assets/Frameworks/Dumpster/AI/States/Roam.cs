@@ -18,19 +18,26 @@ namespace Dumpster.AI {
 		public Pathfinding Pathfinding {
 			get{ return _pathFinding; }
 		}
+		public Personality Personality {
+			get { return _personality; }
+		}
 	
-		public void GetInstance ( Personality personality ) {
+		public override State GetInstance ( Personality personality ) {
+			
+			var inst = ScriptableObject.Instantiate( this );
+			
+			inst._personality 	= personality;
+			inst._eyes 			= personality.Logic.Actor.GetCharacteristic<Eyes>( true );
+			inst._pathFinding 	= personality.Logic.Actor.GetCharacteristic<Pathfinding>( true );
 
-			_personality = personality;
-			_eyes = _personality.Actor.GetCharacteristic<Eyes>( true );
-			_pathFinding = _personality.Actor.GetCharacteristic<Pathfinding>( true );
+			return inst;
 		}
 
 		public override void TryToLeaveState () {
 
 			LookForTarget ();
 
-			if ( _personality.Target != null ) {
+			if ( _personality.Logic.Target != null ) {
 				ChangeState ( _stateOnSeeEnemy );
 			}
 		}
@@ -40,7 +47,7 @@ namespace Dumpster.AI {
 		}
 		public override void UpdateState () {
 
-			if ( _roaming.ActionIsFinished ) {
+			if ( _roaming == null || _roaming.ActionIsFinished ) {
 
 				_roaming = new Roaming( this );
 			}
@@ -72,7 +79,7 @@ namespace Dumpster.AI {
 			if ( targetActorsInView.Count > 0 ) {
 			
 				var target = targetActorsInView[ 0 ];
-				_personality.Target = target;
+				_personality.Logic.Target = target;
 			}
 		}
 		private void SortEyes ( List<Actor> actors ) {

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Targeting
   m_EditorClassIdentifier: 
   _angleScore: 10
-  _distanceScore: 5
-  _raycastPrecision: 1
+  _distanceScore: 10
+  _raycastPrecision: 2
   _visualization: 4
