@@ -20,7 +20,7 @@ namespace Eden.Characteristics {
 
 		
 		public float GetAimAssistRange  () {
-			return _aimAssistRange;
+			return 0f;
 		}
 		public Vector3 GetSpawnLocation () {
 			return _projectileSpawner.position;
@@ -42,7 +42,6 @@ namespace Eden.Characteristics {
 		// ************** Private ***************
 
 
-		[SerializeField] private float _aimAssistRange = 3f;
 		[SerializeField] private Transform _projectileSpawner;
 		[SerializeField] private ForwardDirecton _forwardDirection;
 

@@ -6851,7 +6851,7 @@ MonoBehaviour:
   _verticalFollowSensitivity: 80
   _followLerpSpeed: 0.3
   _strafeLerpSpeed: 0.6
-  _minDistanceToCollider: 1
+  _minDistanceToCollider: 0.1
 --- !u!114 &114339661975844806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6863,7 +6863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4c0bff354d64d0fa60e441c21862a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aimAssistRange: 3
   _projectileSpawner: {fileID: 4876822369851778}
   _forwardDirection: 1
 --- !u!114 &114496422835245934
@@ -6917,8 +6916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mode: 0
-  _maxAngle: 5
-  _maxDistance: 20
+  _maxAngle: 10
+  _maxDistance: 40
   _forward: {fileID: 0}
   _position: {fileID: 0}
 --- !u!114 &114700747070994870

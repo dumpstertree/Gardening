@@ -121,7 +121,7 @@ namespace Eden.Interactors.Ranged {
 					continue;
 				}
 
-	            if ( user.GetForbiddenColliders().Contains( hit.collider ) ) {
+	            if ( user != null && user.GetForbiddenColliders().Contains( hit.collider ) ) {
 	            	continue;
 	            }
 
@@ -150,7 +150,7 @@ namespace Eden.Interactors.Ranged {
 
 			RaycastHit hit;
 
-			if ( Physics.Raycast( UnityEngine.Camera.main.transform.position, forward, out hit, Mathf.Infinity, _layermask )) {
+			if ( Physics.Raycast( spawnLocation, forward, out hit, Mathf.Infinity, _layermask )) {
 				targetPoint = hit.point;
 			} else {
 				targetPoint = forward * 9999f;

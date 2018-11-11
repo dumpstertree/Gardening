@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 114240443797442304}
   - component: {fileID: 65078185949061034}
   - component: {fileID: 54246119623886396}
+  - component: {fileID: 208809144034474688}
   m_Layer: 12
   m_Name: Barrel
   m_TagString: Untagged
@@ -352,7 +353,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188813726910900}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32.28919, y: 2.51, z: 24.022354}
+  m_LocalPosition: {x: -29.48, y: 2.51, z: 23.250002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4574850643827384}
@@ -601,3 +602,18 @@ MonoBehaviour:
   - Health.Death
   _itemToDropPrefab: {fileID: 114462312506915716, guid: 53fd6b0b2e1124f3292440ce986da7fd,
     type: 2}
+--- !u!208 &208809144034474688
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188813726910900}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.35, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5

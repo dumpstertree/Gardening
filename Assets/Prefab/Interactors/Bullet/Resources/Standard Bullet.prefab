@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 4438407750640654}
   - component: {fileID: 33015952682804218}
   - component: {fileID: 23643537755807490}
-  - component: {fileID: 64143932571998984}
   - component: {fileID: 114585500789338838}
   m_Layer: 9
   m_Name: Glow
@@ -190,20 +189,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1128913531867938}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64143932571998984
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1215935620481896}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!82 &82815114137213740
 AudioSource:
   m_ObjectHideFlags: 1
@@ -413,7 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layermask:
     serializedVersion: 2
-    m_Bits: 12305
+    m_Bits: 28689
   _casingPrefab: {fileID: 1751685824669476, guid: 52a45de127aa548d5a5ba457d244f8ab,
     type: 2}
   _bulletCollisionParticlePrefab: {fileID: 1276319726987708, guid: 67ae67199961f449daee06bc20fd803a,

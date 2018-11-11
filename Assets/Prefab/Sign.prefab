@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 114665462290025900}
   - component: {fileID: 54214625230090700}
   - component: {fileID: 65336168428223366}
+  - component: {fileID: 208363847568718162}
   m_Layer: 0
   m_Name: Sign
   m_TagString: Untagged
@@ -220,7 +221,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1668018776027126}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -27.46, y: 2.54, z: 32.27}
+  m_LocalPosition: {x: -27.46, y: 2.497, z: 32.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4864998442550738}
@@ -443,3 +444,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 1
+--- !u!208 &208363847568718162
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1668018776027126}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.375, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5

@@ -30,11 +30,11 @@ namespace Dumpster.Core {
 			}
 		}
 		
-		public void DestroyActor () {
+		public void DestroyActor ( float inSeconds = 0f ) {
 
 			if (!_isBeingDestroyed) {
 				
-				Game.GetModule<Async>()?.WaitForEndOfFrame( () => Destroy( gameObject ) );
+				Game.GetModule<Async>()?.WaitForEndOfFrame( () => Destroy( gameObject, inSeconds ) );
 				_isBeingDestroyed = true;
 			}
 		}
