@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: FleeOnSight
   m_EditorClassIdentifier: 
   _movementSpeed: 5
-  _stateOnSeeEnemy: 1
+  _stateOnSeeEnemy: 3

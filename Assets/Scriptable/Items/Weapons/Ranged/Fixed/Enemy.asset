@@ -18,12 +18,12 @@ MonoBehaviour:
   _maxCount: 1
   _expendable: 1
   _rangedWeaponStats:
-    _rateOfFire: 8
+    _rateOfFire: 4
     _reloadSpeed: 10
-    _accuracy: 8
-    _numOfBullets: 0
+    _accuracy: 5
+    _numOfBullets: 2
     _clipSize: 5
-    _bulletSpeed: 5
+    _bulletSpeed: 3
     _bulletSize: 5
-  _bulletPrefab: {fileID: 114083237891081260, guid: 6bd1dfe00ee46495abb52976927ff207,
+  _bulletPrefab: {fileID: 114083237891081260, guid: 98838491657514007b8c391964b92019,
     type: 2}

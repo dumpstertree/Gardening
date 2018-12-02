@@ -12,7 +12,7 @@ namespace Dumpster.Core {
 		public T GetCharacteristic<T>( bool throwError = false ) where T : class {
 
 			foreach ( Characteristic c in _characteristics ) {
-				if ( c.GetType() == typeof( T ) ) {
+				if ( c.GetType() == typeof( T ) && !c.Secret ) {
 					return c as T;
 				}
 			}
@@ -22,6 +22,17 @@ namespace Dumpster.Core {
 			}
 
 			return null;
+		}
+		public List<T> GetCharacteristics<T>() where T : class {
+
+			var charactersitics = new List<T>();
+			foreach ( Characteristic c in _characteristics ) {
+				if ( c.GetType() == typeof( T ) && !c.Secret ) {
+					charactersitics.Add( c as T );
+				}
+			}
+
+			return charactersitics;
 		} 
 		public void PostNotification ( string notification ) {
 			
@@ -50,7 +61,6 @@ namespace Dumpster.Core {
 
 			return notifications;
 		}
-
 
 		private void Awake () {
 

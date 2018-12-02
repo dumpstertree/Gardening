@@ -207,7 +207,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 2d6f73a4deff2449e877b3dfa2be5b30, type: 2}
+  - {fileID: 2100000, guid: c85fa785b52a043c1908edd9d94619e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listeningToNofications:
   - Health.Death
+  afterSeconds: 0
 --- !u!114 &114208450679170838
 MonoBehaviour:
   m_ObjectHideFlags: 1

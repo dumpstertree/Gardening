@@ -6,18 +6,30 @@ namespace Dumpster.Core {
 	
 	public abstract class Characteristic : MonoBehaviour {
 
-		public const string RUN = "Characteristic.Run";
-		public const string ON_ACTOR_ENTER_TRIGGER = "ON_ACTOR_ENTER_TRIGGER";
-		public const string ON_ACTOR_EXIT_TRIGGER = "ON_ACTOR_EXIT_TRIGGER";
-
+		// ************** Public ****************
+		
+		public bool Secret {
+			get { return _secret; }
+			set { _secret = value; }
+		}
 		public Actor Actor {
 			get { return _actor; }
 		}
 
-		protected Actor _actor;
 
-		private bool _hasInit = false;
-		private bool _hasRun = false;
+		public const string RUN = "Characteristic.Run";
+		public const string ON_ACTOR_ENTER_TRIGGER = "ON_ACTOR_ENTER_TRIGGER";
+		public const string ON_ACTOR_EXIT_TRIGGER = "ON_ACTOR_EXIT_TRIGGER";
+
+
+		public static List<string> GetStaticNotifications () {
+
+			return new List<string>(){ RUN };
+		}
+		public virtual List<string> GetNotifications () {
+			
+			return new List<string>(){};
+		}
 
 		public void Install ( Actor actor ) {
 
@@ -47,23 +59,29 @@ namespace Dumpster.Core {
 		public virtual void RecieveNotification ( string notification ) {
 		}
 		
+		
+		// ************** Protected ****************
+		
 		protected virtual void OnInit () {}
 		protected virtual void OnRun () {}
 		protected virtual void OnActorUpdate () {}
 		protected virtual void OnActorEnterTrigger ( Actor actor ) {}
 		protected virtual void OnActorExitTrigger ( Actor actor ) {}
-		
-		public static List<string> GetStaticNotifications () {
+	
+		protected Actor _actor;
 
-			return new List<string>(){ RUN };
-		}
-		public virtual List<string> GetNotifications () {
-			
-			return new List<string>(){};
-		}
+		
+
+
+		// ************** Private ****************
+		
+		[SerializeField] private bool _secret;
+
+		private bool _hasInit = false;
+		private bool _hasRun = false;
 
 		private void OnTriggerEnter ( Collider other ) {
-
+			
 			var actor = other.GetComponent<Actor>();
 			if ( actor != null ) {
 				

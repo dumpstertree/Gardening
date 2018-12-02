@@ -29,10 +29,10 @@ namespace Eden.Interactors.Melee {
 			Destroy( gameObject, _maxTime );
 		}
 
-
 		[SerializeField] private float _maxTime;
 		[SerializeField] private LayerMask _layermask;
 		[SerializeField] private Path _path;
+		[SerializeField] private GameObject _hitEffect;
 
 		private int _comboNumber;
 		private float _time;
@@ -55,9 +55,10 @@ namespace Eden.Interactors.Melee {
 			_melee.SetSwingProgress( _time/_maxTime, _comboNumber );
 
 			var collider = LookForCollision ();
-			if ( collider != null ) { Collide( collider ); }
+			if ( collider != null ) {
+				Collide( collider );
+			}
 		}
-
 
 		private Collider LookForCollision () {
 
@@ -94,6 +95,8 @@ namespace Eden.Interactors.Melee {
 	        return null;
 		}
 		private void Collide ( Collider collider ) {
+
+			Instantiate( _hitEffect ).transform.position = collider.transform.position;
 
 			_alreadyHitColliders.Add( collider );
 			

@@ -10,6 +10,7 @@ namespace Dumpster.Controllers {
 		public float HorizontalInput { get; set; }
 		public float VerticalInput { get; set; }
 		public bool IsStrafing { get; set; }
+		public bool IsDashing { get; set; }
 
 		public bool IsSwinging { get; set; }
 		public float SwingProgress { get; set; }
@@ -44,13 +45,13 @@ namespace Dumpster.Controllers {
 		[SerializeField] private float _airMovementSpeed = 20f;
 		[SerializeField] private float _walkMovementSpeed = 20f;
 		[SerializeField] private float _runMovementSpeed = 20f;
+		[SerializeField] private float _dashMovementSpeed = 20f;
 		[SerializeField] private float _walkThreshold = 0.15f;
 		[SerializeField] private float _runThreshold = 0.95f;
 
 		[Header( "Animation Settings" )]
 		[SerializeField] private float _stridesPerMeterWalk = 0.5f;
 		[SerializeField] private float _stridesPerMeterRun  = 0.2f;
-
 
 		[Header( "Gameplay Settings" )]
 		[SerializeField] private LayerMask _mask;
@@ -72,6 +73,7 @@ namespace Dumpster.Controllers {
 		private AnimationDampener _aimDampener;
 
 		private KindaBlendTree _runningBlendTree;
+		private KindaBlendTree _dashingBlendTree;
 		private KindaBlendTree _walkingBlendTree;
 
 
@@ -110,11 +112,11 @@ namespace Dumpster.Controllers {
 		}
 
 
-		private bool _leftFoodDown {
+		private bool _leftFootDown {
 			get{ return Mathf.Repeat( _stride, 1.0f ) < 0.5f; }
 		}
-		private bool _rightFoodDown {
-			get{ return !_leftFoodDown; }
+		private bool _rightFootDown {
+			get{ return !_leftFootDown; }
 		}
 		private float _inputMagnitude {
 			get{ return new Vector2( HorizontalInput, VerticalInput ).magnitude; }
@@ -124,13 +126,18 @@ namespace Dumpster.Controllers {
 		private float RaycastDown () {
 
 			var shortest = Mathf.Infinity;
-			var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
-
-			for ( int x=0; x<5; x++ ) {
-				for ( int y=0; y<5; y++ ) {
+			var rows = 5;
+			var collumns = 5;
+			var width = 0.5f;
+			var depth = 0.5f;
+			var startPos = transform.position + Vector3.up + new Vector3( -width/2f, 0f, -depth/2f );
+			
+			Gizmos.color = Color.green;
+			for ( int x=0; x<rows; x++ ) {
+				for ( int y=0; y<collumns; y++ ) {
 					
 					RaycastHit hit;
-					var pos = startPos + new Vector3( (float)x/5f, 0, (float)y/5f );
+					var pos = startPos + new Vector3( (float)x/(float)rows * width, 0, (float)y/(float)collumns * depth );
 					var ray = -Vector3.up;
 					
 					if( Physics.Raycast( pos, ray, out hit, 1.1f, _mask ) ) {
@@ -147,7 +154,7 @@ namespace Dumpster.Controllers {
 		}
 		private Vector3 GetGroundNormal () {
 
-			RaycastHit rh = new RaycastHit();
+			RaycastHit? rh = null;
 			var shortest = Mathf.Infinity;
 			var startPos = transform.position + Vector3.up + new Vector3( -0.5f, 0f, -0.5f );
 
@@ -169,14 +176,22 @@ namespace Dumpster.Controllers {
 				}
 			}
 
-			return rh.normal;
+			if ( rh.HasValue) {
+				return rh.Value.normal;
+			} else {
+				return Vector3.up;
+			}
 		}
 
 
 		// Mono
 		private void Update () {
 			
-			if ( _isOnGround && !_jumping) {
+			if ( IsDashing ) {
+
+				CalculateVelocityInDash ();
+
+			} else if ( _isOnGround && !_jumping) {
 			
 				CalculateVelocityOnGround ();
 			
@@ -229,6 +244,15 @@ namespace Dumpster.Controllers {
 				posY : "Walk_Forward",
 				negY : "Walk_Back"
 			);
+
+			_dashingBlendTree = new KindaBlendTree( 
+				animator : _animator,
+				posX : "Dash_Right",
+				negX : "Dash_Left",
+				posY : "Dash_Forward",
+				negY : "Dash_Back"
+			);
+
 
 			_animator.SetWeight( "Idle", 1f );
 		}
@@ -376,11 +400,47 @@ namespace Dumpster.Controllers {
 			}
 
 			_wasRunning =  _isRunning;
+		
+
+			// Dash
+			if ( !_wasDashing && IsDashing ) {
+				OnBeginDash ();
+			} else if ( _wasDashing && !IsDashing ) {
+				OnEndDash ();
+			} else if ( IsDashing ) { 
+				OnDash (); 
+			}
+
+			_wasDashing =  IsDashing;
 		}
 
 
-
 		// Physics
+		private void CalculateVelocityInDash () {
+			
+			// input vector
+			var cameraRight = Camera.main.transform.right;
+			var cameraForward = Vector3.Cross( cameraRight, Vector3.up );
+			var inputDegrees = Mathf.Rad2Deg * Mathf.Atan2(  HorizontalInput, VerticalInput );
+			var inputVector = Quaternion.AngleAxis( inputDegrees, Vector3.up ) * cameraForward;
+			
+			
+			// ground vector
+			var groundNormalVector = GetGroundNormal();
+
+			
+			// new direction vector
+			var inputRight = Vector3.Cross( Vector3.up, inputVector );
+			var newVector = Vector3.Cross( inputRight, groundNormalVector );
+
+			
+			// calculate new velocity
+			var newVelocity = newVector * _dashMovementSpeed;
+			// var averagedVelocity =  Vector3.Lerp( _velocity.normalized, newVector.normalized, 0.2f ) * _dashMovementSpeed;
+
+			// set new velocity
+			_velocity = Vector3.Lerp( _velocity, newVelocity, 0.2f );
+		}
 		private void CalculateVelocityOnGround () {
 
 			// if no input just abort
@@ -462,7 +522,6 @@ namespace Dumpster.Controllers {
 		}
 
 
-		
 		// Combo 1
 		private bool _wasSwingingCombo1Idling;
 
@@ -498,7 +557,6 @@ namespace Dumpster.Controllers {
 		}
 
 
-
 		// Combo 2
 		private bool _wasSwingingCombo2;
 
@@ -515,7 +573,6 @@ namespace Dumpster.Controllers {
 
 			_combo2Dampener.SetWeight( 0f, 0.2f );
 		}
-
 
 
 		// Strafing
@@ -650,6 +707,30 @@ namespace Dumpster.Controllers {
 		private void OnEndRun () {
 
 			_runningBlendTree.SetWeight( 0f, 0.2f );
+		}
+
+
+		// Dashing
+		private bool _wasDashing;
+		private float _dashStartTime;
+
+		private void OnBeginDash () {
+
+			_dashingBlendTree.SetWeight( 1f, 0.2f );
+			_dashStartTime= Time.time;
+		}
+		private void OnDash () {
+
+			_dashingBlendTree.SetProgress( Mathf.Clamp01(Time.time - _dashStartTime/0.5f) );
+
+			_dashingBlendTree.SetBlendPoint( 
+				_localVelocity.x / _dashMovementSpeed,
+				_localVelocity.z / _dashMovementSpeed
+			);
+		}
+		private void OnEndDash () {
+
+			_dashingBlendTree.SetWeight( 0f, 0.2f );
 		}
 	}
 }

@@ -55,19 +55,18 @@ namespace Eden.Model {
 
 			// if not already firing start
 			if ( !_firing ) {
-
-				var fireRate = _rateOfFire;
 				
-				// create all the bullets
 				_firing = true;
-				for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( actor );  }
 				
-				// end firing				
-				Action onComplete = () => {
-					_firing = false;
-				};
-
-				Game.GetModule<Async>()?.WaitForSeconds( fireRate, onComplete );
+				actor.GetCharacteristic<CanUseRangedWeapons>().Animate( () => {
+					
+					// create all the bullets
+					foreach( CanUseRangedWeapons r in actor.GetCharacteristics<CanUseRangedWeapons>() ){
+						for ( int i=0; i<_numOfBullets; i++ ) {  CreateBullet( r );  }
+					}
+					
+					Game.GetModule<Async>()?.WaitForSeconds( _rateOfFire, () => _firing = false );
+				});
 			}
 		}
 	
@@ -116,11 +115,11 @@ namespace Eden.Model {
 		}
 
 
-		private void CreateBullet ( Actor actor ) {
+		private void CreateBullet ( CanUseRangedWeapons ranged ) {
 
 			var bullet = GameObject.Instantiate( Gun.BulletPrefab );
 
-			bullet.SetBullet( actor, _bulletSize, _bulletSpeed, _accuracy );
+			bullet.SetBullet( ranged, _bulletSize, _bulletSpeed, _accuracy );
 
 			_availableBullets--;
 		}	

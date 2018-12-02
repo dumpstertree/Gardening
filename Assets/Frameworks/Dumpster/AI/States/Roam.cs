@@ -15,9 +15,6 @@ namespace Dumpster.AI {
 		public Eyes Eyes {
 			get{ return _eyes; }
 		}
-		public Pathfinding Pathfinding {
-			get{ return _pathFinding; }
-		}
 		public Personality Personality {
 			get { return _personality; }
 		}
@@ -26,9 +23,8 @@ namespace Dumpster.AI {
 			
 			var inst = ScriptableObject.Instantiate( this );
 			
-			inst._personality 	= personality;
-			inst._eyes 			= personality.Logic.Actor.GetCharacteristic<Eyes>( true );
-			inst._pathFinding 	= personality.Logic.Actor.GetCharacteristic<Pathfinding>( true );
+			inst._personality = personality;
+			inst._eyes = personality.Logic.Actor.GetCharacteristic<Eyes>( true );
 
 			return inst;
 		}
@@ -42,19 +38,29 @@ namespace Dumpster.AI {
 			}
 		}
 		public override void EnterState () {
-
-			_pathFinding.MovementSpeed = _movementSpeed;
 		}
 		public override void UpdateState () {
 
-			if ( _roaming == null || _roaming.ActionIsFinished ) {
+			if ( _currentAction != null && !_currentAction.Complete ) {
+				return;
+			}
 
-				_roaming = new Roaming( this );
+			switch( Random.Range( 0, 2 ) ) {
+				
+				case 0: 
+					_currentAction = new Idle( _personality );
+					_currentAction.Start();
+					break;
+				
+				case 1: 
+					_currentAction = new Wander( _personality );
+					_currentAction.Start();
+					break;
 			}
 		}
 		public override void ExitState () {
 
-			_roaming.Kill();
+			_currentAction.Kill();
 		}
 
 
@@ -62,15 +68,14 @@ namespace Dumpster.AI {
 
 		[SerializeField] private float _movementSpeed;
 		[SerializeField] private Personality.States _stateOnSeeEnemy;
-
-		private Personality _personality;
+		
 		private Eyes _eyes;
-		private Pathfinding _pathFinding;
-		private Roaming _roaming;
+		private Personality _personality;
+		private IStateAction _currentAction;
 		
 		private void ChangeState ( Personality.States newState ) {
 
-			_roaming.Kill();
+			_currentAction.Kill();
 			_personality.ChangeState( _stateOnSeeEnemy );
 		}
 		private void LookForTarget () {

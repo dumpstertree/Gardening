@@ -277,9 +277,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1451782855919490}
-  m_LocalRotation: {x: -0, y: -0.9966368, z: -0, w: -0.08194528}
-  m_LocalPosition: {x: -35.84, y: 2.5, z: 24.69}
-  m_LocalScale: {x: 2.000001, y: 2, z: 2.000001}
+  m_LocalRotation: {x: -0, y: -0.96235585, z: -0, w: 0.27179268}
+  m_LocalPosition: {x: -23.61, y: 2.5, z: 34.73}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4774901321107822}
   - {fileID: 4366772454904212}
@@ -409,6 +409,7 @@ MonoBehaviour:
   - Health.Death
   _spawner: {fileID: 4093899613174172}
   _prefab: {fileID: 100008, guid: c6f0dc0eae58dbe4da95e62a8373ad23, type: 2}
+  _parent: {fileID: 0}
 --- !u!114 &114356456813700810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listeningToNofications:
   - Health.Death
+  afterSeconds: 0
 --- !u!114 &114410567732450162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -451,6 +453,7 @@ MonoBehaviour:
   - Health.Decreased
   _spawner: {fileID: 4145612356249894}
   _prefab: {fileID: 1732701550539862, guid: 138bfbaab8f024d0b960404f1e00598e, type: 2}
+  _parent: {fileID: 0}
 --- !u!114 &114552984614007292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -477,6 +480,7 @@ MonoBehaviour:
   - Health.Decreased
   _spawner: {fileID: 4980909123953728}
   _prefab: {fileID: 1578011619424466, guid: 905e231a42c5a4414a56281569fd2e6d, type: 2}
+  _parent: {fileID: 0}
 --- !u!208 &208685416394404870
 NavMeshObstacle:
   m_ObjectHideFlags: 1

@@ -31,3 +31,19 @@ MonoBehaviour:
     _playerPath: /player/
     _buildablePath: /buildable/
     _rangedWeaponPath: /ranged/
+  _inputLayers:
+    _player: PLAYER
+    _foregroundUI: FOREGROUND
+    _midgroundUI: MIDGROUND
+    _backgroundUI: BACKGROUND
+  _uiContexts:
+    _none: NONE
+    _player: PLAYER
+    _dialog: DIALOG
+    _inventory: INVENTORY
+    _building: BUILDING
+  _uiLayers:
+    _foreground: 2
+    _midground: 1
+    _background: 0
+  _useDialogs: 0

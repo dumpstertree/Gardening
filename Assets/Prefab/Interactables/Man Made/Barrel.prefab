@@ -353,7 +353,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188813726910900}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.48, y: 2.51, z: 23.250002}
+  m_LocalPosition: {x: -33.79042, y: 2.51, z: 30.115726}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4574850643827384}
@@ -456,6 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listeningToNofications:
   - Health.Death
+  afterSeconds: 0
 --- !u!114 &114070737008191632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -487,6 +488,7 @@ MonoBehaviour:
   - Health.Decreased
   _spawner: {fileID: 4187557501989418}
   _prefab: {fileID: 1578011619424466, guid: 905e231a42c5a4414a56281569fd2e6d, type: 2}
+  _parent: {fileID: 0}
 --- !u!114 &114158613041618946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -575,6 +577,7 @@ MonoBehaviour:
   - Health.Death
   _spawner: {fileID: 4187557501989418}
   _prefab: {fileID: 100008, guid: c6f0dc0eae58dbe4da95e62a8373ad23, type: 2}
+  _parent: {fileID: 0}
 --- !u!114 &114818304726761072
 MonoBehaviour:
   m_ObjectHideFlags: 1

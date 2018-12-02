@@ -17,5 +17,24 @@ namespace Dumpster.Core {
 			Array.Copy( source, 0, destination, 1, source.Length - 1);
 			return destination;
 		}
+
+		static public void Shuffle<T> ( T[] source  ) {
+			
+			for ( int i=0; i<source.Length; i++ ) {
+
+				var targetIndex = UnityEngine.Random.Range( 0, source.Length );
+				
+				var ref1 = source[ i ];
+				var ref2 = source[ targetIndex ];
+
+				source[ i ] = ref2;
+				source[ targetIndex ] = ref1;
+			}
+		}
+		static public T[] Shuffled<T> ( T[] source  ) {
+			
+			Shuffle( source );
+			return source;
+		}
 	}
 }

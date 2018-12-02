@@ -11,11 +11,34 @@ namespace Dumpster.Characteristics {
 		// ****************** Public *****************
 	
 		public bool HasDestination {
-			get{ return _hasDestination; }
+			get { return _hasDestination; }
 		}
 		public float MovementSpeed {
-			get{ return _agent.speed; }
-			set{ _agent.speed = value; }
+			get { return _agent.speed; }
+			set { _agent.speed = value; }
+		}
+		public Vector3? Destination {
+			get { return _destination; }
+		}
+		
+		public float? GetPathLength ( Vector3 destination ) {
+
+			var path = new NavMeshPath();
+			var pathExists = _agent.CalculatePath( destination, path );
+
+			if ( pathExists && path.status == NavMeshPathStatus.PathComplete ) {
+
+				var length = 0f;
+				for( int i=1; i<path.corners.Length; i++ ) {
+					
+					var lastPath = path.corners[ i-1 ];
+					length += Vector3.Distance( lastPath, path.corners[ i ] );
+				}
+
+				return length;
+			}
+
+			return null;
 		}
 		public void GoToDestination ( Vector3 destination ) {
 			
@@ -31,7 +54,8 @@ namespace Dumpster.Characteristics {
 			}
 		}
 		public void ClearDestination () {
-
+		
+			_agent.SetPath( new NavMeshPath() );
 			_hasDestination = false;
 		}
 
@@ -45,7 +69,7 @@ namespace Dumpster.Characteristics {
 
 			var dist = Vector3.Distance( _agent.transform.position, _destination );
 			if ( dist < _reachDeadZone ) {
-				_hasDestination = false;
+				ClearDestination();
 			}
 		}
 		

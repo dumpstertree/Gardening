@@ -18,7 +18,10 @@ namespace Eden.UI.Panels {
 		[Header( "Reticle" )]
 		[SerializeField] private Transform _reticle;
 
-		
+		[Header( "Zen" )]
+		[SerializeField] private Transform _zenBar;
+		[SerializeField] private Transform _zenBarFill;
+
 		private Actor _actor {
 			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
 		}
@@ -26,9 +29,13 @@ namespace Eden.UI.Panels {
 
 		private void Update () {
 
+			var zen = Game.GetModule<Eden.Modules.Zen>();
+			if ( zen != null ) {
+				SizeZenBar( zen.CurrentZen, zen.MaxZen );
+			}
+
 			var health = _actor.GetCharacteristic<Health>( true );
 			if ( health != null ) {
-
 				SizeHealthBar ( health.Current, health.Max );
 			}
 
@@ -77,6 +84,11 @@ namespace Eden.UI.Panels {
 
 			var scale = (float)currentEnergy / (float)maxEnergy;
 			_energyBarFill.transform.localScale = new Vector3( 1f, scale, 1f );
+		}
+		private void SizeZenBar ( int currentZen, int maxZen ) {
+			
+			var scale = (float)currentZen / (float)maxZen;
+			_zenBarFill.transform.localScale = new Vector3( 1f, scale, 1f );
 		}
 		private void SizeReloadingBar ( float currentReload, float maxReload ) {
 		}

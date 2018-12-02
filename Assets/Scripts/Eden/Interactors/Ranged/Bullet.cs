@@ -27,12 +27,12 @@ namespace Eden.Interactors.Ranged {
 		
 		// ******************* Public **************************
 
-		public void SetBullet ( Actor actor, float bulletSize, float bulletSpeed, float spread ) {
+		public void SetBullet ( CanUseRangedWeapons ranged, float bulletSize, float bulletSpeed, float spread ) {
 			
 
 			// set all protected variables
-			_user = actor;
-			_ranged = actor.GetCharacteristic<CanUseRangedWeapons>( true );
+			_ranged = ranged;
+			_user = ranged.Actor;
 			_bulletSize = bulletSize;
 			_bulletSpeed = bulletSpeed;
 			_spread = spread;
@@ -49,7 +49,7 @@ namespace Eden.Interactors.Ranged {
 			// set forward taking into account spread
 			forward = AddSpread( forward, spread );
 
-			var target = actor.GetCharacteristic<Targeter>()?.GetBestTarget();
+			var target = _user.GetCharacteristic<Targeter>()?.GetBestTarget();
 			if ( target != null ) {
 				forward = target.transform.position - _ranged.GetSpawnLocation();
 			}
