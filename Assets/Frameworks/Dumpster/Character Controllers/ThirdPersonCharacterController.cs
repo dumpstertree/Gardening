@@ -12,6 +12,7 @@ namespace Dumpster.Controllers {
 		public bool IsStrafing { get; set; }
 		public bool IsDashing { get; set; }
 
+		public bool IsSprinting { get; set; }
 		public bool IsSwinging { get; set; }
 		public float SwingProgress { get; set; }
 
@@ -44,6 +45,7 @@ namespace Dumpster.Controllers {
 		[Header( "Movement Settings" )]
 		[SerializeField] private float _airMovementSpeed = 20f;
 		[SerializeField] private float _walkMovementSpeed = 20f;
+		[SerializeField] private float _sprintMovementSpeed = 20f;
 		[SerializeField] private float _runMovementSpeed = 20f;
 		[SerializeField] private float _dashMovementSpeed = 20f;
 		[SerializeField] private float _walkThreshold = 0.15f;
@@ -72,6 +74,7 @@ namespace Dumpster.Controllers {
 		private AnimationDampener _landDampener;
 		private AnimationDampener _aimDampener;
 
+		private KindaBlendTree _sprintingBlendTree;
 		private KindaBlendTree _runningBlendTree;
 		private KindaBlendTree _dashingBlendTree;
 		private KindaBlendTree _walkingBlendTree;
@@ -190,7 +193,7 @@ namespace Dumpster.Controllers {
 			if ( IsDashing ) {
 
 				CalculateVelocityInDash ();
-
+			
 			} else if ( _isOnGround && !_jumping) {
 			
 				CalculateVelocityOnGround ();
@@ -453,8 +456,12 @@ namespace Dumpster.Controllers {
 			// calculate speed
 			var speed = 0f;
 			
-			if ( _isWalking ) { speed = _walkMovementSpeed; }
-			if ( _isRunning ) { speed = _runMovementSpeed; }
+			if ( IsSprinting && !IsStrafing ) {
+				speed = _sprintMovementSpeed;
+			} else {
+				if ( _isWalking ) { speed = _walkMovementSpeed; }
+				if ( _isRunning ) { speed = _runMovementSpeed; }
+			}
 
 			
 			// input vector
@@ -478,7 +485,7 @@ namespace Dumpster.Controllers {
 
 
 			// set new velocity
-			_velocity = Vector3.Lerp( _velocity, newVelocity, 0.5f );
+			_velocity = Vector3.Lerp( _velocity, newVelocity, 0.3f );
 		}
 		private void CalculateVelocityInAir () {
 
@@ -716,12 +723,12 @@ namespace Dumpster.Controllers {
 
 		private void OnBeginDash () {
 
-			_dashingBlendTree.SetWeight( 1f, 0.2f );
+			_dashingBlendTree.SetWeight( 1f, 0.1f );
 			_dashStartTime= Time.time;
 		}
 		private void OnDash () {
 
-			_dashingBlendTree.SetProgress( Mathf.Clamp01(Time.time - _dashStartTime/0.5f) );
+			_dashingBlendTree.SetProgress( Mathf.Clamp01(Time.time - _dashStartTime/0.2f) );
 
 			_dashingBlendTree.SetBlendPoint( 
 				_localVelocity.x / _dashMovementSpeed,
@@ -730,7 +737,28 @@ namespace Dumpster.Controllers {
 		}
 		private void OnEndDash () {
 
-			_dashingBlendTree.SetWeight( 0f, 0.2f );
+			_dashingBlendTree.SetWeight( 0f, 0.3f );
+		}
+	
+		private bool _wasSprinting;
+		private void OnBeginSprint () {
+
+			_sprintingBlendTree.SetWeight( 1f, 0.2f );
+		}
+		private void OnSprint () {
+
+			var prog = Mathf.Repeat( _stride, 1.0f );
+			
+			_sprintingBlendTree.SetProgress( prog );
+
+			_sprintingBlendTree.SetBlendPoint( 
+				_localVelocity.x / _runMovementSpeed,
+				_localVelocity.z / _runMovementSpeed
+			);
+		}
+		private void OnEndSprint () {
+
+			_sprintingBlendTree.SetWeight( 0f, 0.2f );
 		}
 	}
 }

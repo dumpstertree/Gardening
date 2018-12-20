@@ -19,4 +19,3 @@ MonoBehaviour:
   _expendable: 1
   _swingPrefabs:
   - {fileID: 114196781603355574, guid: 0b03d315c0d15430899735f7a467a0f6, type: 2}
-  - {fileID: 114196781603355574, guid: a1260060e49e64fdebbd4e2eb1e8eac2, type: 2}

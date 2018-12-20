@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Zen
   m_EditorClassIdentifier: 
   _maxLevels: 2
-  _zenPerLevel: 7
+  _zenPerLevel: 15
   _deteration: 1
-  _timeBeforeDeteriate: 1.5
+  _timeBeforeDeteriate: 5

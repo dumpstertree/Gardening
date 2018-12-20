@@ -11,9 +11,11 @@ namespace Eden {
 		private const string DPAD_HORIZONTAL_ID = "DPad_Horizontal";
 		private const string DPAD_VERTICAL_ID 	= "DPad_Vertical";
 
+		private const string ANALOG_RIGHT_BUTTON_ID = "Analog_Right_Button";
 		private const string ANALOG_RIGHT_HORIZONTAL_ID = "Analog_Right_Horizontal";
 		private const string ANALOG_RIGHT_VERTICAL_ID = "Analog_Right_Vertical";
 		
+		private const string ANALOG_LEFT_BUTTON_ID = "Analog_Left_Button";
 		private const string ANALOG_LEFT_HORIZONTAL_ID = "Analog_Left_Horizontal";
 		private const string ANALOG_LEFT_VERTICAL_ID = "Analog_Left_Vertical";
 
@@ -27,8 +29,8 @@ namespace Eden {
 				GetDpadButtons(),
 				GetLeftAnalog(),
 				GetRightAnalog(),
-				GetLeftBackAnalog(),
-				GetRightBackAnalog()
+				GetLeftBack(),
+				GetRightBack()
 			 );
 		}
 
@@ -96,9 +98,11 @@ namespace Eden {
 			return buttons;
 		}
 		private Input.Package.Analog GetLeftAnalog () {
-			
-			return new Input.Package.Analog(
 
+			return new Input.Package.Analog(
+				UnityEngine.Input.GetButton( ANALOG_LEFT_BUTTON_ID ), 
+				UnityEngine.Input.GetButtonDown( ANALOG_LEFT_BUTTON_ID ),
+				UnityEngine.Input.GetButtonUp( ANALOG_LEFT_BUTTON_ID ),
 				UnityEngine.Input.GetAxis( ANALOG_LEFT_HORIZONTAL_ID ),
 				UnityEngine.Input.GetAxis( ANALOG_LEFT_VERTICAL_ID )
 			);
@@ -106,12 +110,14 @@ namespace Eden {
 		private Input.Package.Analog GetRightAnalog () {
 			
 			return new Input.Package.Analog(
-
+				UnityEngine.Input.GetButton( ANALOG_RIGHT_BUTTON_ID ), 
+				UnityEngine.Input.GetButtonDown( ANALOG_RIGHT_BUTTON_ID ),
+				UnityEngine.Input.GetButtonUp( ANALOG_RIGHT_BUTTON_ID ),
 				UnityEngine.Input.GetAxis( ANALOG_RIGHT_HORIZONTAL_ID ),
 				UnityEngine.Input.GetAxis( ANALOG_RIGHT_VERTICAL_ID )
 			);
 		}
-		private Input.Package.Back GetLeftBackAnalog () {
+		private Input.Package.Back GetLeftBack () {
 
 			return new Input.Package.Back ( 
 				0f,
@@ -120,7 +126,7 @@ namespace Eden {
 				UnityEngine.Input.GetButtonUp( BACK_LEFT_BUMPER_ID )
 			 );
 		}
-		private Input.Package.Back GetRightBackAnalog () {
+		private Input.Package.Back GetRightBack () {
 
 			return new Input.Package.Back ( 
 				0f,

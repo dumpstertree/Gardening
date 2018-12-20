@@ -18,19 +18,19 @@ namespace Dumpster.BuiltInModules {
 			
 			switch ( power ) {
 				case ShakePower.Miniscule:
-					_magnitude += 1;
+					_magnitude += 0.05f;
 					break;
 				case ShakePower.Light:
-					_magnitude += 2;
+					_magnitude += 0.2f;
 					break;
 				case ShakePower.Medium :
-					_magnitude += 3;
+					_magnitude += 0.8f;
 					break;
 				case ShakePower.Heavy :
-					_magnitude += 4;
+					_magnitude += 2;
 					break;
 				case ShakePower.Colossal:
-					_magnitude += 5;
+					_magnitude += 4;
 					break;
 				case ShakePower.PlanetShattering:
 					_magnitude += 6;
@@ -42,10 +42,10 @@ namespace Dumpster.BuiltInModules {
 					_decay = 0.2f;
 					break;
 				case DecayRate.Medium:
-					_decay = 0.4f;
+					_decay = 0.5f;
 					break;
 				case DecayRate.Long :
-					_decay = 0.6f;
+					_decay = 0.8f;
 					break;
 			}
 		}
@@ -80,20 +80,16 @@ namespace Dumpster.BuiltInModules {
 
 		private List<Shakable>_shakables = new List<Shakable>();
 		
-		
-
 		private float _magnitude;
 		private float _decay;
 		private float _maxDistance = 30;
 		private Vector3 _startPos;
 
-	
-
-		public void LateUpdate () {
+		protected override void OnLateUpdate () {
 
 			_magnitude = _magnitude * _decay;
 			
-			if ( _magnitude > 0.01 ) {
+			if ( _magnitude > 0.001 ) {
 				
 				foreach ( Shakable s in _shakables ) {
 					

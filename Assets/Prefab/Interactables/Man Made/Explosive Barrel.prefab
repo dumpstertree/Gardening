@@ -46,6 +46,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1196977570752416
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4164704861905796}
+  - component: {fileID: 114790599685610254}
+  m_Layer: 0
+  m_Name: Shake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1275299211919376
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +188,19 @@ Transform:
   m_Father: {fileID: 4601272579783700}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4164704861905796
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1196977570752416}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4601272579783700}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4310048263299186
 Transform:
   m_ObjectHideFlags: 1
@@ -227,6 +256,7 @@ Transform:
   - {fileID: 4014240914592766}
   - {fileID: 4818573018257980}
   - {fileID: 4808070212428228}
+  - {fileID: 4164704861905796}
   m_Father: {fileID: 4430578654657640}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -249,15 +279,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1113204792630900}
-  m_LocalRotation: {x: 0.5775562, y: 0.40795696, z: -0.40795693, w: 0.5775562}
-  m_LocalPosition: {x: -32.751232, y: 2.79, z: 27.853374}
+  m_LocalRotation: {x: 0.7064802, y: 0.029762482, z: -0.029762452, w: 0.7064802}
+  m_LocalPosition: {x: -24, y: 0.32104424, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4310048263299186}
   - {fileID: 4430578654657640}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: -4.8250003}
 --- !u!4 &4808070212428228
 Transform:
   m_ObjectHideFlags: 1
@@ -364,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513a85112ebc241fe90323b0f564cd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _listeningToNofications:
   - Health.Death
   _spawner: {fileID: 4430578654657640}
@@ -380,6 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aefe2687ca0141c9b632478ee2a80e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _health: 1
   _maxHealth: 1
   _hasInfiniteHealth: 0
@@ -394,6 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d64e2dc3a194865a5df1037b138b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _listeningToNofications:
   - Health.Death
   afterSeconds: 0
@@ -408,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6f68b1caff7472c8a932405c9d1b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _showUI: 1
 --- !u!114 &114568564513976814
 MonoBehaviour:
@@ -420,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878f917e4848a462b9dc32dfea3898c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _listeningToNofications:
   - Health.Death
   _spawner: {fileID: 4808070212428228}
@@ -436,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1a5e959cd624bebac5cf34b17c91df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
 --- !u!114 &114742976473160610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -448,6 +484,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 1
+--- !u!114 &114790599685610254
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1196977570752416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a5bbd1583574d1c8654758f4cf2d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _secret: 0
+  _listeningToNofications:
+  - Health.Death
+  _shakeOrigin: {fileID: 4164704861905796}
+  _power: 2
+  _decay: 2
 --- !u!114 &114794032878436352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,6 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b04dcb161bf94d6ab4a451f5b968bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _secret: 0
   _listeningToNofications:
   - Health.Death
   _explosionPrefab: {fileID: 1984029538504354, guid: 1d337624803104143aae0a4cbe791976,

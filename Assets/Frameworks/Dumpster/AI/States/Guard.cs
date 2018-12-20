@@ -27,7 +27,7 @@ namespace Dumpster.AI {
 			
 			LookForTarget ();
 
-			if ( _personality.Logic.Target != null ) {
+			if ( _personality?.Logic.Target != null ) {
 				ChangeState ( _stateOnSeeEnemy );
 			}
 		}
@@ -39,12 +39,12 @@ namespace Dumpster.AI {
 			
 			if ( _currentAction == null || _currentAction.Complete ) {
 				_currentAction = new Idle( _personality );
-				_currentAction.Start();
+				_currentAction?.Start();
 			}
 		}
 		public override void ExitState () {
 			
-			_currentAction.Kill();
+			_currentAction?.Kill();
 		}
 
 		
@@ -58,8 +58,8 @@ namespace Dumpster.AI {
 		
 		private void ChangeState ( Personality.States newState ) {
 
-			_currentAction.Kill();
-			_personality.ChangeState( newState );
+			_currentAction?.Kill();
+			_personality?.ChangeState( newState );
 		}
 		private void LookForTarget () {
 			

@@ -20,7 +20,6 @@ public class PlayerLogic : Characteristic, IInputReciever<Eden.Input.Package> {
 	
 	public void RecieveInput ( Eden.Input.Package package ) {
 
-	
 		if ( package.Dpad.Left_Down )     	{ ShiftQuickSlotLeft (); }
 		if ( package.Dpad.Right_Down )     	{ ShiftQuickSlotRight (); }
 		if ( package.BackRight.Bumper )     { UseItem (); }
@@ -28,14 +27,16 @@ public class PlayerLogic : Characteristic, IInputReciever<Eden.Input.Package> {
 		if ( package.BackLeft.Bumper_Down ) { BeginAiming (); }
 		if ( package.BackLeft.Bumper_Up )   { EndAiming (); }
 		if ( package.Face.Down_Down )       { Jump (); }
+		if ( package.Face.Left_Down ) { BeginDash(); }
+		if ( package.Face.Left_Up )   { EndDash(); }
+		if ( package.RightAnalog.Button_Down ) { ToggleSprinting(); }
 		
 		MoveCameraControllerX ( package.RightAnalog.Horizontal );
 		MoveCameraControllerY ( package.RightAnalog.Vertical );
 		MoveCharacterControllerX ( package.LeftAnalog.Horizontal );
 		MoveCharacterControllerY ( package.LeftAnalog.Vertical );
 		
-		if ( package.Face.Left_Down ) { BeginDash(); }
-		if ( package.Face.Left_Up )   { EndDash(); }
+		_movementMagnitude = Vector2.Distance( Vector2.zero, new Vector2( package.LeftAnalog.Horizontal, package.LeftAnalog.Vertical ) );
 	}
 	public void EnteredInputFocus () {
 	}
@@ -59,6 +60,12 @@ public class PlayerLogic : Characteristic, IInputReciever<Eden.Input.Package> {
 		if ( _isDashing ) {
 			if ( Time.time - _lastDashStartTime > _dashLength ) {
 				EndDash();
+			}
+		}
+
+		if ( _isSprinting ) {
+			if ( _movementMagnitude < 0.5f ) {
+				EndSprinting();
 			}
 		}
 	}
@@ -133,12 +140,16 @@ public class PlayerLogic : Characteristic, IInputReciever<Eden.Input.Package> {
 		_characterController.Jump ();
 	}
 
+	private bool _isSprinting;
+	private float _movementMagnitude;
 	private bool _isDashing;
 	private float _lastDashEndTime;
 	private float _lastDashStartTime;
 	private float _dashCooldown = 0.5f;
-	private float _dashLength = 0.25f;
+	private float _dashLength = 0.4f;
 
+
+	// dashing
 	private void BeginDash () {
 
 		if ( Time.time - _lastDashEndTime > _dashCooldown ) {
@@ -157,6 +168,28 @@ public class PlayerLogic : Characteristic, IInputReciever<Eden.Input.Package> {
 			_isDashing = false;
 		}
 	}
+
+
+	// sprinting
+	private void ToggleSprinting () {
+
+		if ( _isSprinting ) {
+			EndSprinting ();
+		}else {
+			BeginSprinting ();
+		}
+	}
+	private void BeginSprinting () {
+
+		_isSprinting = true;
+		_characterController.IsSprinting = true;
+	}
+	private void EndSprinting () {
+
+		_isSprinting = false;
+		_characterController.IsSprinting = false;
+	}
+
 
 	// ui
 	private void OpenInventoryMenu () {

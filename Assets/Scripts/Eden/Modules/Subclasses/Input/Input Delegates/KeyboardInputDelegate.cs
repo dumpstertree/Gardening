@@ -21,8 +21,8 @@ namespace Eden {
 				GetDpadButtons(),
 				GetLeftAnalog(),
 				GetRightAnalog(),
-				GetLeftBackAnalog(),
-				GetRightBackAnalog()
+				GetLeftBack(),
+				GetRightBack()
 			 );
 		}
 
@@ -71,23 +71,29 @@ namespace Eden {
 		private Input.Package.Analog GetLeftAnalog () {
 			
 			return new Input.Package.Analog( 
-			
+				
+				false, 
+				false,
+				false,
 				UnityEngine.Input.GetAxis( "Horizontal" ),
 				UnityEngine.Input.GetAxis( "Vertical" ) );
 		}
 		private Input.Package.Analog GetRightAnalog () {
 			
 			return new Input.Package.Analog( 
+				false, 
+				false,
+				false,
 				0f, 0f
 				);
 				// UnityEngine.Input.GetAxis( "Horizontal" ),
 				// UnityEngine.Input.GetAxis( "Vertical" ) );
 		}
-		private Input.Package.Back GetLeftBackAnalog () {
+		private Input.Package.Back GetLeftBack () {
 
 			return new Input.Package.Back ();
 		}
-		private Input.Package.Back GetRightBackAnalog () {
+		private Input.Package.Back GetRightBack () {
 
 			return new Input.Package.Back ();
 		}

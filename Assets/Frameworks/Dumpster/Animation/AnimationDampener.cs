@@ -23,7 +23,7 @@ public class AnimationDampener  {
 	public void SetWeight ( float targetvalue, float overTime = 0f ) {
 
 		if ( _weightCoroutine != null ) {
-			_animator.StopCoroutine( _weightCoroutine );
+			_animator?.StopCoroutine( _weightCoroutine );
 		}
 
 		if ( overTime > 0f ) {
@@ -34,7 +34,7 @@ public class AnimationDampener  {
 					
 					v => {
 						_weight = v;
-						_animator.SetWeight( _animation, _weight );
+						_animator?.SetWeight( _animation, _weight );
 					}
 				)
 			);
@@ -42,13 +42,13 @@ public class AnimationDampener  {
 		else {
 
 			_weight = targetvalue;
-			_animator.SetWeight( _animation, _weight );
+			_animator?.SetWeight( _animation, _weight );
 		}
 	}
 	public void SetProgress ( float targetvalue, float overTime = 0f ) {
 
 		if ( _progressCoroutine != null ) {
-			_animator.StopCoroutine( _progressCoroutine );
+			_animator?.StopCoroutine( _progressCoroutine );
 		}
 
 		if ( overTime > 0f ) {
@@ -59,7 +59,7 @@ public class AnimationDampener  {
 					
 					v => {
 						_progress = v;
-						_animator.SetProgress( _animation, _progress );
+						_animator?.SetProgress( _animation, _progress );
 					}
 				)
 			);
@@ -67,13 +67,13 @@ public class AnimationDampener  {
 		else {
 
 			_progress = targetvalue;
-			_animator.SetProgress( _animation, _progress );
+			_animator?.SetProgress( _animation, _progress );
 		}
 	}
 	public void SetGrowth ( float targetvalue, float overTime = 0f ) {
 
 		if ( _growthCoroutine != null ) {
-			_animator.StopCoroutine( _growthCoroutine );
+			_animator?.StopCoroutine( _growthCoroutine );
 		}
 
 		if ( overTime > 0f ) {
@@ -84,7 +84,7 @@ public class AnimationDampener  {
 					
 					v => {
 						_growth = v;
-						_animator.SetGrowth( _animation, _growth );
+						_animator?.SetGrowth( _animation, _growth );
 					}
 				)
 			);
@@ -92,7 +92,7 @@ public class AnimationDampener  {
 		else {
 
 			_growth = targetvalue;
-			_animator.SetGrowth( _animation, _growth );
+			_animator?.SetGrowth( _animation, _growth );
 		}
 	}
 

@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Terrain
   m_Shader: {fileID: 4800000, guid: 5432f8061d1b7422d974919dbeb141c7, type: 3}
   m_ShaderKeywords: 
@@ -23,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_498F6572:
-        m_Texture: {fileID: 2800000, guid: dc511433b7f7340ad8fc76b4c91ed5fa, type: 3}
+        m_Texture: {fileID: 2800000, guid: a03c9dfaf44344918bab74461065f5bf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_59D02000:
@@ -120,12 +121,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_5829046E: 0.02
-    - Vector1_68ED1111: 1
+    - Vector1_68ED1111: 0.5
     - Vector1_6BD19ADD: 1
     - Vector1_8139129D: 0.2
     - Vector1_818368DC: 0
     - Vector1_A832318E: 0.15
-    - Vector1_B6DC0711: 0.8
+    - Vector1_B6DC0711: 0.49
     - Vector1_D3A3F68A: 0.025
     - Vector1_E94981F7: 1
     - _AlphaClip: 0

@@ -68,11 +68,11 @@ public class AttackTarget : Dumpster.AI.IStateAction {
 		}
 		private void LookAtTarget () {
 			
-			_actor.transform.LookAt( _target.transform );
+			_actor?.transform.LookAt( _target.transform );
 		}
 		private void UseItem () {
 			
-			_interactor.Use( _item );
+			_interactor?.Use( _item );
 		}
 	}
 }

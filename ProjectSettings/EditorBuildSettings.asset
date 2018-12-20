@@ -6,42 +6,45 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Vertical Slice.unity
+    guid: 166ecc70ad7d8465ab604c3d0019dbd3
+  - enabled: 0
     path: Assets/Scenes/Gun Range.unity
     guid: c0e89fc94f4394eab856f0524011b1ef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo Level 2.unity
     guid: 4d7724d2dd9fd4ee6b95fa0058b9aa12
-  - enabled: 1
-    path: Assets/Scenes/Demo Level.unity
-    guid: 26ffde065c3c64b2d979e6323a5a4b8d
-  - enabled: 1
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/Areas/Farm.unity
     guid: b569967e9b94e4ded98bb5881245a005
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/_Rooms/Farm/Home.unity
     guid: dec5ebc0feb014e628b0b7658c9a25dc
-  - enabled: 1
-    path: Assets/Scenes/Areas/Dungeon.unity
-    guid: d1afe7edeafce486aab5a57027db1f54
-  - enabled: 1
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/Areas/Town.unity
     guid: 2a6cd9e460d3146d5829bf769a1c85be
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/_Rooms/Town/CraftingArea.unity
     guid: c6f827c117aaa4e7da2c055aa1756b38
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/SmallHome.unity
     guid: ae21d7d7c0e9e4f5f8e0aea9ff6c4578
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/Housing.unity
     guid: 8391e97a0a1034720ac0340eb7a56ced
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/_Rooms/Town/Gardening Shop.unity
     guid: f9110fdc928d64049bef8150b8196174
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/_Rooms/Town/Gun Shop.unity
     guid: 42bd2ed92512444f2b10a050a619946b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Areas/_Rooms/Town/General Shop.unity
     guid: 03f8e1229d9d14c49a395b7c79754c97
   m_configObjects: {}

@@ -186,22 +186,35 @@ namespace Eden {
 			}
 			public class Analog {
 				
+				public bool Button { get; }
+				public bool Button_Down { get; }
+				public bool Button_Up { get; }
+
 				public float Horizontal { get; }
 				public float Vertical { get; }
 
 				public Analog () {
 
+					Button = false;
+					Button_Down = false;
+					Button_Up = false;
 					Horizontal = 0f;
 					Vertical = 0f;  
 				}
-				public Analog ( float horizontal, float vertical ) {
-					
+				public Analog ( bool button, bool button_down, bool button_up, float horizontal, float vertical ) {
+
+					Button = button;
+					Button_Down = button_down;
+					Button_Up = button_up;
 					Horizontal = horizontal;
 					Vertical = vertical;
 				}
 			
 				public static bool Equal ( Analog analog1, Analog analog2 ) {
 
+					if ( analog1.Button != analog2.Button ) return false;
+					if ( analog1.Button_Down != analog2.Button_Down ) return false;
+					if ( analog1.Button_Up != analog2.Button_Up ) return false;
 					if ( analog1.Horizontal != analog2.Horizontal ) return false;
 					if ( analog1.Vertical != analog2.Vertical ) return false;
 

@@ -43,6 +43,7 @@ namespace Eden.Modules {
 		public void BreakZen () {
 
 			_currentZen = 0;
+			_currentLevel = 0;
 			
 			FireBreakEvent();
 		}
