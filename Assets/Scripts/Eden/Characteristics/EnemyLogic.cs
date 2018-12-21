@@ -50,11 +50,15 @@ namespace Dumpster.Characteristics {
 		public bool IsRunning   { get; set; }
 		public bool IsAttacking { get; set; }
 	
-	public override List<string> GetNotifications () {
+		public override List<string> GetNotifications () {
 
 			return new List<string>() {
 				ON_GET_TARGET
 			};
+		}
+		public override void ActorDisabled () {
+		
+			__personality.Kill();
 		}
 		
 		// **************** Protected ********************
@@ -113,7 +117,7 @@ namespace Dumpster.Characteristics {
 			}
 			_wasAttacking = IsAttacking;
 		}
-
+	
 
 		// **************** Private ********************
 		

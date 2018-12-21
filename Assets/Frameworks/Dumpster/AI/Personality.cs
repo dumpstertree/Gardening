@@ -40,6 +40,23 @@ namespace Dumpster.AI {
 
 			return inst;
 		}
+		public void Kill ()  {
+			
+			switch( _state ) {
+
+				case States.Roaming: 
+					__roaming.ExitState (); 
+					break;
+				
+				case States.Attacking: 
+					__attacking.ExitState (); 
+					break;
+				
+				case States.Fleeing: 
+					__fleeing.ExitState (); 
+					break;
+			}
+		}
 		public void ChangeState ( States newState ) {
 
 			if ( newState != _state ) {

@@ -16,7 +16,7 @@ namespace Dumpster.BuiltInModules {
 
 			_thisFrameTargetables.Add( targetable );
 		}
-		public Actor GetBestTarget ( Vector3 position, Vector3 forward, float maxAngle, float maxDistance ) {
+		public Targetable GetBestTarget ( Vector3 position, Vector3 forward, float maxAngle, float maxDistance ) {
 			
 			var targetables = new List<Targetable>( _lastFrameTargetables );
 
@@ -25,7 +25,7 @@ namespace Dumpster.BuiltInModules {
 			GetTargetablesInMaxAngle( targetables, position, forward, maxAngle );
 			GetTargetablesInView( targetables, position, maxDistance );
 
-			return GetHighestScoringTargetable( targetables, position, forward )?.Actor;
+			return GetHighestScoringTargetable( targetables, position, forward );
 		}
 
 

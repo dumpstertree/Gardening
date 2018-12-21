@@ -58,7 +58,8 @@ namespace Dumpster.Core {
 		}
 		public virtual void RecieveNotification ( string notification ) {
 		}
-		
+		public virtual void ActorEnabled () {}
+		public virtual void ActorDisabled () {}
 		
 		// ************** Protected ****************
 		

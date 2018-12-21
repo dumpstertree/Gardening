@@ -9,6 +9,13 @@ namespace Dumpster.Tweening {
 
 		// ***************** Static *********************
 
+		public static Tween Float (  Action<float> setter, float startValue, float targetValue, float time ) {
+
+			var t = new Tween();
+			t._tweenValue = Game.Instance.StartCoroutine( t.TweenValue( time, v => t.OnFloatValueChange( setter, startValue, targetValue, v ) ) );
+
+			return t;
+		}
 		public static Tween Vector3 ( Action<Vector3> setter, Vector3 startValue, Vector3 targetValue, float time ) {
 
 			var t = new Tween();
@@ -45,7 +52,11 @@ namespace Dumpster.Tweening {
 		private Action _onComplete;
 		private Coroutine _tweenValue;
 
-		
+		private void OnFloatValueChange ( Action<float> setter, float startPos, float targetPos, float progress ) {
+
+			var val = UnityEngine.Mathf.Lerp( startPos, targetPos, progress );
+			setter( val );
+		}
 		private void OnVector3ValueChange ( Action<Vector3> setter, Vector3 startPos, Vector3 targetPos, float progress ) {
 
 			var val = UnityEngine.Vector3.Lerp( startPos, targetPos, progress );

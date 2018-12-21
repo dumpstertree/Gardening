@@ -20,7 +20,7 @@ namespace Dumpster.Characteristics {
 		[SerializeField] private Transform _forward;
 		[SerializeField] private Transform _position;
 
-		public Actor GetBestTarget () {
+		public Targetable GetBestTarget () {
 
 			var forward = Vector3.zero;
 			var position = Vector3.zero;

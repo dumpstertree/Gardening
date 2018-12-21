@@ -32,11 +32,11 @@ namespace Eden.UI.Panels {
 		private void Update () {
 
 			var target = _actor.GetCharacteristic<Targeter>( true )?.GetBestTarget();
-			if ( target != null && target.GetCharacteristic<Eden.Characteristics.Targetable>().ShowUI ) {
+			if ( target != null && target.Actor.GetCharacteristic<Eden.Characteristics.Targetable>().ShowUI ) {
 
 				SetVisualVisible( true );
 				SetUIPosition( target.transform.position );
-				SetHealthFill( target.GetCharacteristic<Health>( true ).Current, target.GetCharacteristic<Health>( true ).Max );
+				SetHealthFill( target.Actor.GetCharacteristic<Health>( true ).Current, target.Actor.GetCharacteristic<Health>( true ).Max );
 			
 			} else {
 

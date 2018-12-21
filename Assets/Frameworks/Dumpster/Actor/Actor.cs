@@ -9,6 +9,11 @@ namespace Dumpster.Core {
 
 		[SerializeField] private bool _enabled = true;
 
+		public bool Enabled {
+			get { return _enabled; }
+			set {  SetEnabled( value ); }
+		}
+
 		public T GetCharacteristic<T>( bool throwError = false ) where T : class {
 
 			foreach ( Characteristic c in _characteristics ) {
@@ -80,7 +85,7 @@ namespace Dumpster.Core {
 		}
 		private void Update () {
 			
-			if ( enabled ) {
+			if ( Enabled ) {
 				
 				foreach ( Characteristic c in _characteristics ) {
 					c.ActorUpdate ();
@@ -88,6 +93,23 @@ namespace Dumpster.Core {
 			}
 		}
 
+		private void SetEnabled ( bool newEnabled ) {
+
+			if( _enabled != newEnabled ) {
+
+				_enabled = newEnabled;
+				if ( _enabled ) {
+					foreach ( Characteristic c in _characteristics ) {
+						c.ActorEnabled();
+					}
+				}
+				if ( !_enabled ) {
+					foreach ( Characteristic c in _characteristics ) {
+						c.ActorDisabled();
+					}
+				}
+			}
+		}
 		private Characteristic[] _characteristics;
 		private bool _isBeingDestroyed;
 	}
