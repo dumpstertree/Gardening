@@ -23,6 +23,8 @@ namespace Eden.UI.Panels {
 		private bool _visualWasVisible;
 		private Tween _presentation;
 
+		private Actor _lastTarget;
+
 		
 		private Actor _actor {
 			get{ return Game.GetModule<Navigation>()?.CurrentArea.LoadedPlayer.GetComponent<Actor>(); }
@@ -33,14 +35,26 @@ namespace Eden.UI.Panels {
 
 			var target = _actor.GetCharacteristic<Targeter>( true )?.GetBestTarget();
 			if ( target != null && target.Actor.GetCharacteristic<Eden.Characteristics.Targetable>().ShowUI ) {
+				
+				if ( target.Actor != _lastTarget && target != null ) {
+					SetHealthFill( 
+						target.Actor.GetCharacteristic<Health>( true ).Current, 
+						target.Actor.GetCharacteristic<Health>( true ).Max, 
+						true 
+					);
+				}
 
 				SetVisualVisible( true );
 				SetUIPosition( target.transform.position );
-				SetHealthFill( target.Actor.GetCharacteristic<Health>( true ).Current, target.Actor.GetCharacteristic<Health>( true ).Max );
+				SetHealthFill( target.Actor.GetCharacteristic<Health>( true ).Current, target.Actor.GetCharacteristic<Health>( true ).Max, false );
 			
 			} else {
 
 				SetVisualVisible( false );
+			}
+
+			if ( target != null ) {
+				_lastTarget = target.Actor;
 			}
 		}
 
@@ -50,10 +64,10 @@ namespace Eden.UI.Panels {
 			var pos = Camera.main.WorldToScreenPoint( worldPos );
 			_visual.position = Vector3.Lerp( _visual.position, pos, 0.8f );
 		}
-		private void SetHealthFill ( int currentHealth, int maxhealth ) {
+		private void SetHealthFill ( int currentHealth, int maxhealth, bool instant ) {
 
 			var progress = (float)currentHealth / (float)maxhealth;
-			_healthFill.fillAmount = progress;
+			_healthFill.fillAmount = Mathf.Lerp( _healthFill.fillAmount, progress, instant ? 1f : 0.2f );
 		}
 		private void SetVisualVisible ( bool visible ) {
 

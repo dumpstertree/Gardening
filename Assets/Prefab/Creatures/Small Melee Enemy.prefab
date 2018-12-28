@@ -354,7 +354,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2613396497893228262}
   m_Father: {fileID: 4298434886675542}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1476,7 +1477,7 @@ MonoBehaviour:
   _listeningToNofications:
   - EnemyLogic.GetTarget
   _spawner: {fileID: 4956052238605204}
-  _prefab: {fileID: 1620605138460902, guid: f39319179eed74ce2b7af1647c2ecf20, type: 3}
+  _prefab: {fileID: 563, guid: f39319179eed74ce2b7af1647c2ecf20, type: 3}
   _parent: {fileID: 4956052238605204}
 --- !u!1 &1952823538729044
 GameObject:
@@ -1745,6 +1746,58 @@ MonoBehaviour:
   _spawner: {fileID: 83496620062752344}
   _prefab: {fileID: 1276319726987708, guid: 67ae67199961f449daee06bc20fd803a, type: 3}
   _parent: {fileID: 0}
+--- !u!1 &228144482449530812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2613396497893228262}
+  - component: {fileID: 7858951265789074408}
+  m_Layer: 0
+  m_Name: Flash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2613396497893228262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228144482449530812}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4599145862998546}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7858951265789074408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228144482449530812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985d54063a2714c34a475faff0079951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _secret: 0
+  _listeningToNofications:
+  - Health.Decreased
+  _fadeInTime: 0.1
+  _fadeOutTime: 0.1
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _meshRends: []
+  _skinnedMeshRends:
+  - {fileID: 137112738845330758}
 --- !u!1 &863145014026918352
 GameObject:
   m_ObjectHideFlags: 0

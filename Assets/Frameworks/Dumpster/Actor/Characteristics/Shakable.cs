@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Dumpster.Core;
+﻿using Dumpster.Core;
+using Dumpster.BuiltInModules;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dumpster.BuiltInModules {
+namespace Dumpster.Characteristics {
 	
 	public class Shakable : Dumpster.Core.Characteristic {
 		

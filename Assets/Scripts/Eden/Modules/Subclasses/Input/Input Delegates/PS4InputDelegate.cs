@@ -11,16 +11,20 @@ namespace Eden {
 		private const string DPAD_HORIZONTAL_ID = "DPad_Horizontal";
 		private const string DPAD_VERTICAL_ID 	= "DPad_Vertical";
 
-		private const string ANALOG_RIGHT_BUTTON_ID = "Analog_Right_Button";
+		private const string ANALOG_RIGHT_BUTTON_ID     = "Analog_Right_Button";
 		private const string ANALOG_RIGHT_HORIZONTAL_ID = "Analog_Right_Horizontal";
-		private const string ANALOG_RIGHT_VERTICAL_ID = "Analog_Right_Vertical";
+		private const string ANALOG_RIGHT_VERTICAL_ID   = "Analog_Right_Vertical";
 		
-		private const string ANALOG_LEFT_BUTTON_ID = "Analog_Left_Button";
-		private const string ANALOG_LEFT_HORIZONTAL_ID = "Analog_Left_Horizontal";
-		private const string ANALOG_LEFT_VERTICAL_ID = "Analog_Left_Vertical";
+		private const string ANALOG_LEFT_BUTTON_ID      = "Analog_Left_Button";
+		private const string ANALOG_LEFT_HORIZONTAL_ID  = "Analog_Left_Horizontal";
+		private const string ANALOG_LEFT_VERTICAL_ID    = "Analog_Left_Vertical";
 
-		private const string BACK_LEFT_BUMPER_ID = "Back_Left_Bumper";
-		private const string BACK_RIGHT_BUMPER_ID = "Back_Right_Bumper";
+		private const string BACK_LEFT_TRIGGER_ID  = "Back_Left_Trigger";
+		private const string BACK_RIGHT_TRIGGER_ID = "Back_Right_Trigger";
+		
+		private const string BACK_LEFT_BUMPER_ID   = "Back_Left_Bumper";
+		private const string BACK_RIGHT_BUMPER_ID  = "Back_Right_Bumper";
+		
 
 		Input.Package IInput.GetPackage () {
 
@@ -120,7 +124,7 @@ namespace Eden {
 		private Input.Package.Back GetLeftBack () {
 
 			return new Input.Package.Back ( 
-				0f,
+				UnityEngine.Input.GetAxis( BACK_LEFT_TRIGGER_ID ),
 				UnityEngine.Input.GetButton( BACK_LEFT_BUMPER_ID ),
 				UnityEngine.Input.GetButtonDown( BACK_LEFT_BUMPER_ID ),
 				UnityEngine.Input.GetButtonUp( BACK_LEFT_BUMPER_ID )
@@ -129,7 +133,7 @@ namespace Eden {
 		private Input.Package.Back GetRightBack () {
 
 			return new Input.Package.Back ( 
-				0f,
+				UnityEngine.Input.GetAxis( BACK_RIGHT_TRIGGER_ID ),
 				UnityEngine.Input.GetButton( BACK_RIGHT_BUMPER_ID ),
 				UnityEngine.Input.GetButtonDown( BACK_RIGHT_BUMPER_ID ),
 				UnityEngine.Input.GetButtonUp( BACK_RIGHT_BUMPER_ID )

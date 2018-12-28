@@ -43,7 +43,7 @@ namespace Dumpster.Characteristics {
 			foreach( Magnetic m in magneticObjects ) {
 				
 				var dist = Vector3.Distance( m.Position, _target.position );				
-				m.Position = Vector3.Lerp( m.Position, _target.position, ( 1.0f/dist ) * (_strength * Time.deltaTime) );
+				m.Position = Vector3.Lerp( m.Position, _target.position, ( ( 1f - dist/_range ) * _strength ) * Time.deltaTime);
 			}
 		}
 	}

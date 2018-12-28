@@ -773,3 +773,35 @@ InputManager:
     type: 2
     axis: 6
     joyNum: 0
+  - serializedVersion: 3
+    m_Name: Back_Left_Trigger
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1.5
+    dead: 0.3
+    sensitivity: 1.1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Back_Right_Trigger
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1.5
+    dead: 0.3
+    sensitivity: 1.1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 5
+    joyNum: 0

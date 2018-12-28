@@ -16,7 +16,7 @@ namespace Eden.Interactors.Ranged {
 		[SerializeField] protected GameObject _casingPrefab;
 		[SerializeField] protected GameObject _bulletCollisionParticlePrefab;		
 
-		private const float CASING_KILL_TIME = 15.0f;
+		private const float CASING_KILL_TIME = 2.0f;
 
 		protected Actor _user;
 		protected CanUseRangedWeapons _ranged;
@@ -88,7 +88,7 @@ namespace Eden.Interactors.Ranged {
 
 			inst.GetComponent<Rigidbody>().velocity = velocity;
 
-			Game.GetModule<Async>()?.WaitForSeconds( CASING_KILL_TIME, () => { Destroy( inst ); } );
+			GameObject.Destroy( inst, CASING_KILL_TIME );
 		}
 		protected void MoveForward () {
 
